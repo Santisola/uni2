@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AlertasController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +18,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/alertas', [AlertasController::class, 'all']);
+Route::get('/alertas/{id}', [AlertasController::class, 'ver']);
