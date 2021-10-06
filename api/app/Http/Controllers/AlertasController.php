@@ -13,12 +13,42 @@ class AlertasController extends Controller
     public function all(){
         $alertas = Alerta::all();
 
-        return $alertas->toJson();
+        return response()->json([
+            'data' => $alertas
+        ]);
     }
 
     public function ver($alerta){
-        $alerta = Alerta::find($alerta);
+        $alerta = Alerta::findOrFail($alerta);
 
-        return $alerta->toJson();
+        return response()->json([
+            'data' => $alerta
+        ]);
+    }
+
+    public function deUsuario($usuario){
+        $alertas = Alerta::where('id_usuario', $usuario)->get();
+
+        return response()->json([
+            'data' => $alertas
+        ]);
+    }
+
+    public function nueva(Request $request){
+        //TODO: Validar
+        $alertaNueva = Alerta::create($request->input());
+
+        return response()->json([
+           'success' => true,
+           'data' => $alertaNueva,
+        ]);
+    }
+
+    public function borrar($alerta){
+        Alerta::destroy($alerta);
+
+        return response()->json([
+           'success' => true,
+        ]);
     }
 }

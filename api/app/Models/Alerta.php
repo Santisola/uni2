@@ -11,6 +11,19 @@ class Alerta extends Model
 
     protected $primaryKey = 'id_alerta';
 
+    protected $fillable = [
+        'nombre',
+        'descripcion',
+        'imagenes',
+        'latitud',
+        'longitud',
+        'id_usuario',
+        'id_especie',
+        'id_raza',
+        'id_sexo',
+        'id_tipoalerta',
+    ];
+
     public function especie(){
         return $this->belongsTo(Especie::class,'id_especie', 'id_especie');
     }

@@ -1,0 +1,72 @@
+<template>
+    <div class="card">
+        <div class="cardImgContainer">
+            <span :class="tipo === 1 ? 'perdido' : 'encontrado'">
+                {{tipo === 1 ? 'Perdido' : 'Encontrado'}}
+            </span>
+            <img :src="alerta.img" :alt="'Imagen de' + alerta.nombre">
+        </div>
+        <div class="cardContent">    
+            <h3 v-if="tipo === 1">{{alerta.nombre}}</h3>
+            <ul>
+                <li>{{alerta.fecha}}</li>
+                <li>{{alerta.direccion}}</li>
+                <li>{{alerta.sexo}}</li>
+                <li>{{alerta.raza}}</li>
+            </ul>
+        </div>
+    </div>
+</template>
+<script>
+export default {
+    name: 'CardAlerta',
+    props: {
+        alerta: { required: true },
+        tipo: Number
+    }
+}
+</script>
+<style scoped>
+.card{
+    background: #fff;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.cardImgContainer{
+    position: relative;
+}
+
+.cardImgContainer > span{
+    position: absolute;
+    left: 0;
+    top: 5px;
+    color: #fff;
+    padding: 2px 5px;
+    border-radius: 0 5px 5px 0;
+}
+
+.cardImgContainer > .perdido{
+    background-color: #E5446D;
+}
+
+.cardImgContainer > .encontrado{
+    background-color: #44BBA4;
+    color: #eee;
+}
+
+.cardImgContainer img{
+    width: 100%;
+}
+.cardContent{
+    text-align: left;
+    padding: .5rem 1rem;
+    padding-bottom: 1.5rem;
+}
+.cardContent h3{
+    margin-bottom: 1rem;
+}
+.cardContent ul li{
+    margin: .25rem 0;
+}
+</style>
