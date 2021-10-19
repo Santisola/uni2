@@ -4,7 +4,7 @@
             <span :class="tipo === 2 ? 'perdido' : 'encontrado'">
                 {{tipo === 2 ? 'Perdido' : 'Encontrado'}}
             </span>
-            <img :src="alerta.img" :alt="'Imagen de ' + alerta.nombre">
+            <ImagenesAlerta :imgs="alerta.imagenes" :principal="true" />
         </div>
         <div class="cardContent">    
             <h3 v-if="tipo === 2">{{alerta.nombre}}</h3>
@@ -19,8 +19,13 @@
     </div>
 </template>
 <script>
+import ImagenesAlerta from './ImagenesAlerta.vue';
+
 export default {
     name: 'CardAlerta',
+    components:{
+        ImagenesAlerta
+    },
     props: {
         alerta: { required: true },
         tipo: Number
