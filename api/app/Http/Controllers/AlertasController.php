@@ -54,7 +54,31 @@ class AlertasController extends Controller
 
     public function nueva(Request $request){
         //TODO: Validar
-        $alertaNueva = Alerta::create($request->input());
+        //$alertaNueva = Alerta::create($request->input());
+
+        if ($request->hasFile('imagenes')) {
+            $extension = $request->imagenes->extension();
+            $nombreImg = date('Ymd-his') . $extension;
+
+            $path = $request->imagenes->store('images');
+        }else{
+            $nombreImg = date('Ymd-his') . '.jpg';
+        }
+
+        $data = [
+            'nombre' => $request->input('nombre'),
+            'descripcion' => $request->input('descripcion'),
+            'imagenes' => $nombreImg,
+            'latitud' => $request->input('latitud'),
+            'longitud' => $request->input('longitud'),
+            'id_usuario' => $request->input('id_usuario'),
+            'id_especie' => $request->input('id_especie'),
+            'id_raza' => $request->input('id_raza'),
+            'id_sexo' => $request->input('id_sexo'),
+            'id_tipoalerta' => $request->input('id_tipoalerta'),
+        ];
+
+        $alertaNueva = Alerta::create($data);
 
         return response()->json([
            'success' => true,

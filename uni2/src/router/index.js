@@ -5,6 +5,7 @@ import Buscar from '../views/Buscar.vue'
 import Publicar from '../views/Publicar.vue'
 import Alertas from '../views/Alertas.vue'
 import Perfil from '../views/Perfil.vue'
+import PublicarPerdida from '../views/PublicarPerdida.vue'
 
 Vue.use(VueRouter)
 
@@ -23,6 +24,11 @@ const routes = [
     path: '/publicar',
     name: 'Publicar',
     component: Publicar
+  },
+  {
+    path: '/publicar/perdida',
+    name: 'Publicar Perdida',
+    component: PublicarPerdida
   },
   {
     path: '/alertas',

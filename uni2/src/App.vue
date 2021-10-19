@@ -18,6 +18,8 @@ export default {
 
 :root{
     --primary: #4f3bc0;
+    --perdida: #E5446D;
+    --encontrada: #44BBA4;
 }
 
 #app {
@@ -45,5 +47,62 @@ ul{
 a{
     text-decoration: none;
     color: inherit;
+}
+
+.btn{
+    font-family: 'Montserrat', Helvetica, Arial, sans-serif; 
+    border-radius: 4px;
+    font-size: 18px;
+    transition: all 250ms ease;
+    padding: .5rem;
+}
+
+.btn-secondary{
+    color: var(--primary);
+    border: none;
+    background: none;
+    font-weight: bold;
+}
+
+.btn-primary{
+    border: solid 1px var(--primary);
+    background: var(--primary);
+    font-weight: normal;
+    color: #fff;
+}
+
+.btn-disabled{
+    background: #ccc;
+    color: #e6e6e6;
+    pointer-events: none;
+}
+
+.form-group > input,
+.form-group > label,
+.form-group > select,
+.form-group > textarea{
+    display: block;
+    width: 100%;
+    padding: 1rem .5rem;
+    font-size: 14px;
+}
+
+.form-group > input,
+.form-group > select,
+.form-group > textarea{
+    border: solid 1px #cecece;
+    border-radius: 4px;
+}
+
+.form-group > label{
+    padding-left: 0;
+    margin-top: .5rem;
+}
+
+.form-group > textarea{
+    resize: none;
+    margin-top: .75rem;
+    font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+    font-size: 18px;
 }
 </style>
