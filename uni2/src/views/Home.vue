@@ -1,16 +1,17 @@
 <template>
 	<div class="home">
 		<h1>Hola, {{nombre}}</h1>
-		<SliderAlertas
-		titulo="Mascotas perdidas por tu zona"
-		:alertas=alertasPerdidas
-		:tipo="1"
-		/>
-        <CardAnuncio :anuncio="anuncio" />
-		<SliderAlertas
+		<span v-if="isLoading">Cargando...</span>
+		<SliderAlertas v-else
 		titulo="Mascotas perdidas por tu zona"
 		:alertas=alertasPerdidas
 		:tipo="2"
+		/>
+        <CardAnuncio :anuncio="anuncio" />
+		<SliderAlertas
+		titulo="Mascotas encontradas por tu zona"
+		:alertas=alertasEncontradas
+		:tipo="1"
 		/>
 	</div>
 </template>
@@ -18,7 +19,8 @@
 <script>
 // @ is an alias to /src
 import SliderAlertas from '../components/SliderAlertas';
-import CardAnuncio from '../components/CardAnuncio.vue'
+import CardAnuncio from '../components/CardAnuncio.vue';
+import alertasServicio from '../servicios/alertasServicio'
 
 export default {
   name: 'Home',
@@ -26,73 +28,33 @@ export default {
 	  SliderAlertas,
       CardAnuncio
   },
+  mounted() {
+	  this.isLoading = true;
+	  alertasServicio.todos()
+		.then(data => {
+			this.alertas = data;
+			this.isLoading = false;
+		})
+  },
+  computed: {
+	  alertasPerdidas: function() {
+		  const perdidas = this.alertas.filter(alerta => {
+			  return alerta.id_tipoalerta == 2;
+		  });
+		  return perdidas;
+	  },
+	  alertasEncontradas: function() {
+		  const perdidas = this.alertas.filter(alerta => {
+			  return alerta.id_tipoalerta == 1;
+		  });
+		  return perdidas;
+	  },
+  },
   data: function(){
 	return{
 		nombre: 'Juan Carlos',
-		alertasPerdidas: [
-			{
-				img: 'https://dummyimage.com/150x100/ccc/777',
-				nombre: 'Jano',
-				fecha: '12/07/2020',
-				direccion: 'Malabia 1330',
-				sexo: 'Macho',
-				raza: 'Ovejero Alemán'
-			},
-			{
-				img: 'https://dummyimage.com/150x100/ddd/777',
-				nombre: 'Dexter',
-				fecha: '12/07/2020',
-				direccion: 'Malabia 1330',
-				sexo: 'Macho',
-				raza: 'Mestizo'
-			},
-			{
-				img: 'https://dummyimage.com/150x100/bbb/777',
-				nombre: 'Helena',
-				fecha: '12/07/2020',
-				direccion: 'Malabia 1330',
-				sexo: 'Hembra',
-				raza: 'Bulldog Francés'
-			},
-            {
-				img: 'https://dummyimage.com/150x100/999/777',
-				nombre: 'Luna',
-				fecha: '12/07/2020',
-				direccion: 'Malabia 1330',
-				sexo: 'Hembra',
-				raza: 'Raza desconocida'
-			},
-		],
-        alertasEncontradas: [
-			{
-				img: 'https://dummyimage.com/150x100/ccc/777',
-				fecha: '12/07/2020',
-				direccion: 'Malabia 1330',
-				sexo: 'Hembra',
-				raza: 'Raza desconocida'
-			},
-			{
-				img: 'https://dummyimage.com/150x100/ddd/777',
-				fecha: '12/07/2020',
-				direccion: 'Malabia 1330',
-				sexo: 'Macho',
-				raza: 'Caniche Toy'
-			},
-			{
-				img: 'https://dummyimage.com/150x100/bbb/777',
-				fecha: '12/07/2020',
-				direccion: 'Malabia 1330',
-				sexo: 'Macho',
-				raza: 'Raza desconocida'
-			},
-            {
-				img: 'https://dummyimage.com/150x100/999/777',
-				fecha: '12/07/2020',
-				direccion: 'Malabia 1330',
-				sexo: 'Hembra',
-				raza: 'Raza desconocida'
-			},
-		],
+		isLoading: false,
+		alertas: [],
         anuncio: {
             img: 'https://dummyimage.com/350x125/777/eee',
             titulo: '¡Vení a una nueva jornada de adopción!',

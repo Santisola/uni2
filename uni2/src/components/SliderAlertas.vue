@@ -38,13 +38,13 @@ export default {
 }
 
 .sliderAlertas .header h2{
-    font-size: 1.25rem;
+    font-size: 1.05rem;
 }
 
 .sliderAlertas .header a{
     font-weight: bold;
     color: var(--primary);
-    font-size: 1.15rem;
+    font-size: .95rem;
 }
 
 .sliderAlertas .sliderContent{
@@ -55,10 +55,10 @@ export default {
 .sliderAlertas .sliderContent > ul{
     display: flex;
     overflow: auto;
-    width: 160%;
+    width: 180%;
 }
 .sliderAlertas .sliderContent > ul > li{
-    width: 40%;
+    width: 45%;
     margin: .25rem .5rem;
     padding: .5rem 0;
 }

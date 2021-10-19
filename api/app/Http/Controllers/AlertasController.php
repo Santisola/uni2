@@ -13,8 +13,26 @@ class AlertasController extends Controller
     public function all(){
         $alertas = Alerta::all();
 
+        $data = [];
+        foreach($alertas as $alerta){
+            $data[] = [
+                'id_alerta' => $alerta->id_alerta,
+                'id_usuario' => $alerta->id_usuario,
+                'id_tipoalerta' => $alerta->id_tipoalerta,
+                'especie' => $alerta->especie->especie,
+                'raza' => $alerta->raza->raza,
+                'sexo' => $alerta->sexo->sexo,
+                'descripcion' => $alerta->descripcion,
+                'nombre' => $alerta->nombre,
+                'latitud' => $alerta->latitud,
+                'longitud' => $alerta->longitud,
+                'imagenes' => $alerta->imagenes,
+                'fecha' => $alerta->created_at,
+            ];
+        }
+
         return response()->json([
-            'data' => $alertas
+            'data' => $data
         ]);
     }
 

@@ -1,16 +1,17 @@
 <template>
     <div class="card">
         <div class="cardImgContainer">
-            <span :class="tipo === 1 ? 'perdido' : 'encontrado'">
-                {{tipo === 1 ? 'Perdido' : 'Encontrado'}}
+            <span :class="tipo === 2 ? 'perdido' : 'encontrado'">
+                {{tipo === 2 ? 'Perdido' : 'Encontrado'}}
             </span>
-            <img :src="alerta.img" :alt="'Imagen de' + alerta.nombre">
+            <img :src="alerta.img" :alt="'Imagen de ' + alerta.nombre">
         </div>
         <div class="cardContent">    
-            <h3 v-if="tipo === 1">{{alerta.nombre}}</h3>
+            <h3 v-if="tipo === 2">{{alerta.nombre}}</h3>
             <ul>
                 <li>{{alerta.fecha}}</li>
-                <li>{{alerta.direccion}}</li>
+                <li>{{alerta.especie}}</li>
+                <li>Direcion 1234{{alerta.direccion}}</li>
                 <li>{{alerta.sexo}}</li>
                 <li>{{alerta.raza}}</li>
             </ul>
@@ -67,6 +68,9 @@ export default {
     margin-bottom: 1rem;
 }
 .cardContent ul li{
-    margin: .25rem 0;
+    margin: .5rem 0;
+}
+.cardContent ul li:last-of-type{
+    height: 40px;
 }
 </style>
