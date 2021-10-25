@@ -1,0 +1,282 @@
+<template>
+    <div id="alerta">
+        <div v-if="deleteConfirmation" class="deleteModal">
+            <div class="deleteModalContent">
+                <h2>¿Estás seguro?</h2>
+                <div>
+                    <button @click.prevent="deleteConfirmation = false" class="btn btn-secondary">Cancelar</button>
+                    <button @click="borrarAlerta" class="btn btn-primary">Confirmar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="header">
+            <img src="https://dummyimage.com/500x500/ccc/eee" alt="">
+            <div @click="opciones = !opciones" class="settings">...</div>
+            <div :class="opciones ? 'opened' : 'closed'" class="menu-opciones">
+                <ul>
+                    <li>
+                        <a href="#" @click.prevent="opciones = false">Editar</a>
+                    </li>
+                    <li>
+                        <a href="#" @click.prevent="deleteConfirmation = true">Eliminar</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="content">
+            <div class="title">
+                <h2>{{alerta.nombre}}</h2>
+                <span>{{tipoAlerta}}</span>
+            </div>
+            <div class="data">
+                <p>{{sexoName}}</p>
+                <p>{{razaName}}</p>
+            </div>
+            <ul>
+                <li>12/07/2021</li>
+                <li>20:00</li>
+                <li>Malabia 1330, Buenos Aires</li>
+            </ul>
+        </div>
+    </div>
+</template>
+<script>
+import alertasServicio from '../servicios/alertasServicio';
+
+export default {
+     name: "DetalleAlerta",
+     mounted() {
+         alertasServicio.get(this.$route.params.id).then(res => {
+             this.alerta = res
+         })
+     },
+     methods: {
+         borrarAlerta: function(){
+             alertasServicio.delete(alerta.id_alerta)
+             .then(res => {
+                 if(res){
+                    this.opciones = false,
+                    this.deleteConfirmation = false,
+                    this.$router.push('/alertas');
+                 }
+             })
+         }
+     },
+     computed:{
+         razaName() {
+            let nombreRaza = ''
+            this.razas.map(raza => {
+                if(raza.id_raza === this.alerta.id_raza){
+                    nombreRaza = raza.raza
+                }
+            })
+            return nombreRaza;
+        },
+        sexoName() {
+            if(this.alerta.id_sexo === 1) {
+                return 'Macho';
+            } else if(this.alerta.id_sexo === 2){
+                return 'Hembra';
+            }
+            return false;
+        },
+        especieName() {
+            if(this.alerta.id_especie === 1) {
+                return 'Perro';
+            } else if(this.alerta.id_especie === 2){
+                return 'Gato';
+            }
+            return false;
+        },
+        tipoAlerta() {
+            if(this.alerta.id_tipoalerta === 1) {
+                return 'Encontrada';
+            } else if(this.alerta.id_tipoalerta === 2){
+                return 'Perdida';
+            }
+            return false;
+        }
+     },
+     data() {
+         return {
+             alerta: null,
+             opciones: false,
+             deleteConfirmation: false,
+
+             razas:[
+                {
+                    id_raza: 1,
+                    raza: 'Labrador Retriever'
+                },
+                {
+                    id_raza: 2,
+                    raza: 'Border Collie'
+                },
+                {
+                    id_raza: 3,
+                    raza: 'Bichón Maltés'
+                },
+                {
+                    id_raza: 4,
+                    raza: 'Pitbull'
+                },
+                {
+                    id_raza: 5,
+                    raza: 'Pastor Alemán'
+                },
+                {
+                    id_raza: 6,
+                    raza: 'Yorkshire Terrier'
+                },
+            ],
+         }
+     },
+}
+</script>
+<style scoped>
+    .deleteModal{
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1;
+    }
+
+    .deleteModalContent{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #fff;
+        border-radius: 4px;
+        padding: 1rem;
+        width: 80%;
+    }
+
+    .deleteModalContent h2{
+        margin-bottom: 1rem;
+    }
+
+    .deleteModalContent > div{
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    #alerta > .header{
+        margin: -1rem;
+        margin-bottom: 0;
+        width: calc(100% + 2rem);
+        height: 50vh;
+        position: relative;
+        overflow: hidden;
+    }
+
+    #alerta > .header img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    #alerta > .header .settings{
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: #fff;
+        width: 48px;
+        height: 48px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        transform: rotate(90deg);
+        font-size: 0;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    #alerta > .header .menu-opciones{
+        position: absolute;
+        top: 4.5rem;
+        background: #fff;
+        padding: .5rem;
+        border-radius: 4px 0 4px 4px;
+        transition: all 250ms ease;
+    }
+
+    .menu-opciones.closed{
+        right: -10rem;
+    }
+
+    .menu-opciones.opened{
+        right: 1rem;
+    }
+
+    #alerta > .header .menu-opciones ul li a{
+        display: block;
+        padding: .5rem;
+    }
+
+    #alerta > .header .settings::after{
+        content: "...";
+        font-size: 22px;
+        width: 18px;
+        height: 38px;
+    }
+
+    #alerta > .content{
+        padding: 1rem;
+
+    }
+
+    #alerta > .content .title{
+        display: flex;
+        justify-content: space-between;
+        margin: 1rem 0;
+    }
+
+    #alerta > .content .data{
+        display: flex;
+        justify-content: space-around;
+        margin: 1rem 0;
+    }
+    
+    #alerta > .content > ul{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin: 1rem 0;
+    }
+
+    #alerta > .content > ul li{
+        min-width: 50%;
+        margin: .5rem 0;
+        display: flex;
+        align-items: center;
+    }
+
+    #alerta > .content > ul li::before{
+        width: 16px;
+        height: 16px;
+        background: #cecece;
+        border-radius: 50%;
+        content: "";
+        margin-right: 10px;
+    }
+
+    .data p{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .data p::before{
+        content: "";
+        width: 64px;
+        height: 64px;
+        background: #cecece;
+        display: block;
+    }
+</style>

@@ -6,6 +6,7 @@ import Publicar from '../views/Publicar.vue'
 import Alertas from '../views/Alertas.vue'
 import Perfil from '../views/Perfil.vue'
 import PublicarPerdida from '../views/PublicarPerdida.vue'
+import DetalleAlerta from '../views/DetalleAlerta.vue'
 
 Vue.use(VueRouter)
 
@@ -34,6 +35,11 @@ const routes = [
     path: '/alertas',
     name: 'Alertas',
     component: Alertas
+  },
+  {
+    path: '/alertas/:id',
+    name: 'DetalleAlerta',
+    component: DetalleAlerta
   },
   {
     path: '/perfil',

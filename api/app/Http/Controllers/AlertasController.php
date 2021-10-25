@@ -87,7 +87,7 @@ class AlertasController extends Controller
     }
 
     public function borrar($alerta){
-        Alerta::destroy($alerta);
+        Alerta::findOrFail($alerta)->delete();
 
         return response()->json([
            'success' => true,

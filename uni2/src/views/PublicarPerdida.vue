@@ -54,8 +54,11 @@
                 <!-- ACA VA A IR EL MAPA -->
 
                 <div class="form-group">
-                    <label for="direccion">Dirección</label>
-                    <input v-model="direccion" type="text" name="direccion" id="direccion" placeholder="Soler 5868, Buenos Aires">
+                    <label for="autocomplete">Dirección</label>
+                    <div id="direccion">
+                        <input v-bind:disabled="direccionExitosa" v-model="direccion" type="text" name="direccion" id="autocomplete" placeholder="Soler 5868, Buenos Aires"><a href="#" @click.prevent="direccionExitosa = null" v-if="direccionExitosa">X</a>
+                        <button :class="direccionExitosa ? 'exito' : ''" @click.prevent="actualizarDireccion">Buscar</button>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -146,14 +149,26 @@ import alertasServicio from '../servicios/alertasServicio'
 export default {
     name: "PublicarPerdida",
     methods: {
+        actualizarDireccion: function(){
+            this.direccion = document.getElementById('autocomplete').value;
+            
+            this.geocoder.geocode({address: document.getElementById('autocomplete').value})
+            .then(res => {
+                this.latitud = res.results[0].geometry.location.lat();
+                this.longitud = res.results[0].geometry.location.lng();
+
+                this.direccionExitosa = true;
+            })
+            
+        },
         crear: function (){
 
             const data = {
                 nombre: this.nombre,
                 descripcion: this.descripcion,
                 imagenes: this.imagenPerdida, /*****/
-                latitud: -34.673090,
-                longitud: -58.502804,
+                latitud: this.latitud,
+                longitud: this.longitud,
                 id_usuario: 1,
                 id_especie: this.selectedEspecie,
                 id_raza: this.selectedRaza,
@@ -177,6 +192,19 @@ export default {
 
             reader.readAsDataURL(imagen);
         },
+    },
+    updated(){
+        if(this.paso === 1){
+            new google.maps.places.Autocomplete(
+                document.getElementById('autocomplete'),
+                {
+                    bounds: new google.maps.LatLngBounds(
+                        new google.maps.LatLng(-35.0233134, -59.5390479)
+                    )
+                }
+            );
+            this.geocoder = new google.maps.Geocoder();
+        }
     },
     computed:{
         isValid() {
@@ -247,6 +275,9 @@ export default {
     },
     data: () => {
         return{
+            geocoder: null,
+            direccionExitosa: null,
+
             success: null,
             paso: 0,
             pasos: [
@@ -311,6 +342,9 @@ export default {
 
             imagenPerdida: null,
             descripcion: '',
+
+            latitud: null,
+            longitud: null,
         }
     }
 }
@@ -417,6 +451,65 @@ h2,
 
 .sexo-container > div{
     width: 48%;
+}
+
+#direccion{
+    display: flex;
+}
+
+#direccion > a{
+    display: block;
+    border-top: solid 1px #cecece;
+    border-bottom: solid 1px #cecece;
+    display: flex;
+    align-items: center;
+    padding: 0 .5rem;
+}
+
+#autocomplete{
+    border: solid 1px #cecece;
+    border-right: 0;
+    border-radius: 4px 0 0 4px;
+}
+
+#autocomplete ~ button{
+    border: solid 1px var(--primary);
+    border-left: 0;
+    border-radius: 0 4px 4px 0;
+    background: var(--primary);
+    color: #fff;
+    font-size: 0;
+    width: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#autocomplete ~ button:active{
+    background: #2d0de0;
+}
+
+#autocomplete ~ button::after{
+    content: "";
+    transform: rotate(45deg);
+    width: 10px;
+    height: 10px;
+    margin-left: -5px;
+    border-top: solid 2px #fff;
+    border-right: solid 2px #fff;
+    transition: all 250ms ease;
+}
+
+#autocomplete ~ button.exito{
+    background: #00cf3f;
+    border-color: #00cf3f;
+}
+
+#autocomplete ~ button.exito::after{
+    transform: rotate(135deg);
+    width: 20px;
+    margin-top: -7px;
+    margin-left: 0;
 }
 
 #form-controls{

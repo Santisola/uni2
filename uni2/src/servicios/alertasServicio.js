@@ -9,6 +9,11 @@ const alertasServicio = {
         alertas = respuesta.data
         return [...alertas];
     },
+    get: async function(id){
+        const fetchRes = await fetch(API + '/alertas/' + id);
+        const respuesta = await fetchRes.json();
+        return respuesta.data;
+    },
     nueva: async function(data){
         const fetchRes = await fetch(API + '/alertas', {
             method: 'POST',
@@ -20,6 +25,19 @@ const alertasServicio = {
         });
         const respuesta = await fetchRes.json();
         return respuesta.success;
+    },
+    deUsuario: async function(id){
+        const fetchRes = await fetch(API + '/usuario/' + id + '/alertas');
+        const respuesta = await fetchRes.json();
+        alertas = respuesta.data
+        return [...alertas];
+    },
+    delete: async function(id){
+        const fetchRes = await fetch(API + '/alertas/' + id, {
+            method: 'DELETE'
+        });
+        const respuesta = await fetchRes.json();
+        return respuesta.success
     }
 }
 

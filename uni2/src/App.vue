@@ -78,6 +78,7 @@ a{
 }
 
 .form-group > input,
+.form-group > div > input,
 .form-group > label,
 .form-group > select,
 .form-group > textarea{
