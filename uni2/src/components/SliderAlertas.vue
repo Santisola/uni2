@@ -6,7 +6,7 @@
         </div>
         <div class="sliderContent">
             <ul>
-                <li v-for="(alerta, index) in alertas" :key="index">
+                <li v-for="(alerta, index) in reversedAlertas" :key="index">
                     <router-link to="#">
                         <CardAlerta :alerta="alerta" :tipo="tipo"/>
                     </router-link>
@@ -27,6 +27,17 @@ export default {
         titulo:{ required: true },
         alertas:{ required: true },
         tipo: Number
+    },
+    computed: {
+        reversedAlertas: function(){
+            let newAlertas = [];
+            const alertasCopy = [...this.alertas].reverse();
+            for (let i = 0; i < 5; i++) {
+                newAlertas.push(alertasCopy[i]);
+            }
+
+            return newAlertas;
+        }
     }
 }
 </script>

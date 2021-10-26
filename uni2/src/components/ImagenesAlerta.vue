@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <img v-if="principal" :src="imagenes[0]" alt="Imagen de la mascota">
+    <div class="imgContainer">
+        <img v-if="principal" :src="imgPrincipal" alt="Imagen de la mascota">
         <ul v-else>
             <li v-for="(img, index) in imagenes" :key="index">
                 <img :src="img" :alt="img">
@@ -9,6 +9,8 @@
     </div>
 </template>
 <script>
+import {IMG_PATH} from '../constantes/index'
+
 export default {
     name: 'ImagenesAlerta',
     props:{
@@ -19,10 +21,21 @@ export default {
     computed: {
         imagenes: function (){
             return this.imgs.split('|')
+        },
+
+        imgPrincipal: function(){
+            return IMG_PATH + this.imagenes[0];
         }
     }
 }
 </script>
-<style>
-    
+<style scoped>
+    .imgContainer{
+        height: 100%;
+    }
+    .imgContainer > img{
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
 </style>

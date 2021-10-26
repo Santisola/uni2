@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Alerta;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
 class AlertasController extends Controller
 {
@@ -56,13 +57,13 @@ class AlertasController extends Controller
         //TODO: Validar
         //$alertaNueva = Alerta::create($request->input());
 
-        if ($request->hasFile('imagenes')) {
-            $extension = $request->imagenes->extension();
-            $nombreImg = date('Ymd-his') . $extension;
+        if ($request->input('imagenes')) {
+            $extension = explode('/', explode(';', $request->imagenes)[0])[1];
+            $nombreImg = date('Ymd-his') . '.' . $extension;
 
-            $path = $request->imagenes->store('images');
+            Image::make($request->input('imagenes'))->save(public_path('imgs/mascotas/') . $nombreImg);
         }else{
-            $nombreImg = date('Ymd-his') . '.jpg';
+            $nombreImg = 'default.jpg';
         }
 
         $data = [

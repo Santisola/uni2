@@ -1,3 +1,4 @@
 const API = 'http://localhost/uni2/api/public/api';
+const IMG_PATH = 'http://localhost/uni2/api/public/imgs/mascotas/';
 
-export default API;
+export {API, IMG_PATH};

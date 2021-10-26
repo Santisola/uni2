@@ -1,4 +1,4 @@
-import API from '../constantes/index';
+import {API} from '../constantes/index';
 
 let alertas = null;
 

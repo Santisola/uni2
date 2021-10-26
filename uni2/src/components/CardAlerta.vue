@@ -9,7 +9,7 @@
         <div class="cardContent">    
             <h3 v-if="tipo === 2">{{alerta.nombre}}</h3>
             <ul>
-                <li>{{alerta.fecha}}</li>
+                <li>{{fechaBien}}</li>
                 <li>{{alerta.especie}}</li>
                 <li>Direcion 1234{{alerta.direccion}}</li>
                 <li>{{alerta.sexo}}</li>
@@ -26,6 +26,15 @@ export default {
     components:{
         ImagenesAlerta
     },
+    computed:{
+        fechaBien: function(){
+            if(this.alerta.fecha == null){
+                return 'No se sabe';
+            } 
+            let fecha = this.alerta.fecha.split('T')[0].split('-');
+            return fecha[2] + ' / ' + fecha[1] + ' / ' + fecha[0]; 
+        }
+    },
     props: {
         alerta: { required: true },
         tipo: Number
@@ -41,6 +50,7 @@ export default {
 
 .cardImgContainer{
     position: relative;
+    height: 150px;
 }
 
 .cardImgContainer > span{
