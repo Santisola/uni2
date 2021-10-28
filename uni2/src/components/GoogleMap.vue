@@ -10,7 +10,7 @@
         zoomControl: false,
     }"
   >
-    <gmap-marker
+    <gmap-marker 
       :key="index"
       v-for="(m, index) in markers"
       :position="m.position"
