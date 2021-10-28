@@ -33,7 +33,9 @@ export default {
             let newAlertas = [];
             const alertasCopy = [...this.alertas].reverse();
             for (let i = 0; i < 5; i++) {
-                newAlertas.push(alertasCopy[i]);
+                if(alertasCopy[i]){
+                    newAlertas.push(alertasCopy[i]);
+                }
             }
 
             return newAlertas;
@@ -66,10 +68,10 @@ export default {
 .sliderAlertas .sliderContent > ul{
     display: flex;
     overflow: auto;
-    width: 180%;
+    width: fit-content;
 }
 .sliderAlertas .sliderContent > ul > li{
-    width: 45%;
+    width: 200px;
     margin: .25rem .5rem;
     padding: .5rem 0;
 }

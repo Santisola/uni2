@@ -2,7 +2,7 @@
   <gmap-map
     :center="center"
     :zoom="14"
-    style="width: calc(100% + 2rem); height: calc(100vh - 141px); margin: 0 -1rem;"
+    style="width: calc(100% + 2rem); height: calc(100vh - 155px); margin: 0 -1rem;"
     :options="{
         streetViewControl: false,
         mapTypeControl: false,
@@ -16,12 +16,15 @@
       :position="m.position"
       :title="m.title"
       :clickable="true"
-      @click="center=m.position"
+      :icon="m.tipoAlerta == 1 ? greenMarker : redMarker "
+      @click="$router.push('/alertas/' + m.title)"
     ></gmap-marker>
 
   </gmap-map>
 </template>
 <script>
+  const redMarker = require('../assets/icons/red-marker.svg');
+  const greenMarker = require('../assets/icons/green-marker.svg');
   export default {
     props: {
         latitude: Number,
@@ -48,12 +51,14 @@
           if(alerta.nombre){
             return {
               position: {lat: parseFloat(alerta.latitud), lng: parseFloat(alerta.longitud)},
-              title: alerta.nombre + ', ' + alerta.especie
+              title: alerta.id_alerta,
+              tipoAlerta: alerta.id_tipoalerta
             }
           }else{
             return {
-              position: {lat: alerta.latitud, lng: alerta.longitud},
-              title: alerta.especie + ', ' + alerta.raza
+              position: {lat: parseFloat(alerta.latitud), lng: parseFloat(alerta.longitud)},
+              title: alerta.id_alerta,
+              tipoAlerta: alerta.id_tipoalerta
             }
           }
         });
@@ -63,6 +68,8 @@
     },
     data () {
       return {
+        greenMarker: greenMarker,
+        redMarker: redMarker,
         center: {lat: -34.615759, lng: -58.5033452},
         oldMarkers: [
             {
