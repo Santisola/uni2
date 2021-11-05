@@ -1,5 +1,6 @@
 <template>
-    <div id="alerta">
+    <div v-if="isLoading">Cargando...</div>
+    <div v-else-if="alerta" id="alerta">
         <div v-if="deleteConfirmation" class="deleteModal">
             <div class="deleteModalContent">
                 <h2>¿Estás seguro?</h2>
@@ -11,7 +12,10 @@
         </div>
 
         <div class="header">
-            <img src="https://dummyimage.com/500x500/ccc/eee" alt="">
+            <ImagenesAlerta :imgs="alerta.imagenes" :principal="true" />
+            <div @click="$router.push('/alertas')" class="go-back">
+                <span>Volver</span>
+            </div>
             <div @click="opciones = !opciones" class="settings">...</div>
             <div :class="opciones ? 'opened' : 'closed'" class="menu-opciones">
                 <ul>
@@ -30,30 +34,45 @@
                 <span>{{tipoAlerta}}</span>
             </div>
             <div class="data">
-                <p>{{sexoName}}</p>
-                <p>{{razaName}}</p>
+                <div>
+                    <img :src="this.alerta.id_sexo === 1 ? require('../assets/icons/macho.svg') : require('../assets/icons/hembra.svg')" :alt="this.alerta.id_sexo === 1 ? 'Símbolo masculino' : 'Símbolo femenino'">
+                    <p>{{sexoName}}</p>
+                </div>
+                <div>
+                    <img :src="this.alerta.id_sexo === 1 ? require('../assets/icons/perro.svg') : require('../assets/icons/gato.svg')" :alt="this.alerta.id_sexo === 1 ? 'Silueta de un perro' : 'Silueta de un gato'">
+                    <p>{{razaName}}</p>
+                </div>
             </div>
             <ul>
-                <li>12/07/2021</li>
-                <li>20:00</li>
-                <li>Malabia 1330, Buenos Aires</li>
+                <li>{{fechaBien}}</li>
+                <li>{{horaBien}}</li>
+                <li><Direccion :lat="alerta.latitud" :lng="alerta.longitud" /></li>
             </ul>
         </div>
     </div>
 </template>
 <script>
 import alertasServicio from '../servicios/alertasServicio';
+import ImagenesAlerta from '../components/ImagenesAlerta.vue';
+import Direccion from '../components/Direccion.vue'
 
 export default {
      name: "DetalleAlerta",
+     components:{
+         ImagenesAlerta,
+         Direccion
+     },
      mounted() {
+         this.isLoading = true;
          alertasServicio.get(this.$route.params.id).then(res => {
-             this.alerta = res
-         })
+            this.alerta = res;
+
+            this.isLoading = false;
+         });
      },
      methods: {
          borrarAlerta: function(){
-             alertasServicio.delete(alerta.id_alerta)
+             alertasServicio.delete(this.alerta.id_alerta)
              .then(res => {
                  if(res){
                     this.opciones = false,
@@ -64,7 +83,21 @@ export default {
          }
      },
      computed:{
-         razaName() {
+        fechaBien: function(){
+            if(this.alerta.created_at == null){
+                return 'No se sabe';
+            } 
+            let fecha = this.alerta.created_at.split('T')[0].split('-');
+            return fecha[2] + ' / ' + fecha[1] + ' / ' + fecha[0]; 
+        },
+        horaBien: function(){
+            if(this.alerta.created_at == null){
+                return 'No se sabe';
+            } 
+            let hora = this.alerta.created_at.split('T')[1].split(':');
+            return hora[0] + ':' + hora[1]; 
+        },
+        razaName() {
             let nombreRaza = ''
             this.razas.map(raza => {
                 if(raza.id_raza === this.alerta.id_raza){
@@ -100,9 +133,12 @@ export default {
      },
      data() {
          return {
+             isLoading: false,
              alerta: null,
              opciones: false,
              deleteConfirmation: false,
+
+             direccion: '',
 
              razas:[
                 {
@@ -135,6 +171,30 @@ export default {
 }
 </script>
 <style scoped>
+    .go-back{
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        background: #fff;
+        font-size: 0;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .go-back > span{
+        display: block;
+        border-left: solid 2px #2b2b2b;
+        border-top: solid 2px #2b2b2b;
+        width: 10px;
+        height: 10px;
+        margin-left: 2.5px;
+        transform: rotate(-45deg);
+    }
+
     .deleteModal{
         position: fixed;
         top: 0;
@@ -234,7 +294,16 @@ export default {
     #alerta > .content .title{
         display: flex;
         justify-content: space-between;
+        align-items: center;
         margin: 1rem 0;
+    }
+
+    #alerta > .content .title span{
+        background: var(--perdida);
+        color: #fff;
+        height: fit-content;
+        padding: .5rem;
+        border-radius: 25px;
     }
 
     #alerta > .content .data{
@@ -266,17 +335,20 @@ export default {
         margin-right: 10px;
     }
 
+    .data > div{
+        text-align: center;
+    }
+
+    .data img{
+        width: 42px;
+    }
+
     .data p{
         display: flex;
         flex-direction: column;
         align-items: center;
+        max-width: 100px;
+        text-align: center;
     }
 
-    .data p::before{
-        content: "";
-        width: 64px;
-        height: 64px;
-        background: #cecece;
-        display: block;
-    }
 </style>

@@ -7,10 +7,10 @@
             <p>Aún no recibiste ninguna alerta.</p>
         </div>
         <ul id="alertas" v-else>
-            <li v-for="(alerta, index) in alertas" :key="index">
+            <li v-for="(alerta, index) in reversedAlertas" :key="index">
                 <router-link :to="'alertas/' + alerta.id_alerta">
                     <div>
-                        <img src="https://dummyimage.com/85x85/ccc/eee" alt="">
+                        <ImagenesAlerta :imgs="alerta.imagenes" :principal="true" />
                     </div>
                     <div>
                         <h2>Tu aviso de <strong>{{alerta.nombre}}</strong> fue publicado con éxito.</h2>
@@ -22,15 +22,24 @@
 </template>
 <script>
 import alertasServicio from '../servicios/alertasServicio'
+import ImagenesAlerta from '../components/ImagenesAlerta.vue'
 
 export default {
     name: 'Alertas',
+    components:{
+        ImagenesAlerta
+    },
     mounted() {
         this.isLoading = true;
         alertasServicio.deUsuario(1).then(res => {
             this.alertas = res;
             this.isLoading = false;
         })
+    },
+    computed: {
+        reversedAlertas: function(){
+            return [...this.alertas].reverse();
+        }
     },
     data() {
         return {
@@ -68,6 +77,9 @@ export default {
     }
     #alertas > li > a > div:first-of-type{
         line-height: 0;
+        width: 85px;
+        min-width: 85px;
+        height: 85px;
     }
     #alertas > li > a > div img{
         height: 100%;
