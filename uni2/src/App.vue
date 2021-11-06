@@ -18,7 +18,8 @@ export default {
 
 :root{
     --primary: #4f3bc0;
-    --secondary: #6C64CE;
+    --secondary: #FFC800;
+    --light-primary: #6C64CE;
     --perdida: #E5446D;
     --encontrada: #44BBA4;
 }

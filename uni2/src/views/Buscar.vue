@@ -68,6 +68,6 @@ export default {
     }
 
     #mapHeader .active{
-        background: var(--secondary);
+        background: var(--light-primary);
     }
 </style>

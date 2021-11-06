@@ -175,24 +175,15 @@ export default {
         position: absolute;
         top: 1rem;
         left: 1rem;
-        background: #fff;
         font-size: 0;
         width: 48px;
         height: 48px;
         border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .go-back > span{
         display: block;
-        border-left: solid 2px #2b2b2b;
-        border-top: solid 2px #2b2b2b;
-        width: 10px;
-        height: 10px;
-        margin-left: 2.5px;
-        transform: rotate(-45deg);
+        background-image: url('../assets/icons/arrow.svg');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-color: #fff;
     }
 
     .deleteModal{

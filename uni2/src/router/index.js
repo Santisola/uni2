@@ -7,6 +7,8 @@ import Alertas from '../views/Alertas.vue'
 import Perfil from '../views/Perfil.vue'
 import PublicarPerdida from '../views/PublicarPerdida.vue'
 import DetalleAlerta from '../views/DetalleAlerta.vue'
+import Login from '../views/Login.vue'
+import Registro from '../views/Registro.vue'
 
 Vue.use(VueRouter)
 
@@ -45,6 +47,16 @@ const routes = [
     path: '/perfil',
     name: 'Perfil',
     component: Perfil
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/registro',
+    name: 'Registro',
+    component: Registro
   },
 ]
 
