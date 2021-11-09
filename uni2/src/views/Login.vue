@@ -5,20 +5,20 @@
         </div>
         <div class="login-body">
             <p>Sumate a la comunidad de Unidos y reencontrate con tu mascota</p>
-
-            <form action="#" @submit.prevent="$router.push('/')">
+            <div v-if="errorServer !== null" class="msj msj-error">{{errorServer}}</div>
+            <form action="#" @submit.prevent="login">
                 <div class="form-group">
                     <label for="login-email">Email</label>
-                    <input type="text" id="login-email" name="email">
+                    <input :disabled="isLoading" v-model="email" type="text" id="login-email" name="email">
                 </div>
 
                 <div class="form-group">
                     <label for="login-password">Contraseña</label>
-                    <div><input :type="verContra ? 'text' : 'password'" id="login-password" name="email"><span @click="verContra = !verContra">{{verContra ? 'Ocultar' : 'Mostrar'}}</span></div>
+                    <div><input :disabled="isLoading" v-model="password" :type="verContra ? 'text' : 'password'" id="login-password" name="email"><span @click="verContra = !verContra">{{verContra ? 'Ocultar' : 'Mostrar'}}</span></div>
                 </div>
                 <a href="#">Olvidé mi contraseña</a>
                 <div class="btn-link">
-                    <button class="btn btn-primary">Iniciar Sesión</button>
+                    <button :disabled="isLoading" :class="isLoading ? 'btn btn-disabled' : 'btn btn-primary'">Iniciar Sesión</button>
                     <p>¿No tenés cuenta? <router-link to="/registro"> Registrate</router-link></p>
                 </div>
             </form>
@@ -26,11 +26,40 @@
     </div>
 </template>
 <script>
+import authServicio from '../servicios/authServicio';
+
 export default {
     name: "Login",
+    methods: {
+        login: async function(){
+            this.isLoading = true;
+            this.errorServer = null;
+
+            const data = {
+                email: this.email,
+                password: this.password,
+                device_name: 'Dispositivo_de_' + this.email
+            }
+            const exito = await authServicio.login(data);
+
+            if(exito){
+                this.isLoading = false;
+                this.$router.push('/');
+            }else{
+                this.errorServer = 'Ocurrió un error al intentar iniciar sesión, por favor intentá de nuevo'
+                this.isLoading = false;
+            }
+        }
+    },
     data() {
         return {
+            isLoading: false,
             verContra: false,
+
+            email: '',
+            password: '',
+
+            errorServer: null
         }
     },
 }

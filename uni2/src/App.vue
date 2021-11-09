@@ -1,6 +1,8 @@
 <template>
     <div id="app">
-        <router-view/>
+        <transition name="slide-fade">
+            <router-view/>
+        </transition>
         <Navbar />
     </div>
 </template>
@@ -35,6 +37,16 @@ export default {
   background: #f6f6f6;
 }
 
+.slide-fade-enter-active {
+  transition: all .25s ease;
+}
+
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
+
 *{
   margin: 0;
   padding: 0;
@@ -49,6 +61,21 @@ ul{
 a{
     text-decoration: none;
     color: inherit;
+}
+
+.msj{
+    margin-top: .5rem;
+    padding: 1rem .5rem;
+    border-radius: 4px;
+    background: rgba(255, 200, 0, .5);
+}
+
+.msj-success{
+    background: rgba(26, 255, 0, .5);
+}
+
+.msj-error{
+    background: rgba(255, 0, 0, .5);
 }
 
 .btn{
@@ -75,6 +102,7 @@ a{
 
 .btn-disabled{
     background: #ccc;
+    border: solid 1px #ccc;
     color: #e6e6e6;
     pointer-events: none;
 }

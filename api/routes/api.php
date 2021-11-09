@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AlertasController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,3 +28,6 @@ Route::post('/alertas', [AlertasController::class, 'nueva']);
 Route::delete('/alertas/{id}', [AlertasController::class, 'borrar']);
 
 Route::get('/usuario/{id}/alertas', [AlertasController::class, 'deUsuario']);
+
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->middleware(['auth:sanctum']);
