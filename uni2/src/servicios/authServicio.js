@@ -46,6 +46,21 @@ const authServicio = {
         return respuesta.success;
     },
 
+    registrar: async function(data){
+        const fetchRes = await fetch(API + '/registro', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers:{
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+            }
+        });
+
+        const respuesta = await fetchRes.json();
+
+        return respuesta;
+    },
+    
     /**
      * Retorna un objeto con los datos del usuario autenticado
      * 

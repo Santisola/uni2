@@ -31,3 +31,5 @@ Route::get('/usuario/{id}/alertas', [AlertasController::class, 'deUsuario']);
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware(['auth:sanctum']);
+
+Route::post('/registro', [AuthController::class, 'registrar']);

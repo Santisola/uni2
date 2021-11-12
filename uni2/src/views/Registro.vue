@@ -3,7 +3,14 @@
         <div class="registro-header">
             <router-link to="/login">Volver</router-link>
             <h1>Crear cuenta</h1>
-            <form action="#">
+
+            <div v-if="erroresBack !== null" class="msj msj-error">
+                <ul>
+                    <li v-for="(error, index) in erroresBackArray" :key="index">{{error}}</li>
+                </ul>
+            </div>
+            
+            <form @submit.prevent="registrar" action="#">
                 <div class="form-group">
                     <label for="registro-nombre">Nombre completo</label>
                     <input @blur="validar('nombre')" v-model="usuario.nombre" type="text" id="registro-nombre" name="nombre" placeholder="Nombre completo">
@@ -22,7 +29,7 @@
 
                 <div class="form-group">
                     <label for="registro-celular">Celular</label>
-                    <input @blur="validar('celular')" v-model="usuario.celular" type="text" id="registro-celular" name="celular" placeholder="+54 9 XXX XXXX-XXXX">
+                    <input @blur="validar('celular')" v-model="usuario.telefono" type="text" id="registro-celular" name="telefono" placeholder="+54 9 XXX XXXX-XXXX">
                 </div>
 
                 <button class="btn btn-primary">Registrarme</button>
@@ -31,9 +38,23 @@
     </div>
 </template>
 <script>
+import authServicio from '../servicios/authServicio';
 export default {
     name: "Registro",
     methods: {
+        registrar: function(){
+            this.erroresBack = null;
+
+            authServicio.registrar(this.usuario)
+                .then(rta => {
+                    if(rta.errors){
+                        this.erroresBack = rta.errors;
+                    }else{
+                        this.$router.push('/login?registro=true')
+                    }
+                })
+
+        },
         validar: function(campo){
             switch(campo){
                 case 'nombre':
@@ -50,9 +71,27 @@ export default {
             }
         }
     },
+    computed:{
+        erroresBackArray: function(){
+            if(this.erroresBack === null){
+                return false
+            }
+
+            let errores = [];
+            for (const error in this.erroresBack) {
+                if (Object.hasOwnProperty.call(this.erroresBack, error)) {
+                    errores.push(this.erroresBack[error][0])
+                }
+            }
+            return errores
+        }
+    },
     data() {
         return {
             verContra: false,
+
+            erroresBack: null,
+            
             errores:{
                 nombre: {
                     error: false,
@@ -75,7 +114,7 @@ export default {
                 nombre: '',
                 email: '',
                 password: '',
-                celular: '',
+                telefono: '',
             }
         }
     },

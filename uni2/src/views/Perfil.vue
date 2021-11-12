@@ -2,7 +2,10 @@
     <div>
         <h1>Perfil</h1>
         <h2>{{usuario.nombre}}</h2>
-        <p>{{usuario.email}}</p>
+        <ul>
+            <li>{{usuario.email}}</li>
+            <li>{{usuario.telefono}}</li>
+        </ul>
 
         <ul class="user-menu">
             <li @click="editarDatos = !editarDatos">Editar mis datos</li>
@@ -15,6 +18,10 @@
                     <div class="form-group">
                         <label for="email-editar">Email</label>
                         <input v-model="editarUsuario.email" type="text" name="email" id="email-editar">
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono-editar">Teléfono</label>
+                        <input v-model="editarUsuario.telefono" type="text" name="telefono" id="telefono-editar">
                     </div>
                     <button class="btn btn-primary">Editar</button>
                 </form>

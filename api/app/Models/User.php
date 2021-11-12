@@ -22,9 +22,25 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'name',
+        'nombre',
         'email',
+        'telefono',
         'password',
+    ];
+
+    public static $reglas = [
+        'nombre'=>'required',
+        'email'=>'required|email:rfc',
+        'telefono'=>'required',
+        'password'=>'required',
+    ];
+
+    public static $mensajesDeError = [
+        'nombre.required'=>'El nombre es obligatorio',
+        'email.required'=>'El email es obligatorio',
+        'email.email'=>'El email debe ser de un formato válido (nombre@dominio.extension)',
+        'telefono.required'=>'El teléfono es obligatorio',
+        'password.required'=>'La contraseña es obligatoria',
     ];
 
     /**

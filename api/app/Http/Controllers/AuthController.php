@@ -33,7 +33,8 @@ class AuthController extends Controller
             'data' => [
                 'id_usuario' => $usuario->id_usuario,
                 'email' => $usuario->email,
-                'nombre' => $usuario->nombre
+                'nombre' => $usuario->nombre,
+                'telefono' => $usuario->telefono,
             ],
             'token' => $token
         ]);
@@ -41,6 +42,21 @@ class AuthController extends Controller
 
     public function logout() {
         Auth::user()->tokens()->delete();
+
+        return response()->json([
+            'success' => true,
+        ]);
+    }
+
+    public function registrar(Request $request){
+        $request->validate(User::$reglas, User::$mensajesDeError);
+
+        User::create([
+            'nombre' => $request->nombre,
+            'email' => $request->email,
+            'telefono' => $request->telefono,
+            'password' => Hash::make($request->password),
+        ]);
 
         return response()->json([
             'success' => true,

@@ -5,6 +5,7 @@
         </div>
         <div class="login-body">
             <p>Sumate a la comunidad de Unidos y reencontrate con tu mascota</p>
+            <div v-if="$route.query.registro" class="msj msj-success">¡El registro fue un éxito! Iniciá sesión con tu nueva cuenta</div>
             <div v-if="errorServer !== null" class="msj msj-error">{{errorServer}}</div>
             <form action="#" @submit.prevent="login">
                 <div class="form-group">
