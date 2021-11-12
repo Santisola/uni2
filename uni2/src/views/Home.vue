@@ -1,6 +1,6 @@
 <template>
 	<div class="home">
-		<h1>Hola, {{nombre}}</h1>
+		<h1>Hola, {{usuario.nombre}}</h1>
 		<span v-if="isLoading">Cargando...</span>
 		<SliderAlertas v-else
 		titulo="Mascotas perdidas por tu zona"
@@ -21,6 +21,7 @@
 import SliderAlertas from '../components/SliderAlertas';
 import CardAnuncio from '../components/CardAnuncio.vue';
 import alertasServicio from '../servicios/alertasServicio'
+import authServicio from '../servicios/authServicio';
 
 export default {
   name: 'Home',
@@ -30,6 +31,9 @@ export default {
   },
   mounted() {
 	  this.isLoading = true;
+
+	  this.usuario = authServicio.getUsuario();
+	  
 	  alertasServicio.todos()
 		.then(data => {
 			this.alertas = data;
@@ -52,7 +56,7 @@ export default {
   },
   data: function(){
 	return{
-		nombre: 'Juan Carlos',
+		usuario: {},
 		isLoading: false,
 		alertas: [],
         anuncio: {

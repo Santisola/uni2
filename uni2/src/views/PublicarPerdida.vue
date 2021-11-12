@@ -145,6 +145,7 @@
 </template>
 <script>
 import alertasServicio from '../servicios/alertasServicio'
+import authServicio from '../servicios/authServicio';
 
 export default {
     name: "PublicarPerdida",
@@ -169,7 +170,7 @@ export default {
                 imagenes: this.imagenPerdida, /*****/
                 latitud: this.latitud,
                 longitud: this.longitud,
-                id_usuario: 1,
+                id_usuario: this.usuario.id_usuario,
                 id_especie: this.selectedEspecie,
                 id_raza: this.selectedRaza,
                 id_sexo: this.selectedSexo,
@@ -192,6 +193,9 @@ export default {
 
             reader.readAsDataURL(imagen);
         },
+    },
+    mounted() {
+        this.usuario = authServicio.getUsuario();
     },
     updated(){
         if(this.paso === 1){
@@ -277,6 +281,8 @@ export default {
         return{
             geocoder: null,
             direccionExitosa: null,
+
+            usuario: {},
 
             success: null,
             paso: 0,

@@ -1,12 +1,5 @@
 import {API} from '../constantes/index';
-
-let usuario = {
-    id_usuario: null,
-    email: null,
-    nombre: null
-};
-
-let token = null;
+import storageServicio from './storageServicio';
 
 const authServicio = {
     login: async function(data){
@@ -21,9 +14,12 @@ const authServicio = {
         const respuesta = await fetchRes.json();
 
         if (respuesta.success){
-            usuario =  {...respuesta.data};
-            token = respuesta.token;
+            const usuario =  {...respuesta.data};
+            const token = respuesta.token;
 
+            storageServicio.setUsuario(usuario);
+            storageServicio.setToken(token);
+            
             return true;
         }else{
             return false;
@@ -36,15 +32,41 @@ const authServicio = {
             headers:{
                 'Content-Type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',
-                'Authorization': 'Bearer ' + token
+                'Authorization': 'Bearer ' + storageServicio.getToken()
             }
         });
+
         const respuesta = await fetchRes.json();
+
+        if (respuesta.success){
+            storageServicio.deleteUsuario();
+            storageServicio.deleteToken();
+        }
+
         return respuesta.success;
     },
 
+    /**
+     * Retorna un objeto con los datos del usuario autenticado
+     * 
+     * @returns Object | null
+     */
     getUsuario: function(){
-        return {...usuario};
+        return storageServicio.getUsuario();
+    },
+
+
+    /**
+     * Retorna true si esta autenticado el usuario, de lo contrario false
+     * 
+     * @returns Boolean
+     */
+    estaAutenticado: function(){
+        if(storageServicio.getUsuario() !== null){
+            return true;
+        }else{
+            return false;
+        }
     }
 }
 

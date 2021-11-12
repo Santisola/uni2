@@ -7,7 +7,7 @@
         <div class="sliderContent">
             <ul>
                 <li v-for="(alerta, index) in reversedAlertas" :key="index">
-                    <router-link to="#">
+                    <router-link :to="'/alertas/' + alerta.id_alerta.toString() + '?from=home'">
                         <CardAlerta :alerta="alerta" :tipo="tipo"/>
                     </router-link>
                 </li>

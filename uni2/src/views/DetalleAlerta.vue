@@ -13,7 +13,7 @@
 
         <div class="header">
             <ImagenesAlerta :imgs="alerta.imagenes" :principal="true" />
-            <div @click="$router.push('/alertas')" class="go-back">
+            <div @click="$router.push(goBackRoute)" class="go-back">
                 <span>Volver</span>
             </div>
             <div @click="opciones = !opciones" class="settings">...</div>
@@ -83,6 +83,9 @@ export default {
          }
      },
      computed:{
+        goBackRoute: function(){
+            return '/' + this.$route.query.from;
+        },
         fechaBien: function(){
             if(this.alerta.created_at == null){
                 return 'No se sabe';

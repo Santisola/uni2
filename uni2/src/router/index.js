@@ -1,3 +1,4 @@
+import authServicio from '../servicios/authServicio'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
@@ -16,37 +17,58 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    meta:{
+        requiresAuth: true,
+    },
+    component: Home,
   },
   {
     path: '/buscar',
     name: 'Buscar',
-    component: Buscar
+    meta:{
+        requiresAuth: true,
+    },
+    component: Buscar,
   },
   {
     path: '/publicar',
     name: 'Publicar',
-    component: Publicar
+    meta:{
+        requiresAuth: true,
+    },
+    component: Publicar,
   },
   {
     path: '/publicar/perdida',
     name: 'Publicar Perdida',
-    component: PublicarPerdida
+    meta:{
+        requiresAuth: true,
+    },
+    component: PublicarPerdida,
   },
   {
     path: '/alertas',
     name: 'Alertas',
-    component: Alertas
+    meta:{
+        requiresAuth: true,
+    },
+    component: Alertas,
   },
   {
     path: '/alertas/:id',
     name: 'DetalleAlerta',
-    component: DetalleAlerta
+    meta:{
+        requiresAuth: true,
+    },
+    component: DetalleAlerta,
   },
   {
     path: '/perfil',
     name: 'Perfil',
-    component: Perfil
+    meta:{
+        requiresAuth: true,
+    },
+    component: Perfil,
   },
   {
     path: '/login',
@@ -58,10 +80,29 @@ const routes = [
     name: 'Registro',
     component: Registro
   },
+  {
+    path: '*',
+    meta:{
+      requiresAuth: true,
+    },
+    component: Home
+  },
 ]
 
 const router = new VueRouter({
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(ruta => ruta.meta.requiresAuth)) {
+    if (authServicio.estaAutenticado()) {
+      next();
+    } else {
+      next({ name: "Login" });
+    }
+  } else {
+    next();
+  }
+});
 
 export default router
