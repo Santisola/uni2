@@ -13,23 +13,27 @@
             <form @submit.prevent="registrar" action="#">
                 <div class="form-group">
                     <label for="registro-nombre">Nombre completo</label>
-                    <input @blur="validar('nombre')" v-model="usuario.nombre" type="text" id="registro-nombre" name="nombre" placeholder="Nombre completo">
+                    <input :aria-describedby="errores.nombre.error ? 'error-nombre' : null" @blur="validar('nombre')" v-model="usuario.nombre" type="text" id="registro-nombre" name="nombre" placeholder="Nombre completo">
+                    <p id="error-nombre" class="msj msj-error" v-if="errores.nombre.error">{{errores.nombre.mensaje}}</p>
                 </div>
                 
                 <div class="form-group">
                     <label for="registro-email">Email</label>
-                    <input @blur="validar('email')" v-model="usuario.email" type="text" id="registro-email" name="email" placeholder="mail@ejemplo.com.ar">
+                    <input :aria-describedby="errores.email.error ? 'error-email' : null" @blur="validar('email')" v-model="usuario.email" type="text" id="registro-email" name="email" placeholder="mail@ejemplo.com.ar">
+                    <p id="error-email" class="msj msj-error" v-if="errores.email.error">{{errores.email.mensaje}}</p>
                 </div>
                 
                 <div class="form-group">
                     <label for="registro-password">Contraseña</label>
-                    <div><input @blur="validar('password')" v-model="usuario.password" :type="verContra ? 'text' : 'password'" id="registro-password" name="email"><span @click="verContra = !verContra">{{verContra ? 'Ocultar' : 'Mostrar'}}</span></div>
+                    <div><input :aria-describedby="errores.password.error ? 'error-password' : null" @blur="validar('password')" v-model="usuario.password" :type="verContra ? 'text' : 'password'" id="registro-password" name="email"><span @click="verContra = !verContra">{{verContra ? 'Ocultar' : 'Mostrar'}}</span></div>
+                    <p id="error-password" class="msj msj-error" v-if="errores.password.error">{{errores.password.mensaje}}</p>
                 </div>
                 <p class="password-info">Debe tener como mínimo 6 caracteres</p>
 
                 <div class="form-group">
                     <label for="registro-celular">Celular</label>
-                    <input @blur="validar('celular')" v-model="usuario.telefono" type="text" id="registro-celular" name="telefono" placeholder="+54 9 XXX XXXX-XXXX">
+                    <input :aria-describedby="errores.telefono.error ? 'error-telefono' : null" @blur="validar('telefono')" v-model="usuario.telefono" type="text" id="registro-celular" name="telefono" placeholder="+54 9 XXX XXXX-XXXX">
+                    <p id="error-telefono" class="msj msj-error" v-if="errores.telefono.error">{{errores.telefono.mensaje}}</p>
                 </div>
 
                 <button class="btn btn-primary">Registrarme</button>
@@ -48,6 +52,10 @@ export default {
             authServicio.registrar(this.usuario)
                 .then(rta => {
                     if(rta.errors){
+                        this.errores.nombre.error = false;
+                        this.errores.email.error = false;
+                        this.errores.password.error = false;
+                        this.errores.telefono.error = false;
                         this.erroresBack = rta.errors;
                     }else{
                         this.$router.push('/login?registro=true')
@@ -58,15 +66,32 @@ export default {
         validar: function(campo){
             switch(campo){
                 case 'nombre':
+                    this.errores.nombre.error = false;
                     if(this.usuario.nombre.trim() === ''){
-                        this.errores.nombre
+                        this.errores.nombre.error = true;
                     }
                     break;
                 case 'email':
+                    this.errores.email.error = false;
+                    if(this.usuario.email.trim() === ''){
+                        this.errores.email.error = true;
+                    }
                     break;
                 case 'password':
+                    this.errores.password.error = false;
+                    if(this.usuario.password.trim() === ''){
+                        this.errores.password.error = true;
+                        this.errores.password.mensaje = 'La contraseña es obligatoria';
+                    }else if(this.usuario.password.lenght < 6){
+                        this.errores.password.error = true;
+                        this.errores.password.mensaje = 'La contraseña debe tener como mínimo 6 caracteres';
+                    }
                     break;
-                case 'celular':
+                case 'telefono':
+                    this.errores.telefono.error = false;
+                    if(this.usuario.telefono.trim() === ''){
+                        this.errores.telefono.error = true;
+                    }
                     break;
             }
         }
@@ -105,7 +130,7 @@ export default {
                     error: false,
                     mensaje: 'La contraseña es obligatoria'
                 },
-                celular: {
+                telefono: {
                     error: false,
                     mensaje: 'El numero de celular es obligatorio'
                 },

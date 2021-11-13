@@ -26,7 +26,7 @@ const alertasServicio = {
             },
         });
         const respuesta = await fetchRes.json();
-        return respuesta.success;
+        return respuesta;
     },
 
     deUsuario: async function(id){

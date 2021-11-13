@@ -10,16 +10,18 @@
             <form action="#" @submit.prevent="login">
                 <div class="form-group">
                     <label for="login-email">Email</label>
-                    <input :disabled="isLoading" v-model="email" type="text" id="login-email" name="email">
+                    <input :aria-describedby="errores.email.error ? 'error-email' : null" @blur="validar('email')" :disabled="isLoading" v-model="email" type="text" id="login-email" name="email">
+                    <p id="error-email" class="msj msj-error" v-if="errores.email.error">{{errores.email.mensaje}}</p>
                 </div>
 
                 <div class="form-group">
                     <label for="login-password">Contraseña</label>
-                    <div><input :disabled="isLoading" v-model="password" :type="verContra ? 'text' : 'password'" id="login-password" name="email"><span @click="verContra = !verContra">{{verContra ? 'Ocultar' : 'Mostrar'}}</span></div>
+                    <div><input :aria-describedby="errores.password.error ? 'error-password' : null" @blur="validar('password')" :disabled="isLoading" v-model="password" :type="verContra ? 'text' : 'password'" id="login-password" name="email"><span @click="verContra = !verContra">{{verContra ? 'Ocultar' : 'Mostrar'}}</span></div>
+                    <p id="error-password" class="msj msj-error" v-if="errores.password.error">{{errores.password.mensaje}}</p>
                 </div>
                 <a href="#">Olvidé mi contraseña</a>
                 <div class="btn-link">
-                    <button :disabled="isLoading" :class="isLoading ? 'btn btn-disabled' : 'btn btn-primary'">Iniciar Sesión</button>
+                    <button :disabled="isLoading || errores.email.error || errores.password.error" :class="isLoading || errores.email.error || errores.password.error ? 'btn btn-disabled' : 'btn btn-primary'">Iniciar Sesión</button>
                     <p>¿No tenés cuenta? <router-link to="/registro"> Registrate</router-link></p>
                 </div>
             </form>
@@ -41,14 +43,48 @@ export default {
                 password: this.password,
                 device_name: 'Dispositivo_de_' + this.email
             }
-            const exito = await authServicio.login(data);
+            
+            const login = await authServicio.login(data);
 
-            if(exito){
+            if(login.success){
                 this.isLoading = false;
                 this.$router.push('/');
             }else{
-                this.errorServer = 'Ocurrió un error al intentar iniciar sesión, por favor intentá de nuevo'
-                this.isLoading = false;
+                this.password = '';
+                if(login.errors){
+                    let mensaje = ''
+                    if(login.errors.email){
+                        mensaje += login.errors.email;
+                    }
+                    if(login.errors.password){
+                        if(login.errors.email){
+                            mensaje += '. '
+                        }
+                        mensaje += login.errors.password;
+                    }
+                    this.errorServer = mensaje;
+                    this.isLoading = false;
+                }else{
+                    this.errorServer = login.mensaje;
+                    this.isLoading = false;
+                }
+            }
+        },
+
+        validar: function(campo){
+            switch(campo){
+                case 'email':
+                    this.errores.email.error = false;
+                    if(this.email.trim() === ''){
+                        this.errores.email.error = true;
+                    }
+                    break;
+                case 'password':
+                    this.errores.password.error = false;
+                    if(this.password.trim() === ''){
+                        this.errores.password.error = true;
+                    }
+                    break;
             }
         }
     },
@@ -60,7 +96,18 @@ export default {
             email: '',
             password: '',
 
-            errorServer: null
+            errorServer: null,
+
+            errores:{
+                email: {
+                    error: false,
+                    mensaje: 'El email es obligatorio'
+                },
+                password: {
+                    error: false,
+                    mensaje: 'La contraseña es obligatoria'
+                },
+            },
         }
     },
 }

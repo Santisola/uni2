@@ -19,6 +19,8 @@ class AlertasSeeder extends Seeder
             [
                 'id_alerta' => 1,
                 'nombre' => 'Lazzy',
+                'fecha' => '2021-11-09',
+                'hora' => '23:09',
                 'descripcion' => 'Es tamaño mediano, negro, con una mancha blanca en el pecho y las patitas rubias, tiene tatuado el escudo de Boquita en una gamba',
                 'imagenes' => 'lazzy-frente.jpg|lazzy-jugando.jpg|lazzy-durmiendo.png',
                 'latitud' => -34.632728,
@@ -32,6 +34,8 @@ class AlertasSeeder extends Seeder
             [
                 'id_alerta' => 2,
                 'nombre' => null,
+                'fecha' => '2021-11-05',
+                'hora' => '23:09',
                 'descripcion' => 'Es marron, enano y super bueno, medio cachorro. Huele a lavanda',
                 'imagenes' => 'perro1.jpg|perro2.jpg|perro3.png',
                 'latitud' => -34.633633,

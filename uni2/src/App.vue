@@ -125,6 +125,15 @@ a{
     border-radius: 4px;
 }
 
+input[type="radio"]{
+    width: 100%;
+    max-width: 35px;
+}
+
+input[type="radio"] ~ label{
+    width: 100%;
+}
+
 .form-group > label{
     padding-left: 0;
     margin-top: .5rem;

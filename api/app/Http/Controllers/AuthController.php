@@ -15,6 +15,10 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required',
             'device_name' => 'required',
+        ],[
+            'email.required' => 'El email es obligatorio',
+            'email.email' => 'El email tiene que tener un formato válido (correo@dominio.extension)',
+            'password.required' => 'La contraseña es obligatoria'
         ]);
 
         $usuario = User::where('email', $request->email)->first();

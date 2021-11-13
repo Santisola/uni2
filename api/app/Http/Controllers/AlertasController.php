@@ -54,8 +54,7 @@ class AlertasController extends Controller
     }
 
     public function nueva(Request $request){
-        //TODO: Validar
-        //$alertaNueva = Alerta::create($request->input());
+        $request->validate(Alerta::$reglas, Alerta::$mensajesDeError);
 
         if ($request->input('imagenes')) {
             $extension = explode('/', explode(';', $request->imagenes)[0])[1];
@@ -69,6 +68,8 @@ class AlertasController extends Controller
         $data = [
             'nombre' => $request->input('nombre'),
             'descripcion' => $request->input('descripcion'),
+            'fecha' => $request->input('fecha'),
+            'hora' => $request->input('hora'),
             'imagenes' => $nombreImg,
             'latitud' => $request->input('latitud'),
             'longitud' => $request->input('longitud'),

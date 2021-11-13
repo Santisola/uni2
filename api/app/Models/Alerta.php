@@ -14,6 +14,8 @@ class Alerta extends Model
     protected $fillable = [
         'nombre',
         'descripcion',
+        'fecha',
+        'hora',
         'imagenes',
         'latitud',
         'longitud',
@@ -22,6 +24,32 @@ class Alerta extends Model
         'id_raza',
         'id_sexo',
         'id_tipoalerta',
+    ];
+
+    public static $reglas = [
+        'nombre'=>'required',
+        'descripcion'=>'required',
+        'fecha'=>'required',
+        'hora'=>'required',
+        'latitud'=>'required',
+        'longitud'=>'required',
+        'id_usuario'=>'required',
+        'id_especie'=>'required',
+        'id_raza'=>'required',
+        'id_sexo'=>'required',
+        'id_tipoalerta'=>'required',
+    ];
+
+    public static $mensajesDeError = [
+        'nombre.required'=>'El nombre es obligatorio',
+        'descripcion.required'=>'La descripcion es obligatoria',
+        'fecha.required'=>'La fecha es obligatoria',
+        'hora.required'=>'La hora es obligatoria',
+        'latitud.required'=>'La latitud es obligatoria',
+        'longitud.required'=>'La longitud es obligatoria',
+        'id_especie.required'=>'La especie es obligatoria',
+        'id_raza.required'=>'La raza es obligatoria',
+        'id_sexo.required'=>'El sexo es obligatorio',
     ];
 
     public function especie(){

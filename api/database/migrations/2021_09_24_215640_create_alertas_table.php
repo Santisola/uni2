@@ -17,6 +17,8 @@ class CreateAlertasTable extends Migration
             $table->id('id_alerta')->unsigned();
             $table->string('nombre')->nullable();
             $table->text('descripcion');
+            $table->string('fecha');
+            $table->string('hora');
             $table->text('imagenes');
             $table->decimal('latitud', 8, 6);
             $table->decimal('longitud', 8, 6);
