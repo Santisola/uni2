@@ -84,7 +84,7 @@ export default {
         min-width: 85px;
         height: 85px;
     }
-    #alertas > li > a > div img{
+    .imgContainer >>> img{
         height: 100%;
         object-fit: cover;
         line-height: 0;

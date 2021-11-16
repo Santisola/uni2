@@ -45,7 +45,7 @@
             </div>
             <ul>
                 <li>{{fechaBien}}</li>
-                <li>{{horaBien}}</li>
+                <li>{{alerta.hora}}</li>
                 <li><Direccion :lat="alerta.latitud" :lng="alerta.longitud" /></li>
             </ul>
         </div>
@@ -87,10 +87,10 @@ export default {
             return '/' + this.$route.query.from;
         },
         fechaBien: function(){
-            if(this.alerta.created_at == null){
+            if(this.alerta.fecha == null){
                 return 'No se sabe';
             } 
-            let fecha = this.alerta.created_at.split('T')[0].split('-');
+            let fecha = this.alerta.fecha.split('-');
             return fecha[2] + ' / ' + fecha[1] + ' / ' + fecha[0]; 
         },
         horaBien: function(){
@@ -228,7 +228,7 @@ export default {
         overflow: hidden;
     }
 
-    #alerta > .header img{
+    .imgContainer >>> img{
         width: 100%;
         height: 100%;
         object-fit: cover;

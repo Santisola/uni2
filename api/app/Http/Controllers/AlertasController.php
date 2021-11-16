@@ -28,7 +28,8 @@ class AlertasController extends Controller
                 'latitud' => $alerta->latitud,
                 'longitud' => $alerta->longitud,
                 'imagenes' => $alerta->imagenes,
-                'fecha' => $alerta->created_at,
+                'fecha' => $alerta->fecha,
+                'hora' => $alerta->hora,
             ];
         }
 

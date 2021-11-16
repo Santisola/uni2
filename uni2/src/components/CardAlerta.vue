@@ -31,7 +31,7 @@ export default {
             if(this.alerta.fecha == null){
                 return 'No se sabe';
             } 
-            let fecha = this.alerta.fecha.split('T')[0].split('-');
+            let fecha = this.alerta.fecha.split('-');
             return fecha[2] + ' / ' + fecha[1] + ' / ' + fecha[0]; 
         }
     },
@@ -71,8 +71,10 @@ export default {
     color: #eee;
 }
 
-.cardImgContainer img{
+.imgContainer >>> img{
     width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 .cardContent{
     text-align: left;
