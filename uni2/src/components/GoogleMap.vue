@@ -17,7 +17,7 @@
       :title="m.title"
       :clickable="true"
       :icon="m.tipoAlerta == 1 ? greenMarker : redMarker "
-      @click="$router.push('/alertas/' + m.title)"
+      @click="$router.push('/alertas/' + m.title + '?from=buscar')"
     ></gmap-marker>
 
   </gmap-map>

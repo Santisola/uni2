@@ -86,7 +86,7 @@ export default {
     }
     .imgContainer >>> img{
         height: 100%;
-        object-fit: cover;
+        object-fit: contain;
         line-height: 0;
     }
     #alertas > li > a > div:last-of-type{

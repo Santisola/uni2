@@ -145,7 +145,7 @@
             
             <div id="form-controls">
                 <span class="btn-secondary" @click="paso > 0 ? paso-- : ''">Volver</span>
-                <span v-if="paso !== 4" :class="isValid ? 'btn btn-success' : 'btn btn-disabled'" @click="paso < 4 ? paso++ : ''">Siguiente</span>
+                <span v-if="paso !== 4" :class="isValid ? 'btn btn-primary' : 'btn btn-disabled'" @click="paso < 4 ? paso++ : ''">Siguiente</span>
                 <input type="submit" value="Publicar" class="btn btn-primary" v-else>
             </div>
         </form>

@@ -58,7 +58,17 @@ const authServicio = {
 
         const respuesta = await fetchRes.json();
 
-        return respuesta;
+        if (respuesta.success){
+            const usuario =  {...respuesta.data};
+            const token = respuesta.token;
+
+            storageServicio.setUsuario(usuario);
+            storageServicio.setToken(token);
+            
+            return respuesta;
+        }else{
+            return respuesta;
+        }
     },
     
     /**

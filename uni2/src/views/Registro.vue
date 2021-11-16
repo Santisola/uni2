@@ -13,30 +13,30 @@
             <form @submit.prevent="registrar" action="#">
                 <div class="form-group">
                     <label for="registro-nombre">Nombre completo</label>
-                    <input :aria-describedby="errores.nombre.error ? 'error-nombre' : null" @blur="validar('nombre')" v-model="usuario.nombre" type="text" id="registro-nombre" name="nombre" placeholder="Nombre completo">
+                    <input :disabled="isLoading" :aria-describedby="errores.nombre.error ? 'error-nombre' : null" @blur="validar('nombre')" v-model="usuario.nombre" type="text" id="registro-nombre" name="nombre" placeholder="Nombre completo">
                     <p id="error-nombre" class="msj msj-error" v-if="errores.nombre.error">{{errores.nombre.mensaje}}</p>
                 </div>
                 
                 <div class="form-group">
                     <label for="registro-email">Email</label>
-                    <input :aria-describedby="errores.email.error ? 'error-email' : null" @blur="validar('email')" v-model="usuario.email" type="text" id="registro-email" name="email" placeholder="mail@ejemplo.com.ar">
+                    <input :disabled="isLoading" :aria-describedby="errores.email.error ? 'error-email' : null" @blur="validar('email')" v-model="usuario.email" type="text" id="registro-email" name="email" placeholder="mail@ejemplo.com.ar">
                     <p id="error-email" class="msj msj-error" v-if="errores.email.error">{{errores.email.mensaje}}</p>
                 </div>
                 
                 <div class="form-group">
                     <label for="registro-password">Contraseña</label>
-                    <div><input :aria-describedby="errores.password.error ? 'error-password' : null" @blur="validar('password')" v-model="usuario.password" :type="verContra ? 'text' : 'password'" id="registro-password" name="email"><span @click="verContra = !verContra">{{verContra ? 'Ocultar' : 'Mostrar'}}</span></div>
+                    <div><input :disabled="isLoading" :aria-describedby="errores.password.error ? 'error-password' : null" @blur="validar('password')" v-model="usuario.password" :type="verContra ? 'text' : 'password'" id="registro-password" name="email"><span @click="verContra = !verContra">{{verContra ? 'Ocultar' : 'Mostrar'}}</span></div>
                     <p id="error-password" class="msj msj-error" v-if="errores.password.error">{{errores.password.mensaje}}</p>
                 </div>
                 <p class="password-info">Debe tener como mínimo 6 caracteres</p>
 
                 <div class="form-group">
                     <label for="registro-celular">Celular</label>
-                    <input :aria-describedby="errores.telefono.error ? 'error-telefono' : null" @blur="validar('telefono')" v-model="usuario.telefono" type="text" id="registro-celular" name="telefono" placeholder="+54 9 XXX XXXX-XXXX">
+                    <input :disabled="isLoading" :aria-describedby="errores.telefono.error ? 'error-telefono' : null" @blur="validar('telefono')" v-model="usuario.telefono" type="text" id="registro-celular" name="telefono" placeholder="+54 9 XXX XXXX-XXXX">
                     <p id="error-telefono" class="msj msj-error" v-if="errores.telefono.error">{{errores.telefono.mensaje}}</p>
                 </div>
 
-                <button class="btn btn-primary">Registrarme</button>
+                <button :disabled="isLoading" :class="isLoading ? 'btn btn-disabled' : 'btn btn-primary'">Registrarme</button>
             </form>
         </div>
     </div>
@@ -47,6 +47,7 @@ export default {
     name: "Registro",
     methods: {
         registrar: function(){
+            this.isLoading = true;
             this.erroresBack = null;
 
             authServicio.registrar(this.usuario)
@@ -57,8 +58,10 @@ export default {
                         this.errores.password.error = false;
                         this.errores.telefono.error = false;
                         this.erroresBack = rta.errors;
+                        this.isLoading = false;
                     }else{
-                        this.$router.push('/login?registro=true')
+                        this.isLoading = false;
+                        this.$router.push('/')
                     }
                 })
 
@@ -113,6 +116,8 @@ export default {
     },
     data() {
         return {
+            isLoading: false,
+            
             verContra: false,
 
             erroresBack: null,

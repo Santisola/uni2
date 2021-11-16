@@ -62,8 +62,27 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
+
+        $usuario = User::where('email', $request->email)->first();
+
+        if(!$usuario || !Hash::check($request->password, $usuario->password)){
+            return response()->json([
+                'success' => false,
+                'mensaje' => 'Ocurrió un error al intentar iniciar la sesión',
+             ]);
+        }
+
+        $token = $usuario->createToken('Dispositivo de ' . $request->email)->plainTextToken;
+
         return response()->json([
             'success' => true,
+            'data' => [
+                'id_usuario' => $usuario->id_usuario,
+                'email' => $usuario->email,
+                'nombre' => $usuario->nombre,
+                'telefono' => $usuario->telefono,
+            ],
+            'token' => $token
         ]);
     }
 }
