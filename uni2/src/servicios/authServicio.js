@@ -3,7 +3,7 @@ import storageServicio from './storageServicio';
 
 const authServicio = {
     login: async function(data){
-        const fetchRes = await fetch(API + '/login', {
+        const fetchRes = await fetch(API + '/login/', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
