@@ -1,5 +1,5 @@
 <?php
-
+header('Access-Control-Allow-Origin: http://localhost:8080');
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
 
