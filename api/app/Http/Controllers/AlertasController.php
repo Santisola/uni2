@@ -16,21 +16,39 @@ class AlertasController extends Controller
 
         $data = [];
         foreach($alertas as $alerta){
-            $data[] = [
-                'id_alerta' => $alerta->id_alerta,
-                'id_usuario' => $alerta->id_usuario,
-                'id_tipoalerta' => $alerta->id_tipoalerta,
-                'especie' => $alerta->especie->especie,
-                'raza' => $alerta->raza->raza,
-                'sexo' => $alerta->sexo->sexo,
-                'descripcion' => $alerta->descripcion,
-                'nombre' => $alerta->nombre,
-                'latitud' => $alerta->latitud,
-                'longitud' => $alerta->longitud,
-                'imagenes' => $alerta->imagenes,
-                'fecha' => $alerta->fecha,
-                'hora' => $alerta->hora,
-            ];
+            if($alerta->sexo){
+                $data[] = [
+                    'id_alerta' => $alerta->id_alerta,
+                    'id_usuario' => $alerta->id_usuario,
+                    'id_tipoalerta' => $alerta->id_tipoalerta,
+                    'especie' => $alerta->especie->especie,
+                    'raza' => $alerta->raza->raza,
+                    'sexo' => $alerta->sexo->sexo,
+                    'descripcion' => $alerta->descripcion,
+                    'nombre' => $alerta->nombre,
+                    'latitud' => $alerta->latitud,
+                    'longitud' => $alerta->longitud,
+                    'imagenes' => $alerta->imagenes,
+                    'fecha' => $alerta->fecha,
+                    'hora' => $alerta->hora,
+                ];
+            }else{
+                $data[] = [
+                    'id_alerta' => $alerta->id_alerta,
+                    'id_usuario' => $alerta->id_usuario,
+                    'id_tipoalerta' => $alerta->id_tipoalerta,
+                    'especie' => $alerta->especie->especie,
+                    'raza' => $alerta->raza->raza,
+                    'sexo' => null,
+                    'descripcion' => $alerta->descripcion,
+                    'nombre' => $alerta->nombre,
+                    'latitud' => $alerta->latitud,
+                    'longitud' => $alerta->longitud,
+                    'imagenes' => $alerta->imagenes,
+                    'fecha' => $alerta->fecha,
+                    'hora' => $alerta->hora,
+                ];
+            }
         }
 
         return response()->json([

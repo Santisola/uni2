@@ -23,7 +23,7 @@ class AddIdUsuarioColumnToAlertasTable extends Migration
             $table->unsignedBigInteger('id_raza');
             $table->foreign('id_raza')->references('id_raza')->on('razas');
 
-            $table->unsignedBigInteger('id_sexo');
+            $table->unsignedBigInteger('id_sexo')->nullable();
             $table->foreign('id_sexo')->references('id_sexo')->on('sexo');
 
             $table->unsignedBigInteger('id_tipoalerta');

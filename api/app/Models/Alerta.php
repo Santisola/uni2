@@ -27,7 +27,6 @@ class Alerta extends Model
     ];
 
     public static $reglas = [
-        'nombre'=>'required',
         'descripcion'=>'required',
         'fecha'=>'required',
         'hora'=>'required',
@@ -36,12 +35,10 @@ class Alerta extends Model
         'id_usuario'=>'required',
         'id_especie'=>'required',
         'id_raza'=>'required',
-        'id_sexo'=>'required',
         'id_tipoalerta'=>'required',
     ];
 
     public static $mensajesDeError = [
-        'nombre.required'=>'El nombre es obligatorio',
         'descripcion.required'=>'La descripcion es obligatoria',
         'fecha.required'=>'La fecha es obligatoria',
         'hora.required'=>'La hora es obligatoria',
@@ -49,7 +46,6 @@ class Alerta extends Model
         'longitud.required'=>'La longitud es obligatoria',
         'id_especie.required'=>'La especie es obligatoria',
         'id_raza.required'=>'La raza es obligatoria',
-        'id_sexo.required'=>'El sexo es obligatorio',
     ];
 
     public function especie(){
