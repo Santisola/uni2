@@ -13,7 +13,8 @@
                         <ImagenesAlerta :imgs="alerta.imagenes" :principal="true" />
                     </div>
                     <div>
-                        <h2>Tu aviso de <strong>{{alerta.nombre}}</strong> fue publicado con éxito.</h2>
+                        <h2 v-if="alerta.nombre">Tu aviso de <strong>{{alerta.nombre}}</strong> fue publicado con éxito.</h2>
+                        <h2 v-else>Tu aviso fue publicado con éxito.</h2>
                     </div>
                 </router-link>
             </li>

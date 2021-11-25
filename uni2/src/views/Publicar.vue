@@ -11,7 +11,7 @@
                 </router-link>
             </li>
             <li>
-                <router-link to="/publicar/perdida">
+                <router-link to="/publicar/encontrada">
                     <h2>Mascota encontrada</h2>
                 </router-link>
             </li>

@@ -25,6 +25,8 @@ Route::get('/alertas/{id}', [AlertasController::class, 'ver']);
 
 Route::post('/alertas', [AlertasController::class, 'nueva']);
 
+Route::put('/alertas/{id}', [AlertasController::class, 'editar']);
+
 Route::delete('/alertas/{id}', [AlertasController::class, 'borrar']);
 
 Route::get('/usuario/{id}/alertas', [AlertasController::class, 'deUsuario']);

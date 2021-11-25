@@ -25,6 +25,7 @@ export default {
 
         imgPrincipal: function(){
             return IMG_PATH + this.imagenes[0];
+            /* return 'img/perrito-default.jpg' */
         }
     }
 }
@@ -33,9 +34,9 @@ export default {
     .imgContainer{
         height: 100%;
     }
-    .imgContainer > img{
+    .imgContainer >>> img{
         width: 100%;
         height: 100%;
-        object-fit: contain;
+        object-fit: cover;
     }
 </style>

@@ -16,11 +16,11 @@
             <div @click="$router.push(goBackRoute)" class="go-back">
                 <span>Volver</span>
             </div>
-            <div @click="opciones = !opciones" class="settings">...</div>
-            <div :class="opciones ? 'opened' : 'closed'" class="menu-opciones">
+            <div v-if="usuarioCreoAlerta" @click="opciones = !opciones" class="settings">...</div>
+            <div v-if="usuarioCreoAlerta" :class="opciones ? 'opened' : 'closed'" class="menu-opciones">
                 <ul>
                     <li>
-                        <a href="#" @click.prevent="opciones = false">Editar</a>
+                        <router-link :to="'/alertas/editar/' + alerta.id_alerta" @click.prevent="opciones = false">Editar</router-link>
                     </li>
                     <li>
                         <a href="#" @click.prevent="deleteConfirmation = true">Eliminar</a>
@@ -31,7 +31,7 @@
         <div class="content">
             <div class="title">
                 <h2>{{alerta.nombre}}</h2>
-                <span>{{tipoAlerta}}</span>
+                <span :class="alerta.id_tipoalerta == 1 ? 'encontrada' : 'perdida'">{{tipoAlerta}}</span>
             </div>
             <div class="data">
                 <div>
@@ -48,6 +48,10 @@
                 <li>{{alerta.hora}}</li>
                 <li><Direccion :lat="alerta.latitud" :lng="alerta.longitud" /></li>
             </ul>
+            <div v-if="alerta.descripcion" class="descripcion">
+                <h3>Características</h3>
+                <p>{{alerta.descripcion}}</p>
+            </div>
         </div>
     </div>
 </template>
@@ -55,34 +59,38 @@
 import alertasServicio from '../servicios/alertasServicio';
 import ImagenesAlerta from '../components/ImagenesAlerta.vue';
 import Direccion from '../components/Direccion.vue'
+import storageServicio from '../servicios/storageServicio';
 
 export default {
-     name: "DetalleAlerta",
-     components:{
-         ImagenesAlerta,
-         Direccion
-     },
-     mounted() {
-         this.isLoading = true;
-         alertasServicio.get(this.$route.params.id).then(res => {
-            this.alerta = res;
+    name: "DetalleAlerta",
+    components:{
+        ImagenesAlerta,
+        Direccion
+    },
+    mounted() {
+        this.isLoading = true;
+        alertasServicio.get(this.$route.params.id).then(res => {
+        this.alerta = res;
 
-            this.isLoading = false;
-         });
-     },
-     methods: {
-         borrarAlerta: function(){
-             alertasServicio.delete(this.alerta.id_alerta)
-             .then(res => {
-                 if(res){
-                    this.opciones = false,
-                    this.deleteConfirmation = false,
-                    this.$router.push('/alertas');
-                 }
-             })
-         }
-     },
-     computed:{
+        this.isLoading = false;
+        });
+    },
+    methods: {
+        borrarAlerta: function(){
+            alertasServicio.delete(this.alerta.id_alerta)
+            .then(res => {
+                if(res){
+                this.opciones = false,
+                this.deleteConfirmation = false,
+                this.$router.push('/alertas');
+                }
+            })
+        }
+    },
+    computed:{
+        usuarioCreoAlerta: function(){
+            return storageServicio.getUsuario().id_usuario == this.alerta.id_usuario
+        },
         goBackRoute: function(){
             return '/' + this.$route.query.from;
         },
@@ -115,7 +123,7 @@ export default {
             } else if(this.alerta.id_sexo === 2){
                 return 'Hembra';
             }
-            return false;
+            return 'Sexo desconocido';
         },
         especieName() {
             if(this.alerta.id_especie === 1) {
@@ -133,44 +141,44 @@ export default {
             }
             return false;
         }
-     },
-     data() {
-         return {
-             isLoading: false,
-             alerta: null,
-             opciones: false,
-             deleteConfirmation: false,
+    },
+    data() {
+        return {
+            isLoading: false,
+            alerta: null,
+            opciones: false,
+            deleteConfirmation: false,
 
-             direccion: '',
+            direccion: '',
 
-             razas:[
-                {
-                    id_raza: 1,
-                    raza: 'Labrador Retriever'
-                },
-                {
-                    id_raza: 2,
-                    raza: 'Border Collie'
-                },
-                {
-                    id_raza: 3,
-                    raza: 'Bichón Maltés'
-                },
-                {
-                    id_raza: 4,
-                    raza: 'Pitbull'
-                },
-                {
-                    id_raza: 5,
-                    raza: 'Pastor Alemán'
-                },
-                {
-                    id_raza: 6,
-                    raza: 'Yorkshire Terrier'
-                },
-            ],
-         }
-     },
+            razas:[
+            {
+                id_raza: 1,
+                raza: 'Labrador Retriever'
+            },
+            {
+                id_raza: 2,
+                raza: 'Border Collie'
+            },
+            {
+                id_raza: 3,
+                raza: 'Bichón Maltés'
+            },
+            {
+                id_raza: 4,
+                raza: 'Pitbull'
+            },
+            {
+                id_raza: 5,
+                raza: 'Pastor Alemán'
+            },
+            {
+                id_raza: 6,
+                raza: 'Yorkshire Terrier'
+            },
+        ],
+        }
+    },
 }
 </script>
 <style scoped>
@@ -293,11 +301,18 @@ export default {
     }
 
     #alerta > .content .title span{
-        background: var(--perdida);
         color: #fff;
         height: fit-content;
         padding: .5rem;
         border-radius: 25px;
+    }
+
+    #alerta > .content .title .perdida{
+        background: var(--perdida);
+    }
+
+    #alerta > .content .title .encontrada{
+        background: var(--encontrada);
     }
 
     #alerta > .content .data{
@@ -343,6 +358,10 @@ export default {
         align-items: center;
         max-width: 100px;
         text-align: center;
+    }
+
+    .descripcion > h3{
+        margin-bottom: .5rem;
     }
 
 </style>

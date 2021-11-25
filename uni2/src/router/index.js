@@ -7,7 +7,9 @@ import Publicar from '../views/Publicar.vue'
 import Alertas from '../views/Alertas.vue'
 import Perfil from '../views/Perfil.vue'
 import PublicarPerdida from '../views/PublicarPerdida.vue'
+import PublicarEncontrada from '../views/PublicarEncontrada.vue'
 import DetalleAlerta from '../views/DetalleAlerta.vue'
+import EditarAlerta from '../views/EditarAlerta.vue'
 import Login from '../views/Login.vue'
 import Registro from '../views/Registro.vue'
 
@@ -47,6 +49,14 @@ const routes = [
     component: PublicarPerdida,
   },
   {
+    path: '/publicar/encontrada',
+    name: 'Publicar Encontrada',
+    meta:{
+        requiresAuth: true,
+    },
+    component: PublicarEncontrada,
+  },
+  {
     path: '/alertas',
     name: 'Alertas',
     meta:{
@@ -61,6 +71,14 @@ const routes = [
         requiresAuth: true,
     },
     component: DetalleAlerta,
+  },
+  {
+    path: '/alertas/editar/:id',
+    name: 'EditarAlerta',
+    meta:{
+        requiresAuth: true,
+    },
+    component: EditarAlerta,
   },
   {
     path: '/perfil',

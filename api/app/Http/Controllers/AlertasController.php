@@ -107,6 +107,55 @@ class AlertasController extends Controller
         ]);
     }
 
+    public function editar(Request $request){
+        $request->validate(Alerta::$reglas, Alerta::$mensajesDeError);
+
+        $alerta = Alerta::find($request->input('id_alerta'));
+
+
+        if ($request->input('imagenes')) {
+            $extension = explode('/', explode(';', $request->imagenes)[0])[1];
+            $nombreImg = date('Ymd-his') . '.' . $extension;
+
+            Image::make($request->input('imagenes'))->save(public_path('imgs/mascotas/') . $nombreImg);
+
+            $alerta->nombre = $request->input('nombre');
+            $alerta->descripcion = $request->input('descripcion');
+            $alerta->fecha = $request->input('fecha');
+            $alerta->hora = $request->input('hora');
+            $alerta->imagenes = $nombreImg;
+            $alerta->latitud = $request->input('latitud');
+            $alerta->longitud = $request->input('longitud');
+            $alerta->id_usuario = $request->input('id_usuario');
+            $alerta->id_especie = $request->input('id_especie');
+            $alerta->id_raza = $request->input('id_raza');
+            $alerta->id_sexo = $request->input('id_sexo');
+            $alerta->id_tipoalerta = $request->input('id_tipoalerta');
+
+        }else{
+
+            $alerta->nombre = $request->input('nombre');
+            $alerta->descripcion = $request->input('descripcion');
+            $alerta->fecha = $request->input('fecha');
+            $alerta->hora = $request->input('hora');
+            $alerta->latitud = $request->input('latitud');
+            $alerta->longitud = $request->input('longitud');
+            $alerta->id_usuario = $request->input('id_usuario');
+            $alerta->id_especie = $request->input('id_especie');
+            $alerta->id_raza = $request->input('id_raza');
+            $alerta->id_sexo = $request->input('id_sexo');
+            $alerta->id_tipoalerta = $request->input('id_tipoalerta');
+
+        }
+
+        $alerta->save();
+
+        return response()->json([
+           'success' => true,
+           'data' => $alerta,
+        ]);
+    }
+
     public function borrar($alerta){
         Alerta::findOrFail($alerta)->delete();
 

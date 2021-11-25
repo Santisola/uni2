@@ -12,7 +12,7 @@
                 <li>{{fechaBien}}</li>
                 <li>{{alerta.especie}}</li>
                 <li>Direcion 1234{{alerta.direccion}}</li>
-                <li>{{alerta.sexo}}</li>
+                <li>{{alerta.sexo ? alerta.sexo : 'Sexo desconocido'}}</li>
                 <li>{{alerta.raza}}</li>
             </ul>
         </div>

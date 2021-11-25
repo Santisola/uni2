@@ -29,6 +29,19 @@ const alertasServicio = {
         return respuesta;
     },
 
+    editar: async function(data, id){
+        const fetchRes = await fetch(API + '/alertas/' + id, {
+            method: 'PUT',
+            body: JSON.stringify(data),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        });
+        const respuesta = await fetchRes.json();
+        return respuesta;
+    },
+
     deUsuario: async function(id){
         const fetchRes = await fetch(API + '/usuario/' + id + '/alertas');
         const respuesta = await fetchRes.json();
