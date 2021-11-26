@@ -1,11 +1,12 @@
 <template>
     <div>
+        <Loader v-if="isLoading" />
         <div v-if="success === null" class="form-nueva-header">
             <span @click="paso > 0 ? paso-- : ''">Volver</span>
             <div class="form-nueva-title">
                 <h1>{{pasos[paso].titulo}}</h1>
                 <p v-if="paso < 4">Siguiente: {{pasos[paso+1].titulo}}</p>
-                <p v-else>y publicá el aviso</p>
+                <p v-else>y publicá la alerta</p>
             </div>
             <div>
                 <p>{{pasos[paso].id}} de 5</p>
@@ -106,7 +107,7 @@
             </div>
             <div id="perdida-paso-5" v-if="paso === 4">
                 <h2>Información de la mascota</h2>
-                <p>Asegurate que todo esté de forma correcta. <br> Luego podrás editar el aviso si necesitás</p>
+                <p>Asegurate que todo esté de forma correcta. <br> Luego podrás editar la alerta si necesitás</p>
 
                 <article>
                     <div class="top">
@@ -152,7 +153,7 @@
         <div id="exito" v-else-if="success === true">
             <img src="../assets/icons/success.svg" alt="Tick de éxito">
             <h2>¡Listo!</h2>
-            <p>El aviso fue publicado con éxito.</p>
+            <p>La alerta fue publicada con éxito.</p>
             <router-link to="/" class="btn btn-primary">Volver al inicio</router-link>
         </div>
     </div>
@@ -160,9 +161,13 @@
 <script>
 import alertasServicio from '../servicios/alertasServicio'
 import authServicio from '../servicios/authServicio';
+import Loader from '../components/Loader.vue';
 
 export default {
     name: "PublicarPerdida",
+    components:{
+        Loader
+    },
     methods: {
         actualizarDireccion: function(){
             this.direccion = document.getElementById('autocomplete').value;
@@ -177,7 +182,7 @@ export default {
             
         },
         crear: function (){
-
+            this.isLoading = true
             const data = {
                 nombre: this.nombre,
                 descripcion: this.descripcion,
@@ -195,9 +200,11 @@ export default {
 
             alertasServicio.nueva(data).then(res => {
                 if(res.success){
+                    this.isLoading = false;
                     this.success = true
                 }else{
                     if(res.errors){
+                        this.isLoading = false;
                         this.erroresBack = res.errors
                     }
                 }
@@ -317,7 +324,7 @@ export default {
                     }
                     return true
                 case 1:
-                    if(!this.direccion){
+                    if(!this.direccion || !this.direccionExitosa){
                         return false;
                     }
                     return true
@@ -368,6 +375,7 @@ export default {
     },
     data: () => {
         return{
+            isLoading: false,
             geocoder: null,
             direccionExitosa: null,
 

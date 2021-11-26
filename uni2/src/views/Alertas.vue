@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1>Alertas</h1>
-        <div v-if="isLoading">Cargando...</div>
+        <MiniLoader v-if="isLoading" />
         <div v-else-if="alertas.length == 0" id="sin-alertas">
             <img src="../assets/no-alertas.png" alt="Gato durmiendo sobre una campana de notificaciones">
             <p>Aún no recibiste ninguna alerta.</p>
@@ -13,8 +13,8 @@
                         <ImagenesAlerta :imgs="alerta.imagenes" :principal="true" />
                     </div>
                     <div>
-                        <h2 v-if="alerta.nombre">Tu aviso de <strong>{{alerta.nombre}}</strong> fue publicado con éxito.</h2>
-                        <h2 v-else>Tu aviso fue publicado con éxito.</h2>
+                        <h2 v-if="alerta.nombre">Tu alerta de <strong>{{alerta.nombre}}</strong> fue publicada con éxito.</h2>
+                        <h2 v-else>Tu alerta fue publicada con éxito.</h2>
                     </div>
                 </router-link>
             </li>
@@ -25,18 +25,22 @@
 import alertasServicio from '../servicios/alertasServicio'
 import ImagenesAlerta from '../components/ImagenesAlerta.vue'
 import authServicio from '../servicios/authServicio';
+import MiniLoader from '../components/MiniLoader.vue';
 
 export default {
     name: 'Alertas',
     components:{
-        ImagenesAlerta
+        ImagenesAlerta,
+        MiniLoader
     },
     mounted() {
         this.isLoading = true;
         this.usuario = authServicio.getUsuario();
         alertasServicio.deUsuario(this.usuario.id_usuario).then(res => {
             this.alertas = res;
-            this.isLoading = false;
+            setTimeout(() => {
+				this.isLoading = false
+			}, 750)
         })
     },
     computed: {

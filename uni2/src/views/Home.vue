@@ -1,14 +1,16 @@
 <template>
 	<div class="home">
 		<h1>Hola, {{usuario.nombre}}</h1>
-		<span v-if="isLoading">Cargando...</span>
+		<MiniLoader v-if="isLoading" />
 		<SliderAlertas v-else
 		titulo="Mascotas perdidas por tu zona"
 		:alertas=alertasPerdidas
 		:tipo="2"
 		/>
         <CardAnuncio :anuncio="anuncio" />
+		<MiniLoader v-if="isLoading" />
 		<SliderAlertas
+		v-else
 		titulo="Mascotas encontradas por tu zona"
 		:alertas=alertasEncontradas
 		:tipo="1"
@@ -22,12 +24,14 @@ import SliderAlertas from '../components/SliderAlertas';
 import CardAnuncio from '../components/CardAnuncio.vue';
 import alertasServicio from '../servicios/alertasServicio'
 import authServicio from '../servicios/authServicio';
+import MiniLoader from '../components/MiniLoader.vue';
 
 export default {
   name: 'Home',
   components: {
 	  SliderAlertas,
-      CardAnuncio
+      CardAnuncio,
+	  MiniLoader
   },
   mounted() {
 	  this.isLoading = true;
@@ -37,7 +41,9 @@ export default {
 	  alertasServicio.todos()
 		.then(data => {
 			this.alertas = data;
-			this.isLoading = false;
+			setTimeout(() => {
+				this.isLoading = false
+			}, 750)
 		})
   },
   computed: {

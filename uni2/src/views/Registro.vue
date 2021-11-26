@@ -1,5 +1,6 @@
 <template>
     <div>
+        <Loader v-if="isLoading" />
         <div class="registro-header">
             <router-link to="/login">Volver</router-link>
             <h1>Crear cuenta</h1>
@@ -32,25 +33,40 @@
 
                 <div class="form-group">
                     <label for="registro-celular">Celular</label>
-                    <input :disabled="isLoading" :aria-describedby="errores.telefono.error ? 'error-telefono' : null" @blur="validar('telefono')" v-model="usuario.telefono" type="text" id="registro-celular" name="telefono" placeholder="+54 9 XXX XXXX-XXXX">
+                    <div>
+                        <input :disabled="isLoading" :aria-describedby="errores.codigoArea.error ? 'error-codigo' : null" @blur="validar('codigoArea')" v-model="usuario.codigoArea" type="text" id="registro-area" name="cofigo-area" placeholder="54">
+                        <input :disabled="isLoading" :aria-describedby="errores.telefono.error ? 'error-telefono' : null" @blur="validar('telefono')" v-model="usuario.telefono" type="text" id="registro-celular" name="telefono" placeholder="1122223333">
+                    </div>
                     <p id="error-telefono" class="msj msj-error" v-if="errores.telefono.error">{{errores.telefono.mensaje}}</p>
+                    <p id="error-codigo" class="msj msj-error" v-if="errores.codigoArea.error">{{errores.codigoArea.mensaje}}</p>
                 </div>
+                <p class="password-info">No debe contener espacios, ni caracteres especiales. Unicamente el número de corrido</p>
 
-                <button :disabled="isLoading" :class="isLoading ? 'btn btn-disabled' : 'btn btn-primary'">Registrarme</button>
+                <button :disabled="isLoading || !isValid" :class="isLoading || !isValid ? 'btn btn-disabled' : 'btn btn-primary'">Registrarme</button>
             </form>
         </div>
     </div>
 </template>
 <script>
 import authServicio from '../servicios/authServicio';
+import Loader from '../components/Loader.vue'
+
 export default {
     name: "Registro",
+    components:{
+        Loader
+    },
     methods: {
         registrar: function(){
             this.isLoading = true;
             this.erroresBack = null;
 
-            authServicio.registrar(this.usuario)
+            authServicio.registrar({
+                nombre: this.usuario.nombre,
+                email: this.usuario.email,
+                password: this.usuario.password,
+                telefono: this.usuario.codigoArea + this.usuario.telefono,
+            })
                 .then(rta => {
                     if(rta.errors){
                         this.errores.nombre.error = false;
@@ -92,14 +108,69 @@ export default {
                     break;
                 case 'telefono':
                     this.errores.telefono.error = false;
+                    this.errores.telefono.mensaje = 'El numero de celular es obligatorio';
                     if(this.usuario.telefono.trim() === ''){
                         this.errores.telefono.error = true;
                     }
+
+                    if(
+                    this.usuario.telefono.trim()[0] == '0' ||
+                    this.usuario.telefono.includes('+') ||
+                    this.usuario.telefono.includes('(') ||
+                    this.usuario.telefono.includes(')') ||
+                    this.usuario.telefono.includes('-') ||
+                    this.usuario.telefono.includes(' ') ||
+                    this.usuario.telefono.includes('/')
+                    ){
+                        this.errores.telefono.mensaje = 'Debe ingresar un formato de telefono válido (Ej: 1122223333)';
+                        this.errores.telefono.error = true;
+                    }
                     break;
+                case 'codigoArea':
+                    this.errores.codigoArea.error = false;
+                    if(this.usuario.codigoArea.trim() == ''){
+                        this.errores.codigoArea.error = true;
+                    }
+                    break;               
             }
         }
     },
     computed:{
+        isValid: function(){
+            
+            if(this.usuario.nombre.trim() === ''){
+                return false
+            }
+            if(this.usuario.email.trim() === ''){
+                return false
+            }
+            if(this.usuario.password.trim() === ''){
+                return false
+            }else if(this.usuario.password.lenght < 6){
+                return false
+            }
+            if(this.usuario.telefono.trim() === ''){
+                return false
+            }
+
+            if(
+            this.usuario.telefono.trim()[0] == '0' ||
+            this.usuario.telefono.includes('+') ||
+            this.usuario.telefono.includes('(') ||
+            this.usuario.telefono.includes(')') ||
+            this.usuario.telefono.includes('-') ||
+            this.usuario.telefono.includes(' ') ||
+            this.usuario.telefono.includes('/')
+            ){
+                return false
+            }
+
+            if(this.usuario.codigoArea.trim() == ''){
+                return false
+            }
+
+            return true
+        },
         erroresBackArray: function(){
             if(this.erroresBack === null){
                 return false
@@ -139,12 +210,17 @@ export default {
                     error: false,
                     mensaje: 'El numero de celular es obligatorio'
                 },
+                codigoArea: {
+                    error: false,
+                    mensaje: 'El código de país es obligatorio'
+                },
             },
             usuario: {
                 nombre: '',
                 email: '',
                 password: '',
                 telefono: '',
+                codigoArea: ''
             }
         }
     },
@@ -171,8 +247,39 @@ export default {
         align-items: center;
     }
 
+    form .form-group:last-of-type > div{
+        background-color: transparent;
+        border: 0;
+        display: flex;
+        align-items: stretch;
+    }
+
+    form .form-group:last-of-type > div > input:first-of-type{
+        width: 15%;
+        margin-right: .5rem;
+        border-left: 0;
+        border-radius: 0 4px 4px 0;
+    }
+
+    form .form-group:last-of-type > div::before{
+        content: "+";
+        border: solid 1px #cecece;
+        display: block;
+        padding: 1rem .5rem;
+        padding-right: 0;
+        background-color: #fff;
+        border-right: 0;
+        border-radius: 4px 0 0 4px;
+    }
+    
     .form-group > div > input{
         border: 0;
+    }
+
+    form .form-group:last-of-type > div > input{
+        border: solid 1px #cecece;
+        border-radius: 4px;
+        padding-left: .25rem;
     }
 
     .form-group > div > span{
@@ -193,9 +300,8 @@ export default {
     }
 
     .btn{
-        width: calc(100% - 2rem);
+        width: 100%;
+        margin-top: 2rem;
         padding: .75rem 0;
-        position: absolute;
-        bottom: 15px;
     }
 </style>

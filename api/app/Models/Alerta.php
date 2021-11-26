@@ -60,6 +60,10 @@ class Alerta extends Model
         return $this->belongsTo(Sexo::class,'id_sexo', 'id_sexo');
     }
 
+    public function usuario(){
+        return $this->belongsTo(User::class,'id_usuario', 'id_usuario');
+    }
+
     public function tipoalerta(){
         return $this->belongsTo(Tipoalerta::class,'id_tipoalerta', 'id_tipoalerta');
     }

@@ -19,7 +19,6 @@ export default {
         geocoder
             .geocode({ location: latLng })
             .then(res => {
-                console.log(res.results)
                 this.direccion = res.results[0]
             })
     },

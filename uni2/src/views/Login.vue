@@ -1,5 +1,6 @@
 <template>
     <div id="login">
+        <Loader v-if="isLoading" />
         <div class="login-header">
             <h1>Login</h1>
         </div>
@@ -30,9 +31,13 @@
 </template>
 <script>
 import authServicio from '../servicios/authServicio';
+import Loader from '../components/Loader.vue'
 
 export default {
     name: "Login",
+    components:{
+        Loader
+    },
     methods: {
         login: async function(){
             this.isLoading = true;

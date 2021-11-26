@@ -34,12 +34,17 @@
                 <span :class="alerta.id_tipoalerta == 1 ? 'encontrada' : 'perdida'">{{tipoAlerta}}</span>
             </div>
             <div class="data">
-                <div>
+                <div v-if="alerta.id_sexo === null">
+                    <img src="../assets/icons/question.svg" alt="Sexo desconocido">
+                    <p>{{sexoName}}</p>
+                </div>
+                <div v-else>
                     <img :src="this.alerta.id_sexo === 1 ? require('../assets/icons/macho.svg') : require('../assets/icons/hembra.svg')" :alt="this.alerta.id_sexo === 1 ? 'Símbolo masculino' : 'Símbolo femenino'">
                     <p>{{sexoName}}</p>
                 </div>
+
                 <div>
-                    <img :src="this.alerta.id_sexo === 1 ? require('../assets/icons/perro.svg') : require('../assets/icons/gato.svg')" :alt="this.alerta.id_sexo === 1 ? 'Silueta de un perro' : 'Silueta de un gato'">
+                    <img :src="this.alerta.id_especie === 1 ? require('../assets/icons/perro.svg') : require('../assets/icons/gato.svg')" :alt="this.alerta.id_especie === 1 ? 'Silueta de un perro' : 'Silueta de un gato'">
                     <p>{{razaName}}</p>
                 </div>
             </div>
@@ -51,6 +56,9 @@
             <div v-if="alerta.descripcion" class="descripcion">
                 <h3>Características</h3>
                 <p>{{alerta.descripcion}}</p>
+            </div>
+            <div class="wpp-container">
+                <a class="btn-wpp" target="_blank" :href="wppLink">Contacto</a>
             </div>
         </div>
     </div>
@@ -88,6 +96,10 @@ export default {
         }
     },
     computed:{
+        wppLink: function() {
+            //AGREGAR EL CODIGO DE PAIS (54)
+            return `https://api.whatsapp.com/send?phone=${this.alerta.telefono}&text=Hola!%20Me%20comunico%20por%20la%20alerta%20que%20subiste%20a%20la%20app%20Unidos.%20`;
+        },
         usuarioCreoAlerta: function(){
             return storageServicio.getUsuario().id_usuario == this.alerta.id_usuario
         },
@@ -338,10 +350,23 @@ export default {
     #alerta > .content > ul li::before{
         width: 16px;
         height: 16px;
-        background: #cecece;
-        border-radius: 50%;
         content: "";
         margin-right: 10px;
+    }
+
+    #alerta > .content > ul li:first-of-type::before{
+        background-image: url("../assets/icons/calendar.svg");
+        background-size: contain;
+    }
+
+    #alerta > .content > ul li:nth-of-type(2)::before{
+        background-image: url("../assets/icons/clock.svg");
+        background-size: contain;
+    }
+
+    #alerta > .content > ul li:last-of-type::before{
+        background-image: url("../assets/icons/map-pin.svg");
+        background-size: contain;
     }
 
     .data > div{
@@ -349,7 +374,7 @@ export default {
     }
 
     .data img{
-        width: 42px;
+        height: 42px;
     }
 
     .data p{
@@ -364,4 +389,22 @@ export default {
         margin-bottom: .5rem;
     }
 
+    .wpp-container{
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 1rem;
+    }
+    
+    .btn-wpp{
+        border: solid 3px #fff;
+        display: block;
+        width: 64px;
+        height: 64px;
+        position: relative;
+        text-indent: -500px;
+        overflow: hidden;
+        border-radius: 50%;
+        background: url('../assets/icons/wpp.svg') no-repeat 55% 45%;
+        background-color: #25D366;
+    }
 </style>

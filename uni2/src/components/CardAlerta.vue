@@ -8,23 +8,31 @@
         </div>
         <div class="cardContent">    
             <h3 v-if="tipo === 2">{{alerta.nombre}}</h3>
-            <ul>
+            <ul class="encontradas-data" v-if="tipo === 1">
                 <li>{{fechaBien}}</li>
-                <li>{{alerta.especie}}</li>
-                <li>Direcion 1234{{alerta.direccion}}</li>
-                <li>{{alerta.sexo ? alerta.sexo : 'Sexo desconocido'}}</li>
-                <li>{{alerta.raza}}</li>
+                <li><Direccion :lat="alerta.latitud" :lng="alerta.longitud" /></li>
+                
+                <li v-if="alerta.sexo === null" class="desconocido">Sexo desconocido</li>
+                <li v-else :class="alerta.sexo === 'Macho' ? 'macho' : 'hembra'">{{alerta.sexo}}</li>
+                
+                <li :class="alerta.especie === 'Perro' ? 'perro' : 'gato'">{{alerta.raza}}</li>
+            </ul>
+            <ul class="perdidas-data" v-else>
+                <li>{{fechaBien}}</li>
+                <li><Direccion :lat="alerta.latitud" :lng="alerta.longitud" /></li>
             </ul>
         </div>
     </div>
 </template>
 <script>
 import ImagenesAlerta from './ImagenesAlerta.vue';
+import Direccion from '../components/Direccion.vue'
 
 export default {
     name: 'CardAlerta',
     components:{
-        ImagenesAlerta
+        ImagenesAlerta,
+        Direccion
     },
     computed:{
         fechaBien: function(){
@@ -76,18 +84,85 @@ export default {
     height: 100%;
     object-fit: contain;
 }
+
 .cardContent{
     text-align: left;
     padding: .5rem 1rem;
     padding-bottom: 1.5rem;
 }
+
 .cardContent h3{
     margin-bottom: 1rem;
 }
+
 .cardContent ul li{
     margin: .5rem 0;
+    display: flex;
+    align-items: center;
 }
+
 .cardContent ul li:last-of-type{
     height: 40px;
+}
+
+.perdidas-data >>> li::before{
+    display: block;
+    width: 16px;
+    height: 16px;
+    content: "";
+    margin-right: 10px;
+}
+
+.perdidas-data >>> li:first-of-type::before{
+    background: url("../assets/icons/calendar.svg") no-repeat center;
+    background-size: contain;
+}
+
+.perdidas-data >>> li:last-of-type::before{
+    background: url("../assets/icons/map-pin.svg") no-repeat center;
+    background-size: contain;
+}
+
+.encontradas-data >>> li::before{
+    display: block;
+    width: 16px;
+    height: 16px;
+    content: "";
+    margin-right: 10px;
+}
+
+.encontradas-data >>> li:first-of-type::before{
+    background: url("../assets/icons/calendar.svg") no-repeat center;
+    background-size: contain;
+}
+
+.encontradas-data >>> li:nth-of-type(2)::before{
+    background: url("../assets/icons/map-pin.svg") no-repeat center;
+    background-size: contain;
+}
+
+.desconocido::before{
+    background: url("../assets/icons/question.svg") no-repeat center;
+    background-size: contain;
+}
+
+.macho::before{
+    background: url("../assets/icons/macho.svg") no-repeat center;
+    background-size: contain;
+}
+
+.hembra::before{
+    background: url("../assets/icons/hembra.svg") no-repeat center;
+    background-size: contain;
+}
+
+.perro::before{
+    background: url("../assets/icons/perro.svg") no-repeat center;
+    background-size: contain;
+}
+
+.gato::before{
+    background: url("../assets/icons/gato.svg") no-repeat center;
+    background-size: contain;
 }
 </style>

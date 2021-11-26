@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="publicar-main-header">
-            <h1>¿De qué se trata el aviso que querés publicar?</h1>
+            <h1>¿De qué se trata la alerta que querés publicar?</h1>
             <p>Seleccioná si es sobre una mascota perdida o encontrada:</p>
         </div>
         <ul class="nueva-alerta-options">
