@@ -1,7 +1,7 @@
 <template>
     <div class="card">
-        <a href="#">
-            <div class="cardImgContainer"><img :src="anuncio.img" :alt="'Imagen de' + anuncio.nombre"></div>
+        <a href="https://www.puppis.com.ar/adopcion" target="_blank">
+            <div class="cardImgContainer"><img :src="require(`../assets/${anuncio.img}`)" :alt="'Imagen de' + anuncio.nombre"></div>
             <div class="cardContent">    
                 <h3>{{anuncio.titulo}}</h3>
                 <p>{{anuncio.texto}}</p>
@@ -29,6 +29,8 @@ export default {
 }
 .cardImgContainer img{
     width: 100%;
+    height: 175px;
+    object-fit: cover;
 }
 .cardContent{
     text-align: left;

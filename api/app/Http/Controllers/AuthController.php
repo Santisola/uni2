@@ -52,6 +52,32 @@ class AuthController extends Controller
         ]);
     }
 
+    public function editar(Request $request){
+        $request->validate([
+            'nombre'=>'required',
+            'email'=>'required|email:rfc',
+            'telefono'=>'required',
+        ],[
+            'nombre.required'=>'El nombre es obligatorio',
+            'email.required'=>'El email es obligatorio',
+            'email.email'=>'El email debe ser de un formato válido (nombre@dominio.extension)',
+            'telefono.required'=>'El teléfono es obligatorio',
+        ]);
+
+        $user = User::findOrFail($request->id_usuario);
+
+        $user->nombre = $request->nombre;
+        $user->email = $request->email;
+        $user->telefono = $request->telefono;
+
+        $user->save();
+
+        return response()->json([
+            'success' => true,
+            'data' => $user,
+         ]);
+    }
+
     public function registrar(Request $request){
         $request->validate(User::$reglas, User::$mensajesDeError);
 

@@ -13,20 +13,25 @@
                 <form @submit.prevent="editar" action="#">
                     <div class="form-group">
                         <label for="nombre-editar">Nombre</label>
-                        <input v-model="editarUsuario.nombre" type="text" name="nombre" id="nombre-editar">
+                        <input v-bind:disabled="isLoading" v-model="editarUsuario.nombre" type="text" name="nombre" id="nombre-editar">
                     </div>
                     <div class="form-group">
                         <label for="email-editar">Email</label>
-                        <input v-model="editarUsuario.email" type="text" name="email" id="email-editar">
+                        <input v-bind:disabled="isLoading" v-model="editarUsuario.email" type="text" name="email" id="email-editar">
                     </div>
                     <div class="form-group">
                         <label for="telefono-editar">Teléfono</label>
-                        <input v-model="editarUsuario.telefono" type="text" name="telefono" id="telefono-editar">
+                        <input v-bind:disabled="isLoading" v-model="editarUsuario.telefono" type="text" name="telefono" id="telefono-editar">
                     </div>
-                    <button class="btn btn-primary">Editar</button>
+                    <button v-bind:disabled="isLoading || !isValid" :class="isLoading || !isValid ? 'btn btn-disabled' : 'btn btn-primary'"><MiniLoader v-if="isLoading" /><span v-else>Editar</span></button>
                 </form>
+                <div v-if="erroresBack !== null" class="msj msj-error">
+                    <ul>
+                        <li v-for="(error, index) in erroresBackArray" :key="index">{{error}}</li>
+                    </ul>
+                </div>
             </li>
-            <li @click="$router.push('/alertas')">Notificaciones</li>
+            <li @click="$router.push('/alertas')">Mis alertas</li>
             <li @click="logout">Cerrar sesión</li>
         </ul>
         
@@ -34,14 +39,61 @@
 </template>
 <script>
 import authServicio from '../servicios/authServicio';
+import MiniLoader from '../components/MiniLoader.vue';
 
 export default {
     name: 'Perfil',
+    components:{
+        MiniLoader
+    },
     mounted() {
         this.isLoading = true;
         this.usuario = authServicio.getUsuario();
         this.editarUsuario = authServicio.getUsuario();
         this.isLoading = false;
+    },
+    computed:{
+        isValid: function(){
+            if(this.editarDatos){
+                if(this.editarUsuario.nombre.trim() === ''){
+                    return false
+                }
+                if(this.editarUsuario.email.trim() === ''){
+                    return false
+                }
+                if(this.editarUsuario.telefono.trim() === ''){
+                    return false
+                }
+    
+                if(
+                this.editarUsuario.telefono.trim()[0] == '0' ||
+                this.editarUsuario.telefono.includes('+') ||
+                this.editarUsuario.telefono.includes('(') ||
+                this.editarUsuario.telefono.includes(')') ||
+                this.editarUsuario.telefono.includes('-') ||
+                this.editarUsuario.telefono.includes(' ') ||
+                this.editarUsuario.telefono.includes('/')
+                ){
+                    return false
+                }
+    
+                return true
+            }
+            return false
+        },   
+        erroresBackArray: function(){
+            if(this.erroresBack === null){
+                return false
+            }
+
+            let errores = [];
+            for (const error in this.erroresBack) {
+                if (Object.hasOwnProperty.call(this.erroresBack, error)) {
+                    errores.push(this.erroresBack[error][0])
+                }
+            }
+            return errores
+        }     
     },
     methods: {
         logout: function(){
@@ -50,15 +102,41 @@ export default {
             }
         },
         editar: function(){
-            this.editarDatos = false
+            this.isLoading = true;
+            this.erroresBack = null;
+            authServicio.editar(this.editarUsuario)
+            .then(rta => {
+                if(rta.success){
+                    this.usuario = rta.data;
+
+                    this.editarUsuario = {
+                        nombre: rta.data.nombre,
+                        email: rta.data.email,
+                        telefono: rta.data.telefono,
+                        id_usuario: rta.data.id_usuario,
+                    }
+
+                    this.isLoading = false;
+                    this.editarDatos = false
+                }else{
+                    this.erroresBack = rta.errors;
+                    this.isLoading = false;
+                }
+            })
         }
     },
     data() {
         return {
             editarDatos: false,
             isLoading: false,
+            erroresBack: null,
             usuario: {},
-            editarUsuario: {}
+            editarUsuario: {
+                nombre: null,
+                email: null,
+                telefono: null,
+                id_usuario: null,
+            }
         }
     },
 }
@@ -67,12 +145,12 @@ export default {
     .user-menu{
         margin-top: 2rem;
     }
-    .user-menu li{
+    .user-menu > li{
         padding: 1rem 0;
         border-top: solid 1px #ccc;
     }
 
-    .user-menu li:last-of-type{
+    .user-menu > li:last-of-type{
         border-bottom: solid 1px #ccc;
     }
 
@@ -91,5 +169,10 @@ export default {
     .editar-form .btn{
         width: 100%;
         margin: 1rem 0;
+    }
+
+    .loader{
+        width: 18px!important;
+        height: 18px!important;
     }
 </style>

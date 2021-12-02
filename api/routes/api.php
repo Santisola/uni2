@@ -31,6 +31,8 @@ Route::delete('/alertas/{id}', [AlertasController::class, 'borrar']);
 
 Route::get('/usuario/{id}/alertas', [AlertasController::class, 'deUsuario']);
 
+Route::put('/usuario/{id}', [AuthController::class, 'editar']);
+
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware(['auth:sanctum']);
 

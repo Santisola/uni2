@@ -355,17 +355,17 @@ export default {
     }
 
     #alerta > .content > ul li:first-of-type::before{
-        background-image: url("../assets/icons/calendar.svg");
+        background: url("../assets/icons/calendar.svg") center no-repeat;
         background-size: contain;
     }
 
     #alerta > .content > ul li:nth-of-type(2)::before{
-        background-image: url("../assets/icons/clock.svg");
+        background: url("../assets/icons/clock.svg") center no-repeat;
         background-size: contain;
     }
 
     #alerta > .content > ul li:last-of-type::before{
-        background-image: url("../assets/icons/map-pin.svg");
+        background: url("../assets/icons/map-pin.svg") center no-repeat;
         background-size: contain;
     }
 
@@ -406,5 +406,8 @@ export default {
         border-radius: 50%;
         background: url('../assets/icons/wpp.svg') no-repeat 55% 45%;
         background-color: #25D366;
+    }
+    .direccionBien{
+        width: 100%;
     }
 </style>

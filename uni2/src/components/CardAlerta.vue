@@ -165,4 +165,8 @@ export default {
     background: url("../assets/icons/gato.svg") no-repeat center;
     background-size: contain;
 }
+
+.direccionBien{
+    width: 100%;
+}
 </style>

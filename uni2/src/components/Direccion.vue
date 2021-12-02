@@ -54,5 +54,7 @@ export default {
 }
 </script>
 <style>
-    
+    .direccionBien{
+        width: 100%;
+    }
 </style>

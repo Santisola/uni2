@@ -1,6 +1,6 @@
 <template>
 	<div class="home">
-		<h1>Hola, {{usuario.nombre}}</h1>
+		<h1><div>Hola, {{usuario.nombre}} <img src="../assets/imago-amarillo.svg" alt="Logo Unidos"></div></h1>
 		<MiniLoader v-if="isLoading" />
 		<SliderAlertas v-else
 		titulo="Mascotas perdidas por tu zona"
@@ -66,7 +66,7 @@ export default {
 		isLoading: false,
 		alertas: [],
         anuncio: {
-            img: 'https://dummyimage.com/350x125/777/eee',
+            img: 'adopcion-puppies.jpg',
             titulo: '¡Vení a una nueva jornada de adopción!',
             texto: 'El miércoles en Puppies de Av. Cabildo se hará una nueva jornada de adopción. Podrás acercarte desde las 10:00hs hasta las 18:00hs y bla blablabla blabla'
         }
@@ -76,7 +76,31 @@ export default {
 </script>
 <style scoped>
 h1{
-    margin: 1rem 0;
+    margin: -1rem;
+    margin-bottom: 0;
+    padding: 0.5rem 1rem;
+    padding-bottom: 0;
     font-size: 1.5rem;
+    background: #FFC800;
+}
+
+h1::after {
+    content: "";
+    display: block;
+    height: 10px;
+    background: #f6f6f6;
+    margin: 0 -1rem;
+    margin-top: 0.5rem;
+    border-radius: 16px 16px 0 0;
+    width: calc(100% + 2rem);
+}
+h1 div{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+h1 div img{
+	height: 40px;
 }
 </style>
