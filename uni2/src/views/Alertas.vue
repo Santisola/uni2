@@ -4,7 +4,7 @@
         <MiniLoader v-if="isLoading" />
         <div v-else-if="alertas.length == 0" id="sin-alertas">
             <img src="../assets/no-alertas.png" alt="Gato durmiendo sobre una campana de notificaciones">
-            <p>Aún no recibiste ninguna alerta.</p>
+            <p>Aún no creaste ninguna alerta.</p>
         </div>
         <ul id="alertas" v-else>
             <li v-for="(alerta, index) in reversedAlertas" :key="index">

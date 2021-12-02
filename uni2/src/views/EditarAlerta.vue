@@ -610,4 +610,8 @@ input#fotos::after {
 #editaDireccionLabel.si::before{
     background: var(--primary);
 }
+
+.btn{
+    margin: 1rem 0;
+}
 </style>

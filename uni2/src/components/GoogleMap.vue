@@ -14,7 +14,7 @@
       :key="index"
       v-for="(m, index) in markers"
       :position="m.position"
-      :title="m.title"
+      :title="m.title.toString()"
       :clickable="true"
       :icon="m.tipoAlerta == 1 ? greenMarker : redMarker "
       @click="$router.push('/alertas/' + m.title + '?from=buscar')"

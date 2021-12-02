@@ -2,7 +2,7 @@
     <div class="sliderAlertas">
         <div class="header">
             <h2>{{titulo}}</h2>
-            <a href="#">Ver todo</a>
+            <!-- <a href="#">Ver todo</a> -->
         </div>
         <div class="sliderContent">
             <ul>
