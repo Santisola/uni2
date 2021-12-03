@@ -148,6 +148,7 @@ export default {
             this.alerta = res;
             this.isLoading = false;
         });
+        alertasServicio.getRazas().then(res => {this.razas = res});
     },
     updated() {
         if(document.getElementById('autocomplete') && this.editaDireccion){
@@ -316,6 +317,14 @@ export default {
             }
             return true
         },
+        razasFiltradas: function(){
+            if(this.selectedEspecie !== null){
+
+                return this.razas.filter(raza => raza.id_especie == this.selectedEspecie);
+
+            }
+            return false;
+        },
         razaName() {
             let nombreRaza = ''
             this.razas.map(raza => {
@@ -355,32 +364,7 @@ export default {
 
             imagenPerdida: null,
             
-            razas:[
-                {
-                    id_raza: 1,
-                    raza: 'Labrador Retriever'
-                },
-                {
-                    id_raza: 2,
-                    raza: 'Border Collie'
-                },
-                {
-                    id_raza: 3,
-                    raza: 'Bichón Maltés'
-                },
-                {
-                    id_raza: 4,
-                    raza: 'Pitbull'
-                },
-                {
-                    id_raza: 5,
-                    raza: 'Pastor Alemán'
-                },
-                {
-                    id_raza: 6,
-                    raza: 'Yorkshire Terrier'
-                },
-            ],
+            razas:[],
 
             erroresBack: null,
             errores:{

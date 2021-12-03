@@ -2,7 +2,7 @@
     <div>
         <Loader v-if="isLoading" />
         <div v-if="success === null" class="form-nueva-header">
-            <span @click="paso > 0 ? paso-- : ''">Volver</span>
+            <span @click="paso > 0 ? paso-- : $router.push('/publicar')">Volver</span>
             <div class="form-nueva-title">
                 <h1>{{pasos[paso].titulo}}</h1>
                 <p v-if="paso < 4">Siguiente: {{pasos[paso+1].titulo}}</p>
@@ -15,42 +15,100 @@
         <form v-if="success === null" @submit.prevent="crear" action="#" method="post">
             <div id="perdida-paso-1" v-if="paso === 0">
                 <h2>Especie</h2>
-                <div class="form-grup radio-group">
+                <div class="form-grup radio-group especie-container">
                     <div :class="selectedEspecie == 1 ? 'radio-item radio-active' : 'radio-item'">
-                        <input :aria-describedby="errores.especie.error ? 'error-especie' : null" v-model="selectedEspecie" type="radio" name="especie" id="perro" :value="1">
+                        <input
+                        v-model="selectedEspecie"
+                        :aria-describedby="errores.especie.error ? 'error-especie' : null"
+                        :value="1"
+                        type="radio"
+                        name="especie"
+                        id="perro"
+                        >
                         <label for="perro">Perro</label>
                     </div>
                     <div :class="selectedEspecie == 2 ? 'radio-item radio-active' : 'radio-item'">
-                        <input :aria-describedby="errores.especie.error ? 'error-especie' : null" v-model="selectedEspecie" type="radio" name="especie" id="gato" :value="2">
+                        <input
+                        v-model="selectedEspecie"
+                        :aria-describedby="errores.especie.error ? 'error-especie' : null"
+                        :value="2"
+                        type="radio"
+                        name="especie"
+                        id="gato"
+                        >
                         <label for="gato">Gato</label>
                     </div>
-                    <p v-if="errores.especie.error" id="error-especie" class="msj msj-error">{{errores.especie.mensaje}}</p>
+                    <p
+                    v-if="errores.especie.error"
+                    id="error-especie"
+                    class="msj msj-error"
+                    >{{errores.especie.mensaje}}</p>
                 </div>
                 
                 <div class="form-group">
                     <label for="raza">Raza</label>
-                    <select :aria-describedby="errores.raza.error ? 'error-raza' : null" @blur="validar('raza')" v-model="selectedRaza" name="raza" id="raza">
-                        <option v-for="(raza, index) in razas" :key="index" :value="raza.id_raza">{{raza.raza}}</option>
+                    <select
+                    v-model="selectedRaza"
+                    :aria-describedby="errores.raza.error ? 'error-raza' : null"
+                    name="raza"
+                    id="raza"
+                    @blur="validar('raza')"
+                    v-bind:disabled="!razasFiltradas"
+                    >
+                        <option v-if="!razasFiltradas" :value="null">Necesitás cargar la especie para elegir la raza</option>
+                        <option v-for="(raza, index) in razasFiltradas" :key="index" :value="raza.id_raza">{{raza.raza}}</option>
                     </select>
-                    <p v-if="errores.raza.error" id="error-raza" class="msj msj-error">{{errores.raza.mensaje}}</p>
+                    <p
+                    v-if="errores.raza.error"
+                    id="error-raza"
+                    class="msj msj-error"
+                    >{{errores.raza.mensaje}}</p>
                 </div>
                 
                 <h2>Sexo</h2>
                 <div class="form-group radio-group sexo-container">
                     <div class="radio-item">
-                        <input :aria-describedby="errores.sexo.error ? 'error-sexo' : null" @blur="validar('sexo')" v-model="selectedSexo" type="radio" name="sexo" id="macho" :value="1">
+                        <input
+                        v-model="selectedSexo"
+                        :value="1"
+                        :aria-describedby="errores.sexo.error ? 'error-sexo' : null"
+                        type="radio"
+                        name="sexo"
+                        id="macho"
+                        @blur="validar('sexo')"
+                        >
                         <label for="macho">Macho</label>
                     </div>
                     <div class="radio-item">
-                        <input :aria-describedby="errores.sexo.error ? 'error-sexo' : null" @blur="validar('sexo')" v-model="selectedSexo" type="radio" name="sexo" id="hembra" :value="2">
+                        <input
+                        v-model="selectedSexo"
+                        :aria-describedby="errores.sexo.error ? 'error-sexo' : null"
+                        :value="2"
+                        type="radio"
+                        name="sexo"
+                        id="hembra"
+                        @blur="validar('sexo')"
+                        >
                         <label for="hembra">Hembra</label>
                     </div>
-                    <p v-if="errores.sexo.error" id="error-sexo" class="msj msj-error">{{errores.sexo.mensaje}}</p>
+                    <p
+                    v-if="errores.sexo.error"
+                    id="error-sexo"
+                    class="msj msj-error"
+                    >{{errores.sexo.mensaje}}</p>
                 </div>
                 
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
-                    <input :aria-describedby="errores.nombre.error ? 'error-nombre' : null" @blur="validar('nombre')" v-model="nombre" type="text" name="nombre" id="nombre" placeholder="Nombre de tu mascota">
+                    <input
+                    v-model="nombre"
+                    :aria-describedby="errores.nombre.error ? 'error-nombre' : null"
+                    type="text"
+                    name="nombre"
+                    id="nombre"
+                    placeholder="Nombre de tu mascota"
+                    @blur="validar('nombre')"
+                    >
                     <p v-if="errores.nombre.error" id="error-nombre" class="msj msj-error">{{errores.nombre.mensaje}}</p>
                 </div>
                 
@@ -61,48 +119,115 @@
                 <div class="form-group">
                     <label for="autocomplete">Dirección</label>
                     <div id="direccion">
-                        <input :aria-describedby="errores.direccion.error ? 'error-direccion' : null" @blur="validar('direccion')" v-bind:disabled="direccionExitosa" v-model="direccion" type="text" name="direccion" id="autocomplete" placeholder="Soler 5868, Buenos Aires"><a href="#" @click.prevent="direccionExitosa = null" v-if="direccionExitosa">X</a>
-                        <button :class="direccionExitosa ? 'exito' : ''" @click.prevent="actualizarDireccion">Buscar</button>
+                        <input
+                        v-bind:disabled="direccionExitosa"
+                        v-model="direccion"
+                        :aria-describedby="errores.direccion.error ? 'error-direccion' : null"
+                        type="text"
+                        name="direccion"
+                        id="autocomplete"
+                        placeholder="Soler 5868, Buenos Aires"
+                        @blur="validar('direccion')"
+                        >
+                        <a
+                        v-if="direccionExitosa"
+                        href="#"
+                        @click.prevent="direccionExitosa = null"
+                        >X</a>
+                        <button
+                        :class="direccionExitosa ? 'exito' : ''"
+                        @click.prevent="actualizarDireccion"
+                        >Buscar</button>
                     </div>
                     <p v-if="errores.direccion.error" id="error-direccion" class="msj msj-error">{{errores.direccion.mensaje}}</p>
                 </div>
 
                 <div class="form-group">
                     <label for="extraDireccion">Más información del lugar</label>
-                    <input v-model="extraDireccion" type="text" name="extraDireccion" id="extraDireccion" placeholder="Ej. Entre las calles...">
+                    <input
+                    v-model="extraDireccion"
+                    type="text"
+                    name="extraDireccion"
+                    id="extraDireccion"
+                    placeholder="Ej. Entre las calles..."
+                    >
                 </div>
             </div>
             <div id="perdida-paso-3" v-if="paso === 2">
                 <div class="form-group">
                     <label for="fecha">Fecha</label>
-                    <input :aria-describedby="errores.fecha.error ? 'error-fecha' : null" @blur="validar('fecha')" v-model="fecha" type="date" name="fecha" id="fecha" placeholder="Domingo 18 de julio, 2021">
-                    <p v-if="errores.fecha.error" id="error-fecha" class="msj msj-error">{{errores.fecha.mensaje}}</p>
+                    <input
+                    v-model="fecha"
+                    :aria-describedby="errores.fecha.error ? 'error-fecha' : null"
+                    type="date"
+                    name="fecha"
+                    id="fecha"
+                    placeholder="Domingo 18 de julio, 2021"
+                    @blur="validar('fecha')"
+                    >
+                    <p
+                    v-if="errores.fecha.error"
+                    id="error-fecha"
+                    class="msj msj-error"
+                    >{{errores.fecha.mensaje}}</p>
                 </div>
 
                 <div class="form-group">
                     <label for="hora">Hora</label>
-                    <input :aria-describedby="errores.hora.error ? 'error-hora' : null" @blur="validar('hora')" v-model="hora" type="time" name="hora" id="hora" placeholder="Ingresá la hora">
-                    <p v-if="errores.hora.error" id="error-hora" class="msj msj-error">{{errores.hora.mensaje}}</p>
+                    <input
+                    v-model="hora"
+                    :aria-describedby="errores.hora.error ? 'error-hora' : null"
+                    type="time"
+                    name="hora"
+                    id="hora"
+                    placeholder="Ingresá la hora"
+                    @blur="validar('hora')"
+                    >
+                    <p
+                    v-if="errores.hora.error"
+                    id="error-hora"
+                    class="msj msj-error"
+                    >{{errores.hora.mensaje}}</p>
                 </div>
             </div>
             <div id="perdida-paso-4" v-if="paso === 3">
                 <div class="form-group">
                     <label for="fotos">Seleccioná las fotos</label>
-                    <input v-if="imagenPerdida === null" type="file" id="fotos" ref="imagen" @change="cargarImg">
+                    <input
+                    v-if="imagenPerdida === null"
+                    type="file"
+                    id="fotos"
+                    ref="imagen"
+                    @change="cargarImg"
+                    >
                     <img
                     v-else
                     width="148"
                     height="148"
                     style="object-fit: contain;"
-                    :src="imagenPerdida" :alt="'Mascota perdida ' + nombre">
+                    :src="imagenPerdida"
+                    :alt="'Mascota perdida ' + nombre"
+                    >
                 </div>
 
                 <div class="form-group">
                     <label for="descripcion">Características de tu mascota</label>
                     <p>Escribí cualquier rasgo o detalle de tu mascota que facilite su reconocimiento.</p>
-                    <textarea :aria-describedby="errores.descripcion.error ? 'error-descripcion' : null" @blur="validar('descripcion')" id="descripcion" rows="6" cols="10" v-model="descripcion" placeholder="ej. Tiene una manchita negra en la nariz...">
+                    <textarea
+                    v-model="descripcion"
+                    :aria-describedby="errores.descripcion.error ? 'error-descripcion' : null"
+                    id="descripcion"
+                    rows="6"
+                    cols="10"
+                    placeholder="ej. Tiene una manchita negra en la nariz..."
+                    @blur="validar('descripcion')"
+                    >
                     </textarea>
-                    <p v-if="errores.descripcion.error" id="error-descripcion" class="msj msj-error">{{errores.descripcion.mensaje}}</p>
+                    <p
+                    v-if="errores.descripcion.error"
+                    id="error-descripcion"
+                    class="msj msj-error"
+                    >{{errores.descripcion.mensaje}}</p>
                 </div>
             </div>
             <div id="perdida-paso-5" v-if="paso === 4">
@@ -145,9 +270,22 @@
             </div>
             
             <div id="form-controls">
-                <span class="btn-secondary" @click="paso > 0 ? paso-- : ''">Volver</span>
-                <span v-if="paso !== 4" :class="isValid ? 'btn btn-primary' : 'btn btn-disabled'" @click="paso < 4 ? paso++ : ''">Siguiente</span>
-                <input type="submit" value="Publicar" class="btn btn-primary" v-else>
+                <span
+                class="btn-secondary"
+                @click="paso > 0 ? paso-- : ''"
+                >Volver</span>
+
+                <span
+                v-if="paso !== 4"
+                :class="isValid ? 'btn btn-primary' : 'btn btn-disabled'"
+                @click="paso < 4 ? paso++ : ''"
+                >Siguiente</span>
+                <input
+                type="submit"
+                value="Publicar"
+                class="btn btn-primary"
+                v-else
+                >
             </div>
         </form>
         <div id="exito" v-else-if="success === true">
@@ -279,7 +417,7 @@ export default {
     },
     mounted() {
         this.usuario = authServicio.getUsuario();
-        alertasServicio.getRazas().then(res => {this.razasBien = res});
+        alertasServicio.getRazas().then(res => {this.razas = res});
     },
     updated(){
         if(this.paso === 1){
@@ -307,6 +445,14 @@ export default {
                 }
             }
             return errores
+        },
+        razasFiltradas: function(){
+            if(this.selectedEspecie !== null){
+
+                return this.razas.filter(raza => raza.id_especie == this.selectedEspecie);
+
+            }
+            return false;
         },
         isValid() {
             switch (this.paso){
@@ -406,35 +552,9 @@ export default {
                     titulo: 'Confirmá los datos'
                 },
             ],
-            razasBien: [],
-            razas:[
-                {
-                    id_raza: 1,
-                    raza: 'Labrador Retriever'
-                },
-                {
-                    id_raza: 2,
-                    raza: 'Border Collie'
-                },
-                {
-                    id_raza: 3,
-                    raza: 'Bichón Maltés'
-                },
-                {
-                    id_raza: 4,
-                    raza: 'Pitbull'
-                },
-                {
-                    id_raza: 5,
-                    raza: 'Pastor Alemán'
-                },
-                {
-                    id_raza: 6,
-                    raza: 'Yorkshire Terrier'
-                },
-            ],
+            razas:[],
 
-            selectedEspecie: 1,
+            selectedEspecie: null,
             selectedRaza: null,
             selectedSexo: null,
             nombre: '',
@@ -594,13 +714,19 @@ h2,
     border-color: var(--primary);
 }
 
-.sexo-container{
+option{
+    text-transform: capitalize;
+}
+
+.sexo-container,
+.especie-container{
     justify-content: space-between;
     flex-wrap: wrap;
 }
 
-.sexo-container > div{
-    width: 48%;
+.sexo-container > div,
+.especie-container > div{
+    width: 45%;
 }
 
 .sexo-container > p{
@@ -774,6 +900,7 @@ input#fotos::after {
     line-height: 24px;
     letter-spacing: 0.01em;
     font-weight: 600;
+    margin-right: .5rem;
     color: #222222;
 }
 

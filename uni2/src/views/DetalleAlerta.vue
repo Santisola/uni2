@@ -45,7 +45,7 @@
 
                 <div>
                     <img :src="this.alerta.id_especie === 1 ? require('../assets/icons/perro.svg') : require('../assets/icons/gato.svg')" :alt="this.alerta.id_especie === 1 ? 'Silueta de un perro' : 'Silueta de un gato'">
-                    <p>{{razaName}}</p>
+                    <p>{{alerta.raza.raza}}</p>
                 </div>
             </div>
             <ul>
@@ -120,15 +120,6 @@ export default {
             let hora = this.alerta.created_at.split('T')[1].split(':');
             return hora[0] + ':' + hora[1]; 
         },
-        razaName() {
-            let nombreRaza = ''
-            this.razas.map(raza => {
-                if(raza.id_raza === this.alerta.id_raza){
-                    nombreRaza = raza.raza
-                }
-            })
-            return nombreRaza;
-        },
         sexoName() {
             if(this.alerta.id_sexo === 1) {
                 return 'Macho';
@@ -162,33 +153,6 @@ export default {
             deleteConfirmation: false,
 
             direccion: '',
-
-            razas:[
-            {
-                id_raza: 1,
-                raza: 'Labrador Retriever'
-            },
-            {
-                id_raza: 2,
-                raza: 'Border Collie'
-            },
-            {
-                id_raza: 3,
-                raza: 'Bichón Maltés'
-            },
-            {
-                id_raza: 4,
-                raza: 'Pitbull'
-            },
-            {
-                id_raza: 5,
-                raza: 'Pastor Alemán'
-            },
-            {
-                id_raza: 6,
-                raza: 'Yorkshire Terrier'
-            },
-        ],
         }
     },
 }

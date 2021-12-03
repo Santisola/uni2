@@ -28,7 +28,7 @@ class AlertasSeeder extends Seeder
                 'id_usuario' => 1,
                 'id_especie' => 1,
                 'id_sexo' => 1,
-                'id_raza' => 1,
+                'id_raza' => 25,
                 'id_tipoalerta' => 2,
             ],
             [
@@ -42,7 +42,7 @@ class AlertasSeeder extends Seeder
                 'longitud' =>  -58.492779,
                 'id_especie' => 1,
                 'id_sexo' => 1,
-                'id_raza' => 6,
+                'id_raza' => 40,
                 'id_usuario' => 2,
                 'id_tipoalerta' => 1,
             ],

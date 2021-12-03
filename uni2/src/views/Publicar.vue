@@ -62,8 +62,8 @@ h1{
 }
 
 .nueva-alerta-options li a h2{
-    width: 45%;
-    vertical-align: center;
+    width: 50%;
+    font-size: 22px;
 }
 
 .nueva-alerta-options li:first-of-type a::after{

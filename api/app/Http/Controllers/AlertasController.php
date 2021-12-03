@@ -71,6 +71,7 @@ class AlertasController extends Controller
     public function ver($alerta){
         $alerta = Alerta::findOrFail($alerta);
         $alerta->telefono = $alerta->usuario->telefono;
+        $alerta->raza = $alerta->raza->raza;
 
         return response()->json([
             'data' => $alerta

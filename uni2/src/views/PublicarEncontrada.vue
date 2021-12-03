@@ -2,7 +2,7 @@
     <div>
         <Loader v-if="isLoading" />
         <div v-if="success === null" class="form-nueva-header">
-            <span @click="paso > 0 ? paso-- : ''">Volver</span>
+            <span @click="paso > 0 ? paso-- : $router.push('/publicar')">Volver</span>
             <div class="form-nueva-title">
                 <h1>{{pasos[paso].titulo}}</h1>
                 <p v-if="paso < 4">Siguiente: {{pasos[paso+1].titulo}}</p>
@@ -15,13 +15,13 @@
         <form v-if="success === null" @submit.prevent="crear" action="#" method="post">
             <div id="perdida-paso-1" v-if="paso === 0">
                 <h2>Especie</h2>
-                <div class="form-grup radio-group">
-                    <div class="radio-item radio-active">
-                        <input :aria-describedby="errores.especie.error ? 'error-especie' : null" v-model="selectedEspecie" checked type="radio" name="especie" id="perro" :value="1">
+                <div class="form-grup radio-group especie-container">
+                    <div :class="selectedEspecie == 1 ? 'radio-item radio-active' : 'radio-item'">
+                        <input :aria-describedby="errores.especie.error ? 'error-especie' : null" v-model="selectedEspecie" type="radio" name="especie" id="perro" :value="1">
                         <label for="perro">Perro</label>
                     </div>
-                    <div class="radio-item">
-                        <input :aria-describedby="errores.especie.error ? 'error-especie' : null" v-model="selectedEspecie" disabled type="radio" name="especie" id="gato" :value="2">
+                    <div :class="selectedEspecie == 2 ? 'radio-item radio-active' : 'radio-item'">
+                        <input :aria-describedby="errores.especie.error ? 'error-especie' : null" v-model="selectedEspecie" type="radio" name="especie" id="gato" :value="2">
                         <label for="gato">Gato</label>
                     </div>
                     <p v-if="errores.especie.error" id="error-especie" class="msj msj-error">{{errores.especie.mensaje}}</p>
@@ -29,8 +29,9 @@
                 
                 <div class="form-group">
                     <label for="raza">Raza</label>
-                    <select :aria-describedby="errores.raza.error ? 'error-raza' : null" @blur="validar('raza')" v-model="selectedRaza" name="raza" id="raza">
-                        <option v-for="(raza, index) in razas" :key="index" :value="raza.id_raza">{{raza.raza}}</option>
+                    <select v-bind:disabled="!razasFiltradas" :aria-describedby="errores.raza.error ? 'error-raza' : null" @blur="validar('raza')" v-model="selectedRaza" name="raza" id="raza">
+                        <option v-if="!razasFiltradas" :value="null">Necesitás cargar la especie para elegir la raza</option>
+                        <option v-for="(raza, index) in razasFiltradas" :key="index" :value="raza.id_raza">{{raza.raza}}</option>
                     </select>
                     <p v-if="errores.raza.error" id="error-raza" class="msj msj-error">{{errores.raza.mensaje}}</p>
                 </div>
@@ -267,6 +268,7 @@ export default {
     },
     mounted() {
         this.usuario = authServicio.getUsuario();
+        alertasServicio.getRazas().then(res => {this.razas = res});
     },
     updated(){
         if(this.paso === 1){
@@ -329,6 +331,14 @@ export default {
             }
             return true
         },
+        razasFiltradas: function(){
+            if(this.selectedEspecie !== null){
+
+                return this.razas.filter(raza => raza.id_especie == this.selectedEspecie);
+
+            }
+            return false;
+        },
         razaName() {
             let nombreRaza = ''
             this.razas.map(raza => {
@@ -387,34 +397,9 @@ export default {
                     titulo: 'Confirmá los datos'
                 },
             ],
-            razas:[
-                {
-                    id_raza: 1,
-                    raza: 'Labrador Retriever'
-                },
-                {
-                    id_raza: 2,
-                    raza: 'Border Collie'
-                },
-                {
-                    id_raza: 3,
-                    raza: 'Bichón Maltés'
-                },
-                {
-                    id_raza: 4,
-                    raza: 'Pitbull'
-                },
-                {
-                    id_raza: 5,
-                    raza: 'Pastor Alemán'
-                },
-                {
-                    id_raza: 6,
-                    raza: 'Yorkshire Terrier'
-                },
-            ],
+            razas:[],
 
-            selectedEspecie: 1,
+            selectedEspecie: null,
             selectedRaza: null,
             selectedSexo: null,
             nombre: '',
@@ -565,13 +550,19 @@ h2,
     border-color: var(--primary);
 }
 
-.sexo-container{
+option{
+    text-transform: capitalize;
+}
+
+.sexo-container,
+.especie-container{
     justify-content: space-between;
     flex-wrap: wrap;
 }
 
-.sexo-container > div{
-    width: 48%;
+.sexo-container > div,
+.especie-container > div{
+    width: 45%;
 }
 
 .sexo-container > p{
