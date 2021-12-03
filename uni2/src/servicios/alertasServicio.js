@@ -10,6 +10,12 @@ const alertasServicio = {
         return [...alertas];
     },
 
+    getRazas: async function(){
+        const fetchRes = await fetch(API + '/razas');
+        const respuesta = await fetchRes.json();
+        return respuesta.data;
+    },
+
     get: async function(id){
         const fetchRes = await fetch(API + '/alertas/' + id);
         const respuesta = await fetchRes.json();

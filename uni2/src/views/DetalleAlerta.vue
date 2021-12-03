@@ -58,7 +58,7 @@
                 <p>{{alerta.descripcion}}</p>
             </div>
             <div class="wpp-container">
-                <a class="btn-wpp" target="_blank" :href="wppLink">Contacto</a>
+                <a class="btn btn-primary" target="_blank" :href="wppLink">Enviar Whatsapp</a>
             </div>
         </div>
     </div>
@@ -395,18 +395,23 @@ export default {
         margin-top: 1rem;
     }
     
-    .btn-wpp{
-        border: solid 3px #fff;
-        display: block;
-        width: 64px;
-        height: 64px;
-        position: relative;
-        text-indent: -500px;
-        overflow: hidden;
-        border-radius: 50%;
-        background: url('../assets/icons/wpp.svg') no-repeat 55% 45%;
-        background-color: #25D366;
+    .btn-primary{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
     }
+
+    .btn-primary::before{
+        content: "";
+        display: block;
+        width: 24px;
+        height: 24px;
+        background: url('../assets/icons/wpp.svg')no-repeat center;
+        background-size: contain;
+        margin-right: 5px;
+    }
+
     .direccionBien{
         width: 100%;
     }

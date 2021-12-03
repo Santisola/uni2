@@ -29,6 +29,8 @@ Route::put('/alertas/{id}', [AlertasController::class, 'editar']);
 
 Route::delete('/alertas/{id}', [AlertasController::class, 'borrar']);
 
+Route::get('/razas', [AlertasController::class, 'razas']);
+
 Route::get('/usuario/{id}/alertas', [AlertasController::class, 'deUsuario']);
 
 Route::put('/usuario/{id}', [AuthController::class, 'editar']);

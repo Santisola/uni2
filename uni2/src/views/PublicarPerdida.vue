@@ -16,12 +16,12 @@
             <div id="perdida-paso-1" v-if="paso === 0">
                 <h2>Especie</h2>
                 <div class="form-grup radio-group">
-                    <div class="radio-item radio-active">
-                        <input :aria-describedby="errores.especie.error ? 'error-especie' : null" v-model="selectedEspecie" checked type="radio" name="especie" id="perro" :value="1">
+                    <div :class="selectedEspecie == 1 ? 'radio-item radio-active' : 'radio-item'">
+                        <input :aria-describedby="errores.especie.error ? 'error-especie' : null" v-model="selectedEspecie" type="radio" name="especie" id="perro" :value="1">
                         <label for="perro">Perro</label>
                     </div>
-                    <div class="radio-item">
-                        <input :aria-describedby="errores.especie.error ? 'error-especie' : null" v-model="selectedEspecie" disabled type="radio" name="especie" id="gato" :value="2">
+                    <div :class="selectedEspecie == 2 ? 'radio-item radio-active' : 'radio-item'">
+                        <input :aria-describedby="errores.especie.error ? 'error-especie' : null" v-model="selectedEspecie" type="radio" name="especie" id="gato" :value="2">
                         <label for="gato">Gato</label>
                     </div>
                     <p v-if="errores.especie.error" id="error-especie" class="msj msj-error">{{errores.especie.mensaje}}</p>
@@ -279,6 +279,7 @@ export default {
     },
     mounted() {
         this.usuario = authServicio.getUsuario();
+        alertasServicio.getRazas().then(res => {this.razasBien = res});
     },
     updated(){
         if(this.paso === 1){
@@ -405,6 +406,7 @@ export default {
                     titulo: 'Confirmá los datos'
                 },
             ],
+            razasBien: [],
             razas:[
                 {
                     id_raza: 1,
@@ -583,6 +585,7 @@ h2,
     display: flex;
     justify-content: space-around;
     align-items: center;
+    transition: all 150ms ease;
 }
 
 .radio-active{

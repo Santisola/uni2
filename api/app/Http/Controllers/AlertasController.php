@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alerta;
+use App\Models\Raza;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 
@@ -53,6 +54,17 @@ class AlertasController extends Controller
 
         return response()->json([
             'data' => $data
+        ]);
+    }
+
+    /**
+     * Returorna todas las razas
+     */
+    public function razas(){
+        $razas = Raza::all();
+
+        return response()->json([
+            'data' => $razas
         ]);
     }
 
