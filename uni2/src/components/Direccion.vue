@@ -22,6 +22,18 @@ export default {
                 this.direccion = res.results[0]
             })
     },
+    updated() {
+        const geocoder = new google.maps.Geocoder();
+        const latLng = {
+            lat: parseFloat(this.lat),
+            lng: parseFloat(this.lng),
+        }
+        geocoder
+            .geocode({ location: latLng })
+            .then(res => {
+                this.direccion = res.results[0]
+            })
+    },
     computed:{
         direccionBien: function(){
             if(!this.direccion){

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div @click="alertaElegida = null">
         <div>
             <ul id="mapHeader">
                 <li @click="filter = 0" :class="filter == 0 ? 'active' : '' ">Todas</li>
@@ -7,17 +7,32 @@
                 <li @click="filter = 2" :class="filter == 2 ? 'active' : '' ">Perdidas</li>
             </ul>
         </div>
-        <GoogleMap :allAlertas="filterAlertas" :latitude= 13.7013266 :longitude= -89.226622 :title="'Titulo Marcador'" />
+        <GoogleMap
+        :allAlertas="filterAlertas"
+        :latitude= 13.7013266
+        :longitude= -89.226622
+        :title="'Titulo Marcador'"
+        @abrirResumen="elegirAlerta"
+        />
+        <transition name="slide-fade">
+            <ResumenAlerta
+            v-if="alertaElegida !== null"
+            :alerta="alertaElegida"
+            @cerrarResumen="alertaElegida = null"
+            />
+        </transition>
     </div>
 </template>
 <script>
 import GoogleMap from '../components/GoogleMap.vue';
-import alertasServicio from '../servicios/alertasServicio'
+import ResumenAlerta from '../components/ResumenAlerta.vue';
+import alertasServicio from '../servicios/alertasServicio';
 
 export default {
     name: 'Buscar',
     components: {
-        GoogleMap
+        GoogleMap,
+        ResumenAlerta
     },
     computed:{
         filterAlertas: function() {
@@ -42,16 +57,37 @@ export default {
                 this.alertas = res;
             })
     },
+    methods: {
+        elegirAlerta: function(alerta){
+            this.alertaElegida = null;
+            setTimeout(() => this.alertaElegida = alerta, 100)
+            
+        }
+    },
     data: function() {
         return{
             map: null,
             alertas: [],
-            filter: 0
+            filter: 0,
+            alertaElegida: null
         }
     }
 }
 </script>
 <style scoped>
+.slide-fade-enter-active {
+  transition: all .25s ease;
+}
+
+.slide-fade-leave-active {
+  transition: all .25s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateY(10px);
+  opacity: 0;
+}
     #mapHeader{
         margin: -1rem;
         margin-bottom: 0;

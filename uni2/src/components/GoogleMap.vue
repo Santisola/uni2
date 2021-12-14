@@ -17,7 +17,7 @@
       :title="m.title.toString()"
       :clickable="true"
       :icon="m.tipoAlerta == 1 ? greenMarker : redMarker "
-      @click="$router.push('/alertas/' + m.title + '?from=buscar')"
+      @click="$emit('abrirResumen', m)"
     ></gmap-marker>
 
   </gmap-map>
@@ -52,13 +52,19 @@
             return {
               position: {lat: parseFloat(alerta.latitud), lng: parseFloat(alerta.longitud)},
               title: alerta.id_alerta,
-              tipoAlerta: alerta.id_tipoalerta
+              tipoAlerta: alerta.id_tipoalerta,
+              imagenes: alerta.imagenes,
+              nombre: alerta.nombre,
+              fecha: alerta.fecha
             }
           }else{
             return {
               position: {lat: parseFloat(alerta.latitud), lng: parseFloat(alerta.longitud)},
               title: alerta.id_alerta,
-              tipoAlerta: alerta.id_tipoalerta
+              tipoAlerta: alerta.id_tipoalerta,
+              imagenes: alerta.imagenes,
+              nombre: alerta.nombre,
+              fecha: alerta.fecha
             }
           }
         });
@@ -71,20 +77,6 @@
         greenMarker: greenMarker,
         redMarker: redMarker,
         center: {lat: -34.615759, lng: -58.5033452},
-        oldMarkers: [
-            {
-                position: {lat: this.latitude, lng: this.longitude},
-                title: this.title
-            },
-            {
-                position: {lat: 13.7005299, lng:-89.226588},
-                title: this.title
-            },
-            {
-                position: {lat: 13.7005299, lng:-89.228888},
-                title: this.title
-            },
-        ]
       }
     },
 
