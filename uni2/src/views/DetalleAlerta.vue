@@ -366,7 +366,7 @@ export default {
         width: 100%;
     }
 
-    .btn-primary::before{
+    .content .btn-primary::before{
         content: "";
         display: block;
         width: 24px;
