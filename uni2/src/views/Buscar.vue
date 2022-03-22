@@ -7,32 +7,39 @@
                 <li @click="filter = 2" :class="filter == 2 ? 'active' : '' ">Perdidas</li>
             </ul>
         </div>
-        <GoogleMap
+        <BaseMap
+            :allAlertas="filterAlertas"
+            :userLocation="userLocation"
+            @abrirResumen="elegirAlerta"
+        />
+        <!-- <GoogleMap
         :allAlertas="filterAlertas"
         :latitude= 13.7013266
         :longitude= -89.226622
         :title="'Titulo Marcador'"
         @abrirResumen="elegirAlerta"
-        />
+        /> -->
         <transition name="slide-fade">
             <ResumenAlerta
             v-if="alertaElegida !== null"
             :alerta="alertaElegida"
             @cerrarResumen="alertaElegida = null"
             />
-        </transition>
+        </transition> 
     </div>
 </template>
 <script>
-import GoogleMap from '../components/GoogleMap.vue';
+/* import GoogleMap from '../components/GoogleMap.vue'; */
 import ResumenAlerta from '../components/ResumenAlerta.vue';
+import BaseMap from '../components/BaseMap.vue';
 import alertasServicio from '../servicios/alertasServicio';
 
 export default {
     name: 'Buscar',
     components: {
-        GoogleMap,
+        BaseMap,
         ResumenAlerta
+        /* GoogleMap, */
     },
     computed:{
         filterAlertas: function() {
@@ -49,6 +56,19 @@ export default {
                 return alertasEncontradas
             }
             return this.alertas;
+        }
+    },
+    beforeMount() {
+        // Busco la ubicacion del usuario y la guardo en data para pasarsela al mapa
+        if(navigator.geolocation){
+            navigator.geolocation.getCurrentPosition(function(position){
+                setUserLocation([position.coords.longitude, position.coords.latitude])
+            });
+        }else{
+            this.userLocation = false
+        }
+        const setUserLocation = (lngLat) => {
+            this.userLocation = lngLat
         }
     },
     mounted() {
@@ -69,7 +89,9 @@ export default {
             map: null,
             alertas: [],
             filter: 0,
-            alertaElegida: null
+            alertaElegida: null,
+
+            userLocation: false,
         }
     }
 }

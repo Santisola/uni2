@@ -14,21 +14,21 @@
             </div>
             <ul>
                 <li>{{fechaBien}}</li>
-                <li><Direccion :lat="alerta.position.lat" :lng="alerta.position.lng" /></li>
+                <!-- <li><Direccion :lat="alerta.position.lat" :lng="alerta.position.lng" /></li> -->
             </ul>
         </div>
     </a>
 </template>
 <script>
 import ImagenesAlerta from './ImagenesAlerta.vue';
-import Direccion from './Direccion.vue';
+//import Direccion from './Direccion.vue';
 
 
 export default {
     name: 'ResumenAlerta',
     components:{
         ImagenesAlerta,
-        Direccion
+        //Direccion
     },
     props:{
         alerta: Object
