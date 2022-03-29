@@ -1,5 +1,5 @@
 <template>
-    <div v-if="isLoading">Cargando...</div>
+    <Loader v-if="isLoading" />
     <div v-else-if="alerta" id="alerta">
         <div v-if="deleteConfirmation" class="deleteModal">
             <div class="deleteModalContent">
@@ -67,13 +67,15 @@
 import alertasServicio from '../servicios/alertasServicio';
 import ImagenesAlerta from '../components/ImagenesAlerta.vue';
 import Direccion from '../components/Direccion.vue'
+import Loader from '../components/Loader.vue'
 import storageServicio from '../servicios/storageServicio';
 
 export default {
     name: "DetalleAlerta",
     components:{
         ImagenesAlerta,
-        Direccion
+        Direccion,
+        Loader
     },
     mounted() {
         this.isLoading = true;

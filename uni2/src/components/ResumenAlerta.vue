@@ -2,7 +2,7 @@
     <a
     href="#"
     class="container"
-    @click="$router.push('/alertas/' + alerta.title + '?from=buscar')"
+    @click="$router.push('/alertas/' + alerta.id_alerta + '?from=buscar')"
     >
         <div class="imgContainer">
             <ImagenesAlerta :imgs="alerta.imagenes" :principal="true" />
@@ -14,21 +14,21 @@
             </div>
             <ul>
                 <li>{{fechaBien}}</li>
-                <!-- <li><Direccion :lat="alerta.position.lat" :lng="alerta.position.lng" /></li> -->
+                <li><Direccion :lat="alerta.latitud" :lng="alerta.longitud" /></li>
             </ul>
         </div>
     </a>
 </template>
 <script>
 import ImagenesAlerta from './ImagenesAlerta.vue';
-//import Direccion from './Direccion.vue';
+import Direccion from './Direccion.vue';
 
 
 export default {
     name: 'ResumenAlerta',
     components:{
         ImagenesAlerta,
-        //Direccion
+        Direccion
     },
     props:{
         alerta: Object
@@ -57,6 +57,7 @@ export default {
         position: absolute;
         bottom: 100px;
         box-shadow: 0px 2px 16px -10px rgba(119, 119, 119, 0.5);
+        z-index: 3;
     }
     
     .imgContainer{

@@ -1,66 +1,44 @@
 <template>
-    <div class="direccionBien">
-        {{direccionBien}}
+    <div v-if="isLoading" class="direccionBien">
+        Cargando...
+    </div>
+    <div v-else class="direccionBien">
+        {{direccion}}
     </div>
 </template>
 <script>
+import {HERE_API_KEY} from '../constantes/index.js'
+
 export default {
     name:"Direccion",
     props:{
         lat: {required: true},
         lng: {required: true},
     },
-    mounted() {
-        const geocoder = new google.maps.Geocoder();
-        const latLng = {
-            lat: parseFloat(this.lat),
-            lng: parseFloat(this.lng),
-        }
-        geocoder
-            .geocode({ location: latLng })
-            .then(res => {
-                this.direccion = res.results[0]
-            })
-    },
-    updated() {
-        const geocoder = new google.maps.Geocoder();
-        const latLng = {
-            lat: parseFloat(this.lat),
-            lng: parseFloat(this.lng),
-        }
-        geocoder
-            .geocode({ location: latLng })
-            .then(res => {
-                this.direccion = res.results[0]
-            })
-    },
-    computed:{
-        direccionBien: function(){
-            if(!this.direccion){
-                return 'Cargando...'
-            }
-            let calle = '';
-            let altura = '';
-            let localidad = '';
-            
-            this.direccion.address_components.map(comp => {
-                if(comp.types[0] == 'route'){
-                    calle = comp.short_name
-                }
-                if(comp.types[0] == 'street_number'){
-                    altura = comp.long_name
-                }
-                if(comp.types[0] == 'administrative_area_level_1'){
-                    localidad = comp.short_name
-                }
-            })
+    async mounted() {
+        this.platform = new H.service.Platform({
+            apikey: this.apikey
+        });
 
-            return calle + ' ' + altura + ', ' + localidad
-        }
+        this.service = this.platform.getSearchService();
+
+        this.isLoading = true
+        await this.service.reverseGeocode({
+            at: `${this.lat},${this.lng}`
+        }, (res) => {
+            const resItem = res.items[0];
+            this.direccion = `${resItem.address.street} ${resItem.address.houseNumber}`;
+            this.isLoading = false;
+        })
     },
     data() {
         return {
+            isLoading: false,
+            
             direccion: '',
+            platform: null,
+            service: null,
+            apikey: HERE_API_KEY,
         }
     },
 }

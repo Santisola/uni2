@@ -4,7 +4,7 @@
             :accessToken="accessToken"
             :mapStyle="mapStyle"
             :center="mapCenter"
-            :zoom="12"
+            :zoom="11"
         >
             <MglGeolocateControl position="top-right" />
             
@@ -62,10 +62,8 @@ export default {
         userLocation: {required: true},
         allAlertas: {required: true},
     },
-    computed: {
-        mapCenter: function(){
-            return this.userLocation ? this.userLocation : [-58.447376624867765, -34.611000283089865]
-        }
+    beforeMount() {
+        this.userLocation ? this.mapCenter = {lon: this.userLocation[0], lat: this.userLocation[1]} : this.mapCenter = {lon: -58.447376624867765, lat: -34.611000283089865}
     },
     created() {
         this.mapbox = Mapbox
@@ -74,15 +72,24 @@ export default {
         return {
             accessToken: MAPBOX_PUBLIC_TOKEN,
             mapStyle: 'mapbox://styles/mapbox/streets-v11',
+            mapCenter: {lon: 0, lat: 0}
         }
     },
 }
 </script>
 
 <style scoped>
-#mapContainer{
+#mapContainer {
     width: calc(100% + 2rem);
     height: calc(100vh - 150px);
     margin: 0px -1rem;
+}
+
+.mapboxgl-marker {
+    z-index: 2;
+}
+
+.mapboxgl-user-location-accuracy-circle {
+    z-index: 1;
 }
 </style>

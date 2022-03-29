@@ -12,45 +12,99 @@
                 <p>{{pasos[paso].id}} de 5</p>
             </div>
         </div>
-        <form v-if="success === null" @submit.prevent="crear" action="#" method="post">
+        <form autocomplete="off" v-if="success === null" @submit.prevent="crear" action="#" method="post">
             <div id="perdida-paso-1" v-if="paso === 0">
                 <h2>Especie</h2>
                 <div class="form-grup radio-group especie-container">
                     <div :class="selectedEspecie == 1 ? 'radio-item radio-active' : 'radio-item'">
-                        <input :aria-describedby="errores.especie.error ? 'error-especie' : null" v-model="selectedEspecie" type="radio" name="especie" id="perro" :value="1">
+                        <input
+                            v-model="selectedEspecie"
+                            type="radio"
+                            name="especie"
+                            id="perro"
+                            :value="1"
+                            :aria-describedby="errores.especie.error ? 'error-especie' : null"
+                        >
                         <label for="perro">Perro</label>
                     </div>
                     <div :class="selectedEspecie == 2 ? 'radio-item radio-active' : 'radio-item'">
-                        <input :aria-describedby="errores.especie.error ? 'error-especie' : null" v-model="selectedEspecie" type="radio" name="especie" id="gato" :value="2">
+                        <input
+                            v-model="selectedEspecie"
+                            type="radio"
+                            name="especie"
+                            id="gato"
+                            :value="2"
+                            :aria-describedby="errores.especie.error ? 'error-especie' : null"
+                        >
                         <label for="gato">Gato</label>
                     </div>
-                    <p v-if="errores.especie.error" id="error-especie" class="msj msj-error">{{errores.especie.mensaje}}</p>
+                    <p
+                        v-if="errores.especie.error"
+                        id="error-especie"
+                        class="msj msj-error"
+                    >{{errores.especie.mensaje}}</p>
                 </div>
                 
                 <div class="form-group">
                     <label for="raza">Raza</label>
-                    <select v-bind:disabled="!razasFiltradas" :aria-describedby="errores.raza.error ? 'error-raza' : null" @blur="validar('raza')" v-model="selectedRaza" name="raza" id="raza">
-                        <option v-if="!razasFiltradas" :value="null">Necesitás cargar la especie para elegir la raza</option>
-                        <option v-for="(raza, index) in razasFiltradas" :key="index" :value="raza.id_raza">{{raza.raza}}</option>
+                    <select
+                        v-bind:disabled="!razasFiltradas"
+                        v-model="selectedRaza"
+                        name="raza"
+                        id="raza"
+                        :aria-describedby="errores.raza.error ? 'error-raza' : null"
+                        @blur="validar('raza')"
+                    >
+                        <option
+                            v-if="!razasFiltradas"
+                            :value="null"
+                        >Necesitás cargar la especie para elegir la raza</option>
+                        <option
+                            v-for="(raza, index) in razasFiltradas"
+                            :key="index"
+                            :value="raza.id_raza"
+                        >{{raza.raza}}</option>
                     </select>
-                    <p v-if="errores.raza.error" id="error-raza" class="msj msj-error">{{errores.raza.mensaje}}</p>
+                    <p
+                        v-if="errores.raza.error"
+                        id="error-raza"
+                        class="msj msj-error"
+                    >{{errores.raza.mensaje}}</p>
                 </div>
                 
                 <h2>Sexo</h2>
                 <div class="form-group radio-group sexo-container">
                     <div class="radio-item">
-                        <input v-model="selectedSexo" type="radio" name="sexo" id="macho" :value="1">
+                        <input
+                            v-model="selectedSexo"
+                            type="radio"
+                            name="sexo"
+                            id="macho"
+                            :value="1"
+                        >
                         <label for="macho">Macho</label>
                     </div>
                     <div class="radio-item">
-                        <input v-model="selectedSexo" type="radio" name="sexo" id="hembra" :value="2">
+                        <input
+                            v-model="selectedSexo"
+                            type="radio"
+                            name="sexo"
+                            id="hembra"
+                            :value="2"
+                        >
                         <label for="hembra">Hembra</label>
                     </div>
                 </div>
                 
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
-                    <input v-model="nombre" type="text" name="nombre" id="nombre" placeholder="Nombre de tu mascota">
+                    <input
+                        v-model="nombre"
+                        type="text"
+                        name="nombre"
+                        id="nombre"
+                        placeholder="Nombre de tu mascota"
+                    >
                 </div>
                 
             </div>
@@ -60,28 +114,89 @@
                 <div class="form-group">
                     <label for="autocomplete">Dirección</label>
                     <div id="direccion">
-                        <input :aria-describedby="errores.direccion.error ? 'error-direccion' : null" @blur="validar('direccion')" v-bind:disabled="direccionExitosa" v-model="direccion" type="text" name="direccion" id="autocomplete" placeholder="Soler 5868, Buenos Aires"><a href="#" @click.prevent="direccionExitosa = null" v-if="direccionExitosa">X</a>
-                        <button :class="direccionExitosa ? 'exito' : ''" @click.prevent="actualizarDireccion">Buscar</button>
+                        <input
+                            v-bind:disabled="direccionExitosa"
+                            v-model="direccion"
+                            type="text"
+                            name="direccion"
+                            id="autocomplete"
+                            placeholder="Soler 5868, Buenos Aires"
+                            :aria-describedby="errores.direccion.error ? 'error-direccion' : null"
+                            @blur="validar('direccion')"
+                            @keyup="autocomplete"
+                        >
+                        <a
+                            v-if="direccionExitosa"
+                            href="#"
+                            @click.prevent="direccionExitosa = null"
+                        >X</a>
+                        <button
+                            :class="direccionExitosa ? 'exito' : ''"
+                            @click.prevent="actualizarDireccion(null)"
+                        >Buscar</button>
                     </div>
-                    <p v-if="errores.direccion.error" id="error-direccion" class="msj msj-error">{{errores.direccion.mensaje}}</p>
+                    <ul
+                        id="suggestions"
+                        v-if="showSuggestions && direccion !== ''"
+                    >
+                        <li
+                            v-for="(suggestion, index) in suggestions"
+                            :key="index"
+                            @click="actualizarDireccion(suggestion)"
+                        >{{suggestion.title}}</li>
+                    </ul>
+                    <p
+                        v-if="errores.direccion.error"
+                        id="error-direccion"
+                        class="msj msj-error"
+                    >{{errores.direccion.mensaje}}</p>
                 </div>
 
                 <div class="form-group">
                     <label for="extraDireccion">Más información del lugar</label>
-                    <input v-model="extraDireccion" type="text" name="extraDireccion" id="extraDireccion" placeholder="Ej. Entre las calles...">
+                    <input
+                        v-model="extraDireccion"
+                        type="text"
+                        name="extraDireccion"
+                        id="extraDireccion"
+                        placeholder="Ej. Entre las calles..."
+                    >
                 </div>
             </div>
             <div id="perdida-paso-3" v-if="paso === 2">
                 <div class="form-group">
                     <label for="fecha">Fecha</label>
-                    <input :aria-describedby="errores.fecha.error ? 'error-fecha' : null" @blur="validar('fecha')" v-model="fecha" type="date" name="fecha" id="fecha" placeholder="Domingo 18 de julio, 2021">
-                    <p v-if="errores.fecha.error" id="error-fecha" class="msj msj-error">{{errores.fecha.mensaje}}</p>
+                    <input
+                        :aria-describedby="errores.fecha.error ? 'error-fecha' : null" @blur="validar('fecha')"
+                        v-model="fecha"
+                        type="date"
+                        name="fecha"
+                        id="fecha"
+                        placeholder="Domingo 18 de julio, 2021"
+                    >
+                    <p
+                        v-if="errores.fecha.error"
+                        id="error-fecha"
+                        class="msj msj-error"
+                    >{{errores.fecha.mensaje}}</p>
                 </div>
 
                 <div class="form-group">
                     <label for="hora">Hora</label>
-                    <input :aria-describedby="errores.hora.error ? 'error-hora' : null" @blur="validar('hora')" v-model="hora" type="time" name="hora" id="hora" placeholder="Ingresá la hora">
-                    <p v-if="errores.hora.error" id="error-hora" class="msj msj-error">{{errores.hora.mensaje}}</p>
+                    <input
+                        v-model="hora"
+                        type="time"
+                        name="hora"
+                        id="hora"
+                        placeholder="Ingresá la hora"
+                        :aria-describedby="errores.hora.error ? 'error-hora' : null"
+                        @blur="validar('hora')"
+                    >
+                    <p
+                        v-if="errores.hora.error"
+                        id="error-hora"
+                        class="msj msj-error"
+                    >{{errores.hora.mensaje}}</p>
                 </div>
             </div>
             <div id="perdida-paso-4" v-if="paso === 3">
@@ -89,19 +204,32 @@
                     <label for="fotos">Seleccioná las fotos</label>
                     <input v-if="imagenEncontrada === null" type="file" id="fotos" ref="imagen" @change="cargarImg">
                     <img
-                    v-else
-                    width="148"
-                    height="148"
-                    style="object-fit: contain;"
-                    :src="imagenEncontrada" :alt="'Mascota perdida ' + nombre">
+                        v-else
+                        width="148"
+                        height="148"
+                        style="object-fit: contain;"
+                        :src="imagenEncontrada" :alt="'Mascota perdida ' + nombre"
+                    >
                 </div>
 
                 <div class="form-group">
                     <label for="descripcion">Características de la mascota</label>
                     <p>Escribí cualquier rasgo o detalle de la mascota que facilite su reconocimiento.</p>
-                    <textarea :aria-describedby="errores.descripcion.error ? 'error-descripcion' : null" @blur="validar('descripcion')" id="descripcion" rows="6" cols="10" v-model="descripcion" placeholder="ej. Tiene una manchita negra en la nariz...">
+                    <textarea
+                        id="descripcion"
+                        rows="6"
+                        cols="10"
+                        v-model="descripcion"
+                        placeholder="ej. Tiene una manchita negra en la nariz..."
+                        :aria-describedby="errores.descripcion.error ? 'error-descripcion' : null"
+                        @blur="validar('descripcion')"
+                    >
                     </textarea>
-                    <p v-if="errores.descripcion.error" id="error-descripcion" class="msj msj-error">{{errores.descripcion.mensaje}}</p>
+                    <p
+                        v-if="errores.descripcion.error"
+                        id="error-descripcion"
+                        class="msj msj-error"
+                    >{{errores.descripcion.mensaje}}</p>
                 </div>
             </div>
             <div id="perdida-paso-5" v-if="paso === 4">
@@ -126,10 +254,11 @@
                         </div>
                         <div class="img">
                             <img
-                            width="100"
-                            height="100"
-                            style="object-fit: contain;"
-                            :src="imagenEncontrada" :alt="'Mascota perdida ' + nombre">
+                                width="100"
+                                height="100"
+                                style="object-fit: contain;"
+                                :src="imagenEncontrada" :alt="'Mascota perdida ' + nombre"
+                            >
                         </div>
                     </div>
                     <div class="bottom">
@@ -149,8 +278,17 @@
             
             <div id="form-controls">
                 <span class="btn-secondary" @click="paso > 0 ? paso-- : ''">Volver</span>
-                <span v-if="paso !== 4" :class="isValid ? 'btn btn-primary' : 'btn btn-disabled'" @click="paso < 4 ? paso++ : ''">Siguiente</span>
-                <input type="submit" value="Publicar" class="btn btn-primary" v-else>
+                <span
+                    v-if="paso !== 4"
+                    :class="isValid ? 'btn btn-primary' : 'btn btn-disabled'"
+                    @click="paso < 4 ? paso++ : ''"
+                >Siguiente</span>
+                <input
+                    type="submit"
+                    value="Publicar"
+                    class="btn btn-primary"
+                    v-else
+                >
             </div>
         </form>
         <div id="exito" v-else-if="success === true">
@@ -165,6 +303,7 @@
 import alertasServicio from '../servicios/alertasServicio'
 import authServicio from '../servicios/authServicio';
 import Loader from '../components/Loader.vue';
+import {HERE_API_KEY} from '../constantes/index';
 
 export default {
     name: "PublicarEncontrada",
@@ -172,20 +311,45 @@ export default {
         Loader
     },
     methods: {
-        actualizarDireccion: function(){
-            this.direccion = document.getElementById('autocomplete').value;
-            
-            this.geocoder.geocode({address: document.getElementById('autocomplete').value})
-            .then(res => {
-                this.latitud = res.results[0].geometry.location.lat();
-                this.longitud = res.results[0].geometry.location.lng();
+        autocomplete: function(){
+            if(this.direccion !== ''){
+                this.service.autosuggest({
+                    at: this.userLocation,
+                    limit: 5,
+                    q: this.direccion
+                }, (res) => {
+                    console.log(res)
+                    this.suggestions = res.items;
+                    if(res.items.length > 0) this.showSuggestions = true;
+                }, (err) => {
+                    this.suggestions = [];
+                    this.showSuggestions = false;
+                    console.error(err);
+                })
+            }
+        },
+        actualizarDireccion: function(suggestion){
+            if(suggestion !== null){
+                this.direccion = suggestion.title;
 
-                this.direccionExitosa = true;
-            })
+                this.latitud = suggestion.position.lat;
+                this.longitud = suggestion.position.lng;
+
+            } else{
+                console.log(this.suggestions[0])
+                this.direccion = this.suggestions[0].title;
+
+                this.latitud = this.suggestions[0].position.lat;
+                this.longitud = this.suggestions[0].position.lng;
+            }
+            
+            this.direccionExitosa = true;
+            this.showSuggestions = false;
+            this.suggestions = [];
             
         },
         crear: function (){
-
+            this.isLoading = true;
             const data = {
                 nombre: this.nombre,
                 descripcion: this.descripcion,
@@ -203,9 +367,11 @@ export default {
 
             alertasServicio.nueva(data).then(res => {
                 if(res.success){
+                    this.isLoading = false;
                     this.success = true
                 }else{
                     if(res.errors){
+                        this.isLoading = false;
                         this.erroresBack = res.errors
                     }
                 }
@@ -266,22 +432,27 @@ export default {
             }
         }
     },
+    beforeMount() {
+        if(navigator.geolocation){
+            navigator.geolocation.getCurrentPosition(function(position){
+                setUserLocation(`${position.coords.latitude},${position.coords.longitude}`)
+            });
+        }else{
+            setUserLocation('-34.611000283089865,-58.447376624867765')
+        }
+        const setUserLocation = (lngLat) => {
+            this.userLocation = lngLat
+        }
+    },
     mounted() {
+        this.platform = new H.service.Platform({
+            apikey: this.apikey
+        });
+
+        this.service = this.platform.getSearchService();
+        
         this.usuario = authServicio.getUsuario();
         alertasServicio.getRazas().then(res => {this.razas = res});
-    },
-    updated(){
-        if(this.paso === 1){
-            new google.maps.places.Autocomplete(
-                document.getElementById('autocomplete'),
-                {
-                    bounds: new google.maps.LatLngBounds(
-                        new google.maps.LatLng(-35.0233134, -59.5390479)
-                    )
-                }
-            );
-            this.geocoder = new google.maps.Geocoder();
-        }
     },
     computed:{
         erroresBackArray: function(){
@@ -368,9 +539,15 @@ export default {
     data: () => {
         return{
             isLoading: false,
-            geocoder: null,
             direccionExitosa: null,
 
+            apikey: HERE_API_KEY,
+            platform: null,
+            service: null,
+            userLocation: null,
+            showSuggestions: false,
+            suggestions: [],
+            
             usuario: {},
 
             success: null,
@@ -626,6 +803,24 @@ option{
     width: 20px;
     margin-top: -7px;
     margin-left: 0;
+}
+
+#suggestions{
+    background: #fff;
+    position: absolute;
+    left: 1rem;
+    right: 1rem;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.4);
+}
+
+#suggestions li{
+    padding: .75rem 1rem;
+    border-bottom: solid 1px rgba(0, 0, 0, 0.1);
+}
+
+#suggestions li:active{
+    background-color: #eee;
 }
 
 #form-controls{

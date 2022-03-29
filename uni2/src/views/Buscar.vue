@@ -61,6 +61,7 @@ export default {
     beforeMount() {
         // Busco la ubicacion del usuario y la guardo en data para pasarsela al mapa
         if(navigator.geolocation){
+            navigator.geolocation.getCurrentPosition(position => console.log(position))
             navigator.geolocation.getCurrentPosition(function(position){
                 setUserLocation([position.coords.longitude, position.coords.latitude])
             });
