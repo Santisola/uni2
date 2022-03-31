@@ -134,8 +134,8 @@
                             v-if="direccionExitosa"
                             href="#"
                             @click.prevent="direccionExitosa = null"
-                            >X</a>
-                            <button
+                        >X</a>
+                        <button
                             :class="direccionExitosa ? 'exito' : ''"
                             @click.prevent="actualizarDireccion(null)"
                         >Buscar</button>
