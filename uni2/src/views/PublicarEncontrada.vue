@@ -116,13 +116,14 @@
                     <div id="direccion">
                         <input
                             v-bind:disabled="direccionExitosa"
-                            v-model="direccion"
+                            :aria-describedby="errores.direccion.error ? 'error-direccion' : null"
+                            :value="direccion"
                             type="text"
                             name="direccion"
                             id="autocomplete"
                             placeholder="Soler 5868, Buenos Aires"
-                            :aria-describedby="errores.direccion.error ? 'error-direccion' : null"
                             @blur="validar('direccion')"
+                            @input="e => direccion = e.target.value"
                             @keyup="autocomplete"
                         >
                         <a
@@ -314,7 +315,7 @@ export default {
         autocomplete: function(){
             if(this.direccion !== ''){
                 this.service.autosuggest({
-                    at: this.userLocation,
+                    at: this.userLocation ? this.userLocation : '-34.611000283089865,-58.447376624867765',
                     limit: 5,
                     q: this.direccion
                 }, (res) => {
