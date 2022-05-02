@@ -1,12 +1,18 @@
 <template>
     <div>
         <h1>Perfil</h1>
-        <h2>{{usuario.nombre}}</h2>
-        <ul>
-            <li>{{usuario.email}}</li>
-            <li>{{usuario.telefono}}</li>
-        </ul>
-
+        <div class="columnas-2">
+          <div>
+            <img class="imgPerfil" :src="require('../assets/icons/img-perfil-default.jpg')" alt="Imagen de perfil">
+          </div>
+          <div class="datosUsuario">
+            <h2>{{usuario.nombre}}</h2>
+            <ul>
+              <li>{{usuario.email}}</li>
+              <li>{{usuario.telefono}}</li>
+            </ul>
+          </div>
+        </div>
         <ul class="user-menu">
             <li @click="editarDatos = !editarDatos">Editar mis datos</li>
             <li :style="editarDatos ? 'max-height: 500px;' : 'max-height: 0;'" class="editar-form">
@@ -66,7 +72,7 @@ export default {
                 }
     
                 if(
-                this.editarUsuario.telefono.trim()[0] == '0' ||
+                this.editarUsuario.telefono.trim()[0] === '0' ||
                 this.editarUsuario.telefono.includes('+') ||
                 this.editarUsuario.telefono.includes('(') ||
                 this.editarUsuario.telefono.includes(')') ||
@@ -74,7 +80,7 @@ export default {
                 this.editarUsuario.telefono.includes(' ') ||
                 this.editarUsuario.telefono.includes('/')
                 ){
-                    return false
+                    return false;
                 }
     
                 return true
@@ -93,37 +99,37 @@ export default {
                 }
             }
             return errores
-        }     
+        },
     },
     methods: {
-        logout: function(){
-            if(authServicio.logout()){
-                this.$router.push('/login')
-            }
-        },
-        editar: function(){
-            this.isLoading = true;
-            this.erroresBack = null;
-            authServicio.editar(this.editarUsuario)
-            .then(rta => {
-                if(rta.success){
-                    this.usuario = rta.data;
-
-                    this.editarUsuario = {
-                        nombre: rta.data.nombre,
-                        email: rta.data.email,
-                        telefono: rta.data.telefono,
-                        id_usuario: rta.data.id_usuario,
-                    }
-
-                    this.isLoading = false;
-                    this.editarDatos = false
-                }else{
-                    this.erroresBack = rta.errors;
-                    this.isLoading = false;
-                }
-            })
+      logout: function () {
+        if (authServicio.logout()) {
+          this.$router.push('/login')
         }
+      },
+      editar: function () {
+        this.isLoading = true;
+        this.erroresBack = null;
+        authServicio.editar(this.editarUsuario)
+            .then(rta => {
+              if (rta.success) {
+                this.usuario = rta.data;
+
+                this.editarUsuario = {
+                  nombre: rta.data.nombre,
+                  email: rta.data.email,
+                  telefono: rta.data.telefono,
+                  id_usuario: rta.data.id_usuario,
+                }
+
+                this.isLoading = false;
+                this.editarDatos = false
+              } else {
+                this.erroresBack = rta.errors;
+                this.isLoading = false;
+              }
+            })
+      },
     },
     data() {
         return {
@@ -174,5 +180,23 @@ export default {
     .loader{
         width: 18px!important;
         height: 18px!important;
+    }
+
+    .imgPerfil {
+      /*max-width: 50px;*/
+      width: 100%;
+      border-radius: 50%;
+      display: block;
+    }
+
+    .columnas-2 {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .datosUsuario li {
+      margin-bottom: 5px;
     }
 </style>
