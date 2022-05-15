@@ -25,6 +25,7 @@ class NoticiasSeeder extends Seeder
                                   Adoptar una mascota es una decisión individual y conlleva un proceso delicado, sobre todo en lo que tiene que ver con la adaptación del perro a su nueva familia y su nuevo entorno. \n
                                   Se debe evitar a toda costa el abandono de animales, ya que se les condena a vivir el resto de su vida en un refugio o en el peor de los casos a ser sacrificados. \n
                                   Tú puedes cambiarle la vida a un perro, pero él seguro que también te la cambia a ti.",
+                'imagen' => 'https://cdn.pixabay.com/photo/2022/04/24/16/06/nature-7153955_960_720.jpg',
                 'slug' => 'dia-mundial-del-perro-adoptado',
                 'publicado' => true,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),

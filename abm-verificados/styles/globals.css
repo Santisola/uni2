@@ -1,0 +1,40 @@
+@import "fonts/stylesheet.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --negro: #222222;
+  --amarillo: #FFC800;
+  --violeta: #5C3AE2;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat",-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+  Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+body {
+  position: relative;
+  color: var(--negro);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.bg-negro {
+  background-color: var(--negro);
+}
+
+.text-negro {
+  color: var(--negro);
+}
+
+main {
+  padding: 0 2.5rem;
+}

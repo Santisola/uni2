@@ -19,6 +19,7 @@ class CreateEventosTable extends Migration
             $table->longText('descripcion');
             $table->timestamp('desde')->useCurrent();
             $table->timestamp('hasta')->useCurrent();
+            $table->string('imagen')->nullable();
             $table->boolean('publicado');
 
             $table->unsignedBigInteger('id_verificado');

@@ -17,6 +17,7 @@ class CreateNoticiasTable extends Migration
             $table->id('id_noticia')->unsigned();
             $table->string('titulo');
             $table->longText('contenido');
+            $table->string('imagen');
             $table->string('slug');
             $table->boolean('publicado');
             $table->timestamps();

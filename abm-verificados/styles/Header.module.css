@@ -1,0 +1,136 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--amarillo);
+}
+
+.pagina {
+    color: var(--negro);
+    font-weight: 700;
+}
+
+.button {
+    display: flex;
+    width: 30px;
+    height: 30px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.button span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: var(--negro);
+    border-radius: 20px;
+}
+
+.button span::before,
+.button span::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: var(--negro);
+    border-radius: 20px;
+    transition: all 0.3s ease-in-out;
+}
+
+.button span::before {
+    transform: translateY(-8px);
+}
+
+.button span::after {
+    transform: translateY(5px);
+}
+
+.button.open span {
+    height: 0;
+}
+
+.button.open span::before {
+    transform: translatey(1px) rotate(50deg);
+}
+
+.button.open span::after {
+    transform: translatey(-1px) rotate(-50deg);
+}
+
+.background {
+    background-color: transparent;
+    width: 100vw;
+    max-width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: -100%;
+    z-index: 2;
+    transition: all 0.3s ease-in-out;
+}
+
+.nav {
+    background-color: var(--negro);
+    width: 100%;
+    max-width: 75vw;
+    height: 100%;
+}
+
+.nav ul li a {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    margin: 1rem auto;
+    font-size: 1.5rem;
+}
+
+.background.aparecer {
+    left: 0;
+    background-color: rgba(0,0,0,0.8);
+}
+
+.usuario {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    align-items: center;
+    padding: 2.5rem 20px 2rem 20px;
+    background-color: var(--violeta);
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+}
+
+.usuario img {
+    display: block !important;
+    margin: auto !important;
+    border-radius: 50%;
+    border: 2px solid var(--amarillo) !important;
+}
+
+.hr {
+    max-width: 90%;
+}
+
+.pregunta {
+    position: relative;
+    background-color: var(--violeta);
+    border-radius: 50%;
+    width: 26px;
+    height: 26px;
+    z-index: 2;
+}
+
+.ping {
+    display: block;
+    width: 20px;
+    height: 20px;
+    background-color: var(--violeta);
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    z-index: 1;
+}
