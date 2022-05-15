@@ -7,7 +7,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class VerificadosModel extends Authenticatable
+/**
+ * @method static where(string $string, $usuario)
+ */
+class Verificados extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 

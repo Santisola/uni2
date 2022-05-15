@@ -7,6 +7,7 @@ export default function Home() {
   return (
       <Layout
         pagina={"inicio"}
+        title={"Página de inicio"}
       >
           <h1 className={"text-lg font-semibold"}>Bienvenido Nombre y Apellido</h1>
           <p className={"mt-5"}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam delectus facilis sapiente soluta.</p>

@@ -1,0 +1,16 @@
+.usuario {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    align-items: center;
+    padding: 2.5rem 20px 2rem 20px;
+    background-color: var(--violeta);
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+}
+
+.usuario img {
+    display: block !important;
+    margin: auto !important;
+    border-radius: 50%;
+    border: 2px solid var(--amarillo) !important;
+}

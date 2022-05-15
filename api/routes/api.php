@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AlertasController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\VerificadosController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +33,8 @@ Route::delete('/alertas/{id}', [AlertasController::class, 'borrar']);
 Route::get('/razas', [AlertasController::class, 'razas']);
 
 Route::get('/usuario/{id}/alertas', [AlertasController::class, 'deUsuario']);
+
+Route::get('/verificado/{id}/infoUsuario', [VerificadosController::class, 'infoUsuario']);
 
 Route::put('/usuario/{id}', [AuthController::class, 'editar']);
 
