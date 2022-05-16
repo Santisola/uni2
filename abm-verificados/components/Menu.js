@@ -4,14 +4,16 @@ import Link from "next/link";
 import Estado from "./Estado";
 import MenuDatosUsuario from "./MenuDatosUsuario";
 
-export default function Menu({ setAbierto, abierto }) {
+export default function Menu({ setAbierto, abierto, datosUsario }) {
     return (
         <div
             className={`${Styles.background} ${ abierto ? Styles.aparecer : ''} w-1/3`}
             onClick={() => {setAbierto(!abierto)}}
         >
             <nav className={Styles.nav}>
-                <MenuDatosUsuario />
+                <MenuDatosUsuario
+                    datosUsario={datosUsario}
+                />
                 <Estado />
                 <ul className={"mt-5 px-5"}>
                     <li className={"text-white"}>

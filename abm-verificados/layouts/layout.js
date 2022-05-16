@@ -2,7 +2,7 @@ import Head from "next/head";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 
-export default function Layout({ children, pagina, title }) {
+export default function Layout({ children, pagina, title, datosUsuario }) {
     return(
         <>
             <Head>
@@ -13,6 +13,7 @@ export default function Layout({ children, pagina, title }) {
             </Head>
             <Header
                 pagina={pagina}
+                datosUsario={datosUsuario}
             />
             <main className={"mx-auto my-5"}>
                 {children}

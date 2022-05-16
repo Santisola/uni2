@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Verificados;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class VerificadosController extends Controller
 {
