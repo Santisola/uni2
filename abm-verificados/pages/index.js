@@ -4,19 +4,24 @@ import Image from "next/image";
 import Link from "next/link";
 import {useEffect, useState} from "react";
 
-export default function Home({datos}) {
+export default function Home({ datos }) {
     const [usuario,setUsuario] = useState({
         nombre: 'Nombre',
         apellido: 'Apellido'
     });
 
     useEffect(() => {
-        const { nombre, apellido } = datos[0];
-        setUsuario({
-            nombre: nombre,
-            apellido: apellido
-        })
+        if (datos.length > 0) {
+            const {nombre, apellido} = datos[0];
+            setUsuario({
+                nombre: nombre,
+                apellido: apellido
+            });
+            sessionStorage.setItem('datos',JSON.stringify(datos));
+        }
     },[datos]);
+
+
 
   return (
       <Layout

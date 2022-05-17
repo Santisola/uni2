@@ -9,7 +9,7 @@ class VerificadosController extends Controller
 {
     public function infoUsuario(int $usuario): JsonResponse
     {
-        $datos = Verificados::where('id_verificado', $usuario)->get();
+        $datos = Verificados::select('nombre','apellido','email','telefono','imagen')->where('id_verificado', $usuario)->get();
 
         return response()->json([
             'data' => $datos

@@ -27,7 +27,7 @@ export default function MenuDatosUsuario({datosUsario}) {
             <Image layout={"fixed"} width={50} height={50} src={datos.imagen !== null ? datos.imagen : "/imgs/user-default.png"} alt={"Imagen del usuario"}  />
             <div>
                 <p className={"text-white text-lg font-semibold"}>{datos.nombre} {datos.apellido}</p>
-                <p className={"text-white"}>{datos.email}</p>
+                <p className={`${Styles.email} text-white`}>{datos.email}</p>
             </div>
         </div>
     )

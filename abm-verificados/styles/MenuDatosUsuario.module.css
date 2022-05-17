@@ -6,6 +6,7 @@
     background-color: var(--violeta);
     border-bottom-left-radius: 50px;
     border-bottom-right-radius: 50px;
+    overflow: hidden;
 }
 
 .usuario img {
@@ -14,3 +15,8 @@
     border-radius: 50%;
     border: 2px solid var(--amarillo) !important;
 }
+
+.usuario div {
+    padding-left: 10px;
+}
+
