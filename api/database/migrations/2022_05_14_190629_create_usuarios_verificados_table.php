@@ -15,12 +15,14 @@ class CreateUsuariosVerificadosTable extends Migration
     {
         Schema::create('usuarios_verificados', function (Blueprint $table) {
             $table->id('id_verificado')->unsigned();
+            $table->bigInteger('cuit')->unique();
             $table->string('nombre')->nullable();
             $table->string('apellido')->nullable();
             $table->bigInteger('telefono')->nullable();
             $table->string('email')->unique();
             $table->string('password');
             $table->string('imagen')->nullable();
+            $table->boolean('status')->nullable();
 
             $table->timestamps();
         });

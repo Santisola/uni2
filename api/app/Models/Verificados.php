@@ -36,8 +36,4 @@ class Verificados extends Model
         'email.email'=>'El email debe ser de un formato válido (nombre@dominio.extension)',
         'password.required'=>'La contraseña es obligatoria',
     ];
-
-    protected $hidden = [
-        'remember_token',
-    ];
 }
