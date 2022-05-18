@@ -4,7 +4,7 @@ import Link from "next/link";
 import Estado from "./Estado";
 import MenuDatosUsuario from "./MenuDatosUsuario";
 
-export default function Menu({ setAbierto, abierto, datosUsario }) {
+export default function Menu({ setAbierto, abierto, datosUsuario }) {
     return (
         <div
             className={`${Styles.background} ${ abierto ? Styles.aparecer : ''} w-1/3`}
@@ -12,9 +12,11 @@ export default function Menu({ setAbierto, abierto, datosUsario }) {
         >
             <nav className={Styles.nav}>
                 <MenuDatosUsuario
-                    datosUsario={datosUsario}
+                    datosUsuario={datosUsuario}
                 />
-                <Estado />
+                <Estado
+                    status={datosUsuario}
+                />
                 <ul className={"mt-5 px-5"}>
                     <li className={"text-white"}>
                         <Link href={"/"}>

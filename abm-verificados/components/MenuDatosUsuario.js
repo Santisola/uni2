@@ -2,7 +2,7 @@ import Styles from "../styles/MenuDatosUsuario.module.css";
 import Image from "next/image";
 import {useEffect, useState} from "react";
 
-export default function MenuDatosUsuario({datosUsario}) {
+export default function MenuDatosUsuario({datosUsuario}) {
     const [datos, setDatos] = useState({
         nombre: 'Nombre',
         apellido: 'Apellido',
@@ -11,8 +11,8 @@ export default function MenuDatosUsuario({datosUsario}) {
     });
 
     useEffect(() => {
-       if (datosUsario.length > 0) {
-           const { nombre, apellido, email, imagen } = datosUsario[0];
+       if (datosUsuario.length > 0) {
+           const { nombre, apellido, email, imagen } = datosUsuario[0];
            setDatos({
                nombre: nombre,
                apellido: apellido,
@@ -20,7 +20,7 @@ export default function MenuDatosUsuario({datosUsario}) {
                imagen: imagen
            })
        }
-    },[datosUsario]);
+    },[datosUsuario]);
 
     return (
         <div className={Styles.usuario}>

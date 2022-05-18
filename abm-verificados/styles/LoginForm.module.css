@@ -1,0 +1,37 @@
+.form {
+    column-gap: 40px;
+    width: 80%;
+}
+
+.inpiutContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 10px auto;
+}
+
+.inpiutContainer input {
+    border: 1px solid var(--negro);
+    border-radius: 20px;
+    width: 100%;
+    padding: 5px 10px;
+    color: var(--violeta);
+}
+
+.inpiutContainer label,
+.inpiutContainer small {
+    padding-left: 10px;
+}
+
+.inpiutContainer small {
+    color: var(--gris);
+    margin-top: 5px;
+}
+
+.inpiutContainer input[type="submit"] {
+    background-color: var(--violeta);
+    color: var(--blanco);
+    font-weight: 600;
+    border-color: var(--violeta);
+    border-radius: 10px;
+}

@@ -10,7 +10,7 @@ export default function Error404() {
 
     useEffect(() => {
         setDatos(getSessionStorage());
-    },[])
+    },[]);
 
     return (
         <Layout

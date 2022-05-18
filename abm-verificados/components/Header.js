@@ -4,7 +4,7 @@ import Styles from '../styles/Header.module.css';
 import { useState } from "react";
 import Menu from "./Menu";
 
-export default function Header({ pagina, datosUsario }) {
+export default function Header({ pagina, datosUsuario }) {
     const [abierto, setAbierto] = useState(false);
 
     return (
@@ -22,7 +22,7 @@ export default function Header({ pagina, datosUsario }) {
             <Menu
                 setAbierto={setAbierto}
                 abierto={abierto}
-                datosUsario={datosUsario}
+                datosUsuario={datosUsuario}
             />
         </header>
     )

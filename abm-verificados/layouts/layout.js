@@ -13,7 +13,7 @@ export default function Layout({ children, pagina, title, datosUsuario }) {
             </Head>
             <Header
                 pagina={pagina}
-                datosUsario={datosUsuario}
+                datosUsuario={datosUsuario}
             />
             <main className={"mx-auto my-5"}>
                 {children}
