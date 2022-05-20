@@ -1,10 +1,11 @@
 import {useState} from "react";
 import Styles from '../styles/LoginForm.module.css';
 
-export default function FormLogin() {
+export default function FormRegister() {
     const [cuit,setCuit] = useState('');
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
+    const [repeatPassword,setRepeatPassword] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -12,6 +13,7 @@ export default function FormLogin() {
         console.log(cuit);
         console.log(email);
         console.log(password);
+        console.log(repeatPassword);
 
         const data = {
             cuit,
@@ -83,9 +85,22 @@ export default function FormLogin() {
                 />
             </div>
             <div className={Styles.inpiutContainer}>
+                <label
+                    className={"text-lg"}
+                    htmlFor={"repeatPassword"}>Repetir Contraseña</label>
+                <input
+                    type={"password"}
+                    name={"repeatPassword"}
+                    id={"repeatPassword"}
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    placeholder={"Repita su contraseña aquí"}
+                />
+            </div>
+            <div className={Styles.inpiutContainer}>
                 <input
                     type={"submit"}
-                    value={"Iniciar Sesión"}
+                    value={"Registrarse"}
                 />
             </div>
         </form>

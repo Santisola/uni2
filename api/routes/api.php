@@ -34,11 +34,11 @@ Route::get('/razas', [AlertasController::class, 'razas']);
 
 Route::get('/usuario/{id}/alertas', [AlertasController::class, 'deUsuario']);
 
-Route::get('/verificado/{id}/infoUsuario', [VerificadosController::class, 'infoUsuario']);
-
 Route::put('/usuario/{id}', [AuthController::class, 'editar']);
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware(['auth:sanctum']);
+
+Route::post('/verificado/login', [VerificadosController::class,'login']);
 
 Route::post('/registro', [AuthController::class, 'registrar']);
