@@ -1,20 +1,18 @@
 import {useState} from "react";
 import Styles from '../styles/LoginForm.module.css';
+import {useRouter} from "next/router";
 
-export default function FormLogin() {
+export default function FormLogin({router}) {
     const [cuit,setCuit] = useState('');
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        console.log(cuit);
-        console.log(email);
-        console.log(password);
+        // router.push('/dashboard');
 
         const data = {
-            cuit,
+            cuit: Number(cuit),
             email,
             password
         }
@@ -23,14 +21,15 @@ export default function FormLogin() {
             const url = 'http://localhost/uni2/api/public/api/verificado/login';
             const respuesta = await fetch(url, {
                 method: 'POST',
-                mode:"cors",
                 body: JSON.stringify(data),
                 headers: {
                     "Content-Type": "application/json"
                 }
             });
+            console.log("respuesta",respuesta)
             const resultado = await respuesta.json();
-            console.log(resultado);
+            const datosDevueltos = await resultado.data.original.data[0];
+            console.log("resultado:",datosDevueltos);
         }
         catch (e) {
             console.error(e);

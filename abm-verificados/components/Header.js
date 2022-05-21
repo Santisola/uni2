@@ -12,13 +12,15 @@ export default function Header({ pagina, datosUsuario }) {
             <Link href={"/"}>
                 <a className={"w-1/3"}><Image layout={"fixed"} width={100} height={30} src={"/imgs/logo.svg"} alt={"Logo"}  /></a>
             </Link>
-            <p className={`${Styles.pagina} text-lg uppercase w-1/3`}>{pagina}</p>
-            <button
-                className={`${Styles.button} ${abierto ? Styles.open : ''}`}
-                onClick={() => {setAbierto(!abierto)}}
-            >
-                <span></span>
-            </button>
+            <p className={`${Styles.pagina} text-lg text-center uppercase w-1/3`}>{pagina}</p>
+            <div className={Styles.buttonContainer}>
+                <button
+                    className={`${Styles.button} ${abierto ? Styles.open : ''}`}
+                    onClick={() => {setAbierto(!abierto)}}
+                >
+                    <span></span>
+                </button>
+            </div>
             <Menu
                 setAbierto={setAbierto}
                 abierto={abierto}

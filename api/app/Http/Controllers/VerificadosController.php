@@ -9,16 +9,24 @@ use Illuminate\Support\Facades\Hash;
 
 class VerificadosController extends Controller
 {
-    protected function infoUsuario(int $usuario)
+    public function infoUsuario(int $usuario)
     {
-        return Verificados::select('nombre','apellido','email','telefono','imagen','status')->where('id_verificado', $usuario)->get();
+        $data =  Verificados::select('nombre','apellido','email','telefono','imagen','status')->where('id_verificado', $usuario)->get();
+
+        return response()->json([
+           'data' => $data
+        ]);
     }
 
     public function login(Request $request) : JsonResponse
     {
-        /*$usuario = Verificados::where('email',$request->email)
+/*        return response()->json([
+            'data' => $request->cuit
+        ]);*/
+
+        $usuario = Verificados::where('email', $request->email)
             ->where('cuit',$request->cuit)
-            ->get();
+            ->first();
 
         if(!$usuario || !Hash::check($request->password, $usuario->password)){
             return response()->json([
@@ -30,10 +38,6 @@ class VerificadosController extends Controller
         return response()->json([
             'success' => true,
             'data' => $this->infoUsuario($usuario->id_verificado)
-        ]);*/
-
-        return response()->json([
-            'data' => 'Hola 2'
         ]);
     }
 }

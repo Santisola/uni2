@@ -6,6 +6,8 @@ import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 
 export default function Dashboard({datos}) {
+    console.log(datos);
+
     const [usuario,setUsuario] = useState({
         nombre: 'Nombre',
         apellido: 'Apellido'
@@ -45,10 +47,11 @@ export default function Dashboard({datos}) {
 }
 
 export async function getServerSideProps() {
-    const id = 2;
+    const id = 1;
     const URL = `${process.env.API_URL}/verificado/${id}/infoUsuario`;
     const respuesta = await fetch(URL);
     const resultado = await respuesta.json();
+    console.log(resultado);
 
     return {
         props: {

@@ -10,6 +10,12 @@
     font-weight: 700;
 }
 
+.buttonContainer {
+    width: 100px;
+    display: flex;
+    justify-content: flex-end;
+}
+
 .button {
     display: flex;
     width: 30px;

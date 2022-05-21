@@ -1,14 +1,16 @@
 import {useState} from "react";
 import Styles from '../styles/LoginForm.module.css';
 
-export default function FormRegister() {
-    const [cuit,setCuit] = useState('');
-    const [email,setEmail] = useState('');
-    const [password,setPassword] = useState('');
-    const [repeatPassword,setRepeatPassword] = useState('');
+export default function FormRegister({router}) {
+    const [nombre, setNombre] = useState('');
+    const [cuit, setCuit] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [repeatPassword, setRepeatPassword] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        router.push('/dashboard');
 
         console.log(cuit);
         console.log(email);
@@ -61,6 +63,19 @@ export default function FormRegister() {
             <div className={Styles.inpiutContainer}>
                 <label
                     className={"text-lg"}
+                    htmlFor={"nombre"}>Nombre completo</label>
+                <input
+                    type={"text"}
+                    name={"nombre"}
+                    id={"nombre"}
+                    value={nombre}
+                    onChange={e => setNombre(e.target.value)}
+                    placeholder={"Ingrese su nombre aquí"}
+                />
+            </div>
+            <div className={Styles.inpiutContainer}>
+                <label
+                    className={"text-lg"}
                     htmlFor={"email"}>Email</label>
                 <input
                     type={"email"}
@@ -93,7 +108,7 @@ export default function FormRegister() {
                     name={"repeatPassword"}
                     id={"repeatPassword"}
                     value={password}
-                    onChange={e => setPassword(e.target.value)}
+                    onChange={e => setRepeatPassword(e.target.value)}
                     placeholder={"Repita su contraseña aquí"}
                 />
             </div>
