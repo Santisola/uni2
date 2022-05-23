@@ -1,30 +1,22 @@
 import {useState} from "react";
 import Styles from '../styles/LoginForm.module.css';
 
-export default function FormRegister({router}) {
-    const [nombre, setNombre] = useState('');
+export default function FormRegister() {
     const [cuit, setCuit] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [repeatPassword, setRepeatPassword] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        router.push('/dashboard');
-
-        console.log(cuit);
-        console.log(email);
-        console.log(password);
-        console.log(repeatPassword);
 
         const data = {
-            cuit,
+            cuit: Number(cuit),
             email,
-            password
+            password,
         }
 
         try {
-            const url = 'http://localhost/uni2/api/public/api/verificado/login';
+            const url = 'http://localhost/uni2/api/public/api/verificado/register';
             const respuesta = await fetch(url, {
                 method: 'POST',
                 mode:"cors",
@@ -63,19 +55,6 @@ export default function FormRegister({router}) {
             <div className={Styles.inpiutContainer}>
                 <label
                     className={"text-lg"}
-                    htmlFor={"nombre"}>Nombre completo</label>
-                <input
-                    type={"text"}
-                    name={"nombre"}
-                    id={"nombre"}
-                    value={nombre}
-                    onChange={e => setNombre(e.target.value)}
-                    placeholder={"Ingrese su nombre aquí"}
-                />
-            </div>
-            <div className={Styles.inpiutContainer}>
-                <label
-                    className={"text-lg"}
                     htmlFor={"email"}>Email</label>
                 <input
                     type={"email"}
@@ -97,19 +76,6 @@ export default function FormRegister({router}) {
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                     placeholder={"Ingrese su contraseña aquí"}
-                />
-            </div>
-            <div className={Styles.inpiutContainer}>
-                <label
-                    className={"text-lg"}
-                    htmlFor={"repeatPassword"}>Repetir Contraseña</label>
-                <input
-                    type={"password"}
-                    name={"repeatPassword"}
-                    id={"repeatPassword"}
-                    value={password}
-                    onChange={e => setRepeatPassword(e.target.value)}
-                    placeholder={"Repita su contraseña aquí"}
                 />
             </div>
             <div className={Styles.inpiutContainer}>

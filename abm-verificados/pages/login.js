@@ -4,9 +4,16 @@ import Styles from '../styles/Login.module.css';
 import Link from "next/link";
 import Head from "next/head";
 import {useRouter} from "next/router";
+import {useEffect} from "react";
 
 export default function Login() {
     const router = useRouter();
+
+    useEffect(() => {
+        if (sessionStorage.getItem('usuario')) {
+            router.push('/dashboard');
+        }
+    },[router]);
 
     return (
         <>

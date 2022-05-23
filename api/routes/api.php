@@ -21,6 +21,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+/**
+ * Main App
+ */
+
 Route::get('/alertas', [AlertasController::class, 'all']);
 Route::get('/alertas/{id}', [AlertasController::class, 'ver']);
 
@@ -34,13 +38,15 @@ Route::get('/razas', [AlertasController::class, 'razas']);
 
 Route::get('/usuario/{id}/alertas', [AlertasController::class, 'deUsuario']);
 
-Route::get('/verificado/{id}/infoUsuario', [VerificadosController::class, 'infoUsuario']);
-
 Route::put('/usuario/{id}', [AuthController::class, 'editar']);
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware(['auth:sanctum']);
 
-Route::post('/verificado/login', [VerificadosController::class,'login']);
-
 Route::post('/registro', [AuthController::class, 'registrar']);
+
+/**
+ * CMS Usuarios verificados
+ */
+Route::post('/verificado/login', [VerificadosController::class,'login']);
+Route::post('/verificado/register', [VerificadosController::class,'register']);

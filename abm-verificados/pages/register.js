@@ -4,9 +4,17 @@ import Image from "next/image";
 import Link from "next/link";
 import FormRegister from "../components/FormRegister";
 import {useRouter} from "next/router";
+import {useEffect} from "react";
 
 export default function Register() {
     const router = useRouter();
+
+    useEffect(() => {
+        if (sessionStorage.getItem('usuario')) {
+            router.push('/dashboard');
+        }
+    },[router]);
+
     return (
         <>
             <Head>

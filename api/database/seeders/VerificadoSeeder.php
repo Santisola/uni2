@@ -20,8 +20,7 @@ class VerificadoSeeder extends Seeder
            [
                'id_verificado' => 1,
                'cuit' => 20389958043,
-               'nombre' => 'Matías',
-               'apellido' => 'Bubello',
+               'razon_social' => 'Matías Bubello',
                'email' => 'matias.bubello@davinci.edu.ar',
                'password' => Hash::make('1234'),
                'imagen' => null,

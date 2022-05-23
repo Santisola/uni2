@@ -5,36 +5,28 @@ import Layout from "../layouts/layout";
 import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 
-export default function Dashboard({datos}) {
-    console.log(datos);
-
+export default function Dashboard() {
     const [usuario,setUsuario] = useState({
-        nombre: 'Nombre',
-        apellido: 'Apellido'
+        razon_social: 'Nombre Apellido',
     });
 
     const router = useRouter();
 
     useEffect(() => {
-        if (datos.length > 0) {
-            const {nombre, apellido} = datos[0];
-            setUsuario({
-                nombre: nombre,
-                apellido: apellido
-            });
-            sessionStorage.setItem('datos',JSON.stringify(datos));
-        } else {
+        if (!sessionStorage.getItem('usuario')) {
             router.push('/login');
+        } else {
+            setUsuario(JSON.parse(sessionStorage.getItem('usuario')));
         }
-    },[datos, router]);
+    },[router]);
 
     return (
         <Layout
             pagina={"inicio"}
             title={"Página de inicio"}
-            datosUsuario={datos}
+            datosUsuario={usuario}
         >
-            <h1 className={"text-lg font-semibold"}>Bienvenido {usuario.nombre} {usuario.apellido}</h1>
+            <h1 className={"text-lg font-semibold"}>Bienvenido {usuario.razon_social}</h1>
             <p className={"mt-5"}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam delectus facilis sapiente soluta.</p>
             <Link href={"/eventos"}>
                 <div className={Styles.card}>
@@ -46,6 +38,7 @@ export default function Dashboard({datos}) {
     )
 }
 
+/*
 export async function getServerSideProps() {
     const id = 1;
     const URL = `${process.env.API_URL}/verificado/${id}/infoUsuario`;
@@ -58,4 +51,4 @@ export async function getServerSideProps() {
             datos: resultado.data
         }
     }
-}
+}*/

@@ -4,19 +4,29 @@ import Styles from '../styles/404.module.css'
 import Image from "next/image";
 import { getSessionStorage } from "../helpers";
 import { useEffect, useState } from "react";
+import {useRouter} from "next/router";
 
 export default function Error404() {
-    const [datos, setDatos] = useState('');
+    const [usuario,setUsuario] = useState({
+        nombre: 'Nombre',
+        apellido: 'Apellido'
+    });
+
+    const router = useRouter();
 
     useEffect(() => {
-        setDatos(getSessionStorage());
-    },[]);
+        if (!sessionStorage.getItem('usuario')) {
+            router.push('/login');
+        } else {
+            setUsuario(JSON.parse(sessionStorage.getItem('usuario')));
+        }
+    },[router]);
 
     return (
         <Layout
             pagina={"Error"}
             title={"Página no encontrada"}
-            datosUsuario={datos}
+            datosUsuario={usuario}
         >
             <h1 className={"sr-only"}>Página no encontrada</h1>
             <p className={"text-5xl text-center font-semibold"}>¡Ups!</p>

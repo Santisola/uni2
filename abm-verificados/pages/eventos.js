@@ -1,13 +1,29 @@
 import Layout from "../layouts/layout";
 import Image from "next/image";
 import Styles from '../styles/Eventos.module.css';
+import {useRouter} from "next/router";
+import {useEffect, useState} from "react";
 
-export default function Eventos({datos}) {
+export default function Eventos() {
+    const [usuario, setUsuario] = useState({
+        nombre: 'Nombre',
+        apellido: 'Apellido',
+    })
+    const router = useRouter();
+
+    useEffect(() => {
+        if (!sessionStorage.getItem('usuario')) {
+            router.push('/login');
+        } else {
+            setUsuario(JSON.parse(sessionStorage.getItem('usuario')));
+        }
+    },[router]);
+
     return (
         <Layout
             pagina={"Eventos"}
             title={"Página de eventos"}
-            datosUsuario={datos}
+            datosUsuario={usuario}
         >
          <h1 className={"text-xl font-semibold text-center my-10"}>No tienes ningún evento creado</h1>
             <div className={"flex justify-center items-center my-5"}>
@@ -25,18 +41,4 @@ export default function Eventos({datos}) {
             >Crear un evento</button>
         </Layout>
     )
-}
-
-export async function getServerSideProps() {
-    const id = 1;
-    const URL = `${process.env.API_URL}/verificado/${id}/infoUsuario`;
-    const respuesta = await fetch(URL);
-    const resultado = await respuesta.json();
-    console.log(resultado);
-
-    return {
-        props: {
-            datos: resultado.data
-        }
-    }
 }
