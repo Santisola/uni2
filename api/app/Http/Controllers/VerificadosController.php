@@ -87,7 +87,7 @@ class VerificadosController extends Controller
         catch (\Exception $exception) {
             return response()->json([
                 'success' => false,
-                'data' => 'No existe ese CUIT'
+                'data' => 'El CUIT ingresado no pertenece a ninguna persona física, jurídica o entidad. Ingrese un CUIT válido'
             ]);
         }
 

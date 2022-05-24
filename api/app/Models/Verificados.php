@@ -32,9 +32,9 @@ class Verificados extends Model
     ];
 
     public static $mensajesDeError = [
-        'cuit.required'=>'El Cuit es obligatorio',
-        'cuit.unique'=>'Ya existe otro Cuit en nuestra base de datos',
-        'cuit.numeric'=>'El Cuit deben ser sólo números',
+        'cuit.required'=>'El CUIT es obligatorio',
+        'cuit.unique'=>'Ya existe otro CUIT en nuestra base de datos',
+        'cuit.numeric'=>'El CUIT deben ser sólo números',
 //        'razon_social.required'=>'El nombre es obligatorio',
         'email.required'=>'El email es obligatorio',
         'email.email'=>'El email debe ser de un formato válido (nombre@dominio.extension)',
