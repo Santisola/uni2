@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Verificados;
+use Carbon\Carbon;
 use Goutte\Client;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use mysql_xdevapi\Exception;
 
 class VerificadosController extends Controller
@@ -16,6 +20,7 @@ class VerificadosController extends Controller
         $data = Verificados::select('razon_social','email','telefono','imagen','status')->where('id_verificado', $usuario)->get();
 
         return response()->json([
+           'success' => true,
            'data' => $data
         ]);
     }
@@ -42,15 +47,45 @@ class VerificadosController extends Controller
 
     public function register(Request $request, Client $client)
     {
-        // URL https://www.dateas.com/es/consulta_cuit_cuil?cuit=$cuit
+        $validator = Validator::make($request->all(),Verificados::$reglas,Verificados::$mensajesDeError);
+
+        if ($validator->fails()) {
+            return response()->json([
+               'success' => false,
+               'data' => $validator->messages()
+            ]);
+        }
+
         try {
-            $crawler = $client->request('GET','https://www.dateas.com/es/consulta_cuit_cuil?cuit=20389958043');
+            $cuit = $request->cuit;
+
+            $crawler = $client->request('GET','https://www.dateas.com/es/consulta_cuit_cuil?cuit=' . $cuit);
+
             $RS = $crawler->filter("#mainContent > table > tbody > tr > td:nth-child(1) > a");
 
-            return response()->json([
-                'success' => true,
-                'data' => $RS->html()
-            ]);
+            $razon_social = $RS->html();
+
+            try {
+                $verificado = Verificados::create(array(
+                        'cuit' => $cuit,
+                        'razon_social' => $razon_social,
+                        'email' => $request->email,
+                        'password' => $request->password,
+                        'status' => 0,
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now()
+                    )
+                );
+
+                return $this->infoUsuario($verificado->id_verificado);
+            }
+
+            catch (\Exception $exception) {
+                return response()->json([
+                    'success' => false,
+                    'data' => $exception
+                ]);
+            }
         }
         catch (\Exception $exception) {
             return response()->json([
@@ -58,5 +93,6 @@ class VerificadosController extends Controller
                 'data' => 'No existe ese CUIT'
             ]);
         }
+
     }
 }

@@ -1,6 +1,5 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import Styles from '../styles/LoginForm.module.css';
-import {useRouter} from "next/router";
 import Mensaje from "./Mensaje";
 import {validateEmail} from "../helpers";
 
@@ -37,7 +36,7 @@ export default function FormLogin() {
         }
 
         try {
-            const url = 'http://localhost/uni2/api/public/api/verificado/login';
+            const url = `${process.env.API_URL}/verificado/login`;
             const respuesta = await fetch(url, {
                 method: 'POST',
                 body: JSON.stringify(data),
