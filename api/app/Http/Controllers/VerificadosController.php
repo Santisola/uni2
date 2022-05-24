@@ -5,13 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Verificados;
 use Carbon\Carbon;
 use Goutte\Client;
-use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use mysql_xdevapi\Exception;
 
 class VerificadosController extends Controller
 {
