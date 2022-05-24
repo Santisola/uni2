@@ -4,10 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import FormRegister from "../components/FormRegister";
 import {useRouter} from "next/router";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
+import PawLoader from "../components/PawLoader";
 
 export default function Register() {
     const router = useRouter();
+
+    const [loader, setLoader] = useState(false);
 
     useEffect(() => {
         if (sessionStorage.getItem('usuario')) {
@@ -23,11 +26,15 @@ export default function Register() {
                 <meta name="keywords" content="Unidos, mascotas, usuarios" />
                 <link rel="icon" href={"/imgs/icon.svg"} />
             </Head>
+            { loader && (
+                <PawLoader />
+            )}
             <div className={`${Styles.backgroundRegistro} flex justify-center items-center w-screen h-screen flex-col`}>
                 <Image layout={"fixed"} width={215} height={72} src={"/imgs/logo.svg"} alt={"Logo Unidos"} />
                 <h1 className={"text-center text-4xl my-5"}>Registrarse</h1>
                 <FormRegister
                     router={router}
+                    setLoader={setLoader}
                 />
                 <p>¿Ya tiene cuenta? <Link href={"/login"}><a className={Styles.registrarme}>iniciar sesión</a></Link></p>
             </div>

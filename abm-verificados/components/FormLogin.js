@@ -3,7 +3,7 @@ import Styles from '../styles/LoginForm.module.css';
 import Mensaje from "./Mensaje";
 import {validateEmail} from "../helpers";
 
-export default function FormLogin() {
+export default function FormLogin({ router, setLoader }) {
     const [cuit,setCuit] = useState('');
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
@@ -17,6 +17,7 @@ export default function FormLogin() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setDisabled(true);
+        setLoader(true);
 
         const data = {
             cuit: Number(cuit),
@@ -25,9 +26,10 @@ export default function FormLogin() {
         }
 
         if (validateData(data)) {
-          setMensajeError('Error al completar los campos');
-          setError(true);
-          setDisabled(false);
+            setMensajeError('Error al completar los campos');
+            setError(true);
+            setDisabled(false);
+            setLoader(false);
 
           setTimeout(() => {
               setError(false);
@@ -45,7 +47,7 @@ export default function FormLogin() {
                 }
             });
             const resultado = await respuesta.json();
-            console.log(resultado)
+            setLoader(false)
 
             if (resultado.success === false) {
                 setError(true);
@@ -58,6 +60,7 @@ export default function FormLogin() {
             }
 
             sessionStorage.setItem('usuario',JSON.stringify(resultado.data.original.data[0]));
+            router.push('/dashboard');
         }
         catch (e) {
             console.error(e);

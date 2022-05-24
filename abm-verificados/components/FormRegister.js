@@ -4,7 +4,7 @@ import Image from "next/image";
 import process from "../next.config";
 import {validateEmail} from "../helpers";
 
-export default function FormRegister({router}) {
+export default function FormRegister({ router, setLoader }) {
     const [cuit, setCuit] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -21,6 +21,7 @@ export default function FormRegister({router}) {
         setCuitError('');
         setEmailError('');
         setPasswordError('');
+        setLoader(true);
 
         const data = {
             cuit: Number(cuit),
@@ -48,6 +49,7 @@ export default function FormRegister({router}) {
             }
 
             setDisabled(false);
+            setLoader(false);
         }
         catch (e) {
             console.error(e);
