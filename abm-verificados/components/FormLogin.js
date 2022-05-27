@@ -60,6 +60,7 @@ export default function FormLogin({ router, setLoader }) {
             }
 
             sessionStorage.setItem('usuario',JSON.stringify(resultado.data.original.data[0]));
+            sessionStorage.setItem('id',JSON.stringify(resultado.data.original.id));
             router.push('/dashboard');
         }
         catch (e) {

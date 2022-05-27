@@ -19,7 +19,8 @@ class VerificadosController extends Controller
 
         return response()->json([
            'success' => true,
-           'data' => $data
+           'data' => $data,
+            'id' => $usuario
         ]);
     }
 
@@ -176,7 +177,7 @@ class VerificadosController extends Controller
             $user = Verificados::findOrFail($usuario);
             $file_name = Str::random(35) . '_' . $request->imagen->getClientOriginalName();
             $request->imagen->move(public_path('/imgs/perfiles'),$file_name);
-            $path = "public/images/perfiles/$file_name";
+            $path = "public/imgs/perfiles/$file_name";
 
             $user->imagen = $path;
             $user->telefono = $request->telefono;

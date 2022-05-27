@@ -45,6 +45,7 @@ export default function FormRegister({ router, setLoader }) {
                 mostrarErrores(resultado.data)
             } else if (resultado.success === true) {
                 sessionStorage.setItem('usuario',JSON.stringify(resultado.data[0]));
+                sessionStorage.setItem('id',JSON.stringify(resultado.id));
                 router.push('/dashboard');
             }
 

@@ -14,6 +14,8 @@
     margin: auto !important;
     border-radius: 50%;
     border: 2px solid var(--amarillo) !important;
+    width: 100%;
+    min-width: 50px;
 }
 
 .usuario div {

@@ -21,7 +21,11 @@ export default function MenuDatosUsuario({datosUsuario}) {
 
     return (
         <div className={Styles.usuario}>
-            <Image layout={"fixed"} width={50} height={50} src={datos.imagen ? datos.imagen : "/imgs/user-default.png"} alt={"Imagen del usuario"}  />
+            { datos.imagen ? (
+                <img width={50} height={50} src={process.env.API_IMAGEN + datos.imagen} alt="Foto de perfil" />
+            ) :
+                (<Image layout={"fixed"} width={50} height={50} src={"/imgs/user-default.png"} alt={"Imagen del usuario"}  />)
+            }
             <div>
                 <p className={"text-white text-lg font-semibold"}>{datos.razon_social}</p>
                 <p className={`${Styles.email} text-white`}>{datos.email}</p>
