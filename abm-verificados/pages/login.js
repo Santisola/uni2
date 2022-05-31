@@ -1,5 +1,5 @@
 import Image from "next/image";
-import FormLogin from "../components/FormLogin";
+import FormLogin from "../formularios/FormLogin";
 import Styles from '../styles/Login.module.css';
 import Link from "next/link";
 import Head from "next/head";

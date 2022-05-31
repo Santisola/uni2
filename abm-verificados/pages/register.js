@@ -2,7 +2,7 @@ import Head from "next/head";
 import Styles from "../styles/Login.module.css";
 import Image from "next/image";
 import Link from "next/link";
-import FormRegister from "../components/FormRegister";
+import FormRegister from "../formularios/FormRegister";
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
 import PawLoader from "../components/PawLoader";

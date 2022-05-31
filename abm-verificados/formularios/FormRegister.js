@@ -3,6 +3,7 @@ import Styles from '../styles/LoginForm.module.css';
 import Image from "next/image";
 import process from "../next.config";
 import {validateEmail} from "../helpers";
+import Mensaje from "../components/Mensaje";
 
 export default function FormRegister({ router, setLoader }) {
     const [cuit, setCuit] = useState('');
@@ -10,7 +11,8 @@ export default function FormRegister({ router, setLoader }) {
     const [password, setPassword] = useState('');
     const [togglePassword, setTogglePassword] = useState(false);
     const [disabled, setDisabled] = useState(false);
-
+    const [error, setError] = useState(false);
+    const [mensajeError, setMensajeError] = useState('');
     const [cuitError,setCuitError] = useState('');
     const [emailError,setEmailError] = useState('');
     const [passwordError,setPasswordError] = useState('');
@@ -54,6 +56,8 @@ export default function FormRegister({ router, setLoader }) {
         }
         catch (e) {
             console.error(e);
+            setError(true);
+            setMensajeError('Ha ocurrido un error al momento de autenticar sus datos');
         }
     }
 
@@ -100,6 +104,12 @@ export default function FormRegister({ router, setLoader }) {
             className={`${Styles.form} flex flex-col items-center justify-center`}
             onSubmit={e => handleSubmit(e)}
         >
+            { error && (
+                <Mensaje
+                    tipo={false}
+                    mensaje={mensajeError}
+                />
+            )}
             <div className={Styles.inpiutContainer}>
                 <label
                     className={"text-lg"}

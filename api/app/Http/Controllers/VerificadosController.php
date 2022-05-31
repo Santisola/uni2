@@ -103,6 +103,7 @@ class VerificadosController extends Controller
      */
     public function update(Request $request,int $usuario) : JsonResponse
     {
+
         $validator = Validator::make($request->all(),[
             'email' => 'required|email',
             'imagen' => 'image|required|max:10000',
@@ -153,7 +154,7 @@ class VerificadosController extends Controller
         }
     }
 
-    public function completeData(Request $request, int $usuario)
+    public function completeData(Request $request, int $usuario) : JsonResponse
     {
         $validator = Validator::make($request->all(),[
             'imagen' => 'image|required|max:10000',

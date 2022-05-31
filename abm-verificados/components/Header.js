@@ -3,6 +3,7 @@ import Image from "next/image";
 import Styles from '../styles/Header.module.css';
 import { useState } from "react";
 import Menu from "./Menu";
+import FormCompletar from "../formularios/FormCompletar";
 
 export default function Header({ pagina, datosUsuario }) {
     const [abierto, setAbierto] = useState(false);

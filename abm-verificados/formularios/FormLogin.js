@@ -1,6 +1,6 @@
 import {useState} from "react";
 import Styles from '../styles/LoginForm.module.css';
-import Mensaje from "./Mensaje";
+import Mensaje from "../components/Mensaje";
 import {validateEmail} from "../helpers";
 
 export default function FormLogin({ router, setLoader }) {
@@ -65,6 +65,8 @@ export default function FormLogin({ router, setLoader }) {
         }
         catch (e) {
             console.error(e);
+            setError(true);
+            setMensajeError('Ha ocurrido un error al momento de autenticar sus datos');
         }
     }
 

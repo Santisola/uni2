@@ -2,7 +2,7 @@ import Styles from "../styles/Estado.module.css";
 import {useEffect, useState} from "react";
 import ModalStatus from "./ModalStatus";
 
-export default function Estado({status}) {
+export default function Estado({ status }) {
     const [modal,setModal] = useState(false);
 
     useEffect(() => {
