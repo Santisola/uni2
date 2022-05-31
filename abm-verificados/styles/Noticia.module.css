@@ -1,0 +1,42 @@
+.carta {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 5px 5px rgba(0,0,0,0.2);
+    border-radius: 10px;
+}
+
+.carta div {
+    padding: 1rem;
+}
+
+.carta img{
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.carta h2 {
+    color: var(--violeta);
+    margin-bottom: 1rem;
+}
+
+.carta a {
+    display: block;
+    text-align: center;
+    border: 3px solid var(--violeta);
+    color: var(--violeta);
+    border-radius: 10px;
+    padding: 0.3rem 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.carta a:hover {
+    color: var(--blanco);
+    background-color: var(--violeta);
+}
+
+.contenido {
+    white-space: pre-line;
+}

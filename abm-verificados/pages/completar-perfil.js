@@ -27,9 +27,7 @@ export default function CompletarPerfil() {
             title={"Completar datos del perfil"}
             datosUsuario={usuario}
         >
-            <FormCompletar
-
-            />
+            <FormCompletar />
         </Layout>
     )
 }

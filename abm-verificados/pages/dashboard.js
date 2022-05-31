@@ -26,7 +26,7 @@ export default function Dashboard() {
             title={"Página de inicio"}
             datosUsuario={usuario}
         >
-            <h1 className={"text-lg font-semibold"}>Bienvenido {usuario.razon_social}</h1>
+            <h2 className={"text-lg font-semibold"}>Bienvenido {usuario.razon_social}</h2>
             <p className={"mt-5"}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam delectus facilis sapiente soluta.</p>
             <Link href={"/eventos"}>
                 <div className={Styles.card}>
@@ -37,18 +37,3 @@ export default function Dashboard() {
         </Layout>
     )
 }
-
-/*
-export async function getServerSideProps() {
-    const id = 1;
-    const URL = `${process.env.API_URL}/verificado/${id}/infoUsuario`;
-    const respuesta = await fetch(URL);
-    const resultado = await respuesta.json();
-    console.log(resultado);
-
-    return {
-        props: {
-            datos: resultado.data
-        }
-    }
-}*/

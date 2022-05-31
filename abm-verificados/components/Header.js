@@ -21,7 +21,7 @@ export default function Header({ pagina, datosUsuario }) {
                     <span></span>
                 </button>
             </div>
-            <p className={`${Styles.pagina} text-lg text-center uppercase w-full`}>{pagina}</p>
+            <h1 className={`${Styles.pagina} text-lg text-center uppercase w-full`}>{pagina}</h1>
             <Menu
                 setAbierto={setAbierto}
                 abierto={abierto}

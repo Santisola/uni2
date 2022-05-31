@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AlertasController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\NoticiasController;
 use App\Http\Controllers\VerificadosController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -50,5 +51,12 @@ Route::post('/registro', [AuthController::class, 'registrar']);
  */
 Route::post('/verificado/login', [VerificadosController::class,'login']);
 Route::post('/verificado/register', [VerificadosController::class,'register']);
+
 Route::put('/verificado/{usuario}/update', [VerificadosController::class,'update']);
 Route::put('/verificado/{usuario}/complete', [VerificadosController::class,'completeData']);
+
+/**
+ * CMS Noticias
+ */
+Route::get('/noticias', [NoticiasController::class, 'all']);
+Route::get('/noticias/{noticia}', [NoticiasController::class, 'noticia']);

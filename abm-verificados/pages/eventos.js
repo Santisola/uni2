@@ -25,7 +25,7 @@ export default function Eventos() {
             title={"Página de eventos"}
             datosUsuario={usuario}
         >
-         <h1 className={"text-xl font-semibold text-center my-10"}>No tienes ningún evento creado</h1>
+         <h2 className={"text-xl font-semibold text-center my-10"}>No tienes ningún evento creado</h2>
             <div className={"flex justify-center items-center my-5"}>
                 <Image
                     layout={"fixed"}
