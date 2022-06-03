@@ -44,7 +44,6 @@ function GoogleMaps({ setLatitud, setLongitud, latitud, longitud }) {
                     setLatitud(resultado[0].geometry.location.lat());
                     setLongitud(resultado[0].geometry.location.lng());
                 } else {
-                    console.log('Hubo un error')
                 }
             });
         } catch (e) {
@@ -79,6 +78,7 @@ function GoogleMaps({ setLatitud, setLongitud, latitud, longitud }) {
                     <button
                         className={Styles.centrar}
                         onClick={ () => map.panTo(center) }
+                        type={"button"}
                     >
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={"/imgs/location.svg"} alt={"Centrar"} />
@@ -86,6 +86,7 @@ function GoogleMaps({ setLatitud, setLongitud, latitud, longitud }) {
                     <button
                         className={Styles.buscar}
                         onClick={buscar}
+                        type={"button"}
                     >Buscar</button>
                 </div>
             </div>
