@@ -101,7 +101,7 @@ class VerificadosController extends Controller
      * @param int $usuario
      * @return JsonResponse
      */
-    public function update(Request $request,int $usuario) : JsonResponse
+    public function update(Request $request, int $usuario) : JsonResponse
     {
 
         $validator = Validator::make($request->all(),[

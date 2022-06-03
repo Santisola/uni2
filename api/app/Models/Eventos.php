@@ -12,23 +12,41 @@ class Eventos extends Model
     protected $fillable = [
         'nombre',
         'descripcion',
+        'latitud',
+        'longitud',
         'desde',
         'hasta',
         'imagen',
-        'publicado'
+        'publicado',
+        'id_verificado',
     ];
 
     public static $reglas = [
-        'nombre'=>'required',
-        'descripcion'=>'required',
-        'desde'=>'required',
-        'hasta'=>'required',
+        'nombre'=>'required|min:3',
+        'descripcion'=>'required|min:30',
+        'latitud' => 'required|numeric',
+        'longitud' => 'required|numeric',
+        'desde'=>'required|date',
+        'hasta'=>'required|date',
+        'id_verificado' => 'numeric',
     ];
 
     public static $mensajesDeError = [
         'nombre.required'=>'El nombre del evento es obligatorio',
         'descripcion.required'=>'La descripción del evento es obligatoria',
+        'latitud.required' => 'Debe seleccionar una ubicación',
+        'longitud.required' => 'Debe seleccionar una ubicación',
         'desde.required'=>'Esta fecha es obligatoria',
         'hasta.required'=>'Esta fecha es obligatoria',
+        'nombre.min' => 'El nombre del evento debe tener al menos 3 caracteres',
+        'descripcion.min' => 'La descripción del evento debe tener al menos 30 caracteres',
+        'latitud.numeric' => 'Hubo un error al seleccionar su ubicación',
+        'longitud.numeric' => 'Hubo un error al seleccionar su ubicación',
+        'desde.date' => 'Debe seleccionar una fecha y hora válida',
+        'hasta.date' => 'Debe seleccionar una fecha y hora válida',
     ];
+
+    /*protected $hidden = [
+        'id_verificado',
+    ];*/
 }

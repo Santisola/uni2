@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AlertasController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EventosController;
 use App\Http\Controllers\NoticiasController;
 use App\Http\Controllers\VerificadosController;
 use Illuminate\Http\Request;
@@ -60,3 +61,19 @@ Route::put('/verificado/{usuario}/complete', [VerificadosController::class,'comp
  */
 Route::get('/noticias', [NoticiasController::class, 'all']);
 Route::get('/noticias/{noticia}', [NoticiasController::class, 'noticia']);
+
+/**
+ * APP & CMS Eventos
+ */
+
+// Aplicación Uni2
+Route::get('/eventos',[EventosController::class,'eventosPublicados']);
+Route::get('/evento/{id}',[EventosController::class,'eventoPublicado']);
+
+// CMS verificados
+Route::get('/eventos-cms/{usuario}', [EventosController::class, 'eventosVerificados']);
+Route::get('/eventos-cms/{usuario}/{id_evento}', [EventosController::class, 'eventoVerificado']);
+
+Route::put('/eventos-cms/{id_evento}/editar', [EventosController::class , 'editar']);
+
+Route::post('/nuevo-evento',[EventosController::class, 'nuevo']);

@@ -39,7 +39,7 @@ export async function getServerSideProps() {
     const URL = `${process.env.API_URL}/noticias`;
     const respuesta = await fetch(URL);
     const resultado = await respuesta.json();
-    console.log(resultado);
+    // console.log(resultado);
 
     return {
         props: {

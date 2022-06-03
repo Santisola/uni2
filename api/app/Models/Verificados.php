@@ -51,4 +51,9 @@ class Verificados extends Model
     {
         $this->attributes['password'] = bcrypt($password);
     }
+
+    public function eventos()
+    {
+        return $this->belongsTo(Eventos::class, 'id_evento', 'id_evento');
+    }
 }
