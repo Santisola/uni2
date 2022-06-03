@@ -2,37 +2,54 @@ import {
     useJsApiLoader,
     GoogleMap,
     Marker,
-    Autocomplete,
     DirectionsRenderer,
+    Autocomplete
 } from '@react-google-maps/api';
-import { useRef, useState } from 'react'
+import {useEffect, useRef, useState} from 'react'
 import PawLoader from "../components/PawLoader";
 import Styles from '../styles/GoogleMaps.module.css';
 
-function GoogleMaps() {
+function GoogleMaps({ setLatitud, setLongitud, latitud, longitud }) {
     const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: process.env.API_GOOGLE,
         libraries: ['places']
     });
 
     const [map, setMap] = useState(/**@type google.maps.Map  */ (null));
-    const [direccion, setDireccion] = useState(null);
+    const [direccion, setDireccion] = useState('');
     const [center, setCenter] = useState({ lat: Number(-34.595951217761645), lng: Number(-58.456828095751796) });
 
     /** @type React.MutableRefObject<HTMLInputElement> */
     const lugar = useRef();
 
+    useEffect(() => {
+        if (latitud && longitud) {
+            setCenter({
+                lat: Number(latitud),
+                lng: Number(longitud)
+            })
+        }
+    },[latitud, longitud]);
+
     if (!isLoaded) return <PawLoader />
 
-    const buscar = async () => {
+    const buscar = async e => {
+        e.preventDefault();
+
         const geocoder = new google.maps.Geocoder();
-        await geocoder.geocode({ 'address': direccion }, function (resultado, status) {
-            if (status == 'OK') {
-                setCenter(resultado[0].geometry.location)
-            } else {
-                console.log('Hubo un error')
-            }
-        })
+        try {
+            await geocoder.geocode({ 'address': direccion }, function (resultado, status) {
+                if (status == 'OK') {
+                    setCenter(resultado[0].geometry.location);
+                    setLatitud(resultado[0].geometry.location.lat());
+                    setLongitud(resultado[0].geometry.location.lng());
+                } else {
+                    console.log('Hubo un error')
+                }
+            });
+        } catch (e) {
+            console.error(e);
+        }
     }
 
     return (
@@ -40,25 +57,37 @@ function GoogleMaps() {
             <div
                 className={Styles.contenedor}
             >
+                <label
+                    htmlFor={"direccion"}
+                    className={"sr-only"}
+                >Indique la dirección del evento</label>
                 <Autocomplete>
                     <input
                         type={"text"}
-                        placeholder={"Lugar"}
+                        placeholder={"Ingresar ubicación"}
                         className={Styles.inputs}
                         ref={lugar}
                         onChange={e => setDireccion(e.target.value)}
                         value={direccion}
+                        name={"dirección"}
+                        id={"direccion"}
                     />
                 </Autocomplete>
-                <button
-                    className={Styles.volver}
-                    onClick={ () => map.panTo(center) }
+                <div
+                    className={"mt-3 flex space-between w-full items-center"}
                 >
-                    Centrar
-                </button>
-                <button
-                    onClick={buscar}
-                >Buscar</button>
+                    <button
+                        className={Styles.centrar}
+                        onClick={ () => map.panTo(center) }
+                    >
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={"/imgs/location.svg"} alt={"Centrar"} />
+                    </button>
+                    <button
+                        className={Styles.buscar}
+                        onClick={buscar}
+                    >Buscar</button>
+                </div>
             </div>
             <GoogleMap
                 center={center}
@@ -73,7 +102,10 @@ function GoogleMaps() {
                 onLoad={map => setMap(map)}
             >
                 {direccion && (
-                    <DirectionsRenderer directions={direccion} />
+                    <>
+                        <Marker  position={center}/>
+                        <DirectionsRenderer directions={direccion} />
+                    </>
                 )}
                 <Marker  position={center}/>
             </GoogleMap>

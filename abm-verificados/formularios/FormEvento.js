@@ -100,7 +100,14 @@ export default function FormEvento() {
                     />
                 </div>
                 {/*Google Maps*/}
-                {/*<GoogleMaps />*/}
+                <div className={`my-5 ${Styles.googleContainer}`}>
+                    <GoogleMaps
+                        setLatitud={setLatitud}
+                        setLongitud={setLongitud}
+                        latitud={latitud}
+                        longitud={longitud}
+                    />
+                </div>
                 <div
                     className={`${Styles.formGroups} w-full`}
                 >

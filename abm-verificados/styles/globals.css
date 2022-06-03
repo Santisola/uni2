@@ -40,3 +40,7 @@ a {
 main {
   padding: 0 2.5rem;
 }
+
+.space-between {
+  justify-content: space-between;
+}

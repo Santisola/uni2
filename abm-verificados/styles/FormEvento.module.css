@@ -84,3 +84,8 @@
     background-color: var(--violeta);
     color: var(--blanco);
 }
+
+.googleContainer {
+    height: 400px;
+    overflow: hidden;
+}
