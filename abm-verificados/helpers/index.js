@@ -12,3 +12,8 @@ export function fecha(fecha) {
     const date = new Date(fecha);
     return date.toLocaleDateString();
 }
+
+export function dateTime(data) {
+    const date = new Date(data);
+    return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+}

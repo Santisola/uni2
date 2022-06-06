@@ -1,9 +1,8 @@
 import Styles from '../styles/PawLoader.module.css';
-import {useState} from "react";
 
 export default function PawLoader() {
     return (
-        <div className={"fixed w-screen h-screen bg-opacity-75 bg-black z-10"}>
+        <div className={`${Styles.modal} fixed w-screen h-screen bg-opacity-75 bg-black z-10`}>
             <svg id="svg-sprite">
                 <symbol id="paw" viewBox="0 0 249 209.32">
                     <ellipse cx="27.917" cy="106.333" strokeWidth="0" rx="27.917" ry="35.833"/>

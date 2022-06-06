@@ -4,12 +4,19 @@ import Styles from '../styles/Eventos.module.css';
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
 import Link from "next/link";
+import CrearPrimerEvento from "../eventos/CrearPrimerEvento";
+import Evento from "../eventos/Evento";
+import PawLoader from "../components/PawLoader";
 
 export default function Eventos() {
     const [usuario, setUsuario] = useState({
         nombre: 'Nombre',
         apellido: 'Apellido',
-    })
+    });
+    const [fetching, setFetching] = useState(true);
+    const [id, setID] = useState('');
+    const [eventos, setEventos] = useState([]);
+
     const router = useRouter();
 
     useEffect(() => {
@@ -20,28 +27,47 @@ export default function Eventos() {
         }
     },[router]);
 
+    useEffect(() => {
+        sessionStorage.getItem('id') ? setID(JSON.parse(sessionStorage.getItem('id'))) : sessionStorage.removeItem('usuario');
+    },[]);
+
+    const buscarEventos = async id => {
+        const URL = `${process.env.API_URL}/eventos-cms/${Number(id)}`;
+        const respuesta = await fetch(URL);
+        const resultado = await respuesta.json();
+
+        console.log(respuesta);
+
+        setEventos(resultado['eventos']);
+        setFetching(false);
+    }
+
+    useEffect(()  => {
+        if (id !== '') {
+            buscarEventos(id)
+        }
+    },[id]);
+
     return (
         <Layout
             pagina={"Eventos"}
             title={"Página de eventos"}
             datosUsuario={usuario}
         >
-         <h2 className={"text-xl font-semibold text-center my-10"}>No tienes ningún evento creado</h2>
-            <div className={"flex justify-center items-center my-5"}>
-                <Image
-                    layout={"fixed"}
-                    width={250}
-                    height={250}
-                    src={'/imgs/no-event.svg'}
-                    alt={"Crear un evento"}
-                />
-            </div>
-            <Link href={"/eventos/nuevoEvento"}>
-                <a
-                    role={"button"}
-                    className={`${Styles.btn} text-lg mb-10 mt-5 block text-center`}
-                >Crear un evento</a>
-            </Link>
+            { fetching && (
+                <PawLoader />
+            ) }
+            { eventos.length > 0 ? (
+                    eventos.map(evento => (
+                            <Evento
+                                key={evento.id_evento}
+                                evento={evento}
+                            />
+                        )
+                    )
+            ) : (
+                <CrearPrimerEvento />
+            ) }
         </Layout>
     )
 }

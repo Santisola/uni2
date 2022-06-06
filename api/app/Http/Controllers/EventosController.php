@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class EventosController extends Controller
 {
@@ -87,16 +88,15 @@ class EventosController extends Controller
 
     /**
      * Trae el evento del usuario verificado
+     * @param int $usuario
      * @param int $id_evento
      * @return JsonResponse
      */
-    public function eventoVerificado( int $usuario, int $id_evento) : JsonResponse
+    public function eventoVerificado( int $id_evento) : JsonResponse
     {
         try {
-            $evento = Eventos::all()
-                ->where('id_evento', $id_evento)
-                ->where('id_verificado', $usuario)
-                ->first();
+            $evento = Eventos::where('id_evento', $id_evento)->first();
+
             return response()->json([
                'success' => true,
                'evento' => $evento
@@ -135,8 +135,8 @@ class EventosController extends Controller
             $evento->descripcion = $request->descripcion;
             $evento->latitud = $request->latitud;
             $evento->longitud = $request->longitud;
-            $evento->desde = $request->desde;
-            $evento->hasta = $request->hasta;
+            $evento->desde = Carbon::createFromFormat('Y-m-d H:i:s', $request->desde);
+            $evento->hasta = Carbon::createFromFormat('Y-m-d H:i:s', $request->hasta);
             $evento->imagen = $request->imagen;
             $evento->publicado = $request->publicado;
 
@@ -155,6 +155,11 @@ class EventosController extends Controller
         }
     }
 
+    /**
+     * Creación de un nuevo evento
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function nuevo(Request $request) : JsonResponse
     {
         $validator = Validator::make($request->all(), Eventos::$reglas, Eventos::$mensajesDeError);
@@ -167,16 +172,27 @@ class EventosController extends Controller
         }
 
         try {
-            $evento = Eventos::create(array(
+
+            $file_name = Str::random(35) . '_' . $request->imagen->getClientOriginalName();
+            $request->imagen->move(public_path('/imgs/eventos'),$file_name);
+            $path = "public/imgs/eventos/$file_name";
+
+            $publicado = 0;
+
+            if (filter_var($request->publicado, FILTER_VALIDATE_BOOL) === true) {
+                $publicado = 1;
+            }
+
+            Eventos::create(array(
                 'nombre' => $request->nombre,
                 "descripcion" => $request->descripcion,
                 "latitud" => $request->latitud,
                 "longitud" => $request->longitud,
-                "desde" => $request->desde,
-                "hasta" => $request->hasta,
-                "imagen" => $request->imagen,
-                "publicado" => $request->publicado,
-                'id_verificado' => $request->id_verificado,
+                "desde" => Carbon::parse($request->desde)->format('Y-m-d\TH:i'),
+                "hasta" => Carbon::parse($request->hasta)->format('Y-m-d\TH:i'),
+                "imagen" => $path,
+                "publicado" => $publicado,
+                'id_verificado' => (int)$request->id_verificado,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ));

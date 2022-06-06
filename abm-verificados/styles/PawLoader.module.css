@@ -1,3 +1,8 @@
+.modal {
+    top: 0;
+    left: 0;
+}
+
 .ajaxLoader {
     position: absolute;
     top: 25%;

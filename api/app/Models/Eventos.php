@@ -19,6 +19,7 @@ class Eventos extends Model
         'imagen',
         'publicado',
         'id_verificado',
+        'status',
     ];
 
     public static $reglas = [
@@ -29,6 +30,7 @@ class Eventos extends Model
         'desde'=>'required|date',
         'hasta'=>'required|date',
         'id_verificado' => 'numeric',
+        'status' => 'boolean',
     ];
 
     public static $mensajesDeError = [
@@ -44,9 +46,6 @@ class Eventos extends Model
         'longitud.numeric' => 'Hubo un error al seleccionar su ubicación',
         'desde.date' => 'Debe seleccionar una fecha y hora válida',
         'hasta.date' => 'Debe seleccionar una fecha y hora válida',
+        'status.boolean' => 'Error en el el status'
     ];
-
-    /*protected $hidden = [
-        'id_verificado',
-    ];*/
 }

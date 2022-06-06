@@ -72,7 +72,7 @@ Route::get('/evento/{id}',[EventosController::class,'eventoPublicado']);
 
 // CMS verificados
 Route::get('/eventos-cms/{usuario}', [EventosController::class, 'eventosVerificados']);
-Route::get('/eventos-cms/{usuario}/{id_evento}', [EventosController::class, 'eventoVerificado']);
+Route::get('/evento-cms/{id_evento}', [EventosController::class, 'eventoVerificado']);
 
 Route::put('/eventos-cms/{id_evento}/editar', [EventosController::class , 'editar']);
 

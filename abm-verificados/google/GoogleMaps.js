@@ -18,6 +18,7 @@ function GoogleMaps({ setLatitud, setLongitud, latitud, longitud }) {
     const [map, setMap] = useState(/**@type google.maps.Map  */ (null));
     const [direccion, setDireccion] = useState('');
     const [center, setCenter] = useState({ lat: Number(-34.595951217761645), lng: Number(-58.456828095751796) });
+    const [error, setError] = useState('');
 
     /** @type React.MutableRefObject<HTMLInputElement> */
     const lugar = useRef();
@@ -35,20 +36,30 @@ function GoogleMaps({ setLatitud, setLongitud, latitud, longitud }) {
 
     const buscar = async e => {
         e.preventDefault();
+        const place = await lugar.current.value;
+        setDireccion(place);
 
         const geocoder = new google.maps.Geocoder();
         try {
-            await geocoder.geocode({ 'address': direccion }, function (resultado, status) {
+            await geocoder.geocode({ 'address': place }, function (resultado, status) {
                 if (status == 'OK') {
                     setCenter(resultado[0].geometry.location);
                     setLatitud(resultado[0].geometry.location.lat());
                     setLongitud(resultado[0].geometry.location.lng());
                 } else {
+                    setError('No se pudo encontrar esa dirección');
                 }
             });
         } catch (e) {
             console.error(e);
+            setError('No se pudo encontrar esa dirección');
         }
+
+        setTimeout(() => {
+            if (error !== '') {
+                setError('');
+            }
+        },5000);
     }
 
     return (
@@ -66,8 +77,6 @@ function GoogleMaps({ setLatitud, setLongitud, latitud, longitud }) {
                         placeholder={"Ingresar ubicación"}
                         className={Styles.inputs}
                         ref={lugar}
-                        onChange={e => setDireccion(e.target.value)}
-                        value={direccion}
                         name={"dirección"}
                         id={"direccion"}
                     />
@@ -89,6 +98,12 @@ function GoogleMaps({ setLatitud, setLongitud, latitud, longitud }) {
                         type={"button"}
                     >Buscar</button>
                 </div>
+                { error && (
+                    <p
+                        className={"bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative text-center"}
+                        role={"alertdialog"}
+                    >{error}</p>
+                )}
             </div>
             <GoogleMap
                 center={center}
@@ -104,7 +119,14 @@ function GoogleMaps({ setLatitud, setLongitud, latitud, longitud }) {
             >
                 {direccion && (
                     <>
-                        <Marker  position={center}/>
+                        <Marker
+                            icon={{
+                                url: '/imgs/icon.svg',
+                                anchor: new google.maps.Point(20, 40),
+                                scaledSize: new google.maps.Size(40, 40)
+                            }}
+                            position={center}
+                        />
                         <DirectionsRenderer directions={direccion} />
                     </>
                 )}

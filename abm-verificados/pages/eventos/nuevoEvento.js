@@ -1,13 +1,17 @@
 import Layout from "../../layouts/layout";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import FormEvento from "../../formularios/FormEvento";
+import PawLoader from "../../components/PawLoader";
 
 export default function NuevoEvento() {
     const [usuario, setUsuario] = useState({
         nombre: 'Nombre',
         apellido: 'Apellido',
-    })
+    });
+    const [success,setSuccess] = useState(false);
+    const [loader, setLoader] = useState(false);
+
     const router = useRouter();
 
     useEffect(() => {
@@ -18,15 +22,27 @@ export default function NuevoEvento() {
         }
     },[router]);
 
+    useEffect(() => {
+        if (success) {
+            router.push('/eventos');
+        }
+    },[router, success])
+
     return (
         <Layout
-            pagina={"Nuevo Evento"}
+            pagina={"Nuevo Id_evento"}
             title={"Nuevo evento"}
             datosUsuario={usuario}
         >
+            { loader && (
+                <PawLoader />
+            )}
             <h2 className={"text-xl font-semibold text-center my-10"}>Cree aquí su evento</h2>
             <div className={"mt-5"}>
-                <FormEvento />
+                <FormEvento
+                    setSuccess={setSuccess}
+                    setLoader={setLoader}
+                />
             </div>
         </Layout>
     )
