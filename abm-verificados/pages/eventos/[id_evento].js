@@ -2,12 +2,17 @@ import Layout from "../../layouts/layout";
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
 import Detalle from "../../eventos/Detalle";
+import FormEvento from "../../formularios/FormEvento";
+import PawLoader from "../../components/PawLoader";
 
 export default function Id_evento({evento}) {
     const [usuario, setUsuario] = useState({
         nombre: 'Nombre',
         apellido: 'Apellido',
     });
+    const [editar, setEditar] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const [loader, setLoader] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
@@ -17,6 +22,12 @@ export default function Id_evento({evento}) {
             setUsuario(JSON.parse(sessionStorage.getItem('usuario')));
         }
     },[router]);
+    
+    useEffect(() => {
+        if (success) {
+            router.push('/eventos');
+        }
+    },[router, success])
 
     const { id_evento, nombre, descripcion, latitud, longitud, desde, hasta, imagen, publicado, id_verificado, created_at, updated_at } = evento;
 
@@ -26,16 +37,38 @@ export default function Id_evento({evento}) {
             title={nombre}
             datosUsuario={usuario}
         >
-            <Detalle
-                nombre={nombre}
-                descripcion={descripcion}
-                desde={desde}
-                hasta={hasta}
-                imagen={imagen}
-                publicado={publicado}
-                created_at={created_at}
-                updated_at={updated_at}
-            />
+            { loader && (
+                <PawLoader />
+            ) }
+            { editar ? (
+                <FormEvento
+                    setSuccess={setSuccess}
+                    setLoader={setLoader}
+                    nombreEdit={nombre}
+                    descripcionEdit={descripcion}
+                    desdeEdit={desde}
+                    hastaEdit={hasta}
+                    imagenEdit={imagen}
+                    publicadoEdit={publicado}
+                    latitudEdit={latitud}
+                    longitudEdit={longitud}
+                    editando={editar}
+                    id_evento={id_evento}
+                />
+            ) : (
+                    <Detalle
+                        nombre={nombre}
+                        descripcion={descripcion}
+                        desde={desde}
+                        hasta={hasta}
+                        imagen={imagen}
+                        publicado={publicado}
+                        created_at={created_at}
+                        updated_at={updated_at}
+                        setEditar={setEditar}
+                    />
+                )
+            }
         </Layout>
     )
 }

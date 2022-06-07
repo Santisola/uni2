@@ -30,7 +30,7 @@ export default function NuevoEvento() {
 
     return (
         <Layout
-            pagina={"Nuevo Id_evento"}
+            pagina={"Nuevo Evento"}
             title={"Nuevo evento"}
             datosUsuario={usuario}
         >

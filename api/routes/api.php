@@ -74,6 +74,6 @@ Route::get('/evento/{id}',[EventosController::class,'eventoPublicado']);
 Route::get('/eventos-cms/{usuario}', [EventosController::class, 'eventosVerificados']);
 Route::get('/evento-cms/{id_evento}', [EventosController::class, 'eventoVerificado']);
 
-Route::put('/eventos-cms/{id_evento}/editar', [EventosController::class , 'editar']);
+Route::put('/evento-cms/{id_evento}/editar', [EventosController::class , 'editar']);
 
 Route::post('/nuevo-evento',[EventosController::class, 'nuevo']);

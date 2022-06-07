@@ -1,17 +1,29 @@
-import React, {useEffect, useState} from "react";
-import PawLoader from "../components/PawLoader";
+import React, { useEffect, useState } from "react";
 import Styles from '../styles/FormEvento.module.css';
 import GoogleMaps from "../google/GoogleMaps";
 
-export default function FormEvento({ setSuccess, setLoader }) {
-    const [nombre, setNombre] = useState('');
-    const [descripcion, setDescripcion] = useState('');
-    const [latitud, setLatitud] = useState(0);
-    const [longitud, setLongitud] = useState(0);
-    const [desde, setDesde] = useState('');
-    const [hasta, setHasta] = useState('');
-    const [imagen, setImagen] = useState(null);
-    const [publicado, setPublicado] = useState(false);
+export default function FormEvento({
+    setSuccess,
+    setLoader,
+    nombreEdit,
+    descripcionEdit,
+    desdeEdit,
+    hastaEdit,
+    imagenEdit,
+    publicadoEdit,
+    latitudEdit,
+    longitudEdit,
+    editando,
+    id_evento
+}) {
+    const [nombre, setNombre] = useState(nombreEdit ? nombreEdit : '');
+    const [descripcion, setDescripcion] = useState(descripcionEdit ? descripcionEdit : '');
+    const [latitud, setLatitud] = useState(latitudEdit ? latitudEdit : 0);
+    const [longitud, setLongitud] = useState(longitudEdit ? longitudEdit : 0);
+    const [desde, setDesde] = useState(desdeEdit ? desdeEdit : '');
+    const [hasta, setHasta] = useState(hastaEdit ? hastaEdit : '');
+    const [imagen, setImagen] = useState(imagenEdit ? imagenEdit : null);
+    const [publicado, setPublicado] = useState(publicadoEdit ? publicadoEdit : false);
     const [currentUser, setCurrentUser] = useState('');
 
     // Errores
@@ -61,7 +73,14 @@ export default function FormEvento({ setSuccess, setLoader }) {
         formData.append('id_verificado',currentUser);
 
         try {
-            const url = `${process.env.API_URL}/nuevo-evento`;
+            let url;
+            if (editando) {
+                url = `${process.env.API_URL}/evento-cms/${id_evento}/editar`;
+                formData.append('_method','PUT');
+            } else {
+                url = `${process.env.API_URL}/nuevo-evento`;
+            }
+
             const respuesta = await fetch(url, {
                 method: 'POST',
                 body: formData
@@ -309,6 +328,7 @@ export default function FormEvento({ setSuccess, setLoader }) {
                     <button
                         onClick={imageClick}
                         className={Styles.imagen}
+                        type={"button"}
                     >Agregar Imagen</button>
                     <small>La imagen del evento es opcional</small>
                     { errorImagen !== '' && (

@@ -36,7 +36,7 @@ export default function Eventos() {
         const respuesta = await fetch(URL);
         const resultado = await respuesta.json();
 
-        console.log(respuesta);
+        // console.log(respuesta);
 
         setEventos(resultado['eventos']);
         setFetching(false);

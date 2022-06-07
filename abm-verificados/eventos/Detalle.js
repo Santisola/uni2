@@ -1,7 +1,18 @@
 import {dateTime} from "../helpers";
 import Styles from '../styles/DetalleEvento.module.css';
 
-export default function Detalle({ nombre, descripcion, imagen, hasta, desde, publicado, updated_at, created_at }) {
+export default function Detalle({
+    nombre,
+    descripcion,
+    imagen,
+    hasta,
+    desde,
+    publicado,
+    updated_at,
+    created_at,
+    setEditar
+})
+    {
     return (
         <>
             <div>
@@ -28,6 +39,7 @@ export default function Detalle({ nombre, descripcion, imagen, hasta, desde, pub
             <button
                 type={"button"}
                 className={Styles.boton}
+                onClick={() => setEditar(true)}
             >Modificar</button>
         </>
     )

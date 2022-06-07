@@ -131,14 +131,24 @@ class EventosController extends Controller
                 ->where('id_evento', $evento)
                 ->first();
 
+            $file_name = Str::random(35) . '_' . $request->imagen->getClientOriginalName();
+            $request->imagen->move(public_path('/imgs/eventos'),$file_name);
+            $path = "public/imgs/eventos/$file_name";
+
+            $publicado = 0;
+
+            if (filter_var($request->publicado, FILTER_VALIDATE_BOOL) === true) {
+                $publicado = 1;
+            }
+
             $evento->nombre = $request->nombre;
             $evento->descripcion = $request->descripcion;
             $evento->latitud = $request->latitud;
             $evento->longitud = $request->longitud;
             $evento->desde = Carbon::createFromFormat('Y-m-d H:i:s', $request->desde);
             $evento->hasta = Carbon::createFromFormat('Y-m-d H:i:s', $request->hasta);
-            $evento->imagen = $request->imagen;
-            $evento->publicado = $request->publicado;
+            $evento->imagen = $path;
+            $evento->publicado = $publicado;
 
             $evento->save();
 
@@ -150,7 +160,8 @@ class EventosController extends Controller
         } catch (\Exception $exception) {
             return response()->json([
                'success' => false,
-               'mensaje' => 'Hubo un error al intentar editar su evento'
+               'mensaje' => 'Hubo un error al intentar editar su evento',
+                'Error' => $exception
             ]);
         }
     }
