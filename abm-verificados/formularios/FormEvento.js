@@ -70,7 +70,16 @@ export default function FormEvento({
         formData.append('hasta',hasta);
         formData.append('imagen',imagen);
         formData.append('publicado',publicado);
-        formData.append('id_verificado',currentUser);
+
+        console.log(nombre);
+        console.log(descripcion);
+        console.log(latitud);
+        console.log(longitud);
+        console.log(desde);
+        console.log(hasta);
+        console.log(imagen);
+        console.log(publicado);
+        console.log(currentUser);
 
         try {
             let url;
@@ -80,6 +89,8 @@ export default function FormEvento({
             } else {
                 url = `${process.env.API_URL}/nuevo-evento`;
             }
+
+            console.log(formData.values());
 
             const respuesta = await fetch(url, {
                 method: 'POST',

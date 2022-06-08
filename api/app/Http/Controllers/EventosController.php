@@ -71,7 +71,8 @@ class EventosController extends Controller
     {
         try {
 
-            $eventos = Eventos::all()->where('id_verificado',$usuario);
+            $eventos = Eventos::all()
+                ->where('id_verificado',$usuario);
 
             return response()->json([
                 'success' => true,
@@ -131,7 +132,7 @@ class EventosController extends Controller
                 ->where('id_evento', $evento)
                 ->first();
 
-            $file_name = Str::random(35) . '_' . $request->imagen->getClientOriginalName();
+            $file_name = Str::random(35) . '_' . trim($request->imagen->getClientOriginalName());
             $request->imagen->move(public_path('/imgs/eventos'),$file_name);
             $path = "public/imgs/eventos/$file_name";
 
@@ -145,10 +146,11 @@ class EventosController extends Controller
             $evento->descripcion = $request->descripcion;
             $evento->latitud = $request->latitud;
             $evento->longitud = $request->longitud;
-            $evento->desde = Carbon::createFromFormat('Y-m-d H:i:s', $request->desde);
-            $evento->hasta = Carbon::createFromFormat('Y-m-d H:i:s', $request->hasta);
+            $evento->desde = Carbon::parse($request->desde)->format('Y-m-d\TH:i');
+            $evento->hasta = Carbon::parse($request->hasta)->format('Y-m-d\TH:i');
             $evento->imagen = $path;
             $evento->publicado = $publicado;
+            $evento->updated_at = Carbon::now();
 
             $evento->save();
 
@@ -161,7 +163,7 @@ class EventosController extends Controller
             return response()->json([
                'success' => false,
                'mensaje' => 'Hubo un error al intentar editar su evento',
-                'Error' => $exception
+                'Error' => $exception->getMessage()
             ]);
         }
     }
@@ -184,7 +186,7 @@ class EventosController extends Controller
 
         try {
 
-            $file_name = Str::random(35) . '_' . $request->imagen->getClientOriginalName();
+            $file_name = Str::random(35) . '_' . trim($request->imagen->getClientOriginalName());
             $request->imagen->move(public_path('/imgs/eventos'),$file_name);
             $path = "public/imgs/eventos/$file_name";
 

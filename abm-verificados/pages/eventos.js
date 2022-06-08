@@ -1,5 +1,4 @@
 import Layout from "../layouts/layout";
-import Image from "next/image";
 import Styles from '../styles/Eventos.module.css';
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
@@ -68,6 +67,12 @@ export default function Eventos() {
             ) : (
                 <CrearPrimerEvento />
             ) }
+            <Link href={"/eventos/nuevoEvento"}>
+                <a
+                    role={"button"}
+                    className={`${Styles.btn} text-lg mb-10 mt-5 block text-center`}
+                >Crear un evento</a>
+            </Link>
         </Layout>
     )
 }

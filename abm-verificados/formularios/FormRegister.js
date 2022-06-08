@@ -168,6 +168,7 @@ export default function FormRegister({ router, setLoader }) {
                 <button
                     onClick={ () => setTogglePassword( !togglePassword ) }
                     className={Styles.ojo}
+                    type={"button"}
                 >
                     {
                         togglePassword ?

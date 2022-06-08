@@ -130,7 +130,7 @@ class VerificadosController extends Controller
 
         try {
             $user = Verificados::findOrFail($usuario);
-            $file_name = Str::random(35) . '_' . $request->imagen->getClientOriginalName();
+            $file_name = Str::random(35) . '_' . trim($request->imagen->getClientOriginalName());
             $request->imagen->move(public_path('/imgs/perfiles'),$file_name);
             $path = "public/imgs/perfiles/$file_name";
 

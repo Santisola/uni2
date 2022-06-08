@@ -3,7 +3,7 @@ import {dateTime} from "../helpers";
 import Link from "next/link";
 
 export default function Evento({evento}) {
-    console.log(evento)
+    // console.log(evento)
     const { nombre, desde, hasta, id_evento, imagen } = evento;
     return (
         <article
