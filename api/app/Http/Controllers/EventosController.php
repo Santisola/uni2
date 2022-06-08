@@ -205,7 +205,7 @@ class EventosController extends Controller
                 "hasta" => Carbon::parse($request->hasta)->format('Y-m-d\TH:i'),
                 "imagen" => $path,
                 "publicado" => $publicado,
-                'id_verificado' => (int)$request->id_verificado,
+                'id_verificado' => $request->id_verificado,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ));

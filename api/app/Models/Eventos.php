@@ -48,4 +48,9 @@ class Eventos extends Model
         'hasta.date' => 'Debe seleccionar una fecha y hora válida',
         'status.boolean' => 'Error en el el status'
     ];
+
+    public function verificado()
+    {
+        $this->belongsTo(Verificados::class, 'id_verificado','id_verificado');
+    }
 }
