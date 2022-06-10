@@ -17,6 +17,7 @@ class CreateEventosTable extends Migration
             $table->id('id_evento');
             $table->string('nombre');
             $table->longText('descripcion');
+            $table->text('direccion');
             $table->decimal('latitud', 8, 6);
             $table->decimal('longitud', 8, 6);
             $table->timestamp('desde')->useCurrent();

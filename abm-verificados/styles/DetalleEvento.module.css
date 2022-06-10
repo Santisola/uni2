@@ -9,10 +9,10 @@
     color: var(--violeta);
 }
 
-.status {
+.resaltar {
     color: var(--violeta);
     font-weight: 600;
-    margin-left: 1rem;
+    margin-left: 10px;
 }
 
 .timestamp {

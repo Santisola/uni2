@@ -1,9 +1,11 @@
 import {dateTime} from "../helpers";
 import Styles from '../styles/DetalleEvento.module.css';
+import Breadcrum from "../components/Breadcrum";
 
 export default function Detalle({
     nombre,
     descripcion,
+    direccion,
     imagen,
     hasta,
     desde,
@@ -15,6 +17,11 @@ export default function Detalle({
     {
     return (
         <>
+            <Breadcrum
+                link={'/eventos'}
+                anterior={'Eventos'}
+                actual={nombre}
+            />
             <div>
                 <picture>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -28,8 +35,12 @@ export default function Detalle({
                 <dl className={"font-semibold"}>Desde: <span className={Styles.fechas}>{dateTime(desde)}</span></dl>
                 <dl className={"font-semibold"}>Hasta: <span className={Styles.fechas}>{dateTime(hasta)}</span></dl>
                 <div className={"mt-3 flex w-full"}>
+                    <dt className={"font-bold"}>Dirección:</dt>
+                    <dl className={Styles.resaltar}>{direccion}</dl>
+                </div>
+                <div className={"mt-3 flex w-full"}>
                     <dt className={"font-bold"}>Status:</dt>
-                    <dl className={Styles.status}>{publicado === 1 ? 'Publicado' : 'Borrador' }</dl>
+                    <dl className={Styles.resaltar}>{publicado === 1 ? 'Publicado' : 'Borrador' }</dl>
                 </div>
             </dl>
             <ul className={"mt-5"}>

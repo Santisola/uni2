@@ -12,6 +12,7 @@ class Eventos extends Model
     protected $fillable = [
         'nombre',
         'descripcion',
+        'direccion',
         'latitud',
         'longitud',
         'desde',
@@ -25,6 +26,7 @@ class Eventos extends Model
     public static $reglas = [
         'nombre'=>'required|min:3',
         'descripcion'=>'required|min:30',
+        'direccion' => 'required',
         'latitud' => 'required|numeric',
         'longitud' => 'required|numeric',
         'desde'=>'required|date',
@@ -36,6 +38,7 @@ class Eventos extends Model
     public static $mensajesDeError = [
         'nombre.required'=>'El nombre del evento es obligatorio',
         'descripcion.required'=>'La descripción del evento es obligatoria',
+        'direccion.required' => 'La dirección es obligatoria',
         'latitud.required' => 'Debe seleccionar una ubicación',
         'longitud.required' => 'Debe seleccionar una ubicación',
         'desde.required'=>'Esta fecha es obligatoria',

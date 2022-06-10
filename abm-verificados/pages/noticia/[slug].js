@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import {fecha} from "../../helpers";
 import Styles from '../../styles/Noticia.module.css'
+import Breadcrum from "../../components/Breadcrum";
 
 export default function EntradaNoticia({noticia}) {
     const [usuario, setUsuario] = useState({
@@ -27,10 +28,18 @@ export default function EntradaNoticia({noticia}) {
             title={titulo}
             datosUsuario={usuario}
         >
+            <Breadcrum
+                link={'/noticias'}
+                anterior={'Noticias'}
+                actual={titulo}
+            />
             <div>
                 <picture>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={imagen} alt={`${titulo} - noticia`} />
+                    <img
+                        src={imagen}
+                        alt={`${titulo} - noticia`}
+                    />
                 </picture>
             </div>
             <h2 className={"text-xl font-semibold mt-5"}>{titulo}</h2>

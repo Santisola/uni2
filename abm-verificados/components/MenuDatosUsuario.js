@@ -29,9 +29,16 @@ export default function MenuDatosUsuario({datosUsuario}) {
                     <img width={50} height={50} src={"/imgs/user-default.png"} alt={"Imagen predeterminada para usuario"}  />
                 )
             }
-            <div>
+            <div className={"overflow-hidden"}>
                 <p className={"text-white text-lg font-semibold"}>{datos.razon_social}</p>
-                <p className={`${Styles.email} text-white`}>{datos.email}</p>
+                {datos.email?.length > 20 ? (
+                    <div className={"flex"}>
+                        <p className={`${Styles.email} text-white mr-5`}>{datos.email}</p>
+                        <p className={`${Styles.email} text-white`}>{datos.email}</p>
+                    </div>
+                ) : (
+                    <p className={"text-white"}>{datos.email}</p>
+                )}
             </div>
         </div>
     )

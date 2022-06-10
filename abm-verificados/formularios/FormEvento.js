@@ -7,6 +7,7 @@ export default function FormEvento({
     setLoader,
     nombreEdit,
     descripcionEdit,
+    direccionEdit,
     desdeEdit,
     hastaEdit,
     imagenEdit,
@@ -18,6 +19,7 @@ export default function FormEvento({
 }) {
     const [nombre, setNombre] = useState(nombreEdit ? nombreEdit : '');
     const [descripcion, setDescripcion] = useState(descripcionEdit ? descripcionEdit : '');
+    const [direccion, setDireccion] = useState(direccionEdit ? direccionEdit : '');
     const [latitud, setLatitud] = useState(latitudEdit ? latitudEdit : 0);
     const [longitud, setLongitud] = useState(longitudEdit ? longitudEdit : 0);
     const [desde, setDesde] = useState(desdeEdit ? desdeEdit : '');
@@ -29,6 +31,7 @@ export default function FormEvento({
     // Errores
     const [errorNombre, setErrorNombre] = useState('');
     const [errorDescripcion, setErrorDescripcion] = useState('');
+    const [errorDireccion, setErrorDireccion] = useState('');
     const [errorFecha, setErrorFecha] = useState('');
     const [errorImagen, setErrorImagen] = useState('');
     const [errorPublicado, setErrorPublicado] = useState('');
@@ -46,6 +49,7 @@ export default function FormEvento({
         const evento = {
             nombre,
             descripcion,
+            direccion,
             latitud,
             longitud,
             desde,
@@ -64,6 +68,7 @@ export default function FormEvento({
         const formData = new FormData();
         formData.append('nombre',nombre);
         formData.append('descripcion',descripcion);
+        formData.append('direccion',direccion);
         formData.append('latitud',latitud);
         formData.append('longitud',longitud);
         formData.append('desde',desde);
@@ -124,7 +129,7 @@ export default function FormEvento({
     }
 
     const validateEvento = data => {
-        const { nombre, descripcion, desde, hasta, imagen, latitud, longitud, publicado } = data;
+        const { nombre, descripcion, direccion, desde, hasta, imagen, latitud, longitud, publicado } = data;
         resetErrors();
 
         let errores = {};
@@ -145,6 +150,10 @@ export default function FormEvento({
             errores.descripcion = "La descripción debe tener al menos 30 caracteres";
         }
 
+        if(direccion === '') {
+            errores.direccion = "La dirección no puede estar vacía";
+        }
+
         if (desde === '' || hasta === '') {
             errores.fechas = "Las fechas están vacías"
         }
@@ -161,8 +170,10 @@ export default function FormEvento({
             errores.imagen = "Selecciona un imagen";
         }
 
-        if ((/\.(jpe?g|png)$/i).test(imagen)) {
-            errores.imagen = "El formato del archivo no es válido, únicamente .jpg, .jpeg y .png";
+        if (typeof imagen !== "string") {
+            if ((/\.(jpe?g|png)$/i).test(imagen)) {
+                errores.imagen = "El formato del archivo no es válido, únicamente .jpg, .jpeg y .png";
+            }
         }
 
         if (typeof publicado !== "boolean") {
@@ -180,6 +191,10 @@ export default function FormEvento({
 
             if (errores.descripcion) {
                 setErrorDescripcion(errores.descripcion);
+            }
+
+            if (errores.direccion) {
+                setErrorDireccion(errores.direccion);
             }
 
             if (errores.fechas) {
@@ -304,6 +319,9 @@ export default function FormEvento({
                         setLongitud={setLongitud}
                         latitud={latitud}
                         longitud={longitud}
+                        errorDireccion={errorDireccion}
+                        setDireccion={setDireccion}
+                        direccion={direccion}
                     />
                     { errorLugar !== '' && (
                         <p

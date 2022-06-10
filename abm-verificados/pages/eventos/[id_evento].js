@@ -29,7 +29,7 @@ export default function Id_evento({evento}) {
         }
     },[router, success])
 
-    const { id_evento, nombre, descripcion, latitud, longitud, desde, hasta, imagen, publicado, id_verificado, created_at, updated_at } = evento;
+    const { id_evento, nombre, descripcion, direccion, latitud, longitud, desde, hasta, imagen, publicado, id_verificado, created_at, updated_at } = evento;
 
     return (
         <Layout
@@ -46,6 +46,7 @@ export default function Id_evento({evento}) {
                     setLoader={setLoader}
                     nombreEdit={nombre}
                     descripcionEdit={descripcion}
+                    direccionEdit={direccion}
                     desdeEdit={desde}
                     hastaEdit={hasta}
                     imagenEdit={imagen}
@@ -59,6 +60,7 @@ export default function Id_evento({evento}) {
                     <Detalle
                         nombre={nombre}
                         descripcion={descripcion}
+                        direccion={direccion}
                         desde={desde}
                         hasta={hasta}
                         imagen={imagen}

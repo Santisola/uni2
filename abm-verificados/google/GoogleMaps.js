@@ -9,14 +9,14 @@ import {useEffect, useRef, useState} from 'react'
 import PawLoader from "../components/PawLoader";
 import Styles from '../styles/GoogleMaps.module.css';
 
-function GoogleMaps({ setLatitud, setLongitud, latitud, longitud }) {
+function GoogleMaps({ setLatitud, setLongitud, latitud, longitud, errorDireccion, setDireccion, direccion }) {
     const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: process.env.API_GOOGLE,
         libraries: ['places']
     });
 
     const [map, setMap] = useState(/**@type google.maps.Map  */ (null));
-    const [direccion, setDireccion] = useState('');
+    const [localizacion, setLocalizacion] = useState('');
     const [center, setCenter] = useState({ lat: Number(-34.595951217761645), lng: Number(-58.456828095751796) });
     const [error, setError] = useState('');
 
@@ -37,7 +37,8 @@ function GoogleMaps({ setLatitud, setLongitud, latitud, longitud }) {
     const buscar = async e => {
         e.preventDefault();
         const place = await lugar.current.value;
-        setDireccion(place);
+        setLocalizacion(place);
+        setDireccion(place)
 
         const geocoder = new google.maps.Geocoder();
         try {
@@ -68,7 +69,7 @@ function GoogleMaps({ setLatitud, setLongitud, latitud, longitud }) {
                 className={Styles.contenedor}
             >
                 <label
-                    htmlFor={"direccion"}
+                    htmlFor={"localizacion"}
                     className={"sr-only"}
                 >Indique la dirección del evento</label>
                 <Autocomplete>
@@ -77,8 +78,9 @@ function GoogleMaps({ setLatitud, setLongitud, latitud, longitud }) {
                         placeholder={"Ingresar ubicación"}
                         className={Styles.inputs}
                         ref={lugar}
-                        name={"dirección"}
-                        id={"direccion"}
+                        name={"localizacion"}
+                        id={"localizacion"}
+                        defaultValue={direccion ? direccion : ''}
                     />
                 </Autocomplete>
                 <div
@@ -98,6 +100,12 @@ function GoogleMaps({ setLatitud, setLongitud, latitud, longitud }) {
                         type={"button"}
                     >Buscar</button>
                 </div>
+                { errorDireccion && (
+                    <p
+                        className={"bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative text-center"}
+                        role={"alertdialog"}
+                    >{errorDireccion}</p>
+                ) }
                 { error && (
                     <p
                         className={"bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative text-center"}
@@ -117,7 +125,7 @@ function GoogleMaps({ setLatitud, setLongitud, latitud, longitud }) {
                 }}
                 onLoad={map => setMap(map)}
             >
-                {direccion && (
+                {localizacion && (
                     <>
                         <Marker
                             icon={{
@@ -127,7 +135,7 @@ function GoogleMaps({ setLatitud, setLongitud, latitud, longitud }) {
                             }}
                             position={center}
                         />
-                        <DirectionsRenderer directions={direccion} />
+                        <DirectionsRenderer directions={localizacion} />
                     </>
                 )}
                 <Marker  position={center}/>

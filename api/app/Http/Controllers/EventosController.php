@@ -89,7 +89,6 @@ class EventosController extends Controller
 
     /**
      * Trae el evento del usuario verificado
-     * @param int $usuario
      * @param int $id_evento
      * @return JsonResponse
      */
@@ -132,9 +131,13 @@ class EventosController extends Controller
                 ->where('id_evento', $evento)
                 ->first();
 
-            $file_name = Str::random(35) . '_' . trim($request->imagen->getClientOriginalName());
-            $request->imagen->move(public_path('/imgs/eventos'),$file_name);
-            $path = "public/imgs/eventos/$file_name";
+            if (!is_string($request->imagen)) {
+                $file_name = Str::random(35) . '_' . trim($request->imagen->getClientOriginalName());
+                $request->imagen->move(public_path('/imgs/eventos'),$file_name);
+                $path = "public/imgs/eventos/$file_name";
+            } else {
+                $path = $request->imagen;
+            }
 
             $publicado = 0;
 
@@ -144,6 +147,7 @@ class EventosController extends Controller
 
             $evento->nombre = $request->nombre;
             $evento->descripcion = $request->descripcion;
+            $evento->direccion = $request->direccion;
             $evento->latitud = $request->latitud;
             $evento->longitud = $request->longitud;
             $evento->desde = Carbon::parse($request->desde)->format('Y-m-d\TH:i');
@@ -197,8 +201,9 @@ class EventosController extends Controller
             }
 
             Eventos::create(array(
-                'nombre' => $request->nombre,
+                "nombre" => $request->nombre,
                 "descripcion" => $request->descripcion,
+                "direccion" => $request->direccion,
                 "latitud" => $request->latitud,
                 "longitud" => $request->longitud,
                 "desde" => Carbon::parse($request->desde)->format('Y-m-d\TH:i'),

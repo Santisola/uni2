@@ -23,6 +23,27 @@
     padding-left: 10px;
 }
 
-.email {
+@media (max-width: 578px) {
+    .email {
+        -webkit-animation-name: rotate;
+        -webkit-animation-duration: 10000ms;
+        -webkit-animation-delay: 0ms;
+        -webkit-animation-fill-mode: forwards;
+        -webkit-animation-timing-function: linear;
+        -webkit-animation-iteration-count: infinite;
+        -webkit-transform-origin: 0 0;
+    }
+    @-webkit-keyframes rotate {
+        0% {
+            transform: translateX(0);
+        }
 
+        100% {
+            transform: translateX(-108%);
+        }
+
+        /*100% {*/
+        /*    transform: translateX(0);*/
+        /*}*/
+    }
 }

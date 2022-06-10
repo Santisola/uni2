@@ -1,0 +1,21 @@
+.bread {
+    margin-bottom: 1rem;
+}
+
+.link {
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    cursor: pointer;
+    padding-right: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+.link:hover {
+    text-decoration-color: var(--negro);
+}
+
+.actual {
+    color: var(--violeta);
+    font-weight: 500;
+    padding-left: 10px;
+}
