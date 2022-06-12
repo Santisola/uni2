@@ -17,6 +17,7 @@ function GoogleMaps({ setLatitud, setLongitud, latitud, longitud, errorDireccion
 
     const [map, setMap] = useState(/**@type google.maps.Map  */ (null));
     const [localizacion, setLocalizacion] = useState('');
+    const [autocompletar, setAutocompletar] = useState({});
     const [center, setCenter] = useState({ lat: Number(-34.595951217761645), lng: Number(-58.456828095751796) });
     const [error, setError] = useState('');
 
@@ -36,7 +37,7 @@ function GoogleMaps({ setLatitud, setLongitud, latitud, longitud, errorDireccion
 
     const buscar = async e => {
         e.preventDefault();
-        const place = await lugar.current.value;
+        const place = lugar.current.value;
         setLocalizacion(place);
         setDireccion(place)
 
@@ -72,7 +73,12 @@ function GoogleMaps({ setLatitud, setLongitud, latitud, longitud, errorDireccion
                     htmlFor={"localizacion"}
                     className={"sr-only"}
                 >Indique la dirección del evento</label>
-                <Autocomplete>
+                <Autocomplete
+                    onLoad={(autocomplete) => setAutocompletar(autocomplete)}
+                    onPlaceChanged={() => {
+                        console.log(autocompletar.getPlace());
+                    }}
+                >
                     <input
                         type={"text"}
                         placeholder={"Ingresar ubicación"}

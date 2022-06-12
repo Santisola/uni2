@@ -55,10 +55,11 @@ export default function FormRegister({ router, setLoader }) {
             setLoader(false);
         }
         catch (e) {
-            console.error(e);
+            // console.error(e);
             setError(true);
             setMensajeError('Ha ocurrido un error al momento de autenticar sus datos');
         }
+        setLoader(false);
     }
 
     function mostrarErrores(mensajes) {

@@ -69,6 +69,7 @@ export default function FormLogin({ router, setLoader }) {
             setMensajeError('Ha ocurrido un error al momento de autenticar sus datos');
             setLoader(false);
         }
+        setLoader(false);
     }
 
     function validateData(datos) {
