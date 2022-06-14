@@ -27,7 +27,7 @@ export default {
             at: `${this.lat},${this.lng}`
         }, (res) => {
             const resItem = res.items[0];
-            this.direccion = `${resItem.address.street} ${resItem.address.houseNumber}`;
+            this.direccion = `${resItem.address.street } ${resItem.address.houseNumber ?? ''}`;
             this.isLoading = false;
         })
     },
