@@ -37,7 +37,7 @@ export default function Eventos() {
 
         // console.log(respuesta);
 
-        setEventos(resultado['eventos'].reverse());
+        setEventos(resultado['eventos']);
         setFetching(false);
     }
 

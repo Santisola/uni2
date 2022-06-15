@@ -17,3 +17,11 @@ export function dateTime(data) {
     const date = new Date(data);
     return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
 }
+
+export function dateTimeLocal(data) {
+    return data.toString().replace(' ','T');
+}
+
+export function previewImage(imagen) {
+    return  URL.createObjectURL(imagen);
+}

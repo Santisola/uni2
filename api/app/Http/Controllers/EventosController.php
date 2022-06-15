@@ -71,8 +71,9 @@ class EventosController extends Controller
     {
         try {
 
-            $eventos = Eventos::all()
-                ->where('id_verificado',$usuario);
+            $eventos = Eventos::orderBy('updated_at','desc')
+                ->where('id_verificado',$usuario)
+                ->get();
 
             return response()->json([
                 'success' => true,

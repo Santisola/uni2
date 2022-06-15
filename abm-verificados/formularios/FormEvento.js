@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Styles from '../styles/FormEvento.module.css';
 import GoogleMaps from "../google/GoogleMaps";
+import {dateTimeLocal, previewImage} from "../helpers";
 
 export default function FormEvento({
     setSuccess,
@@ -22,8 +23,8 @@ export default function FormEvento({
     const [direccion, setDireccion] = useState(direccionEdit ? direccionEdit : '');
     const [latitud, setLatitud] = useState(latitudEdit ? latitudEdit : 0);
     const [longitud, setLongitud] = useState(longitudEdit ? longitudEdit : 0);
-    const [desde, setDesde] = useState(desdeEdit ? desdeEdit : '');
-    const [hasta, setHasta] = useState(hastaEdit ? hastaEdit : '');
+    const [desde, setDesde] = useState(desdeEdit ? dateTimeLocal(desdeEdit) : '');
+    const [hasta, setHasta] = useState(hastaEdit ? dateTimeLocal(hastaEdit) : '');
     const [imagen, setImagen] = useState(imagenEdit ? imagenEdit : null);
     const [publicado, setPublicado] = useState(publicadoEdit ? publicadoEdit : false);
     const [currentUser, setCurrentUser] = useState('');
@@ -223,6 +224,10 @@ export default function FormEvento({
         setCurrentUser(JSON.parse(sessionStorage.getItem('id')))
     },[]);
 
+    useEffect(() => {
+        console.log(imagen)
+    },[imagen])
+
     return(
         <>
             <form
@@ -350,7 +355,14 @@ export default function FormEvento({
                         className={Styles.imagen}
                         type={"button"}
                     >Agregar Imagen</button>
-                    <small>La imagen del evento es opcional</small>
+                    { imagen && (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                            className={Styles.imgPreview}
+                            src={typeof imagen === 'object' ? previewImage(imagen) : process.env.API_IMAGEN + imagen}
+                            alt="imagen" />
+                    ) }
+                    <small>Previsualización de la imagen</small>
                     { errorImagen !== '' && (
                         <p
                             className={"mt-3 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative text-center"}
