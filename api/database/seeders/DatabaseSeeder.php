@@ -13,7 +13,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
         $this->call(EspeciesSeeder::class);
         $this->call(RazasSeeder::class);
         $this->call(SexoSeeder::class);
@@ -23,5 +22,6 @@ class DatabaseSeeder extends Seeder
         $this->call(VerificadoSeeder::class);
         $this->call(EventosSeeder::class);
         $this->call(NoticiasSeeder::class);
+        $this->call(AdminSeeder::class);
     }
 }

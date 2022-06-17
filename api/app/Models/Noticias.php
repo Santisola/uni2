@@ -14,14 +14,16 @@ class Noticias extends Model
         'contenido',
         'slug',
         'imagen',
-        'publicado'
+        'publicado',
+        'created_at',
+        'updated_at'
     ];
 
     public static $reglas = [
-        'titulo'=>'required',
-        'contenido'=>'required',
-        'slug'=>'required|unique',
-        'imagen'=>'required',
+        'titulo'=>'required|min:3',
+        'contenido'=>'required|min:20',
+        'slug'=>'required|unique:noticias',
+        'imagen'=>'required|mimes:jpeg,jpg,png|max:10000',
     ];
 
     public static $mensajesDeError = [
@@ -30,5 +32,7 @@ class Noticias extends Model
         'slug.required'=>'El slug es obligatorio',
         'slug.unique'=>'El slug debe ser único e irrepetible, quizas ya exista otro slug con este nombre',
         'imagen.required'=>'La imagen es obligatoria',
+        'imagen.mimes'=>'La imagen debe ser formato jpeg,jpg o png',
+        'imagen.max' => 'La imagen es muy pesada intente subir otra',
     ];
 }

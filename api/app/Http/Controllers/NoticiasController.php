@@ -9,7 +9,9 @@ class NoticiasController extends Controller
 {
     public function all() : JsonResponse
     {
-        $noticias = Noticias::orderBy('created_at')->get();
+        $noticias = Noticias::orderBy('created_at','desc')
+            ->where('publicado',1)
+            ->get();
 
         return response()->json([
            'success' => true,

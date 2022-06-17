@@ -5,16 +5,22 @@
     align-items: center;
     box-shadow: 0 5px 5px rgba(0,0,0,0.2);
     border-radius: 10px;
+    margin-bottom: 2rem;
 }
 
 .carta div {
     padding: 1rem;
+    width: 100%;
 }
 
 .carta img{
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    min-height: 210px;
+    height: 100%;
+    width: 100vw;
+    max-height: 210px;
+    object-fit: cover;
+    object-position: center;
 }
 
 .carta h2 {
