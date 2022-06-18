@@ -4,38 +4,38 @@
 @extends('layouts.main')
 @section('title','UNIDOS | Usuarios')
 @section('main')
-    <div class="container mt-3">
-        <h1 class="text-center">Usuarios</h1>
-        <table class="table table-stripped">
-            <thead>
-                <tr>
-                    <th class="align-middle text-center">Cuit</th>
-                    <th class="align-middle text-center">Razón Social</th>
-                    <th class="align-middle text-center">Teléfono</th>
-                    <th class="align-middle text-center">Email</th>
-                    <th class="align-middle text-center">Imagen</th>
-                    <th class="align-middle text-center">Status</th>
-                    <th class="align-middle text-center">Fecha de registro</th>
-                    <th class="align-middle text-center">Última actualización</th>
-                </tr>
+    <h1 class="text-center text-3xl mb-10">Usuarios</h1>
+    <div class="overflow-x-scroll xl:overflow-x-hidden pb-20">
+        <table class="table table-auto mx-auto px-10">
+            <thead class="border">
+            <tr>
+                <th class="whitespace-nowrap px-5 border align-middle text-center">Cuit</th>
+                <th class="whitespace-nowrap px-5 border align-middle text-center">Razón Social</th>
+                <th class="whitespace-nowrap px-5 border align-middle text-center">Teléfono</th>
+                <th class="whitespace-nowrap px-5 border align-middle text-center">Email</th>
+                <th class="whitespace-nowrap px-5 border align-middle text-center">Imagen</th>
+                <th class="whitespace-nowrap px-5 border align-middle text-center">Status</th>
+                <th class="whitespace-nowrap px-5 border align-middle text-center">Fecha de registro</th>
+                <th class="whitespace-nowrap px-5 border align-middle text-center">Última actualización</th>
+            </tr>
             </thead>
-            <tbody>
-                @forelse($usuarios as $usuario)
-                    <tr>
-                        <td class="align-middle">{{ $usuario->cuit }}</td>
-                        <td class="align-middle">{{ $usuario->razon_social }}</td>
-                        <td class="align-middle">{{ $usuario->telefono ?? '-' }}</td>
-                        <td class="align-middle">{{ $usuario->email}}</td>
-                        <td class="align-middle">{{ $usuario->imagen ?? '-'}}</td>
-                        <td class="align-middle">{{ $usuario->status === 1 ? 'Verificado' : 'No verificado' }}</td>
-                        <td class="align-middle">{{ $usuario->created_at}}</td>
-                        <td class="align-middle">{{ $usuario->updated_at}}</td>
-                    </tr>
-                @empty
+            <tbody class="whitespace-nowrap px-5 border">
+            @forelse($usuarios as $usuario)
                 <tr>
-                    <td colspan="100%" class="text-center h2">No hay datos</td>
+                    <td class="whitespace-nowrap px-5 border align-middle">{{ $usuario->cuit }}</td>
+                    <td class="whitespace-nowrap px-5 border align-middle">{{ $usuario->razon_social }}</td>
+                    <td class="whitespace-nowrap px-5 border align-middle">{{ $usuario->telefono ?? '-' }}</td>
+                    <td class="whitespace-nowrap px-5 border align-middle">{{ $usuario->email}}</td>
+                    <td class="whitespace-nowrap px-5 border align-middle">{{ $usuario->imagen ?? '-'}}</td>
+                    <td class="whitespace-nowrap px-5 border align-middle">{{ $usuario->status === 1 ? 'Verificado' : 'No verificado' }}</td>
+                    <td class="whitespace-nowrap px-5 border align-middle">{{ $usuario->created_at}}</td>
+                    <td class="whitespace-nowrap px-5 border align-middle">{{ $usuario->updated_at}}</td>
                 </tr>
-                @endforelse
+            @empty
+                <tr>
+                    <td colspan="100%" class="text-center text-2xl font-bold py-5">No hay datos</td>
+                </tr>
+            @endforelse
             </tbody>
         </table>
     </div>

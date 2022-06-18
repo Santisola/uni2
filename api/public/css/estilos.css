@@ -1,0 +1,15 @@
+#login {
+    min-height: calc(100vh - 104px);
+}
+
+main {
+    min-height: calc(100vh - 200px);
+}
+
+#menu {
+    font-size: 0;
+}
+
+#modal {
+    background-color: rgba(0,0,0,0.4);
+}

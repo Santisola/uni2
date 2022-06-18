@@ -17,7 +17,7 @@
                     value="{{ old('titulo','') }}"
                 >
                 @error('titulo')
-                    <p class="alert alert-danger" id="error-titulo">{{ $message }}</p>
+                    <p class="text-red-800 bg-red-600" id="error-titulo">{{ $message }}</p>
                 @enderror
             </div>
             <div class="form-group">
@@ -32,7 +32,7 @@
                     {{ old('contenido','') }}
                 </textarea>
                 @error('contenido')
-                    <p class="alert alert-danger" id="error-contenido">{{ $message }}</p>
+                    <p class="text-red-800 bg-red-600" id="error-contenido">{{ $message }}</p>
                 @enderror
             </div>
             <div class="form-group">
@@ -43,11 +43,11 @@
                     id="imagen"
                     name="imagen"
                     placeholder="Ingrese la imagen de la noticia aquí"
-                    class="form-control-file"
+                    class="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"
                     @error('imagen') aria-describedby="error-imagen" @enderror
                 >
                 @error('imagen')
-                    <p class="alert alert-danger" id="error-imagen">{{ $message }}</p>
+                    <p class="text-red-800 bg-red-600" id="error-imagen">{{ $message }}</p>
                 @enderror
             </div>
             <div class="form-group">
@@ -62,14 +62,14 @@
                     value="{{ old('slug','') }}"
                 >
                 @error('slug')
-                    <p class="alert alert-danger" id="error-slug">{{ $message }}</p>
+                    <p class="text-red-800 bg-red-600" id="error-slug">{{ $message }}</p>
                 @enderror
             </div>
             <input type="hidden" name="publicado" id="publicado">
             <div class="form-group">
                 <div class="botones">
-                    <button id="publicar" type="button" class="btn btn-primary">Publicar</button>
-                    <button id="borrador" type="button" class="btn btn-outline-primary">Guardar borrador</button>
+                    <button id="publicar" type="button" class="rounded bg-violet-800 text-white">Publicar</button>
+                    <button id="borrador" type="button" class="rounded border-violet-800 hover:bg-violet-800 text-violet-800 hover:text-white">Guardar borrador</button>
                 </div>
             </div>
         </form>

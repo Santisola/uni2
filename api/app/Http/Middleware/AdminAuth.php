@@ -23,12 +23,12 @@ class AdminAuth
                 return redirect()
                     ->route('home')
                     ->with('message','Usted no tiene los permisos para ingresar a esta sección')
-                    ->with('message_type','danger');
+                    ->with('message_type','bg-red-300 text-red-800');
             }
         }
         return redirect()
             ->route('auth.loginForm')
             ->with('message','No tiene permisos, para ingresar a ese enlace')
-            ->with('message_type','info');
+            ->with('message_type','bg-violet-600 text-white');
     }
 }

@@ -61,13 +61,13 @@ class AdminController extends Controller
             return redirect()
                 ->route('noticias')
                 ->with('message','Noticia agregada')
-                ->with('message_type','success');
+                ->with('message_type','bg-green-300 text-green-800');
 
         } catch (\Exception $exception) {
             return redirect()
                 ->route('noticias.crearForm')
                 ->with('message', $exception->getMessage())
-                ->with('message_type','danger');
+                ->with('message_type','bg-red-300 text-red-800');
         }
     }
 
@@ -107,13 +107,13 @@ class AdminController extends Controller
             return redirect()
                 ->route('noticias')
                 ->with('message','Noticia Editada')
-                ->with('message_type','success');
+                ->with('message_type','bg-green-300 text-green-800');
 
         } catch (\Exception $exception) {
             return redirect()
                 ->route('noticias.crearForm')
                 ->with('message', $exception->getMessage())
-                ->with('message_type','danger');
+                ->with('message_type','bg-red-300 text-red-800');
         }
     }
 
@@ -125,12 +125,12 @@ class AdminController extends Controller
             return redirect()
                 ->route('noticias')
                 ->with('message','Noticia Eliminada')
-                ->with('message_type','success');
+                ->with('message_type','bg-green-300 text-green-800');
         } catch (\Exception $exception) {
             return redirect()
                 ->route('noticias.crearForm')
                 ->with('message', 'No se pudo eliminar la noticia')
-                ->with('message_type','danger');
+                ->with('message_type','bg-red-300 text-red-800');
         }
     }
 
@@ -142,13 +142,13 @@ class AdminController extends Controller
                 ->route('auth.loginForm')
                 ->withInput()
                 ->with('message', 'Email o Contraseña inválido')
-                ->with('message_type','danger');
+                ->with('message_type','bg-red-300 text-red-800');
         }
 
         return redirect()
             ->route('home')
             ->with('message', '¡Bienvenido ' . Auth::user()->nombre . '!')
-            ->with('message_type','success');
+            ->with('message_type','bg-green-300 text-green-800');
     }
 
     public function logout()
@@ -157,7 +157,7 @@ class AdminController extends Controller
         return redirect()
             ->route('auth.login')
             ->with('message','La sesión ha sido cerrada con éxito')
-            ->with('message_type','success');
+            ->with('message_type','bg-green-300 text-green-800');
     }
 
     private function getNoticia(int $id_noticia)
