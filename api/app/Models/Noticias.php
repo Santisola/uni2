@@ -26,6 +26,13 @@ class Noticias extends Model
         'imagen'=>'required|mimes:jpeg,jpg,png|max:10000',
     ];
 
+    public static $reglasEdit = [
+        'titulo'=>'required|min:3',
+        'contenido'=>'required|min:20',
+        'slug'=>'required',
+        'imagen'=>'required|mimes:jpeg,jpg,png|max:10000',
+    ];
+
     public static $mensajesDeError = [
         'titulo.required'=>'El titulo de la noticia es obligatorio',
         'contenido.required'=>'El contenido de la noticia es obligatorio',

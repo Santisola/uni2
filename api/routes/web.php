@@ -28,6 +28,13 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('/noticias')->group(function () {
         Route::get('/', [AdminController::class, 'listadoNoticias'])->name('noticias');
         Route::get('/agregar', [AdminController::class, 'noticiaForm'])->name('noticias.crearForm');
+        Route::get('/detalle/{noticia}', [AdminController::class, 'detalle'])->name('noticias.detalle');
+        Route::get('/editar/{noticia}', [AdminController::class, 'editarForm'])->name('noticias.editarForm');
+
         Route::post('/crear', [AdminController::class, 'crear'])->name('noticias.crear');
+
+        Route::put('/editar/{noticia}', [AdminController::class,'editar'])->name('noticias.editar');
+
+        Route::match(['get', 'delete'],'/eliminar/{noticia}', [AdminController::class,'eliminar'])->name('noticias.eliminar');
     });
 });

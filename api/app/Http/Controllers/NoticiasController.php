@@ -21,7 +21,7 @@ class NoticiasController extends Controller
 
     public function noticia(string $slug) : JsonResponse
     {
-      $noticia =Noticias::all()
+      $noticia = Noticias::all()
           ->where('slug', $slug)
           ->where('publicado',1)
           ->first();

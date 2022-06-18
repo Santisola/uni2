@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Noticias;
 use App\Models\Verificados;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Admin;
@@ -41,14 +40,7 @@ class AdminController extends Controller
 
     public function crear(Request $request)
     {
-        $validator = Validator::make($request->all(),[Noticias::$reglas, Noticias::$mensajesDeError]);
-
-        if ($validator->fails()) {
-            return redirect()
-                ->route('noticias.crearForm')
-                ->with('message','Hubo un error al crear el evento')
-                ->with('message_type','danger');
-        }
+        $request->validate(Noticias::$reglas, Noticias::$mensajesDeError);
 
         try {
 
@@ -79,6 +71,69 @@ class AdminController extends Controller
         }
     }
 
+    public function detalle(int $id_noticia)
+    {
+        $noticia = $this->getNoticia($id_noticia);
+        return view('noticias.detalle', compact('noticia'));
+    }
+
+    public function editarForm(int $id_noticia)
+    {
+        $noticia = $this->getNoticia($id_noticia);
+        return view('noticias.editarForm', compact('noticia'));
+    }
+
+    public function editar(Request $request, int $id_noticia)
+    {
+        $request->validate(Noticias::$reglasEdit, Noticias::$mensajesDeError);
+
+        try {
+            if ($request->hasFile('imagen')) {
+                $file_name = md5(time()) . '_' . str_replace(' ','-',$request->imagen->getClientOriginalName());
+                $request->imagen->move(public_path('/imgs/noticias'),$file_name);
+                $request->imagen = $file_name;
+            }
+
+            Noticias::where('id_noticia', '=', $id_noticia)
+                ->update([
+                    'titulo' => $request->titulo,
+                    'contenido' => $request->contenido,
+                    'imagen' => $request->imagen,
+                    'slug' => $request->slug,
+                    'publicado' => $request->publicado,
+                    'updated_at' => Carbon::now(),
+                ]);
+
+            return redirect()
+                ->route('noticias')
+                ->with('message','Noticia Editada')
+                ->with('message_type','success');
+
+        } catch (\Exception $exception) {
+            return redirect()
+                ->route('noticias.crearForm')
+                ->with('message', $exception->getMessage())
+                ->with('message_type','danger');
+        }
+    }
+
+    public function eliminar(int $id_eliminar)
+    {
+        try {
+            Noticias::findOrFail($id_eliminar)->delete();
+
+            return redirect()
+                ->route('noticias')
+                ->with('message','Noticia Eliminada')
+                ->with('message_type','success');
+        } catch (\Exception $exception) {
+            return redirect()
+                ->route('noticias.crearForm')
+                ->with('message', 'No se pudo eliminar la noticia')
+                ->with('message_type','danger');
+        }
+    }
+
     public function login(Request $request)
     {
         $credenciales = $request->only(['email', 'password']);
@@ -103,5 +158,10 @@ class AdminController extends Controller
             ->route('auth.login')
             ->with('message','La sesión ha sido cerrada con éxito')
             ->with('message_type','success');
+    }
+
+    private function getNoticia(int $id_noticia)
+    {
+        return Noticias::where('id_noticia', '=', $id_noticia)->first();
     }
 }
