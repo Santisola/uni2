@@ -15,7 +15,7 @@ class VerificadosController extends Controller
 {
     public function infoUsuario(int $usuario)
     {
-        $data = Verificados::select('razon_social','email','telefono','imagen','status')->where('id_verificado', $usuario)->get();
+        $data = Verificados::select('razon_social','email','telefono','imagen','status','deleted_at')->where('id_verificado', $usuario)->get();
 
         return response()->json([
            'success' => true,
@@ -71,8 +71,8 @@ class VerificadosController extends Controller
                         'email' => $request->email,
                         'password' => $request->password,
                         'status' => 0,
-                        'created_at' => Carbon::now(),
-                        'updated_at' => Carbon::now()
+                        'created_at' => Carbon::now('UTC'),
+                        'updated_at' => Carbon::now('UTC')
                     )
                 );
 
@@ -138,12 +138,13 @@ class VerificadosController extends Controller
             $user->telefono = $request->telefono;
             $user->email = $request->email;
             $request->password === '' ?? $user->password = $request->password;
+            $user->updated_at = Carbon::now('UTC');
 
             $user->save();
 
             return response()->json([
                'success'=> true,
-               'data' => $user
+               'data' => $this->infoUsuario($user->id_verificado)
             ]);
 
         } catch (\Exception $exception) {
@@ -182,12 +183,13 @@ class VerificadosController extends Controller
 
             $user->imagen = $path;
             $user->telefono = $request->telefono;
+            $user->updated_at = Carbon::now('UTC');
 
             $user->save();
 
             return response()->json([
                 'success'=> true,
-                'data' => $user
+                'data' => $this->infoUsuario($user->id_verificado)
             ]);
 
         } catch (\Exception $exception) {

@@ -28,8 +28,8 @@ class NoticiasSeeder extends Seeder
                 'imagen' => 'noticia1.png',
                 'slug' => 'dia-mundial-del-perro-adoptado',
                 'publicado' => true,
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+                'created_at' => Carbon::now('UTC')->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now('UTC')->format('Y-m-d H:i:s')
             ],
         ]);
     }

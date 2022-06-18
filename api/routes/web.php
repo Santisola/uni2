@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/login',[AdminController::class,'loginForm'])->name('auth.loginForm');
 Route::get('/logout',[AdminController::class, 'logout'])->name('auth.logout');
+
 Route::post('/login',[AdminController::class, 'login'])->name('auth.login');
 
 Route::middleware(['auth'])->group(function () {
@@ -23,6 +24,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('/usuarios')->group(function () {
         Route::get('/', [AdminController::class, 'listadoUsuarios'])->name('usuarios');
+
+        Route::match(['get', 'put'],'/verificar/{usuario}', [AdminController::class,'verificarUsuario'])->name('usuarios.verificar');
+        Route::match(['get', 'delete'],'/eliminar/{usuario}', [AdminController::class,'usuarioEliminar'])->name('usuarios.eliminar');
     });
 
     Route::prefix('/noticias')->group(function () {

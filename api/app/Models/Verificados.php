@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @method static where(string $string, $usuario)
  */
 class Verificados extends Model
 {
+    use SoftDeletes;
 
     protected $table = 'usuarios_verificados';
 
@@ -22,6 +23,8 @@ class Verificados extends Model
         'email',
         'password',
         'imagen',
+        'status',
+        'deleted_at',
     ];
 
     public static $reglas = [
@@ -44,7 +47,8 @@ class Verificados extends Model
 
     protected $hidden = [
         'password',
-        'status'
+        'created_at',
+        'updated_at'
     ];
 
     public function setPasswordAttribute($password)

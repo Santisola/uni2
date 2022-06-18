@@ -2,7 +2,7 @@
 @section('title', 'UNIDOS | Iniciar Sesión')
 @section('main')
 <div id="login" class="container h-96 m-auto flex justify-center items-center flex-col">
-    <h1 class="text-center mb-5 text-3xl">Iniciar Sesión</h1>
+    <h1 class="text-center mb-5 text-3xl text-violet-800 font-bold">Iniciar Sesión</h1>
     <form action="{{ route('auth.login') }}" method="post" class="mx-auto md:max-w-lg w-full px-5 md:px-0">
         @csrf
         <div class="mb-5">

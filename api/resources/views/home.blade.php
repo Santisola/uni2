@@ -1,7 +1,7 @@
 @extends('layouts.main')
 @section('title','UNIDOS | Inicio')
 @section('main')
-    <h1 class="text-center text-3xl mb-10">UNIDOS</h1>
+    <h1 class="text-center text-3xl mb-10 text-violet-800 font-bold">UNIDOS</h1>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A deleniti, dignissimos doloremque dolores ducimus
         enim error exercitationem facilis fuga hic magni non obcaecati placeat porro quae qui reiciendis
         reprehenderit, soluta. Adipisci amet architecto atque, culpa delectus dolore dolores eum magni molestiae

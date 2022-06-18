@@ -155,7 +155,7 @@ class EventosController extends Controller
             $evento->hasta = Carbon::parse($request->hasta)->format('Y-m-d\TH:i');
             $evento->imagen = $path;
             $evento->publicado = $publicado;
-            $evento->updated_at = Carbon::now();
+            $evento->updated_at = Carbon::now('UTC')->format('Y-m-d H:i:s');
 
             $evento->save();
 
@@ -212,8 +212,8 @@ class EventosController extends Controller
                 "imagen" => $path,
                 "publicado" => $publicado,
                 'id_verificado' => $request->id_verificado,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now('UTC'),
+                'updated_at' => Carbon::now('UTC')
             ));
 
             return $this->eventosVerificados($request->id_verificado);

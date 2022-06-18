@@ -24,8 +24,8 @@ class AdminSeeder extends Seeder
                 'email' => 'matias.bubello@davinci.edu.ar',
                 'password' => Hash::make(123456),
                 'role' => 'Admin',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
+                'created_at' => Carbon::now('UTC')->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now('UTC')->format('Y-m-d H:i:s'),
             ],
             [
                 'id_admin' => 2,
@@ -33,8 +33,8 @@ class AdminSeeder extends Seeder
                 'email' => 'santiago.isola@davinci.edu.ar',
                 'password' => Hash::make(123456),
                 'role' => 'Admin',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
+                'created_at' => Carbon::now('UTC')->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now('UTC')->format('Y-m-d H:i:s'),
             ],
             [
                 'id_admin' => 3,
@@ -42,8 +42,8 @@ class AdminSeeder extends Seeder
                 'email' => 'lucas.campora@davinci.edu.ar',
                 'password' => Hash::make(123456),
                 'role' => 'Admin',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
+                'created_at' => Carbon::now('UTC')->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now('UTC')->format('Y-m-d H:i:s'),
             ],
         ]);
 

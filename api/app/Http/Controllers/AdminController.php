@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Noticias;
 use App\Models\Verificados;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Admin;
 
 class AdminController extends Controller
 {
@@ -23,13 +23,66 @@ class AdminController extends Controller
 
     public function listadoUsuarios()
     {
-        $usuarios = Verificados::orderBy('updated_at','desc')->get();
+        $usuarios = Verificados::orderBy('updated_at','desc')->paginate(25);
         return view('usuarios.index', compact('usuarios'));
+    }
+
+    public function verificarUsuario(int $id_verificado): RedirectResponse
+    {
+        $usuarios = Verificados::findOrFail($id_verificado);
+
+        try {
+            if ($usuarios->status !== 1) {
+                $usuarios->status = 1;
+                $usuarios->updated_at = Carbon::now('UTC')->format('Y-m-d H:i:s');
+
+                $usuarios->save();
+
+                return redirect()
+                    ->route('usuarios')
+                    ->with('message','Usuario verificado')
+                    ->with('message_type','bg-green-300 text-green-800');
+            } else {
+                $usuarios->status = 0;
+                $usuarios->updated_at = Carbon::now('UTC')->format('Y-m-d H:i:s');
+
+                $usuarios->save();
+
+                return redirect()
+                    ->route('usuarios')
+                    ->with('message','Usuario disentido')
+                    ->with('message_type','bg-green-300 text-green-800');
+            }
+
+        } catch (\Exception $exception) {
+            return redirect()
+                ->route('usuarios')
+                ->with('message', $exception->getMessage())
+                ->with('message_type','bg-red-300 text-red-800');
+        }
+    }
+
+    public function usuarioEliminar(int $id_verificado): RedirectResponse
+    {
+        try {
+            Verificados::findOrFail($id_verificado)->delete();
+
+            return redirect()
+                ->route('usuarios')
+                ->with('message','Usuario eliminado')
+                ->with('message_type','bg-green-300 text-green-800');
+
+        } catch (\Exception $exception) {
+            return redirect()
+                ->route('usuarios')
+                ->with('message', $exception->getMessage())
+                ->with('message_type','bg-red-300 text-red-800');
+        }
     }
 
     public function listadoNoticias()
     {
-        $noticias = Noticias::orderBy('created_at','desc')->get();
+        $noticias = Noticias::orderBy('created_at','desc')->paginate(25);
         return view('noticias.index', compact('noticias'));
     }
 
@@ -38,7 +91,7 @@ class AdminController extends Controller
         return view('noticias.crearForm');
     }
 
-    public function crear(Request $request)
+    public function crear(Request $request): RedirectResponse
     {
         $request->validate(Noticias::$reglas, Noticias::$mensajesDeError);
 
@@ -54,8 +107,8 @@ class AdminController extends Controller
                 "imagen" => $file_name,
                 "slug" => $request->slug,
                 "publicado" => $request->publicado,
-                "created_at" => Carbon::now(),
-                "updated_at" => Carbon::now(),
+                "created_at" => Carbon::now('UTC')->format('Y-m-d H:i:s'),
+                "updated_at" => Carbon::now('UTC')->format('Y-m-d H:i:s'),
             ));
 
             return redirect()
@@ -83,7 +136,7 @@ class AdminController extends Controller
         return view('noticias.editarForm', compact('noticia'));
     }
 
-    public function editar(Request $request, int $id_noticia)
+    public function editar(Request $request, int $id_noticia): RedirectResponse
     {
         $request->validate(Noticias::$reglasEdit, Noticias::$mensajesDeError);
 
@@ -101,7 +154,7 @@ class AdminController extends Controller
                     'imagen' => $request->imagen,
                     'slug' => $request->slug,
                     'publicado' => $request->publicado,
-                    'updated_at' => Carbon::now(),
+                    'updated_at' => Carbon::now('UTC')->format('Y-m-d H:i:s'),
                 ]);
 
             return redirect()
@@ -117,7 +170,7 @@ class AdminController extends Controller
         }
     }
 
-    public function eliminar(int $id_eliminar)
+    public function eliminar(int $id_eliminar): RedirectResponse
     {
         try {
             Noticias::findOrFail($id_eliminar)->delete();

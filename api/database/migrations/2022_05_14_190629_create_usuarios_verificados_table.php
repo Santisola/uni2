@@ -22,7 +22,7 @@ class CreateUsuariosVerificadosTable extends Migration
             $table->string('password');
             $table->string('imagen')->nullable();
             $table->boolean('status')->nullable();
-
+            $table->softDeletes()->nullable();
             $table->timestamps();
         });
     }

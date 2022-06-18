@@ -25,8 +25,9 @@ class VerificadoSeeder extends Seeder
                'password' => Hash::make('1234'),
                'imagen' => null,
                'status' => false,
-               'created_at' => Carbon::now(),
-               'updated_at' => Carbon::now()
+               'deleted_at' => null,
+               'created_at' => Carbon::now('UTC')->format('Y-m-d H:i:s'),
+               'updated_at' => Carbon::now('UTC')->format('Y-m-d H:i:s')
            ],
         ]);
     }

@@ -53,6 +53,9 @@ use Illuminate\Support\Str;
             </tbody>
         </table>
     </div>
+    <div class="flex justify-center items-center flex-col mb-5">
+        {{ $noticias->links() }}
+    </div>
     <!-- Modal -->
     <div id="modal" class="hidden h-screen w-screen max-w-full fixed top-0 left-0 flex justify-center items-center" onclick="cerrar()">
         <div class="bg-white relative z-10 p-5 rounded max-w-fit w-full">

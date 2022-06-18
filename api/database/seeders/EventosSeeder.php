@@ -29,8 +29,8 @@ class EventosSeeder extends Seeder
                 'imagen' => 'public/imgs/eventos/veterinario.jpg',
                 'publicado' => true,
                 'id_verificado' => 1,
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+                'created_at' => Carbon::now('UTC')->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now('UTC')->format('Y-m-d H:i:s')
             ],
             [
                 'id_evento' => 2,
@@ -44,8 +44,8 @@ class EventosSeeder extends Seeder
                 'imagen' => 'public/imgs/eventos/voluntario.jpeg',
                 'publicado' => false,
                 'id_verificado' => 1,
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+                'created_at' => Carbon::now('UTC')->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now('UTC')->format('Y-m-d H:i:s')
             ],
             [
                 'id_evento' => 3,
@@ -59,8 +59,8 @@ class EventosSeeder extends Seeder
                 'imagen' => 'public/imgs/eventos/shower.jpg',
                 'publicado' => false,
                 'id_verificado' => 1,
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+                'created_at' => Carbon::now('UTC')->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now('UTC')->format('Y-m-d H:i:s')
             ],
             [
                 'id_evento' => 4,
@@ -74,8 +74,8 @@ class EventosSeeder extends Seeder
                 'imagen' => 'public/imgs/eventos/cachorrito.jpg',
                 'publicado' => true,
                 'id_verificado' => 1,
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+                'created_at' => Carbon::now('UTC')->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now('UTC')->format('Y-m-d H:i:s')
             ],
         ]);
     }
