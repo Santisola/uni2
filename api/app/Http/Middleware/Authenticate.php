@@ -17,7 +17,7 @@ class Authenticate extends Middleware
     {
         if (! $request->expectsJson()) {
             Session::flash('message','Se requiere iniciar sesión para ver el contenido');
-            Session::flash('message_type','info');
+            Session::flash('message_type','bg-yellow-500 text-center');
             return route('auth.loginForm');
         }
     }

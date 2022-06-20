@@ -21,10 +21,28 @@ class AdminController extends Controller
         return view('auth.login');
     }
 
-    public function listadoUsuarios()
+    public function listadoUsuarios(Request $request)
     {
-        $usuarios = Verificados::orderBy('updated_at','desc')->paginate(25);
-        return view('usuarios.index', compact('usuarios'));
+        $seleccionado = null;
+        if (isset($request->usuarios)) {
+            $seleccionado = $request->usuarios;
+            if ($request->usuarios === 'eliminados') {
+                $usuarios = Verificados::orderBy('updated_at','desc')
+                    ->onlyTrashed()
+                    ->paginate(25);
+
+            } else if($request->usuarios === 'verificados') {
+                $usuarios = Verificados::where('status','=',1)->paginate(25);
+            } else if($request->usuarios === 'no-verificados') {
+                $usuarios = Verificados::where('status','=',0)->paginate(25);
+
+            } else {
+                $usuarios = Verificados::orderBy('updated_at','desc')->withTrashed()->paginate(25);
+            }
+        } else {
+            $usuarios = Verificados::orderBy('updated_at','desc')->withTrashed()->paginate(25);
+        }
+        return view('usuarios.index', compact('usuarios','seleccionado'));
     }
 
     public function verificarUsuario(int $id_verificado): RedirectResponse
@@ -70,6 +88,25 @@ class AdminController extends Controller
             return redirect()
                 ->route('usuarios')
                 ->with('message','Usuario eliminado')
+                ->with('message_type','bg-green-300 text-green-800');
+
+        } catch (\Exception $exception) {
+            return redirect()
+                ->route('usuarios')
+                ->with('message', $exception->getMessage())
+                ->with('message_type','bg-red-300 text-red-800');
+        }
+    }
+
+    public function usuarioRestaurar(int $id_verificado): RedirectResponse
+    {
+        try {
+            $usuario = Verificados::withTrashed()->findOrFail($id_verificado);
+            $usuario->restore();
+
+            return redirect()
+                ->route('usuarios')
+                ->with('message','Usuario restaurado')
                 ->with('message_type','bg-green-300 text-green-800');
 
         } catch (\Exception $exception) {

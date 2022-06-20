@@ -27,6 +27,8 @@ Route::middleware(['auth'])->group(function () {
 
         Route::match(['get', 'put'],'/verificar/{usuario}', [AdminController::class,'verificarUsuario'])->name('usuarios.verificar');
         Route::match(['get', 'delete'],'/eliminar/{usuario}', [AdminController::class,'usuarioEliminar'])->name('usuarios.eliminar');
+
+        Route::get('/restaurar/{usuario}', [AdminController::class, 'usuarioRestaurar'])->name('usuarios.restaurar');
     });
 
     Route::prefix('/noticias')->group(function () {

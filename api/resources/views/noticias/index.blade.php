@@ -31,10 +31,14 @@ use Illuminate\Support\Str;
                         <td class="whitespace-nowrap px-5 border align-middle">-</td>
                     @else
                         <td class="whitespace-nowrap px-5 border align-middle">
-                            <img class="img-thumbnail" src="{{ asset('imgs/noticias/' . $noticia->imagen) }}" alt="{{ $noticia->titulo }} imagen">
+                            <img class="border block w-full max-w-sm rounded border-2 border-violet-800" src="{{ asset('imgs/noticias/' . $noticia->imagen) }}" alt="{{ $noticia->titulo }} imagen">
                         </td>
                     @endif
-                    <td class="text-center whitespace-nowrap px-5 border align-middle">{{ $noticia->publicado === 1 ? 'Publicado' : 'Borrador' }}</td>
+                    @if($noticia->publicado === 1)
+                        <td class="text-center whitespace-nowrap px-5 border align-middle text-violet-800 font-semibold">Publicado</td>
+                    @else
+                        <td class="text-center whitespace-nowrap px-5 border align-middle text-violet-800 font-semibold">Borrado</td>
+                    @endif
                     <td class="text-center whitespace-nowrap px-5 border align-middle">{{ date('d/m/Y H.i:s', strtotime($noticia->created_at)) }}</td>
                     <td class="text-center whitespace-nowrap px-5 border align-middle">{{ date('d/m/Y H:i:s', strtotime($noticia->updated_at)) }}</td>
                     <td class="whitespace-nowrap px-5 border align-middle">

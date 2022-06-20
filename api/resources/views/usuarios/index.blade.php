@@ -1,10 +1,24 @@
 <?php
     /**@var \App\Models\Verificados $usuarios*/
+    /**@var \App\Models\Admin $seleccionado*/
 ?>
 @extends('layouts.main')
 @section('title','UNIDOS | Usuarios')
 @section('main')
     <h1 class="text-center text-3xl mb-10 text-violet-800 font-bold">Usuarios</h1>
+    <div class="flex justify-center md:justify-between items-center gap-3 flex-wrap">
+        <form id="formulario" action="{{ route('usuarios') }}" method="get" class="md:w-1/2 w-full mb-5 px-3 md:px-0">
+            <div>
+                <label for="usuarios" class="sr-only">Seleccione</label>
+                <select name="usuarios" id="usuarios" class="border border-violet-800 rounded w-full bg-white px-2 py-1">
+                    <option value="" {{ $seleccionado === null ? 'selected' : '' }}>Todos</option>
+                    <option value="eliminados" {{ $seleccionado === 'ban' ? 'selected' : '' }}>Eliminados</option>
+                    <option value="verificados" {{ $seleccionado === 'verificados' ? 'selected' : '' }}>Verificados</option>
+                    <option value="no-verificados" {{ $seleccionado === 'no-verificados' ? 'selected' : '' }}>No verificados</option>
+                </select>
+            </div>
+        </form>
+    </div>
     <div class="overflow-x-scroll xl:overflow-x-hidden pb-20">
         <table class="table table-auto mx-auto px-10 w-full">
             <thead class="border">
@@ -22,7 +36,7 @@
             </thead>
             <tbody class="whitespace-nowrap px-5 border">
             @forelse($usuarios as $usuario)
-                <tr>
+                <tr class="{{ $usuario->deleted_at ? 'bg-red-300' : 'bg-white' }}">
                     <td class="whitespace-nowrap px-5 border align-middle">{{ $usuario->cuit }}</td>
                     <td class="whitespace-nowrap px-5 border align-middle">{{ $usuario->razon_social }}</td>
                     <td class="whitespace-nowrap px-5 border align-middle">{{ $usuario->telefono ?? '-' }}</td>
@@ -42,11 +56,18 @@
                                 <button type="submit" class="w-full px-3 py-1 my-3 rounded border-violet-800 text-center bg-violet-800 text-white">Verificar</button>
                             @endif
                         </form>
-                        <form action="{{ route('usuarios.eliminar', ['usuario' => $usuario->id_verificado]) }}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="w-full px-3 py-1 my-3 rounded text-center bg-red-600 hover:bg-red-700 hover:ease-in-out transition duration-300 text-white">Ban</button>
-                        </form>
+                        @if($usuario->deleted_at)
+                            <form action="{{ route('usuarios.restaurar', ['usuario' => $usuario->id_verificado]) }}">
+                                @csrf
+                                <button type="submit" class="w-full px-3 py-1 my-3 rounded text-center bg-green-600 hover:bg-green-700 hover:ease-in-out transition duration-300 text-white">Restaurar</button>
+                            </form>
+                        @else
+                            <form action="{{ route('usuarios.eliminar', ['usuario' => $usuario->id_verificado]) }}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="w-full px-3 py-1 my-3 rounded text-center bg-red-600 hover:bg-red-700 hover:ease-in-out transition duration-300 text-white">Eliminar</button>
+                            </form>
+                        @endif
                     </td>
                 </tr>
             @empty
@@ -61,3 +82,13 @@
         {{ $usuarios->links() }}
     </div>
 @endsection
+@push('js')
+    <script>
+        const formulario = document.querySelector('#formulario');
+        const select = document.querySelector('#usuarios');
+
+        select.addEventListener('change', () => {
+           formulario.submit();
+        });
+    </script>
+@endpush
