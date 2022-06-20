@@ -16,7 +16,7 @@ export default function Menu({ setAbierto, abierto, datosUsuario }) {
                     datosUsuario={datosUsuario}
                 />
                 <Estado
-                    status={datosUsuario}
+                    status={datosUsuario.status}
                 />
                 <ul className={"mt-5 px-5"}>
                     <li className={"text-white"}>

@@ -19,7 +19,7 @@
             </div>
         </form>
     </div>
-    <div class="overflow-x-scroll xl:overflow-x-hidden pb-20">
+    <div class="overflow-x-auto pb-20">
         <table class="table table-auto mx-auto px-10 w-full">
             <thead class="border">
             <tr>
@@ -42,7 +42,12 @@
                     <td class="whitespace-nowrap px-5 border align-middle">{{ $usuario->telefono ?? '-' }}</td>
                     <td class="whitespace-nowrap px-5 border align-middle">{{ $usuario->email}}</td>
                     <td class="whitespace-nowrap px-5 border align-middle">{{ $usuario->imagen ?? '-'}}</td>
-                    <td class="whitespace-nowrap px-5 border align-middle">{{ $usuario->status === 1 ? 'Verificado' : 'No verificado' }}</td>
+                    <td class="whitespace-nowrap px-5 border align-middle">
+                    @if($usuario->status === 1)
+                        <td class="text-center whitespace-nowrap px-5 border align-middle text-violet-800 font-semibold">Verificado</td>
+                    @else
+                        <td class="text-center whitespace-nowrap px-5 border align-middle text-violet-800 font-semibold">No verificado</td>
+                    @endif
                     <td class="whitespace-nowrap px-5 border align-middle">{{ $usuario->created_at}}</td>
                     <td class="whitespace-nowrap px-5 border align-middle">{{ $usuario->updated_at}}</td>
                     <td class="whitespace-nowrap px-5 border align-middle flex flex-col">
@@ -69,7 +74,6 @@
                             </form>
                         @endif
                     </td>
-                    <td>HOLA 123</td>
                 </tr>
             @empty
                 <tr>

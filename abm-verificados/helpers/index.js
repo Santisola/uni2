@@ -19,3 +19,7 @@ export function dateTimeLocal(data) {
 export function previewImage(imagen) {
     return  URL.createObjectURL(imagen);
 }
+
+export function imageWorking(imagen) {
+    return /\.(jpeg|jpg|png|gif)\b/i.test(imagen);
+}

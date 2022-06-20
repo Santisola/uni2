@@ -15,7 +15,10 @@ class VerificadosController extends Controller
 {
     public function infoUsuario(int $usuario): JsonResponse
     {
-        $data = Verificados::select('razon_social','email','telefono','imagen','status','deleted_at')->where('id_verificado', $usuario)->get();
+        $data = Verificados::select('razon_social','email','telefono','imagen','status','deleted_at')
+            ->withTrashed()
+            ->where('id_verificado', $usuario)
+            ->get();
 
         return response()->json([
            'success' => true,
@@ -27,7 +30,7 @@ class VerificadosController extends Controller
     public function login(Request $request) : JsonResponse
     {
 
-        $usuario = Verificados::where('email', $request->email)
+        $usuario = Verificados::where('email', $request->email)->withTrashed()
             ->where('cuit',$request->cuit)
             ->first();
 

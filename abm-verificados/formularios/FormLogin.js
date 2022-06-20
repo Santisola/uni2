@@ -48,7 +48,8 @@ export default function FormLogin({ router, setLoader }) {
                 }
             });
             const resultado = await respuesta.json();
-            setLoader(false)
+
+            // console.log(resultado)
 
             if (resultado.success === false) {
                 setError(true);
