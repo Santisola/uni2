@@ -2,15 +2,16 @@ import Layout from "../layouts/layout";
 import Link from "next/link";
 import Styles from '../styles/404.module.css'
 import Image from "next/image";
-import { getSessionStorage } from "../helpers";
 import { useEffect, useState } from "react";
 import {useRouter} from "next/router";
+import UsuarioEliminado from "../components/UsuarioEliminado";
 
 export default function Error404() {
     const [usuario,setUsuario] = useState({
         nombre: 'Nombre',
         apellido: 'Apellido'
     });
+    const [eliminado, setEliminado] = useState(null);
 
     const router = useRouter();
 
@@ -19,6 +20,7 @@ export default function Error404() {
             router.push('/login');
         } else {
             setUsuario(JSON.parse(sessionStorage.getItem('usuario')));
+            setEliminado(JSON.parse(sessionStorage.getItem('eliminado')));
         }
     },[router]);
 
@@ -28,6 +30,9 @@ export default function Error404() {
             title={"Página no encontrada"}
             datosUsuario={usuario}
         >
+            { eliminado !== null && (
+                <UsuarioEliminado />
+            ) }
             <h2 className={"sr-only"}>Página no encontrada</h2>
             <p className={"text-5xl text-center font-semibold"}>¡Ups!</p>
             <Image layout={"responsive"} width={330} height={330} src={"/imgs/404.svg"} alt={"Error"} />

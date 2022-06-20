@@ -2,6 +2,7 @@ import {useState} from "react";
 import Styles from '../styles/LoginForm.module.css';
 import Mensaje from "../components/Mensaje";
 import {validateEmail} from "../helpers";
+import DatosUsuario from "../usuario/DatosUsuario";
 
 export default function FormLogin({ router, setLoader }) {
     const [cuit,setCuit] = useState('');
@@ -61,6 +62,8 @@ export default function FormLogin({ router, setLoader }) {
 
             sessionStorage.setItem('usuario',JSON.stringify(resultado.data.original.data[0]));
             sessionStorage.setItem('id',JSON.stringify(resultado.data.original.id));
+            sessionStorage.setItem('eliminado',JSON.stringify(resultado.data.original.data[0]['deleted_at']));
+
             router.push('/dashboard');
         }
         catch (e) {

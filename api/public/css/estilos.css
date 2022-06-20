@@ -13,3 +13,17 @@ main {
 #modal {
     background-color: rgba(0,0,0,0.4);
 }
+
+.botones {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 911px) {
+    .botones {
+        flex-direction: column;
+    }
+}

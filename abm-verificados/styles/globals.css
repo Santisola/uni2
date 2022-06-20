@@ -44,3 +44,11 @@ main {
 .space-between {
   justify-content: space-between;
 }
+
+.bg-violeta {
+  background-color: var(--violeta);
+}
+
+.bg-amarillo {
+  background-color: var(--amarillo);
+}

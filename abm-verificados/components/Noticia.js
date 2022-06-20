@@ -1,11 +1,9 @@
 import Link from "next/link";
 import {fecha} from "../helpers";
 import Styles from '../styles/Noticia.module.css';
-import {useState} from "react";
 
 export default function Noticia({noticia}) {
     const { titulo, imagen, created_at, slug } = noticia;
-
 
     return (
         <article className={Styles.carta}>

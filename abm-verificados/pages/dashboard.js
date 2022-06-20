@@ -4,11 +4,13 @@ import Image from "next/image";
 import Layout from "../layouts/layout";
 import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
+import UsuarioEliminado from "../components/UsuarioEliminado";
 
 export default function Dashboard() {
     const [usuario,setUsuario] = useState({
         razon_social: 'Nombre Apellido',
     });
+    const [eliminado, setEliminado] = useState(null);
 
     const router = useRouter();
 
@@ -17,6 +19,7 @@ export default function Dashboard() {
             router.push('/login');
         } else {
             setUsuario(JSON.parse(sessionStorage.getItem('usuario')));
+            setEliminado(JSON.parse(sessionStorage.getItem('eliminado')));
         }
     },[router]);
 
@@ -26,6 +29,9 @@ export default function Dashboard() {
             title={"Página de inicio"}
             datosUsuario={usuario}
         >
+            { eliminado !== null && (
+                <UsuarioEliminado />
+            ) }
             <h2 className={"text-lg font-semibold"}>Bienvenido {usuario.razon_social}</h2>
             <p className={"mt-5"}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam delectus facilis sapiente soluta.</p>
             <Link href={"/eventos"}>

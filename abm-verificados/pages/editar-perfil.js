@@ -1,10 +1,10 @@
-import {useEffect, useState} from "react";
-import {useRouter} from "next/router";
 import Layout from "../layouts/layout";
-import FormCompletar from "../formularios/FormCompletar";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import FormEditarPerfil from "../formularios/FormEditarPerfil";
 import UsuarioEliminado from "../components/UsuarioEliminado";
 
-export default function CompletarPerfil() {
+export default function EditarPerfil() {
     const [usuario,setUsuario] = useState({
         razon_social: 'Nombre Apellido',
     });
@@ -23,14 +23,17 @@ export default function CompletarPerfil() {
 
     return (
         <Layout
-            pagina={"Completar Perfil"}
-            title={"Completar datos del perfil"}
+            pagina={"Editar Perfil"}
+            title={"Página editar perfil"}
             datosUsuario={usuario}
         >
             { eliminado !== null && (
                 <UsuarioEliminado />
             ) }
-            <FormCompletar />
+            <p className={"text-center mt-5 mb-10 font-semibold"}>Complete únicamente los datos que quiera cambiar</p>
+            <FormEditarPerfil
+                usuario={usuario}
+            />
         </Layout>
-    )
+    );
 }

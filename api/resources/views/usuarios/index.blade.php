@@ -69,6 +69,7 @@
                             </form>
                         @endif
                     </td>
+                    <td>HOLA 123</td>
                 </tr>
             @empty
                 <tr>

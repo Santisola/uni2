@@ -6,12 +6,14 @@ import Link from "next/link";
 import CrearPrimerEvento from "../eventos/CrearPrimerEvento";
 import Evento from "../eventos/Evento";
 import PawLoader from "../components/PawLoader";
+import UsuarioEliminado from "../components/UsuarioEliminado";
 
 export default function Eventos() {
     const [usuario, setUsuario] = useState({
         nombre: 'Nombre',
         apellido: 'Apellido',
     });
+    const [eliminado, setEliminado] = useState(null);
     const [fetching, setFetching] = useState(true);
     const [id, setID] = useState('');
     const [eventos, setEventos] = useState([]);
@@ -28,14 +30,13 @@ export default function Eventos() {
 
     useEffect(() => {
         sessionStorage.getItem('id') ? setID(JSON.parse(sessionStorage.getItem('id'))) : sessionStorage.removeItem('usuario');
+        setEliminado(JSON.parse(sessionStorage.getItem('eliminado')));
     },[]);
 
     const buscarEventos = async id => {
         const URL = `${process.env.API_URL}/eventos-cms/${Number(id)}`;
         const respuesta = await fetch(URL);
         const resultado = await respuesta.json();
-
-        // console.log(respuesta);
 
         setEventos(resultado['eventos']);
         setFetching(false);
@@ -53,6 +54,9 @@ export default function Eventos() {
             title={"Página de eventos"}
             datosUsuario={usuario}
         >
+            { eliminado !== null && (
+                <UsuarioEliminado />
+            ) }
             { fetching && (
                 <PawLoader />
             ) }

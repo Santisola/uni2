@@ -1,29 +1,34 @@
 import {useState} from "react";
-import Styles from "../styles/LoginForm.module.css";
-import PawLoader from "../components/PawLoader";
-import Mensaje from "../components/Mensaje";
 import {useRouter} from "next/router";
+import Mensaje from "../components/Mensaje";
+import PawLoader from "../components/PawLoader";
+import {validateEmail} from "../helpers";
 
-export default function FormCompletar() {
-    const [telefono,setTelefono] = useState('');
-    const [imagen, setImagen] = useState('');
+export default function FormEditarPerfil({ usuario }) {
+    const [email, setEmail] = useState(usuario.email);
+    const [imagen, setImagen] = useState(usuario.imagen);
+    const [telefono, setTelefono] = useState(usuario.telefono);
+    const [password, setPassword] = useState('');
+
     const [error, setError] = useState(false);
     const [mensajeError, setMensajeError] = useState('');
     const [errorTelefono, setErrorTelefono] = useState('');
     const [errorImagen, setErrorImagen] = useState('');
+    const [errorEmail, setErrorEmail] = useState('');
+    const [errorPassword, setErrorPassword] = useState('');
     const [disabled, setDisabled] = useState(false);
     const [loader, setLoader] = useState(false);
 
     const router = useRouter();
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async e => {
         e.preventDefault();
-        setLoader(true);
-        setDisabled(true);
 
         const data = {
             telefono: Number(telefono),
-            imagen: imagen,
+            imagen,
+            email,
+            password
         }
 
         if (validateData(data)) {
@@ -42,18 +47,20 @@ export default function FormCompletar() {
 
         formData.append('imagen', imagen);
         formData.append('telefono', telefono);
+        formData.append('email', email);
+        formData.append('password', password);
         formData.append('_method', 'PUT');
 
         try {
             const id = await JSON.parse(sessionStorage.getItem('id'))
-            const url = `${process.env.API_URL}/verificado/${id}/complete`;
+            const url = `${process.env.API_URL}/verificado/${id}/update`;
             const respuesta = await fetch(url, {
                 method: 'POST',
                 body: formData,
             });
             const resultado = await respuesta.json();
+
             if (resultado[0].original.success === true) {
-                // return console.log(resultado[0].original.data[0]);
                 const { cuit, email, imagen, razon_social, telefono } = resultado[0].original.data[0];
                 const id_verificado = resultado[0].original.id;
 
@@ -68,13 +75,11 @@ export default function FormCompletar() {
                 await sessionStorage.setItem('usuario',JSON.stringify(usuario));
                 await sessionStorage.setItem('id',JSON.stringify(id_verificado));
 
-                await router.push('/');
+                await router.push('/configuracion');
 
             } else {
                 setError(true);
                 setMensajeError('Hubo un error al llenar los campos');
-                resultado[0].original.data[0] ? setErrorImagen(resultado.data.imagen) : '';
-                resultado[0].original.data[0] ? setErrorTelefono(resultado.data.telefono) : '';
 
                 setTimeout(() => {
                     setError(false);
@@ -84,9 +89,6 @@ export default function FormCompletar() {
         catch (e) {
             console.error(e);
         }
-
-        setDisabled(false);
-        setLoader(false);
     }
 
     function validateData(datos) {
@@ -109,6 +111,18 @@ export default function FormCompletar() {
             errores.imagen = 'El campo imagen está vacío';
         }
 
+        if (email === '') {
+            errores.email = 'El campo email está vacío'
+        }
+
+        if (validateEmail(email)) {
+            errores.email = 'El email no es válido';
+        }
+
+        if (password === '') {
+            errores.password = 'La contraseña está vacía';
+        }
+
         if (Object.keys(errores).length > 0) {
 
             if (errores.telefono) {
@@ -118,41 +132,65 @@ export default function FormCompletar() {
             if (errores.imagen) {
                 setErrorImagen(errores.imagen);
             }
+
+            if (errores.email) {
+                setErrorEmail(errores.email)
+            }
+
+            if (errores.password) {
+                setErrorPassword(errores.password);
+            }
+
             return true;
         } else {
             return false;
         }
     }
-    
+
     return (
-        <div
-            className={Styles.formularioModal}
-        >
+        <>
             { loader && (
                 <PawLoader />
             )}
             <form
-                className={`${Styles.form} flex flex-col items-center justify-center`}
-                onSubmit={e => handleSubmit(e)}
+                action="#"
+                method={"post"}
+                onSubmit={handleSubmit}
             >
-                <p className={"text-center text-md mb-5 font-bold"}>Complete los siguientes datos para dar de alta su usuario</p>
                 { error && (
                     <Mensaje
                         tipo={false}
                         mensaje={mensajeError}
                     />
                 )}
-                <div className={Styles.inpiutContainer}>
-                    <label
-                        className={"text-lg"}
-                        htmlFor={"telefono"}>Teléfono</label>
+                <div className={"mb-5 flex flex-col"}>
+                    <label htmlFor={"email"} className={"mb-1"}>Email</label>
+                    <input
+                        type={"email"}
+                        id={"email"}
+                        name={"email"}
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                        className={"border rounded px-3 py-1"}
+                        placeholder={"Ingrese su email aquí"}
+                        disabled={disabled}
+                    />
+                    { errorEmail !== '' && (
+                        <div className={"mt-3 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"} role={"alert"}>
+                            <p className={"text-center"}>{errorEmail}</p>
+                        </div>
+                    )}
+                </div>
+                <div className={"mb-5 flex flex-col"}>
+                    <label htmlFor={"telefono"} className={"mb-1"}>Teléfono</label>
                     <input
                         type={"tel"}
-                        name={"telefono"}
                         id={"telefono"}
+                        name={"telefono"}
                         value={telefono}
                         onChange={e => setTelefono(e.target.value)}
-                        placeholder={"Ingrese su número de teléfono aquí"}
+                        className={"border rounded px-3 py-1"}
+                        placeholder={"Ingrese su teléfono aquí"}
                         disabled={disabled}
                     />
                     { errorTelefono !== '' && (
@@ -161,30 +199,52 @@ export default function FormCompletar() {
                         </div>
                     )}
                 </div>
-                <div className={Styles.inpiutContainer}>
-                    <label
-                        className={"text-lg"}
-                        htmlFor={"imagen"}>Imagen</label>
+                <div className="mb-5 flex flex-col">
+                    <label htmlFor={"imagen"} className={"mb-1"}>Imagen</label>
                     <input
-                        type={"file"}
-                        name={"imagen"}
+                        type="file"
+                        accept={"image/*"}
                         id={"imagen"}
+                        name={"imagen"}
                         onChange={e => setImagen(e.target.files[0])}
+                        disabled={disabled}
                     />
+                    { typeof imagen === "string" && (
+                        <div className={"mt-3"}>
+                            <span>Preview:</span>
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={process.env.API_IMAGEN + imagen} alt="imagen" className={"block w-full"}/>
+                        </div>
+                    )}
                     { errorImagen !== '' && (
                         <div className={"mt-3 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"} role={"alert"}>
                             <p className={"text-center"}>{errorImagen}</p>
                         </div>
                     )}
                 </div>
-                <div className={Styles.inpiutContainer}>
+                <div className={"mb-5 flex flex-col"}>
+                    <label htmlFor={"password"} className={"mb-1"}>Contraseña</label>
                     <input
-                        type={"submit"}
-                        value={"Guardar datos"}
-                        className={"mt-20 block"}
+                        type={"password"}
+                        id={"password"}
+                        name={"password"}
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                        className={"border rounded px-3 py-1"}
+                        placeholder={"Ingrese su contraseña aquí"}
+                        disabled={disabled}
                     />
+                    { errorPassword !== '' && (
+                        <div className={"mt-3 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"} role={"alert"}>
+                            <p className={"text-center"}>{errorPassword}</p>
+                        </div>
+                    )}
                 </div>
+                <button
+                    type={"submit"}
+                    className={"bg-violeta border rounded text-white px-5 py-1 w-full md:w-fit"}
+                >Guardar Datos</button>
             </form>
-        </div>
+        </>
     )
 }

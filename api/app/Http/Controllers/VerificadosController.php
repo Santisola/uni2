@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
 
 class VerificadosController extends Controller
 {
-    public function infoUsuario(int $usuario)
+    public function infoUsuario(int $usuario): JsonResponse
     {
         $data = Verificados::select('razon_social','email','telefono','imagen','status','deleted_at')->where('id_verificado', $usuario)->get();
 
@@ -71,8 +71,8 @@ class VerificadosController extends Controller
                         'email' => $request->email,
                         'password' => $request->password,
                         'status' => 0,
-                        'created_at' => Carbon::now('UTC'),
-                        'updated_at' => Carbon::now('UTC')
+                        'created_at' => Carbon::now('UTC')->format('Y-m-d H:i:s'),
+                        'updated_at' => Carbon::now('UTC')->format('Y-m-d H:i:s')
                     )
                 );
 
@@ -103,48 +103,75 @@ class VerificadosController extends Controller
      */
     public function update(Request $request, int $usuario) : JsonResponse
     {
+        $errores = [];
 
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->only(['email','telefono']),[
             'email' => 'required|email',
-            'imagen' => 'image|required|max:10000',
             'telefono' => 'required|unique:usuarios_verificados,telefono',
-            'password' => 'required'
         ],[
             'email.required'=>'El email es obligatorio',
             'email.email'=>'El email debe ser de un formato válido (nombre@dominio.extension)',
             'email.unique'=>'El email que intenta ingresar ya existe en nuestra base de datos',
-            'password.required'=>'La contraseña es obligatoria',
-            'imagen.image' => 'El formato de la imagen no es valido. Intente en un formato .jpeg, .jpg o .png',
-            'imagen.required' => 'La imagen en esta sección es obligatoria',
-            'imagen.max' => 'La imagen es muy pesada, intente una menor tamaño',
             'telefono.required' => 'El teléfono en esta instancia es obligatorio',
             'telefono.unique' => 'Ese número de teléfono ya se encuentra registrado'
         ]);
 
         if ($validator->fails()) {
+            $errores[] .= $validator->messages();
+        }
+
+        if ($request->hasFile('imagen')) {
+            $validator = Validator::make($request->only(['imagen']),[
+                'imagen' => 'image|required|max:10000',
+            ],[
+                'imagen.image' => 'El formato de la imagen no es valido. Intente en un formato .jpeg, .jpg o .png',
+                'imagen.required' => 'La imagen en esta sección es obligatoria',
+                'imagen.max' => 'La imagen es muy pesada, intente una menor tamaño',
+            ]);
+
+            if ($validator->fails()) {
+                $errores[] .= $validator->messages();
+            }
+        }
+
+        if ($request->password !== null) {
+            $validator = Validator::make($request->only(['password']),[
+                'password' => 'required'
+            ],[
+                'password.required'=>'La contraseña es obligatoria',
+            ]);
+
+            if ($validator->fails()) {
+                $errores[] .= $validator->messages();
+            }
+        }
+
+        if ($validator->fails()) {
             return response()->json([
                 'success' => false,
-                'data' => $validator->messages()
+                'data' => $errores
             ]);
         }
 
         try {
             $user = Verificados::findOrFail($usuario);
-            $file_name = Str::random(35) . '_' . trim($request->imagen->getClientOriginalName());
-            $request->imagen->move(public_path('/imgs/perfiles'),$file_name);
-            $path = "public/imgs/perfiles/$file_name";
 
-            $user->imagen = $path;
+            if ($request->hasFile('imagen')) {
+                $file_name = md5(time()) . '_' . str_replace(' ','-', $request->imagen->getClientOriginalName());
+                $request->imagen->move(public_path('/imgs/perfiles'),$file_name);
+                $path = "public/imgs/perfiles/$file_name";
+            }
+
+            $user->imagen = $path ?? $request->imagen;
             $user->telefono = $request->telefono;
             $user->email = $request->email;
             $request->password === '' ?? $user->password = $request->password;
-            $user->updated_at = Carbon::now('UTC');
+            $user->updated_at = Carbon::now('UTC')->format('Y-m-d H:i:s');
 
             $user->save();
 
             return response()->json([
-               'success'=> true,
-               'data' => $this->infoUsuario($user->id_verificado)
+                $this->infoUsuario($user->id_verificado)
             ]);
 
         } catch (\Exception $exception) {
@@ -177,19 +204,18 @@ class VerificadosController extends Controller
 
         try {
             $user = Verificados::findOrFail($usuario);
-            $file_name = Str::random(35) . '_' . $request->imagen->getClientOriginalName();
+            $file_name = md5(time()) . '_' . str_replace(' ','-',$request->imagen->getClientOriginalName());
             $request->imagen->move(public_path('/imgs/perfiles'),$file_name);
             $path = "public/imgs/perfiles/$file_name";
 
             $user->imagen = $path;
             $user->telefono = $request->telefono;
-            $user->updated_at = Carbon::now('UTC');
+            $user->updated_at = Carbon::now('UTC')->format('Y-m-d H:i:s');
 
             $user->save();
 
             return response()->json([
-                'success'=> true,
-                'data' => $this->infoUsuario($user->id_verificado)
+                $this->infoUsuario($user->id_verificado)
             ]);
 
         } catch (\Exception $exception) {

@@ -117,10 +117,19 @@ class AdminController extends Controller
         }
     }
 
-    public function listadoNoticias()
+    public function listadoNoticias(Request $request)
     {
-        $noticias = Noticias::orderBy('created_at','desc')->paginate(25);
-        return view('noticias.index', compact('noticias'));
+        $seleccionado = null;
+        if (isset($request->titulo)) {
+            $seleccionado = $request->titulo;
+            $noticias = Noticias::where('titulo','Like', '%' . $request->titulo . '%')
+                ->orderBy('created_at','DESC')
+                ->paginate(25);
+        } else {
+            $noticias = Noticias::orderBy('created_at','desc')->paginate(25);
+        }
+
+        return view('noticias.index', compact('noticias', 'seleccionado'));
     }
 
     public function noticiaForm()
@@ -224,7 +233,7 @@ class AdminController extends Controller
         }
     }
 
-    public function login(Request $request)
+    public function login(Request $request): RedirectResponse
     {
         $credenciales = $request->only(['email', 'password']);
         if (!Auth::attempt($credenciales)) {
@@ -241,7 +250,7 @@ class AdminController extends Controller
             ->with('message_type','bg-green-300 text-green-800');
     }
 
-    public function logout()
+    public function logout(): RedirectResponse
     {
         auth()->logout();
         return redirect()

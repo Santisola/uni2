@@ -1,5 +1,4 @@
 import Styles from "../styles/MenuDatosUsuario.module.css";
-import Image from "next/image";
 import {useEffect, useState} from "react";
 
 export default function MenuDatosUsuario({datosUsuario}) {

@@ -2,12 +2,15 @@ import Layout from "../layouts/layout";
 import {useRouter} from "next/router";
 import { useEffect, useState } from "react";
 import Noticia from "../components/Noticia";
+import UsuarioEliminado from "../components/UsuarioEliminado";
 
 export default function Noticias({noticias}) {
     const [usuario, setUsuario] = useState({
         nombre: 'Nombre',
         apellido: 'Apellido',
-    })
+    });
+    const [eliminado, setEliminado] = useState(null);
+
     const router = useRouter();
 
     useEffect(() => {
@@ -15,6 +18,7 @@ export default function Noticias({noticias}) {
             router.push('/login');
         } else {
             setUsuario(JSON.parse(sessionStorage.getItem('usuario')));
+            setEliminado(JSON.parse(sessionStorage.getItem('eliminado')));
         }
     },[router]);
 
@@ -24,6 +28,9 @@ export default function Noticias({noticias}) {
             title={"Página de noticias"}
             datosUsuario={usuario}
         >
+            { eliminado !== null && (
+                <UsuarioEliminado />
+            ) }
             <h2 className={"text-xl font-semibold my-10"}>Estas son las noticias destacadas</h2>
             { noticias.map((noticia, index) => (
                 <Noticia
