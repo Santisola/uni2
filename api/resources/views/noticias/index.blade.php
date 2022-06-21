@@ -57,7 +57,7 @@ use Illuminate\Support\Str;
                     @if($noticia->publicado === 1)
                         <td class="text-center whitespace-nowrap px-5 border align-middle text-violet-800 font-semibold">Publicado</td>
                     @else
-                        <td class="text-center whitespace-nowrap px-5 border align-middle text-violet-800 font-semibold">Borrado</td>
+                        <td class="text-center whitespace-nowrap px-5 border align-middle text-violet-800 font-semibold">Borrador</td>
                     @endif
                     <td class="text-center whitespace-nowrap px-5 border align-middle">{{ date('d/m/Y H.i:s', strtotime($noticia->created_at)) }}</td>
                     <td class="text-center whitespace-nowrap px-5 border align-middle">{{ date('d/m/Y H:i:s', strtotime($noticia->updated_at)) }}</td>
@@ -90,7 +90,7 @@ use Illuminate\Support\Str;
                 </button>
             </div>
             <div class="modal-body">
-                ¿Está seguro que desea eliminar esta noticia? Una vez eliminada no habrá paso atrás.
+                ¿Está seguro que desea eliminar esta noticia? Una vez eliminada no habrá vuelta atrás.
             </div>
             <div class="modal-footer flex justify-end items-center gap-1 mt-5">
                 <button type="button" class="block w-fit border rounded bg-slate-700 text-white transition duration-300 hover:ease-in-out px-3 py-1" onclick="cerrar()">Cerrar</button>

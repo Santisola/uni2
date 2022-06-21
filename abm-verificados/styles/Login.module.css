@@ -2,7 +2,8 @@
     background-image: url("/imgs/mobile/bg-login.svg");
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;
+    background-position: center center;
+    padding-bottom: 7vh;
 }
 
 .backgroundRegistro {

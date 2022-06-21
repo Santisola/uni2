@@ -33,11 +33,11 @@ export default function Configuracion() {
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi aut culpa cupiditate, dignissimos dolorem fugiat incidunt minima nemo nesciunt numquam quisquam, quo repellat temporibus veniam voluptatum!</p>
             <ul className={"mt-5"}>
                 <li>
-                    <Link href={"/contacto"}><a>Contacto</a></Link>
+                    <Link href={"/contacto"}><a className={"bg-amarillo w-fit rounded px-3 py-2"}>Contacto</a></Link>
                 </li>
-                <li className={"bg-amarillo w-fit rounded px-3 py-1"}>
+                {/*<li className={"bg-amarillo w-fit rounded px-3 py-1"}>
                     <Link href={"/editar-perfil"}><a>Editar Perfil</a></Link>
-                </li>
+                </li>*/}
             </ul>
         </Layout>
     )

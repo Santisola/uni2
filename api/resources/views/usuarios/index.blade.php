@@ -41,8 +41,13 @@
                     <td class="whitespace-nowrap px-5 border align-middle">{{ $usuario->razon_social }}</td>
                     <td class="whitespace-nowrap px-5 border align-middle">{{ $usuario->telefono ?? '-' }}</td>
                     <td class="whitespace-nowrap px-5 border align-middle">{{ $usuario->email}}</td>
-                    <td class="whitespace-nowrap px-5 border align-middle">{{ $usuario->imagen ?? '-'}}</td>
-                    <td class="whitespace-nowrap px-5 border align-middle">
+                    @if($usuario->imagen)
+                        <td class="whitespace-nowrap px-5 border align-middle">
+                            <img class="img-perfil border rounded border-2 border-violet-800" src="{{ asset(str_replace('public/','',$usuario->imagen))}}" alt="Imagen usuario">
+                        </td>
+                    @else
+                        <td class="whitespace-nowrap px-5 border align-middle">-</td>
+                    @endif
                     @if($usuario->status === 1)
                         <td class="text-center whitespace-nowrap px-5 border align-middle text-violet-800 font-semibold">Verificado</td>
                     @else

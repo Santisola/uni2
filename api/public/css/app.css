@@ -681,6 +681,9 @@ video {
 .h-screen {
   height: 100vh;
 }
+.max-h-40 {
+  max-height: 10rem;
+}
 .min-h-screen {
   min-height: 100vh;
 }
@@ -706,6 +709,9 @@ video {
 }
 .w-screen {
   width: 100vw;
+}
+.min-w-full {
+  min-width: 100%;
 }
 .max-w-6xl {
   max-width: 72rem;
@@ -768,6 +774,9 @@ video {
 }
 .overflow-hidden {
   overflow: hidden;
+}
+.overflow-x-auto {
+  overflow-x: auto;
 }
 .overflow-x-scroll {
   overflow-x: scroll;

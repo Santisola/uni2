@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import Styles from '../styles/Layout.module.css';
 
 export default function Layout({ children, pagina, title, datosUsuario }) {
     return(
@@ -15,7 +16,7 @@ export default function Layout({ children, pagina, title, datosUsuario }) {
                 pagina={pagina}
                 datosUsuario={datosUsuario}
             />
-            <main className={"mx-auto my-5"}>
+            <main className={`${Styles.main} mx-auto my-5`}>
                 {children}
             </main>
             <Footer />

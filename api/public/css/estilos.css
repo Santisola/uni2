@@ -22,6 +22,11 @@ main {
     flex-wrap: wrap;
 }
 
+.img-perfil {
+    width: 100%;
+    min-width: 200px;
+}
+
 @media (max-width: 911px) {
     .botones {
         flex-direction: column;
