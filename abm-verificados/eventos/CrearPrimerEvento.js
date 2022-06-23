@@ -3,8 +3,8 @@ import Image from "next/image";
 export default function CrearPrimerEvento() {
     return (
         <>
-            <h2 className={"text-xl font-semibold text-center my-10"}>No tienes ningún evento creado</h2>
-            <div className={"flex justify-center items-center my-5"}>
+            <h2 className={"text-xl font-semibold text-center mt-10"}>No tienes ningún evento creado</h2>
+            <div className={"flex justify-center items-center mt-5"}>
                 <Image
                     layout={"fixed"}
                     width={250}

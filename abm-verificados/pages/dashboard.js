@@ -11,15 +11,17 @@ export default function Dashboard() {
         razon_social: 'Nombre Apellido',
     });
     const [eliminado, setEliminado] = useState(null);
+    const [id, setID] = useState(null);
 
     const router = useRouter();
 
     useEffect(() => {
         if (!sessionStorage.getItem('usuario')) {
-            return router.push('/login');
+            router.push('/login');
         } else {
             setUsuario(JSON.parse(sessionStorage.getItem('usuario')));
             setEliminado(JSON.parse(sessionStorage.getItem('eliminado')));
+            setID(JSON.parse(sessionStorage.getItem('id')));
         }
     },[router]);
 

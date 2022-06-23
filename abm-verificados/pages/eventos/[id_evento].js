@@ -4,22 +4,27 @@ import {useEffect, useState} from "react";
 import Detalle from "../../eventos/Detalle";
 import FormEvento from "../../formularios/FormEvento";
 import PawLoader from "../../components/PawLoader";
+import UsuarioEliminado from "../../components/UsuarioEliminado";
 
 export default function Id_evento({evento}) {
     const [usuario, setUsuario] = useState({
         nombre: 'Nombre',
         apellido: 'Apellido',
     });
+    const [eliminado, setEliminado] = useState(null);
     const [editar, setEditar] = useState(false);
     const [success, setSuccess] = useState(false);
     const [loader, setLoader] = useState(false);
+
     const router = useRouter();
+
 
     useEffect(() => {
         if (!sessionStorage.getItem('usuario')) {
-            return router.push('/login');
+            router.push('/login');
         } else {
             setUsuario(JSON.parse(sessionStorage.getItem('usuario')));
+            setEliminado(JSON.parse(sessionStorage.getItem('eliminado')));
         }
     },[router]);
     
@@ -37,6 +42,9 @@ export default function Id_evento({evento}) {
             title={nombre}
             datosUsuario={usuario}
         >
+            { eliminado !== null && (
+                <UsuarioEliminado />
+            ) }
             { loader && (
                 <PawLoader />
             ) }

@@ -14,7 +14,7 @@ export default function Register() {
 
     useEffect(() => {
         if (sessionStorage.getItem('usuario')) {
-            return router.push('/dashboard');
+            router.push('/dashboard');
         }
     },[router]);
 

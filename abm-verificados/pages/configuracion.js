@@ -14,7 +14,7 @@ export default function Configuracion() {
 
     useEffect(() => {
         if (!sessionStorage.getItem('usuario')) {
-            return router.push('/login');
+            router.push('/login');
         } else {
             setUsuario(JSON.parse(sessionStorage.getItem('usuario')));
             setEliminado(JSON.parse(sessionStorage.getItem('eliminado')));

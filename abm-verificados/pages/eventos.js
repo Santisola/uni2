@@ -22,16 +22,13 @@ export default function Eventos() {
 
     useEffect(() => {
         if (!sessionStorage.getItem('usuario')) {
-            return router.push('/login');
+            router.push('/login');
         } else {
             setUsuario(JSON.parse(sessionStorage.getItem('usuario')));
+            setEliminado(JSON.parse(sessionStorage.getItem('eliminado')));
+            setID(JSON.parse(sessionStorage.getItem('id')));
         }
     },[router]);
-
-    useEffect(() => {
-        sessionStorage.getItem('id') ? setID(JSON.parse(sessionStorage.getItem('id'))) : sessionStorage.removeItem('usuario');
-        setEliminado(JSON.parse(sessionStorage.getItem('eliminado')));
-    },[]);
 
     const buscarEventos = async id => {
         const URL = `${process.env.API_URL}/eventos-cms/${Number(id)}`;
@@ -44,7 +41,7 @@ export default function Eventos() {
 
     useEffect(()  => {
         if (id !== '') {
-            return buscarEventos(id)
+            buscarEventos(id)
         }
     },[id]);
 
@@ -60,6 +57,12 @@ export default function Eventos() {
             { fetching && (
                 <PawLoader />
             ) }
+            <Link href={"/eventos/nuevoEvento"}>
+                <a
+                    role={"button"}
+                    className={`${Styles.btn} text-lg mb-10 mt-5 block text-center`}
+                >Crear un evento</a>
+            </Link>
             { eventos.length > 0 ? (
                     eventos.map(evento => (
                             <Evento
@@ -71,12 +74,6 @@ export default function Eventos() {
             ) : (
                 <CrearPrimerEvento />
             ) }
-            <Link href={"/eventos/nuevoEvento"}>
-                <a
-                    role={"button"}
-                    className={`${Styles.btn} text-lg mb-10 mt-5 block text-center`}
-                >Crear un evento</a>
-            </Link>
         </Layout>
     )
 }

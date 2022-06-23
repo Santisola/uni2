@@ -28,7 +28,7 @@
     position: relative;
 }
 
-.inpiutContainer input {
+.inpiutContainer input[type="tel"] {
     border: 1px solid var(--negro);
     border-radius: 20px;
     width: 100%;

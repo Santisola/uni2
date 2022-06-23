@@ -15,7 +15,7 @@ export default function Noticias({noticias}) {
 
     useEffect(() => {
         if (!sessionStorage.getItem('usuario')) {
-            return router.push('/login');
+           router.push('/login');
         } else {
             setUsuario(JSON.parse(sessionStorage.getItem('usuario')));
             setEliminado(JSON.parse(sessionStorage.getItem('eliminado')));

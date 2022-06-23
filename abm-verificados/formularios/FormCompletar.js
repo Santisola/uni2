@@ -135,7 +135,7 @@ export default function FormCompletar() {
                 className={`${Styles.form} flex flex-col items-center justify-center`}
                 onSubmit={e => handleSubmit(e)}
             >
-                <p className={"text-center text-md mb-5 font-bold"}>Complete los siguientes datos para dar de alta su usuario</p>
+                <p className={"text-center text-md mb-5 font-semibold"}>Estos datos serán visibles en la aplicación de <b className={"text-violeta"}>UNIDOS</b></p>
                 { error && (
                     <Mensaje
                         tipo={false}
@@ -169,6 +169,7 @@ export default function FormCompletar() {
                         type={"file"}
                         name={"imagen"}
                         id={"imagen"}
+                        className={"file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"}
                         onChange={e => setImagen(e.target.files[0])}
                     />
                     { errorImagen !== '' && (
@@ -181,7 +182,7 @@ export default function FormCompletar() {
                     <input
                         type={"submit"}
                         value={"Guardar datos"}
-                        className={"mt-20 block"}
+                        className={"mt-20 block py-2"}
                     />
                 </div>
             </form>

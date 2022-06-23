@@ -53,8 +53,8 @@ Route::post('/registro', [AuthController::class, 'registrar']);
 Route::post('/verificado/login', [VerificadosController::class,'login']);
 Route::post('/verificado/register', [VerificadosController::class,'register']);
 
-Route::put('/verificado/{usuario}/update', [VerificadosController::class,'update']);
-//Route::put('/verificado/{usuario}/complete', [VerificadosController::class,'completeData']);
+//Route::put('/verificado/{usuario}/update', [VerificadosController::class,'update']);
+Route::put('/verificado/{usuario}/complete', [VerificadosController::class,'completeData']);
 
 /**
  * CMS Noticias

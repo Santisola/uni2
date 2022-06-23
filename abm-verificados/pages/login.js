@@ -14,7 +14,7 @@ export default function Login() {
 
     useEffect(() => {
         if (sessionStorage.getItem('usuario')) {
-            return router.push('/dashboard');
+            router.push('/dashboard');
         }
     },[router]);
 

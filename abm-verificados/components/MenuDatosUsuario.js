@@ -20,12 +20,12 @@ export default function MenuDatosUsuario({datosUsuario}) {
 
     return (
         <div className={Styles.usuario}>
-            { datos.imagen !== null ? (
+            { datos.imagen === null ? (
                     // eslint-disable-next-line @next/next/no-img-element
-                <img width={50} height={50} src={process.env.API_IMAGEN + datos.imagen} alt={`Foto de ${datos.razon_social}`} />
-            ) : (
-                // eslint-disable-next-line @next/next/no-img-element
                     <img width={50} height={50} src={"/imgs/user-default.png"} alt={"Imagen predeterminada para usuario"}  />
+            ) : (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img width={50} height={50} src={process.env.API_IMAGEN + datos.imagen} alt={`Foto de ${datos.razon_social}`} />
                 )
             }
             <div className={"overflow-hidden"}>
