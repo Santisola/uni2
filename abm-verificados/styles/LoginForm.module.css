@@ -28,7 +28,10 @@
     position: relative;
 }
 
-.inpiutContainer input[type="tel"] {
+.inpiutContainer input[type="tel"],
+.inpiutContainer input[type="email"],
+.inpiutContainer input[type="password"],
+.inpiutContainer input[type="number"] {
     border: 1px solid var(--negro);
     border-radius: 20px;
     width: 100%;

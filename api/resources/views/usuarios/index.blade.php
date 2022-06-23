@@ -12,7 +12,7 @@
                 <label for="usuarios" class="sr-only">Seleccione</label>
                 <select name="usuarios" id="usuarios" class="border border-violet-800 rounded w-full bg-white px-2 py-1">
                     <option value="" {{ $seleccionado === null ? 'selected' : '' }}>Todos</option>
-                    <option value="eliminados" {{ $seleccionado === 'ban' ? 'selected' : '' }}>Eliminados</option>
+                    <option value="eliminados" {{ $seleccionado === 'eliminados' ? 'selected' : '' }}>Eliminados</option>
                     <option value="verificados" {{ $seleccionado === 'verificados' ? 'selected' : '' }}>Verificados</option>
                     <option value="no-verificados" {{ $seleccionado === 'no-verificados' ? 'selected' : '' }}>No verificados</option>
                 </select>

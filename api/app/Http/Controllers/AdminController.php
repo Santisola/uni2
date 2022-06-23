@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Monolog\Handler\IFTTTHandler;
 
 class AdminController extends Controller
 {
@@ -183,37 +184,61 @@ class AdminController extends Controller
     }
 
     public function editar(Request $request, int $id_noticia): RedirectResponse
-    {
-        $request->validate(Noticias::$reglasEdit, Noticias::$mensajesDeError);
+{
+    $noticia = Noticias::findOrFail($id_noticia);
 
-        try {
-            if ($request->hasFile('imagen')) {
-                $file_name = md5(time()) . '_' . str_replace(' ','-',$request->imagen->getClientOriginalName());
-                $request->imagen->move(public_path('/imgs/noticias'),$file_name);
-                $request->imagen = $file_name;
-            }
+    $request->validate([
+        'titulo'=>'required|min:3',
+        'contenido'=>'required|min:20',
+        'publicado' => 'required|integer|between:0,1'
+    ],[
+        'titulo.required'=>'El titulo de la noticia es obligatorio',
+        'contenido.required'=>'El contenido de la noticia es obligatorio',
+        'publicado.required' => 'El estado no puede estar vacío',
+        'publicado.integer' => 'El estado debe ser un entero',
+        'publicado.between' => 'El estado debe estar entre 0 y 1',
+    ]);
 
-            Noticias::where('id_noticia', '=', $id_noticia)
-                ->update([
-                    'titulo' => $request->titulo,
-                    'contenido' => $request->contenido,
-                    'imagen' => $request->imagen,
-                    'slug' => $request->slug,
-                    'publicado' => $request->publicado,
-                    'updated_at' => Carbon::now('UTC')->format('Y-m-d H:i:s'),
-                ]);
+    $noticia->titulo = $request->titulo;
+    $noticia->contenido = $request->contenido;
+    $noticia->publicado = $request->publicado;
 
-            return redirect()
-                ->route('noticias')
-                ->with('message','Noticia Editada')
-                ->with('message_type','bg-green-300 text-green-800');
+    if ($request->hasFile('imagen')) {
+        $request->validate(
+        [
+            'imagen'=>'required|mimes:jpeg,jpg,png|max:10000'
+        ],
+        [
+            'imagen.required'=>'La imagen es obligatoria',
+            'imagen.mimes'=>'La imagen debe ser formato jpeg, jpg o png',
+            'imagen.max' => 'La imagen es muy pesada intente subir otra',
+        ]);
 
-        } catch (\Exception $exception) {
-            return redirect()
-                ->route('noticias.crearForm')
-                ->with('message', $exception->getMessage())
-                ->with('message_type','bg-red-300 text-red-800');
-        }
+        $file_name = md5(time()) . '_' . str_replace(' ','-',$request->imagen->getClientOriginalName());
+        $request->imagen->move(public_path('/imgs/noticias'), $file_name);
+
+        $noticia->imagen = $file_name;
+    }
+
+    if ($request->slug !== $noticia->slug) {
+        $request->validate(
+            [
+                'slug'=>'required|unique:noticias',
+            ],
+            [
+                'slug.required'=>'El slug es obligatorio',
+                'slug.unique'=>'El slug debe ser único e irrepetible, quizás ya exista otro slug con este nombre',
+            ]);
+
+        $noticia->imagen = $request->slug;
+    }
+
+    $noticia->save();
+
+    return redirect()
+        ->route('noticias')
+        ->with('message','Noticia Editada')
+        ->with('message_type','bg-green-300 text-green-800');
     }
 
     public function eliminar(int $id_eliminar): RedirectResponse

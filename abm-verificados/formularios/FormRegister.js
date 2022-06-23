@@ -188,6 +188,7 @@ export default function FormRegister({ router, setLoader }) {
                 <input
                     type={"submit"}
                     value={"Registrarse"}
+                    className={"py-2"}
                 />
             </div>
         </form>

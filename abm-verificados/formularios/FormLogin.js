@@ -49,7 +49,7 @@ export default function FormLogin({ router, setLoader }) {
             });
             const resultado = await respuesta.json();
 
-            // console.log(resultado)
+            console.log(resultado)
 
             if (resultado.success === false) {
                 setError(true);
@@ -59,6 +59,8 @@ export default function FormLogin({ router, setLoader }) {
                 setTimeout(() => {
                     setError(false);
                 },10000);
+
+                return setLoader(false);
             }
 
             sessionStorage.setItem('usuario',JSON.stringify(resultado.data.original.data[0]));
@@ -202,6 +204,7 @@ export default function FormLogin({ router, setLoader }) {
                 <input
                     type={"submit"}
                     value={"Iniciar Sesión"}
+                    className={"py-2"}
                 />
             </div>
         </form>
