@@ -52,3 +52,7 @@ main {
 .bg-amarillo {
   background-color: var(--amarillo);
 }
+
+.text-violeta {
+  color: var(--violeta);
+}

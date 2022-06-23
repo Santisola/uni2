@@ -17,7 +17,7 @@ export default function Id_evento({evento}) {
 
     useEffect(() => {
         if (!sessionStorage.getItem('usuario')) {
-            router.push('/login');
+            return router.push('/login');
         } else {
             setUsuario(JSON.parse(sessionStorage.getItem('usuario')));
         }

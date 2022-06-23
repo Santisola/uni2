@@ -14,7 +14,7 @@ export default function EntradaNoticia({noticia}) {
 
     useEffect(() => {
         if (!sessionStorage.getItem('usuario')) {
-            router.push('/login');
+            return router.push('/login');
         } else {
             setUsuario(JSON.parse(sessionStorage.getItem('usuario')));
         }

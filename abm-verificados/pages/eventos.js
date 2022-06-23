@@ -22,7 +22,7 @@ export default function Eventos() {
 
     useEffect(() => {
         if (!sessionStorage.getItem('usuario')) {
-            router.push('/login');
+            return router.push('/login');
         } else {
             setUsuario(JSON.parse(sessionStorage.getItem('usuario')));
         }
@@ -44,7 +44,7 @@ export default function Eventos() {
 
     useEffect(()  => {
         if (id !== '') {
-            buscarEventos(id)
+            return buscarEventos(id)
         }
     },[id]);
 

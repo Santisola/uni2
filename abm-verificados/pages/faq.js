@@ -1,10 +1,8 @@
-import {useEffect, useState} from "react";
-import {useRouter} from "next/router";
 import Layout from "../layouts/layout";
-import FormCompletar from "../formularios/FormCompletar";
-import UsuarioEliminado from "../components/UsuarioEliminado";
+import {useRouter} from "next/router";
+import {useEffect, useState} from "react";
 
-export default function CompletarPerfil() {
+export default function Faq() {
     const [usuario,setUsuario] = useState({
         razon_social: 'Nombre Apellido',
     });
@@ -14,23 +12,20 @@ export default function CompletarPerfil() {
 
     useEffect(() => {
         if (!sessionStorage.getItem('usuario')) {
-            return router.push('/login');
+           return router.push('/login');
         } else {
             setUsuario(JSON.parse(sessionStorage.getItem('usuario')));
             setEliminado(JSON.parse(sessionStorage.getItem('eliminado')));
         }
     },[router]);
-
+    
     return (
         <Layout
-            pagina={"Completar Perfil"}
-            title={"Completar datos del perfil"}
+            pagina={"FAQ"}
+            title={"Preguntas frecuentes"}
             datosUsuario={usuario}
         >
-            { eliminado !== null && (
-                <UsuarioEliminado />
-            ) }
-            <FormCompletar />
+            <h2>Preguntas frecuentes</h2>
         </Layout>
     )
 }

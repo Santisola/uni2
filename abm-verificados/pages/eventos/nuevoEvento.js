@@ -16,7 +16,7 @@ export default function NuevoEvento() {
 
     useEffect(() => {
         if (!sessionStorage.getItem('usuario')) {
-            router.push('/login');
+            return router.push('/login');
         } else {
             setUsuario(JSON.parse(sessionStorage.getItem('usuario')));
         }
@@ -24,7 +24,7 @@ export default function NuevoEvento() {
 
     useEffect(() => {
         if (success) {
-            router.push('/eventos');
+            return router.push('/eventos');
         }
     },[router, success])
 

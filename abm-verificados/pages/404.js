@@ -17,7 +17,7 @@ export default function Error404() {
 
     useEffect(() => {
         if (!sessionStorage.getItem('usuario')) {
-            router.push('/login');
+            return router.push('/login');
         } else {
             setUsuario(JSON.parse(sessionStorage.getItem('usuario')));
             setEliminado(JSON.parse(sessionStorage.getItem('eliminado')));

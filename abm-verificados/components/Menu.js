@@ -16,7 +16,7 @@ export default function Menu({ setAbierto, abierto, datosUsuario }) {
                     datosUsuario={datosUsuario}
                 />
                 <Estado
-                    status={datosUsuario.status}
+                    status={datosUsuario?.status}
                 />
                 <ul className={"mt-5 px-5"}>
                     <li className={"text-white"}>
@@ -58,7 +58,7 @@ export default function Menu({ setAbierto, abierto, datosUsuario }) {
                         </Link>
                     </li>
                     <li className={"text-white"}>
-                        <Link href={"/configuracion"}>
+                        <Link href={"/faq"}>
                             <a>
                                 <Image layout={"fixed"} width={30} height={30} src={"/imgs/faq-icon.svg"} alt={"icono de preguntas frecuentes"} />
                                 <abbr title="Preguntas frecuentes">FAQ</abbr>
