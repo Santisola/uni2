@@ -20,9 +20,14 @@ class EventosController extends Controller
         try {
             $eventos = Eventos::all()->where('publicado',true);
 
+            $data = [];
+            foreach($eventos as $evento){
+                $data[] = $evento;
+            }
+
             return response()->json([
                 'success' => true,
-                'eventos' => $eventos
+                'eventos' => $data
             ]);
 
         } catch (\Exception $exception) {
