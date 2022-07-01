@@ -43,13 +43,13 @@ export default function Menu({ setAbierto, abierto, datosUsuario }) {
                 </ul>
                 <hr className={`${Styles.hr} mx-auto my-10 border-white`} />
                 <ul className={"px-5"}>
-                    <li className={"text-white"}>
+                    {/*<li className={"text-white"}>
                         <Link href={"/notificaciones"}>
                             <a>
                                 <Image layout={"fixed"} width={30} height={30} src={"/imgs/notificaciones-icon.svg"} alt={"icono de notificación"} /> Notificaciones
                             </a>
                         </Link>
-                    </li>
+                    </li>*/}
                     <li className={"text-white"}>
                         <Link href={"/configuracion"}>
                             <a>

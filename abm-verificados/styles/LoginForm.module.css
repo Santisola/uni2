@@ -28,10 +28,7 @@
     position: relative;
 }
 
-.inpiutContainer input[type="tel"],
-.inpiutContainer input[type="email"],
-.inpiutContainer input[type="password"],
-.inpiutContainer input[type="number"] {
+.inpiutContainer :is(input[type="tel"], input[type="email"], input[type="password"], input[type="number"], input[type="text"]) {
     border: 1px solid var(--negro);
     border-radius: 20px;
     width: 100%;
@@ -39,8 +36,7 @@
     color: var(--violeta);
 }
 
-.inpiutContainer label,
-.inpiutContainer small {
+.inpiutContainer :is(label, small) {
     padding-left: 10px;
 }
 
@@ -66,8 +62,7 @@
     margin-top: 1.5rem;
 }
 
-.ojo img,
-.ojo span {
+.ojo :is(img, span) {
     max-width: 100%;
     display: block;
 }

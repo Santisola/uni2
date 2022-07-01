@@ -8,8 +8,7 @@
     padding: 1rem;
 }
 
-.formGroups input,
-.formGroups textarea {
+.formGroups :is(input, textarea) {
     border: 1px solid var(--gris);
     border-radius: 5px;
     padding: 5px;

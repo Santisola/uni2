@@ -35,9 +35,7 @@ export default function Configuracion() {
                 <li>
                     <Link href={"/contacto"}><a className={"bg-amarillo w-fit rounded px-3 py-2"}>Contacto</a></Link>
                 </li>
-                {/*<li className={"bg-amarillo w-fit rounded px-3 py-1"}>
-                    <Link href={"/editar-perfil"}><a>Editar Perfil</a></Link>
-                </li>*/}
+            {/*  Acá iria la opción de editar el perfil  */}
             </ul>
         </Layout>
     )
