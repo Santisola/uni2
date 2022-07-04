@@ -1,23 +1,78 @@
 @extends('layouts.main')
 @section('title','UNIDOS | Inicio')
+@push('css')
+    <!-- Link Swiper's CSS -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/swiper/swiper-bundle.min.css"
+    />
+@endpush
 @section('main')
     <h1 class="text-center text-3xl mb-10 text-violet-800 font-bold">UNIDOS</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A deleniti, dignissimos doloremque dolores ducimus
-        enim error exercitationem facilis fuga hic magni non obcaecati placeat porro quae qui reiciendis
-        reprehenderit, soluta. Adipisci amet architecto atque, culpa delectus dolore dolores eum magni molestiae
-        molestias nostrum numquam porro provident quas quisquam sit ullam voluptates. Accusantium aliquid blanditiis
-        consequuntur deleniti eaque, magnam maiores maxime minus natus quos repellendus sint tenetur velit vero
-        vitae, voluptatem voluptates. Aliquam asperiores aspernatur cum error esse exercitationem explicabo in
-        laudantium, molestias obcaecati optio, perspiciatis quae quaerat quasi reiciendis sed sint suscipit totam
-        ullam unde? A animi atque aut cum, dicta dolor dolorem earum eos ex excepturi fuga harum impedit ipsa ipsam
-        laboriosam laudantium maiores maxime, nam nihil pariatur porro quae quaerat quos reiciendis repellat sint
-        ullam vitae, voluptate voluptates voluptatibus. Adipisci cumque debitis id incidunt molestias non quae quis
-        similique, veniam. Accusamus doloribus eum ipsam officiis voluptatem. A accusamus accusantium iure laborum
-        quisquam. Beatae culpa ea excepturi exercitationem perferendis quos reiciendis! A animi aspernatur beatae
-        blanditiis doloremque doloribus eaque exercitationem facere illo impedit incidunt ipsum, labore laudantium
-        maiores modi molestiae nihil obcaecati placeat quia quidem repellendus sequi tempore veritatis vitae
-        voluptas. Ab aliquid consequuntur dolor doloremque exercitationem facere, facilis fugit illum incidunt ipsa,
-        modi molestiae quia voluptas. Accusantium dignissimos libero minus modi nobis. Autem blanditiis consequatur
-        dolor doloribus eum in ipsa iste iure magni natus nulla, optio repellat, saepe soluta tenetur velit
-        voluptatum! Enim eveniet facilis molestias odit veritatis.</p>
+    <p class="text-lg w-50 mx-auto">
+        <b>Unidos</b> trabaja incansablemente para que ellos puedan volver sus hogares o encuentren uno nuevo. Unimos a los rescatistas y sus rescatados con sus futuras familias. Como también unimos a aquellos que se extraviaron con sus dueños.
+    </p>
+    <section id="ellos">
+        <h2 class="text-center text-xl mb-10 text-violet-800 font-bold">Es por ellos</h2>
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="https://images.pexels.com/photos/7210487/pexels-photo-7210487.jpeg" alt="img1">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://images.pexels.com/photos/6001779/pexels-photo-6001779.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="img2">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://images.pexels.com/photos/9313627/pexels-photo-9313627.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="img3">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://images.pexels.com/photos/9313636/pexels-photo-9313636.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="img4">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://images.pexels.com/photos/9505960/pexels-photo-9505960.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="img5">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://images.pexels.com/photos/9985929/pexels-photo-9985929.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="img6">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://images.pexels.com/photos/8498519/pexels-photo-8498519.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="img7">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://images.pexels.com/photos/8146755/pexels-photo-8146755.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="img8">
+                </div>
+                <div class="swiper-slide">
+                    <img src="https://images.pexels.com/photos/10117271/pexels-photo-10117271.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="img9">
+                </div>
+            </div>
+        </div>
+    </section>
 @endsection
+@push('js')
+    <!-- Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+        const swiper = new Swiper(".mySwiper", {
+            spaceBetween: 30,
+            effect: "fade",
+            centeredSlides: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+        });
+    </script>
+    <script>
+        const imgs = document.querySelectorAll('#ellos img');
+
+        imgs.forEach(img => {
+            console.log(img.parentElement)
+           img.parentElement.style.backgroundImage = `url(${img.src})`;
+        });
+    </script>
+@endpush

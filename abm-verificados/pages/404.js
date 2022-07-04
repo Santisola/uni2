@@ -36,7 +36,7 @@ export default function Error404() {
             <h2 className={"sr-only"}>Página no encontrada</h2>
             <p className={"text-5xl text-center font-semibold"}>¡Ups!</p>
             <Image layout={"responsive"} width={330} height={330} src={"/imgs/404.svg"} alt={"Error"} />
-            <p className={"mt-5 text-2xl font-semibold"}>Parece que la sección que busca no existe</p>
+            <p className={"mt-5 text-2xl font-semibold text-center"}>Parece que la sección que busca no existe</p>
             <Link href={"/"}>
                 <a className={Styles.error}>Click aquí para volver</a>
             </Link>

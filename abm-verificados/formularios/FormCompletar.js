@@ -1,8 +1,9 @@
-import {useState} from "react";
-import Styles from "../styles/LoginForm.module.css";
+import React, {useState} from "react";
+import Styles from "../styles/FormCompletar.module.css";
 import PawLoader from "../components/PawLoader";
 import Mensaje from "../components/Mensaje";
 import {useRouter} from "next/router";
+import {previewImage} from "../helpers";
 
 export default function FormCompletar() {
     const [telefono,setTelefono] = useState('');
@@ -172,6 +173,13 @@ export default function FormCompletar() {
                         className={"file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"}
                         onChange={e => setImagen(e.target.files[0])}
                     />
+                    { typeof imagen === "object" && (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                            className={Styles.preview}
+                            src={previewImage(imagen)}
+                            alt="imagen" />
+                    ) }
                     { errorImagen !== '' && (
                         <div className={"mt-3 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"} role={"alert"}>
                             <p className={"text-center"}>{errorImagen}</p>

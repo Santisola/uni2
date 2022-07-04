@@ -1,23 +1,7 @@
-.formularioModal {
-    width: 100vw;
-    height: 65vh;
-    max-width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-}
-
-.formularioModal > .form {
-    background-color: var(--blanco);
-    border-radius: 10px;
-    padding: 1rem;
-    width: 100% !important;
-}
-
 .form {
     column-gap: 40px;
-    width: 80%;
+    width: 100%;
+    margin: auto;
 }
 
 .inpiutContainer {

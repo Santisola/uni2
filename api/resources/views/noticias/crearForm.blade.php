@@ -105,4 +105,25 @@
             formulario.submit();
         }
     </script>
+    <script>
+        const inputFile = document.querySelector('#imagen');
+
+        inputFile.addEventListener('change',showPreview);
+
+        function showPreview(e) {
+            const imagen = e.target.files[0];
+            const preview = URL.createObjectURL(imagen);
+
+            if (document.querySelector('.preview')) {
+                document.querySelector('.preview').src = preview;
+            } else {
+                const img = document.createElement('img');
+                img.setAttribute('src',preview);
+                img.setAttribute('alt','preview');
+                img.classList.add('preview');
+
+                e.target.insertAdjacentElement('afterend',img);
+            }
+        }
+    </script>
 @endpush

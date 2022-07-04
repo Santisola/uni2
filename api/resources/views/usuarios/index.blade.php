@@ -55,8 +55,8 @@
                     @endif
                     <td class="whitespace-nowrap px-5 border align-middle">{{ $usuario->created_at}}</td>
                     <td class="whitespace-nowrap px-5 border align-middle">{{ $usuario->updated_at}}</td>
-                    <td class="whitespace-nowrap px-5 border align-middle flex flex-col">
-                        <form action="{{ route('usuarios.verificar', ['usuario' => $usuario->id_verificado]) }}" method="post">
+                    <td class="whitespace-nowrap px-5 border align-middle">
+                        <form action="{{ route('usuarios.verificar', ['usuario' => $usuario->id_verificado]) }}" method="post" class="flex flex-col">
                             @csrf
                             @method('PUT')
 

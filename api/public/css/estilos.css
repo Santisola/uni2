@@ -27,6 +27,72 @@ main {
     min-width: 200px;
 }
 
+.w-50 {
+    max-width: 50%;
+}
+
+#ellos {
+    margin: 3em auto;
+}
+
+#ellos img {
+    max-width: 100%;
+    max-height: 600px;
+    width: 100%;
+    height: 100%;
+    object-fit: scale-down;
+    object-position: center;
+    position: relative;
+    z-index: 3;
+}
+
+#ellos .swiper-slide {
+    background-position: center center;
+/*    background-size: cover;
+    background-repeat: no-repeat;*/
+    position: relative;
+}
+
+#ellos .swiper-slide::before {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    z-index: 2;
+    filter: blur(10px);
+    background-image: inherit;
+    background-size: cover;
+    background-repeat: no-repeat;
+    left: 0;
+    top: 0;
+    background-position: center center;
+}
+
+#ellos .swiper-slide::after {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    z-index: 2;
+    filter: blur(10px);
+    background-image: inherit;
+    background-repeat: no-repeat;
+    background-size: cover;
+    right: 0;
+    top: 0;
+    background-position: center center;
+}
+
+.preview {
+    max-width: 300px;
+    max-height: 300px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    margin: 1rem auto;
+}
+
 @media (max-width: 911px) {
     .botones {
         flex-direction: column;
