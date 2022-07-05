@@ -61,7 +61,7 @@ export default function Menu({ setAbierto, abierto, datosUsuario }) {
                         <Link href={"/faq"}>
                             <a>
                                 <Image layout={"fixed"} width={30} height={30} src={"/imgs/faq-icon.svg"} alt={"icono de preguntas frecuentes"} />
-                                <abbr title="Preguntas frecuentes">FAQ</abbr>
+                                Consultas
                             </a>
                         </Link>
                     </li>

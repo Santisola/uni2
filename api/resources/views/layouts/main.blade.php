@@ -7,6 +7,7 @@
     <title>@yield('title', 'UNIDOS - Administrador')</title>
     <link rel="stylesheet" href="<?= url('css/app.css');?>">
     <link rel="stylesheet" href="<?= url('css/estilos.css');?>">
+    <link rel="icon" href="{{ asset('/imgs/logo-unidos.png') }}">
     @stack('css')
 </head>
 <body>
