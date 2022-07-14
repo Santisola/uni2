@@ -1,33 +1,11 @@
 <template>
     <a
-    v-if="alerta.tipoAlerta"
     href="#"
     class="container"
-    @click="$router.push('/alertas/' + alerta.id_alerta + '?from=buscar')"
+    @click="alerta.id_evento ? $router.push('/eventos/' + alerta.id_evento + '?from=buscar') : $router.push('/alertas/' + alerta.id_alerta + '?from=buscar')"
     >
         <div class="imgContainer">
-            <ImagenesAlerta :imgs="alerta.imagenes" :principal="true" />
-        </div>
-        <div class="info">
-            <div class="info-header">
-                <h1 v-if="alerta.nombre">{{alerta.nombre}}</h1>
-                <span v-if="!alerta.id_tipoalerta" class="evento">Evento</span>
-                <span :class="alerta.id_tipoalerta == 1 ? 'encontrada' : 'perdida'">{{tipoAlerta}}</span>
-            </div>
-            <ul>
-                <li>{{fechaBien}}</li>
-                <li><Direccion :lat="alerta.latitud" :lng="alerta.longitud" /></li>
-            </ul>
-        </div>
-    </a>
-    <a
-    v-else
-    href="#"
-    class="container"
-    @click="$router.push('/alertas/' + alerta.id_alerta + '?from=buscar')"
-    >
-        <div class="imgContainer">
-            <ImagenesAlerta :imgs="alerta.id_tipoalerta ? alerta.imagenes : alerta.imagen" :principal="true" />
+            <ImagenesAlerta :imgs="alerta.id_tipoalerta ? alerta.imagenes : alerta.imagen" :principal="true" :esEvento="alerta.id_evento ? true : false" />
         </div>
         <div class="info">
             <div class="info-header">

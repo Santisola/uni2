@@ -9,6 +9,7 @@ import Perfil from '../views/Perfil.vue'
 import PublicarPerdida from '../views/PublicarPerdida.vue'
 import PublicarEncontrada from '../views/PublicarEncontrada.vue'
 import DetalleAlerta from '../views/DetalleAlerta.vue'
+import DetalleEvento from '../views/DetalleEvento.vue'
 import EditarAlerta from '../views/EditarAlerta.vue'
 import Login from '../views/Login.vue'
 import Registro from '../views/Registro.vue'
@@ -71,6 +72,14 @@ const routes = [
         requiresAuth: true,
     },
     component: DetalleAlerta,
+  },
+  {
+    path: '/eventos/:id',
+    name: 'DetalleEvento',
+    meta:{
+        requiresAuth: true,
+    },
+    component: DetalleEvento,
   },
   {
     path: '/alertas/editar/:id',

@@ -9,13 +9,14 @@
     </div>
 </template>
 <script>
-import {IMG_PATH} from '../constantes/index'
+import {IMG_PATH, EVENTOS_IMG_PATH} from '../constantes/index'
 
 export default {
     name: 'ImagenesAlerta',
     props:{
+        esEvento: {default: false},
         principal: {default: false},
-        imgs: {required: true}
+        imgs: {required: true},
     },
     
     computed: {
@@ -24,8 +25,7 @@ export default {
         },
 
         imgPrincipal: function(){
-            return IMG_PATH + this.imagenes[0];
-            /* return 'img/perrito-default.jpg' */
+            return this.esEvento ? EVENTOS_IMG_PATH + this.imagenes[0] : IMG_PATH + this.imagenes[0];
         }
     }
 }

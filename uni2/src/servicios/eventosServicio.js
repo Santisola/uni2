@@ -11,9 +11,9 @@ const eventosServicio = {
     },
 
     get: async function(id){
-        const fetchRes = await fetch(API + '/eventos/' + id);
+        const fetchRes = await fetch(API + '/evento/' + id);
         const respuesta = await fetchRes.json();
-        return respuesta.data;
+        return respuesta.evento;
     },
 }
 

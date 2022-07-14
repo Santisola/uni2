@@ -171,6 +171,7 @@
                     <input
                         v-model="fecha"
                         :aria-describedby="errores.fecha.error ? 'error-fecha' : null"
+                        :max="diaMaximo"
                         type="date"
                         name="fecha"
                         id="fecha"
@@ -477,6 +478,14 @@ export default {
         alertasServicio.getRazas().then(res => {this.razas = res});
     },
     computed:{
+        diaMaximo: function() {
+            const hoy = new Date();
+            const dia = hoy.getDate() < 10 ? `0${hoy.getDate()}` : hoy.getDate();
+            const mes = hoy.getMonth() < 9 ? `0${hoy.getMonth() + 1}` : hoy.getMonth() + 1;
+            const año = hoy.getFullYear();
+
+            return `${año}-${mes}-${dia}`
+        },
         erroresBackArray: function(){
             if(this.erroresBack === null){
                 return false
