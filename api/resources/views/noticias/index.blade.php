@@ -1,7 +1,6 @@
 <?php
 /**@var \App\Models\Noticias $noticias*/
 /**@var \App\Models\Admin $seleccionado*/
-use Illuminate\Support\Str;
 ?>
 @extends('layouts.main')
 @section('title','UNIDOS | Noticias')
@@ -29,53 +28,49 @@ use Illuminate\Support\Str;
     <div class="w-full flex md:justify-end items-center">
         <a class="rounded-t-lg block w-fit px-2 py-3 text-white bg-violet-800 hover:ease-in-out transition duration-300 hover:bg-violet-900 md:ml-3" role="button" href="{{ route('noticias.crearForm') }}">Añadir nueva noticia</a>
     </div>
-    <div class="overflow-x-scroll xl:overflow-x-hidden pb-20">
-        <table class="table table-auto mx-auto px-10 w-full">
-            <thead class="border">
-            <tr>
-                <th class="whitespace-nowrap px-5 border align-middle text-center">Titulo</th>
-                <th class="whitespace-nowrap px-5 border align-middle text-center">Contenido</th>
-                <th class="whitespace-nowrap px-5 border align-middle text-center">Imagen</th>
-                <th class="whitespace-nowrap px-5 border align-middle text-center">Status</th>
-                <th class="whitespace-nowrap px-5 border align-middle text-center">Fecha de creación</th>
-                <th class="whitespace-nowrap px-5 border align-middle text-center">Fecha última actualización</th>
-                <th class="whitespace-nowrap px-5 border align-middle text-center">Acciones</th>
-            </tr>
-            </thead>
-            <tbody class="border">
-            @forelse($noticias as $noticia)
-                <tr>
-                    <td class="text-xl font-bold text-center px-5 border align-middle">{{ $noticia->titulo }}</td>
-                    <td class="text-lg font-semibold px-5 border align-middle">{{ Str::limit($noticia->contenido, 50) }}</td>
+    <div id="noticias">
+        @forelse($noticias as $noticia)
+            <div class="flex flex-wrap justify-between items-center w-full py-5 px-10 mb-10 tableta noticias shadow-lg rounded-lg">
+                <div>
                     @if(!$noticia->imagen)
-                        <td class="whitespace-nowrap px-5 border align-middle">-</td>
+                        <span class="whitespace-nowrap px-5">-</span>
                     @else
-                        <td class="whitespace-nowrap px-5 border align-middle">
-                            <img class="border block w-full max-w-sm rounded border-2 border-violet-800" src="{{ asset('imgs/noticias/' . $noticia->imagen) }}" alt="{{ $noticia->titulo }} imagen">
-                        </td>
+                        <img class="img-noticia border block w-full max-w-sm rounded-full border-2 border-violet-800" src="{{ asset('imgs/noticias/' . $noticia->imagen) }}" alt="{{ $noticia->titulo }} imagen">
                     @endif
+                </div>
+                <dl>
+                    <dt class="sr-only">Titulo:</dt>
+                    <dd>{{ $noticia->titulo }}</dd>
+                </dl>
+                <dl>
+                    <dt class="sr-only">Status:</dt>
                     @if($noticia->publicado === 1)
-                        <td class="text-center whitespace-nowrap px-5 border align-middle text-violet-800 font-semibold">Publicado</td>
+                        <dd class="text-violet-800 font-semibold">Publicado</dd>
                     @else
-                        <td class="text-center whitespace-nowrap px-5 border align-middle text-violet-800 font-semibold">Borrador</td>
+                        <dd class="text-violet-800 font-semibold">Borrador</dd>
                     @endif
-                    <td class="text-center whitespace-nowrap px-5 border align-middle">{{ date('d/m/Y H.i:s', strtotime($noticia->created_at)) }}</td>
-                    <td class="text-center whitespace-nowrap px-5 border align-middle">{{ date('d/m/Y H:i:s', strtotime($noticia->updated_at)) }}</td>
-                    <td class="whitespace-nowrap px-5 border align-middle">
-                        <div class="flex flex-col">
-                            <a class="rounded text-center py-3 px-2 mt-3 block w-full bg-teal-500 hover:bg-teal-600 transition hover:ease-in-out duration-300" href="{{ route('noticias.detalle', ['noticia' => $noticia->id_noticia]) }}">Detalle</a>
-                            <a class="rounded text-center py-3 px-2 mt-3 block w-full bg-yellow-500 hover:bg-yellow-600 transition hover:ease-in-out duration-300" href="{{ route('noticias.editarForm', ['noticia' => $noticia->id_noticia]) }}">Editar</a>
-                            <a href="{{ route('noticias.eliminar', ['noticia' => $noticia->id_noticia]) }}" class="rounded text-center py-3 px-2 my-3 block w-full bg-red-500 hover:bg-red-600 transition hover:ease-in-out duration-300">Eliminar</a>
-                        </div>
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="100%" class="text-center text-2xl font-bold py-5">No hay noticias creadas.</td>
-                </tr>
-            @endforelse
-            </tbody>
-        </table>
+                </dl>
+                <dl>
+                    <div class="flex gap-3">
+                        <dt>Fecha de creación:</dt>
+                        <dd>{{ date('d/m/Y H.i:s', strtotime($noticia->created_at)) }}</dd>
+                    </div>
+                    <div class="flex gap-3">
+                        <dt>Última actualización:</dt>
+                        <dd>{{ date('d/m/Y H:i:s', strtotime($noticia->updated_at)) }}</dd>
+                    </div>
+                </dl>
+                <div class="flex flex-col">
+                    <a class="rounded text-center py-3 px-2 mt-3 block w-full bg-teal-500 hover:bg-teal-600 transition hover:ease-in-out duration-300" href="{{ route('noticias.detalle', ['noticia' => $noticia->id_noticia]) }}">Detalle</a>
+                    <a class="rounded text-center py-3 px-2 mt-3 block w-full bg-yellow-500 hover:bg-yellow-600 transition hover:ease-in-out duration-300" href="{{ route('noticias.editarForm', ['noticia' => $noticia->id_noticia]) }}">Editar</a>
+                    <a href="{{ route('noticias.eliminar', ['noticia' => $noticia->id_noticia]) }}" class="rounded text-center py-3 px-2 my-3 block w-full bg-red-500 hover:bg-red-600 transition hover:ease-in-out duration-300 eliminar">Eliminar</a>
+                </div>
+            </div>
+        @empty
+            <div class="flex justify-center items-center w-full px-5 mb-5">
+                <h2 class="text-center text-3xl">No hay Datos</h2>
+            </div>
+        @endforelse
     </div>
     <div class="flex justify-center items-center flex-col mb-5">
         {{ $noticias->links() }}
@@ -105,7 +100,7 @@ use Illuminate\Support\Str;
 @endsection
 @push('js')
     <script>
-        const btnEliminar = document.querySelectorAll('.bg-red-500');
+        const btnEliminar = document.querySelectorAll('.eliminar');
         const formulario = document.querySelector('#formulario');
         const modal = document.querySelector('#modal');
 
@@ -119,7 +114,8 @@ use Illuminate\Support\Str;
             const tituloModal = document.querySelector('.modal-title');
 
             formulario.action = e.target.href;
-            tituloModal.textContent = e.target.parentNode.parentNode.parentNode.firstElementChild.textContent;
+
+            tituloModal.textContent = e.target.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.lastElementChild.textContent;
 
             modal.classList.remove('hidden');
         }

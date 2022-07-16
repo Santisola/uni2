@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Eventos;
+use App\Models\Verificados;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -53,9 +54,14 @@ class EventosController extends Controller
                 ->where('publicado', true)
                 ->first();
 
+            $telefono = Verificados::findOrFail($evento->id_verificado)
+                ->select('telefono')
+                ->get();
+
             return response()->json([
                 'success' => true,
-                'evento' => $evento
+                'evento' => $evento,
+                'contacto' => $telefono
             ]);
 
         } catch (\Exception $exception) {

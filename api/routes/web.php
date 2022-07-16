@@ -43,4 +43,10 @@ Route::middleware(['auth'])->group(function () {
 
         Route::match(['get', 'delete'],'/eliminar/{noticia}', [AdminController::class,'eliminar'])->name('noticias.eliminar');
     });
+
+    Route::prefix('/eventos')->group(function () {
+        Route::get('/', [AdminController::class, 'listadoEventos'])->name('eventos');
+
+        Route::get('/detalle/{evento}', [AdminController::class, 'detalleEvento'])->name('eventos.detalle');
+    });
 });

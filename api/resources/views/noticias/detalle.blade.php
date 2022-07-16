@@ -2,7 +2,7 @@
 /**@var \App\Models\Noticias $noticia*/
 ?>
 @extends('layouts.main')
-@section('title','UNIDOS | Noticias')
+@section('title','UNIDOS | Detalle Noticia')
 @section('main')
     <div class="container-2xl mb-5">
         <h1 class="text-center text-violet-800 font-bold text-3xl mb-5">{{ $noticia->titulo }}</h1>
@@ -19,7 +19,7 @@
             <li class="text-sm text-zinc-500">Última modificación: {{ date('d/m/Y H:i:s', strtotime($noticia->updated_at)) }}</li>
         </ul>
         <h2 class="mt-5 text-2xl font-bold text-violet-800">Nota:</h2>
-        <p class="mt-2 whitespace-pre-line mb-10">{{ $noticia->contenido }}</p>
+        <p class="mt-2 whitespace-pre-line mb-10 break-words detalle">{{ $noticia->contenido }}</p>
         <a href="{{ route('noticias.editarForm', ['noticia' => $noticia->id_noticia]) }}" class="block border rounded bg-yellow-500 mt-5 hover:bg-yellow-600 transition hover:ease-in-out duration-300 px-5 py-1 w-fit">Editar</a>
     </div>
 @endsection

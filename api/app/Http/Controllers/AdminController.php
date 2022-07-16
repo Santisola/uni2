@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Eventos;
 use App\Models\Noticias;
 use App\Models\Verificados;
 use Illuminate\Http\RedirectResponse;
@@ -22,6 +23,21 @@ class AdminController extends Controller
         return view('auth.login');
     }
 
+    public function listadoEventos(Request $request)
+    {
+        // TODO: filtrado
+
+        $eventos = Eventos::orderBy('created_at')->paginate(25);
+
+        return view('eventos.index', compact('eventos'));
+    }
+
+    public function detalleEvento(int $id_evento)
+    {
+        $evento = Eventos::findOrFail($id_evento);
+        return view('eventos.detalle', compact('evento'));
+    }
+
     public function listadoUsuarios(Request $request)
     {
         $seleccionado = null;
@@ -33,9 +49,9 @@ class AdminController extends Controller
                     ->paginate(25);
 
             } else if($request->usuarios === 'verificados') {
-                $usuarios = Verificados::where('status','=',1)->paginate(25);
+                $usuarios = Verificados::where('status',true)->paginate(25);
             } else if($request->usuarios === 'no-verificados') {
-                $usuarios = Verificados::where('status','=',0)->paginate(25);
+                $usuarios = Verificados::where('status',false)->paginate(25);
 
             } else {
                 $usuarios = Verificados::orderBy('updated_at','desc')->withTrashed()->paginate(25);
