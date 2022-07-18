@@ -87,7 +87,7 @@ export default function FormEvento({
                 url = `${process.env.API_URL}/nuevo-evento`;
             }
 
-            console.log(url);
+            // console.log(url);
 
             const respuesta = await fetch(url, {
                 method: 'POST',
@@ -95,7 +95,7 @@ export default function FormEvento({
             });
             const resultado = await respuesta.json();
 
-            console.log(resultado)
+            // console.log(resultado)
 
             if (resultado.success === false) {
                 const {mensaje} = resultado;
@@ -167,6 +167,10 @@ export default function FormEvento({
             errores.fechas = "Las fechas no pueden ser exactamente las mismas";
         }
 
+        if (Date.parse(desde) <= new Date().getTime() || Date.parse(hasta) <= new Date().getTime()) {
+            errores.fechas = "Las fechas no pueden ser anteriores a la fecha actual";
+        }
+
         if (imagen === null) {
             errores.imagen = "Selecciona un imagen";
         }
@@ -223,10 +227,6 @@ export default function FormEvento({
     useEffect(() => {
         setCurrentUser(JSON.parse(sessionStorage.getItem('id')))
     },[]);
-
-    useEffect(() => {
-        console.log(imagen)
-    },[imagen])
 
     return(
         <>

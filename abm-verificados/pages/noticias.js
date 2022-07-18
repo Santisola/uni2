@@ -31,7 +31,7 @@ export default function Noticias({noticias}) {
             { eliminado !== null && (
                 <UsuarioEliminado />
             ) }
-            <h2 className={"text-xl font-semibold my-10"}>Estas son las noticias destacadas</h2>
+            <h2 className={"text-xl font-semibold my-10"}>Novedades para mantenerlo informado</h2>
             { noticias.map((noticia, index) => (
                 <Noticia
                     key={noticia.id ? noticia.id : index}

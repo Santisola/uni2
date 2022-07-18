@@ -10,11 +10,11 @@
             <img class="max-w-4xl mx-auto w-full" src="{{ asset(str_replace('public/','',$evento->imagen)) }}" alt="{{ $evento->nombre }} imagen">
         </div>
         <ul class="mt-5">
-            @if($evento->publicado === 1)
+            {{--@if($evento->publicado === 1)
             <li class="rounded border border-double w-fit border-4 border-violet-800 px-3 px-2 bg-violet-800 text-white">Status: Publicado</li>
             @else
                 <li class="rounded border border-2 w-fit border-violet-800 px-3 px-2 text-violet-800">Status: Borrador</li>
-            @endif
+            @endif--}}
             <li class="mt-3 text-sm text-zinc-500">Dirección: {{ $evento->direccion }}</li>
             <li class="mt-3 text-sm text-zinc-500">Fecha de creación: {{ date('d/m/Y H:i:s', strtotime($evento->created_at)) }}</li>
             <li class="text-sm text-zinc-500">Última modificación: {{ date('d/m/Y H:i:s', strtotime($evento->updated_at)) }}</li>

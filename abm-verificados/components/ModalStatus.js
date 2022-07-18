@@ -1,9 +1,9 @@
 import Styles from '../styles/ModalStatus.module.css';
 import {useRouter} from "next/router";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 
 export default function ModalStatus({ setModal }) {
-    const [datos, setDatos] = useState(sessionStorage.getItem('usuario') ? JSON.parse(sessionStorage.getItem('usuario')) : '');
+    const datos = useState(sessionStorage.getItem('usuario') ? JSON.parse(sessionStorage.getItem('usuario')) : '');
 
     const router = useRouter();
 

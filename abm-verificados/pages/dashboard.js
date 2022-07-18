@@ -36,7 +36,7 @@ export default function Dashboard() {
             ) }
             <h2 className={"text-lg font-semibold"}>Bienvenido {usuario.razon_social}</h2>
             <div className={"mb-5"}>
-                <p className={"mt-5"}>Crea, modifica y supervisa tus eventos personalizados para poder alcanzar a esas personas amantes de los animales.</p>
+                <p className={"mt-5"}>Cree, modifique y supervise sus eventos personalizados para alcanzar a esas personas amantes de los animales.</p>
                 <Link href={"/eventos"}>
                     <div className={`${Styles.card} ${Styles.cardVioleta}`}>
                         <Image layout={"fixed"} width={126} height={126} src={"/imgs/card-evento.svg"} alt={"Ver eventos"} />
@@ -46,7 +46,7 @@ export default function Dashboard() {
             </div>
             <hr/>
             <div>
-                <p className={"mt-5"}>En la sección de noticias te informamos de todo lo necesario para el uso de esta aplicación y novedades próximas que te podrán servir al momento de crear eventos y cómo llegar esos usuarios</p>
+                <p className={"mt-5"}>En la sección de noticias le informamos de todo lo necesario para el uso de esta aplicación y novedades próximas que le podrán servir al momento de crear eventos y cómo llegar a su público</p>
                 <Link href={"/noticias"}>
                     <div className={`${Styles.card} ${Styles.cardAmarillo}`}>
                         <Image layout={"fixed"} width={126} height={126} src={"/imgs/card-noticia.svg"} alt={"Ver Noticias"} />

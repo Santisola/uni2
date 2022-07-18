@@ -5,6 +5,7 @@ import Detalle from "../../eventos/Detalle";
 import FormEvento from "../../formularios/FormEvento";
 import PawLoader from "../../components/PawLoader";
 import UsuarioEliminado from "../../components/UsuarioEliminado";
+import Link from "next/link";
 
 export default function Id_evento({evento}) {
     const [usuario, setUsuario] = useState({
@@ -17,7 +18,6 @@ export default function Id_evento({evento}) {
     const [loader, setLoader] = useState(false);
 
     const router = useRouter();
-
 
     useEffect(() => {
         if (!sessionStorage.getItem('usuario')) {
@@ -32,9 +32,28 @@ export default function Id_evento({evento}) {
         if (success) {
             router.push('/eventos');
         }
-    },[router, success])
+    },[router, success]);
 
-    const { id_evento, nombre, descripcion, direccion, latitud, longitud, desde, hasta, imagen, publicado, id_verificado, created_at, updated_at } = evento;
+    if (typeof evento === "string") {
+        return (
+            <Layout
+                pagina={"Detalle del evento"}
+                title={"No existe"}
+                datosUsuario={usuario}
+            >
+                { eliminado !== null && (
+                    <UsuarioEliminado />
+                ) }
+                { loader && (
+                    <PawLoader />
+                ) }
+                <h2 className={"text-center text-2xl my-5"}>El evento no existe</h2>
+                <Link href={"/eventos"}><a className={"text-center text-violeta block"}>Volver</a></Link>
+            </Layout>
+        )
+    }
+
+    const { id_evento, nombre, descripcion, direccion, latitud, longitud, desde, hasta, imagen, publicado, created_at, updated_at } = evento;
 
     return (
         <Layout
@@ -87,7 +106,7 @@ export async function getServerSideProps({query: {id_evento}}) {
     const URL = `${process.env.API_URL}/evento-cms/${id_evento}`;
     const respuesta = await fetch(URL);
     const resultado = await respuesta.json();
-    const evento = await resultado.evento;
+    const evento = await resultado.evento ?? resultado.mensaje ;
 
     return {
         props: {

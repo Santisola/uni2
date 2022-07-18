@@ -136,7 +136,7 @@ export default function FormCompletar() {
                 className={`${Styles.form} flex flex-col items-center justify-center`}
                 onSubmit={e => handleSubmit(e)}
             >
-                <p className={"text-center text-md mb-5 font-semibold"}>Estos datos serán visibles en la aplicación de <b className={"text-violeta"}>UNIDOS</b></p>
+                <p className={"text-center text-md mb-5 font-semibold"}>Estos datos serán visibles en la aplicación de <b className={"text-violeta"}>Unidos</b></p>
                 { error && (
                     <Mensaje
                         tipo={false}

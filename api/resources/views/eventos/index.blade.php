@@ -28,14 +28,14 @@
                 <dt class="sr-only">Descripción del evento:</dt>
                 <dd class="detalle">{{ substr($evento->descripcion, 0, 40 ) }}</dd>
             </dl>
-            <dl>
+            {{--<dl>
                 <dt class="sr-only">Status:</dt>
                 @if($evento->publicado === 1)
                     <dd class="text-violet-800 font-semibold">Publicado</dd>
                 @else
                     <dd class="text-violet-800 font-semibold">Borrador</dd>
                 @endif
-            </dl>
+            </dl>--}}
             <dl>
                 <div class="mb-5">
                     <dt class="text-sm text-zinc-500">Fecha de creación:</dt>

@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use phpDocumentor\Reflection\Types\True_;
 
 class AdminController extends Controller
 {
@@ -41,17 +42,20 @@ class AdminController extends Controller
             $seleccionado = 'eliminados';
 
             $eventos = Eventos::onlyTrashed()
+                ->where('publicado', true)
                 ->orderBy('created_at', 'DESC')
                 ->paginate(25);
 
         } elseif ($request->eventos === 'no-eliminados') {
             $seleccionado = 'desbloqueados';
 
-            $eventos = Eventos::orderBy('created_at', 'DESC')
+            $eventos = Eventos::where('publicado', true)
+                ->orderBy('created_at', 'DESC')
                 ->paginate(25);
 
         } else {
-            $eventos = Eventos::orderBy('created_at', 'DESC')
+            $eventos = Eventos::where('publicado', true)
+                ->orderBy('created_at', 'DESC')
                 ->withTrashed()
                 ->paginate(25);
         }

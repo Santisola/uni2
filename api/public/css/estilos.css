@@ -164,7 +164,7 @@ main {
 .card {
     max-width: 300px;
     align-self: stretch;
-    border: 1px solid;
+    border: 3px solid;
 }
 
 #loguearse {
@@ -201,6 +201,10 @@ main {
 footer {
     position: relative;
     z-index: 5;
+}
+
+input:focus, input:focus-visible, textarea:focus, textarea:focus-visible {
+    outline-color: var(--violeta);
 }
 
 @media (max-width: 910px) {
