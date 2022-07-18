@@ -14,7 +14,7 @@
     background-color: var(--negro);
     width: 100%;
     max-width: 75vw;
-    height: fit-content;
+    height: 100vh;
     padding-bottom: 2rem;
 }
 

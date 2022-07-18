@@ -9,13 +9,24 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Monolog\Handler\IFTTTHandler;
 
 class AdminController extends Controller
 {
     public function index()
     {
-        return view('home');
+        $a = Verificados::latest()
+            ->take(5)
+            ->get();
+
+        $b = Eventos::where('publicado',true)
+            ->latest()
+            ->take(5)
+            ->get();
+
+        $merged = $b->mergeRecursive($a)->sortByDesc('created_at');
+        $results = $merged->all();
+
+        return view('home', compact('results'));
     }
 
     public function loginForm()
@@ -25,17 +36,70 @@ class AdminController extends Controller
 
     public function listadoEventos(Request $request)
     {
-        // TODO: filtrado
+        $seleccionado = null;
+        if ($request->eventos === 'eliminados') {
+            $seleccionado = 'eliminados';
 
-        $eventos = Eventos::orderBy('created_at')->paginate(25);
+            $eventos = Eventos::onlyTrashed()
+                ->orderBy('created_at', 'DESC')
+                ->paginate(25);
 
-        return view('eventos.index', compact('eventos'));
+        } elseif ($request->eventos === 'no-eliminados') {
+            $seleccionado = 'desbloqueados';
+
+            $eventos = Eventos::orderBy('created_at', 'DESC')
+                ->paginate(25);
+
+        } else {
+            $eventos = Eventos::orderBy('created_at', 'DESC')
+                ->withTrashed()
+                ->paginate(25);
+        }
+
+        return view('eventos.index', compact('eventos', 'seleccionado'));
     }
 
     public function detalleEvento(int $id_evento)
     {
         $evento = Eventos::findOrFail($id_evento);
         return view('eventos.detalle', compact('evento'));
+    }
+
+    public function eliminarEvento(int $evento): RedirectResponse
+    {
+        try {
+            Eventos::findOrFail($evento)->delete();
+
+            return redirect()
+                ->route('eventos')
+                ->with('message','Evento bloqueado')
+                ->with('message_type','bg-green-300 text-green-800');
+
+        } catch (\Exception $exception) {
+            return redirect()
+                ->route('eventos')
+                ->with('message', $exception->getMessage())
+                ->with('message_type','bg-red-300 text-red-800');
+        }
+    }
+
+    public function eventosDesbloquear(int $id_evento): RedirectResponse
+    {
+        try {
+            $evento = Eventos::onlyTrashed()->findOrFail($id_evento);
+            $evento->restore();
+
+            return redirect()
+                ->route('eventos')
+                ->with('message','Evento desbloqueado')
+                ->with('message_type','bg-green-300 text-green-800');
+
+        } catch (\Exception $exception) {
+            return redirect()
+                ->route('eventos')
+                ->with('message', $exception->getMessage())
+                ->with('message_type','bg-red-300 text-red-800');
+        }
     }
 
     public function listadoUsuarios(Request $request)
@@ -59,6 +123,7 @@ class AdminController extends Controller
         } else {
             $usuarios = Verificados::orderBy('updated_at','desc')->withTrashed()->paginate(25);
         }
+
         return view('usuarios.index', compact('usuarios','seleccionado'));
     }
 
@@ -118,7 +183,7 @@ class AdminController extends Controller
     public function usuarioRestaurar(int $id_verificado): RedirectResponse
     {
         try {
-            $usuario = Verificados::withTrashed()->findOrFail($id_verificado);
+            $usuario = Verificados::onlyTrashed()->findOrFail($id_verificado);
             $usuario->restore();
 
             return redirect()

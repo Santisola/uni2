@@ -11,10 +11,6 @@
     width: 100%;
 }
 
-#login {
-    min-height: calc(100vh - 104px);
-}
-
 main {
     min-height: calc(100vh - 200px);
 }
@@ -125,7 +121,7 @@ main {
     border-left: 50px solid darkgrey;
 }
 
-.tableta.verificados {
+.tableta.verificados, .card.verificados {
     border-image: linear-gradient(180deg, var(--violeta) 50%, var(--amarillo) 50%) 1;
 }
 
@@ -137,7 +133,7 @@ main {
     border-top-right-radius: 0;
 }
 
-.tableta.eventos {
+.tableta.eventos, .card.eventos {
     border-color: var(--amarillo);
 }
 
@@ -150,8 +146,90 @@ main {
     word-break: break-word;
 }
 
-@media (max-width: 911px) {
+.deleted {
+    border-color: #DC2626 !important;
+}
+
+.w-fit {
+    width: fit-content !important;
+}
+
+#tarjetas {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 40px;
+}
+
+.card {
+    max-width: 300px;
+    align-self: stretch;
+    border: 1px solid;
+}
+
+#loguearse {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: calc(100vh - 104px);
+    position: relative;
+    overflow: hidden;
+}
+
+#carrousel, #login {
+    width: 50%;
+    max-height: 100%;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+#carrousel img {
+    max-height: 100%;
+    width: 100%;
+    height: 100%;
+    object-position: center;
+    object-fit: cover;
+}
+
+#carrousel .swiper, .swiper-slide {
+    max-width: 100%;
+    max-height: 100%;
+    overflow: hidden;
+}
+
+footer {
+    position: relative;
+    z-index: 5;
+}
+
+@media (max-width: 910px) {
+    main.container {
+        padding: 0 10px;
+    }
+
     .botones {
         flex-direction: column;
+    }
+
+    .tableta {
+        border-left: 1px solid darkgrey;
+    }
+
+    .img-noticia, .img-evento {
+        max-width: 100%;
+        max-height: fit-content;
+    }
+
+    .tableta dd {
+        text-align: center;
+    }
+
+    .tableta dl {
+        margin-bottom: 1rem;
+    }
+
+    .tableta .flex.flex-col {
+        width: 100%;
     }
 }

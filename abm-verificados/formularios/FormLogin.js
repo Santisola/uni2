@@ -2,7 +2,6 @@ import {useState} from "react";
 import Styles from '../styles/LoginForm.module.css';
 import Mensaje from "../components/Mensaje";
 import {validateEmail} from "../helpers";
-import DatosUsuario from "../usuario/DatosUsuario";
 
 export default function FormLogin({ router, setLoader }) {
     const [cuit,setCuit] = useState('');

@@ -19,10 +19,13 @@ class EventosController extends Controller
     public function eventosPublicados() : JsonResponse
     {
         try {
-            $eventos = Eventos::all()->where('publicado',true);
+            $eventos = Eventos::all()
+                ->where('publicado',true);
 
             $data = [];
             foreach($eventos as $evento){
+                $verificado = Verificados::findOrFail($evento->id_verificado, array('telefono'));
+                $evento->contacto = $verificado->telefono;
                 $data[] = $evento;
             }
 

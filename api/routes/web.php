@@ -48,5 +48,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', [AdminController::class, 'listadoEventos'])->name('eventos');
 
         Route::get('/detalle/{evento}', [AdminController::class, 'detalleEvento'])->name('eventos.detalle');
+
+        Route::delete('/eliminar/{evento}', [AdminController::class, 'eliminarEvento'])->name('eventos.eliminar');
+        Route::get('/restaurar/{evento}', [AdminController::class, 'eventosDesbloquear'])->name('eventos.restaurar');
     });
 });

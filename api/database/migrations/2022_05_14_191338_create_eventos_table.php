@@ -28,6 +28,7 @@ class CreateEventosTable extends Migration
             $table->unsignedBigInteger('id_verificado');
             $table->foreign('id_verificado')->references('id_verificado')->on('usuarios_verificados')->onDelete('cascade');
 
+            $table->softDeletes()->nullable();
             $table->timestamps();
         });
     }

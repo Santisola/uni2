@@ -59,13 +59,13 @@
                 @if($usuario->deleted_at)
                     <form action="{{ route('usuarios.restaurar', ['usuario' => $usuario->id_verificado]) }}">
                         @csrf
-                        <button type="submit" class="w-full px-3 py-3 px-2 my-3 rounded text-center bg-green-600 hover:bg-green-700 hover:ease-in-out transition duration-300 text-white">Restaurar</button>
+                        <button type="submit" class="rounded text-center py-3 px-2 mt-3 block w-full bg-teal-500 hover:bg-teal-600 transition hover:ease-in-out duration-300">Restaurar</button>
                     </form>
                 @else
                     <form action="{{ route('usuarios.eliminar', ['usuario' => $usuario->id_verificado]) }}" method="post">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="w-full px-3 py-3 px-2 my-3 rounded text-center bg-red-600 hover:bg-red-700 hover:ease-in-out transition duration-300 text-white">Eliminar</button>
+                        <button type="submit" class="rounded text-center py-3 px-2 my-3 block w-full bg-red-500 hover:bg-red-600 transition hover:ease-in-out duration-300">Eliminar</button>
                     </form>
                 @endif
             </div>
@@ -80,14 +80,5 @@
     </div>
 @endsection
 @push('js')
-    <script>
-        document.addEventListener('DOMContentLoaded',() => {
-            const formulario = document.querySelector('#formulario');
-            const select = document.querySelector('#usuarios');
-
-            select.addEventListener('change', () => {
-                formulario.submit();
-            });
-        });
-    </script>
+    <script src="{{ asset('js/selector.js') }}"></script>
 @endpush
