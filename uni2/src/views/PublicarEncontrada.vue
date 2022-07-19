@@ -204,14 +204,37 @@
             <div id="perdida-paso-4" v-if="paso === 3">
                 <div class="form-group">
                     <label for="fotos">Seleccioná las fotos</label>
-                    <input v-if="imagenEncontrada === null" type="file" id="fotos" ref="imagen" @change="cargarImg">
-                    <img
-                        v-else
-                        width="148"
-                        height="148"
-                        style="object-fit: contain;"
-                        :src="imagenEncontrada" :alt="'Mascota perdida ' + nombre"
-                    >
+
+                    <div id="selectImgsContainer">
+                        <img
+                            v-if="imagenEncontrada !== null"
+                            width="148"
+                            height="148"
+                            style="object-fit: contain;"
+                            :src="imagenEncontrada" :alt="'Mascota perdida ' + nombre"
+                        >
+                        <div v-else id="agregarFoto" @click="elegirFoto = true"></div>
+                    </div>
+
+                    <div id="opcionesFoto" v-if="elegirFoto">
+                        <div>
+                            <h3>¿Cómo querés subir las fotos?</h3>
+                            <div id="lasOpciones">
+                                <div id="camara">
+                                    <button id="fotosCelu" @click.prevent="sacarFoto">Sacar Foto</button>
+                                    <p>Cámara</p>
+                                </div>
+
+                                <div id="archivos">
+                                    <div id="inputFile">
+                                        <input type="file" id="fotos" ref="imagen" capture="environment" @change="cargarImg">
+                                    </div>
+                                    <p>Archivos</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
                 <div class="form-group">
@@ -313,6 +336,23 @@ export default {
         Loader
     },
     methods: {
+        sacarFoto: function(){
+            this.elegirFoto = false
+            navigator.camera.getPicture(this.camaraSuccess, this.camaraError, {
+                saveToPhotoAlbum: true,
+                correctOrientation: true,
+                destinationType: Camera.DestinationType.DATA_URL
+            })
+        },
+        camaraSuccess: function(imageData){
+            this.imagenEncontrada = "data:image/jpeg;base64," + imageData;
+        },
+        camaraError: function(msj){
+            this.errorCamara.error = true;
+            this.errorCamara.msj = 'Ocurrió un error al intentar usar la cámara, por favor intentá de nuevo';
+
+            console.error('ERROR CAMARA: ', msj)
+        },
         autocomplete: function(){
             if(this.direccion !== ''){
                 this.service.autosuggest({
@@ -381,6 +421,7 @@ export default {
         },
         cargarImg: function (){
             const imagen = this.$refs.imagen.files[0];
+            this.elegirFoto = false
             const reader = new FileReader();
 
             reader.addEventListener('load', () => {
@@ -603,6 +644,13 @@ export default {
             latitud: null,
             longitud: null,
 
+            elegirFoto: false,
+
+            errorCamara: {
+                error: false,
+                msj: '',
+            },
+            
             erroresBack: null,
             errores:{
                 //Paso 1
@@ -850,14 +898,25 @@ option{
     color: #656565;
 }
 
-#fotos{
+#selectImgsContainer{
+    display: flex;
+    align-items: center;
+}
+
+#selectImgsContainer > img{
+    display: block;
+    margin-right: 1rem;
+}
+
+#agregarFoto{
     background: #fff;
     width: 150px;
     height: 150px;
     position: relative;
+    border: solid 1px #cecece;
 }
 
-input#fotos::before {
+#agregarFoto::after{
     content: "+";
     color: var(--primary);
     position: absolute;
@@ -875,14 +934,75 @@ input#fotos::before {
     align-items: center;
 }
 
-input#fotos::after {
-    position: absolute;
+#opcionesFoto{
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: rgba(0, 0, 0, 0.2);
+}
+#opcionesFoto > div{
+    background: #fff;
+    position: fixed;
+    z-index: 1000;
     left: 0;
     right: 0;
-    top: 0;
     bottom: 0;
-    content: "";
-    background: #fff;
+    padding: 1rem;
+    padding-bottom: 2rem;
+    border-radius: 4px 4px 0 0;
+    box-shadow: 0 -1px 5px rgb(0 0 0 / 25%);
+    transition: all 250ms ease;
+    animation: showUp 250ms;
+}
+
+@keyframes showUp {
+    0%{
+        bottom: -100%;
+    }
+    100%{
+        bottom: 0;
+    }
+}
+
+#lasOpciones{
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+#camara,
+#archivos{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#archivos{
+    margin-left: 2rem;
+}
+
+#inputFile{
+    width: 50px;
+    height: 50px;
+    border: solid 1px #ccc;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    background: url("../assets/icons/files.svg") center/25px no-repeat;
+}
+
+#inputFile > input{
+    opacity: 0;
+}
+
+#fotosCelu{
+    width: 50px;
+    height: 50px;
+    font-size: 0;
+    background: url("../assets/icons/camera.svg") center/25px no-repeat;
+    background-color: transparent;
+    border: solid 1px #ccc;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
 }
 
 #perdida-paso-5 > p{

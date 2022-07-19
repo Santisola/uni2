@@ -142,6 +142,7 @@ export default {
         color: #fff;
         padding: .5rem;
         border-radius: 4px;
+        font-size: 14px;
     }
 
     #mapHeader .active{
