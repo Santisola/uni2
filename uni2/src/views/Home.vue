@@ -4,16 +4,24 @@
 		<MiniLoader v-if="isLoading" />
 		<SliderAlertas v-else
 		titulo="Mascotas perdidas por tu zona"
-		:alertas=alertasPerdidas
+		:alertas="alertasPerdidas"
 		:tipo="2"
 		/>
-        <CardAnuncio :anuncio="anuncio" />
-		<MiniLoader v-if="isLoading" />
+        
 		<SliderAlertas
-		v-else
+		v-if="!isLoading"
 		titulo="Mascotas encontradas por tu zona"
-		:alertas=alertasEncontradas
+		:alertas="alertasEncontradas"
 		:tipo="1"
+		/>
+
+		<CardAnuncio :anuncio="anuncio" />
+
+		<MiniLoader v-if="isLoading" />
+		<SliderEventos 
+		v-else
+		titulo="¡Enterate de los eventos que tenés cerca!"
+		:alertas="eventos"
 		/>
 	</div>
 </template>
@@ -21,8 +29,10 @@
 <script>
 // @ is an alias to /src
 import SliderAlertas from '../components/SliderAlertas';
+import SliderEventos from '../components/SliderEventos';
 import CardAnuncio from '../components/CardAnuncio.vue';
 import alertasServicio from '../servicios/alertasServicio'
+import eventosServicio from '../servicios/eventosServicio'
 import authServicio from '../servicios/authServicio';
 import MiniLoader from '../components/MiniLoader.vue';
 
@@ -30,6 +40,7 @@ export default {
   name: 'Home',
   components: {
 	  SliderAlertas,
+	  SliderEventos,
       CardAnuncio,
 	  MiniLoader
   },
@@ -41,6 +52,14 @@ export default {
 	  alertasServicio.todos()
 		.then(data => {
 			this.alertas = data;
+			setTimeout(() => {
+				this.isLoading = false
+			}, 750)
+		})
+
+	  eventosServicio.todos()
+		.then(data => {
+			this.eventos = data;
 			setTimeout(() => {
 				this.isLoading = false
 			}, 750)
@@ -65,6 +84,7 @@ export default {
 		usuario: {},
 		isLoading: false,
 		alertas: [],
+		eventos: [],
         anuncio: {
             img: 'adopcion-puppies.jpg',
             titulo: '¡Vení a una nueva jornada de adopción!',

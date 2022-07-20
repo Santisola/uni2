@@ -22,7 +22,7 @@ export default {
     background: #fff;
     border-radius: 5px;
     overflow: hidden;
-    margin: 2rem 0;
+    margin: .5rem 0;
 }
 .card > a{
     display: block;

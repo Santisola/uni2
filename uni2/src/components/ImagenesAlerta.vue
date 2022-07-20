@@ -1,9 +1,9 @@
 <template>
     <div class="imgContainer">
         <img v-if="principal" :src="imgPrincipal" alt="Imagen de la mascota">
-        <ul v-else>
-            <li v-for="(img, index) in imagenes" :key="index">
-                <img :src="img" :alt="img">
+        <ul v-else id="sliderImgs">
+            <li v-for="(img, index) in imgs" :key="index">
+                <img :src="imgRoute(img.imagen)" :alt="img.imagen">
             </li>
         </ul>
     </div>
@@ -18,16 +18,16 @@ export default {
         principal: {default: false},
         imgs: {required: true},
     },
-    
     computed: {
-        imagenes: function (){
-            return this.imgs.split('|')
-        },
-
         imgPrincipal: function(){
-            return this.esEvento ? EVENTOS_IMG_PATH + this.imagenes[0] : IMG_PATH + this.imagenes[0];
+            return this.esEvento ? EVENTOS_IMG_PATH + this.imgs : IMG_PATH + this.imgs[0].imagen;
         }
-    }
+    },
+    methods: {
+        imgRoute: function(img){
+            return this.isEvento ? EVENTOS_IMG_PATH + img : IMG_PATH + img
+        }
+    },
 }
 </script>
 <style scoped>
@@ -38,5 +38,17 @@ export default {
         width: 100%;
         height: 100%;
         object-fit: contain;
+    }
+    #sliderImgs{
+        display: flex;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        scroll-snap-type: x mandatory;
+    }
+    #sliderImgs > li{
+        width: 100%;
+        flex-shrink: 0;
+        scroll-snap-align: start;
     }
 </style>

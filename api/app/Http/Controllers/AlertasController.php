@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alerta;
+use App\Models\AlertaImg;
 use App\Models\Raza;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
@@ -17,6 +18,11 @@ class AlertasController extends Controller
 
         $data = [];
         foreach($alertas as $alerta){
+            $imgs = AlertaImg::all()->where('id_alerta', $alerta->id_alerta);
+            $formatImgs = [];
+            foreach($imgs as $img){
+                $formatImgs[] = $img;
+            }
             if($alerta->sexo){
                 $data[] = [
                     'id_alerta' => $alerta->id_alerta,
@@ -29,7 +35,7 @@ class AlertasController extends Controller
                     'nombre' => $alerta->nombre,
                     'latitud' => $alerta->latitud,
                     'longitud' => $alerta->longitud,
-                    'imagenes' => $alerta->imagenes,
+                    'imagenes' => $formatImgs,
                     'fecha' => $alerta->fecha,
                     'hora' => $alerta->hora,
                 ];
@@ -45,7 +51,7 @@ class AlertasController extends Controller
                     'nombre' => $alerta->nombre,
                     'latitud' => $alerta->latitud,
                     'longitud' => $alerta->longitud,
-                    'imagenes' => $alerta->imagenes,
+                    'imagenes' => $formatImgs,
                     'fecha' => $alerta->fecha,
                     'hora' => $alerta->hora,
                 ];
@@ -72,6 +78,14 @@ class AlertasController extends Controller
         $alerta = Alerta::findOrFail($alerta);
         $alerta->telefono = $alerta->usuario->telefono;
         $alerta->raza = $alerta->raza->raza;
+
+        $imgs = AlertaImg::all()->where('id_alerta', $alerta->id_alerta);
+        $formatImgs = [];
+        foreach($imgs as $img){
+            $formatImgs[] = $img;
+        }
+
+        $alerta->imagenes = $formatImgs;
 
         return response()->json([
             'data' => $alerta

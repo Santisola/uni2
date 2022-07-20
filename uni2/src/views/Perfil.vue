@@ -2,9 +2,6 @@
     <div>
         <h1>Perfil</h1>
         <div class="columnas-2">
-          <div>
-            <img class="imgPerfil" :src="require('../assets/icons/img-perfil-default.jpg')" alt="Imagen de perfil">
-          </div>
           <div class="datosUsuario">
             <h2>{{usuario.nombre}}</h2>
             <ul>

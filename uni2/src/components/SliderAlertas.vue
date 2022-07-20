@@ -76,4 +76,12 @@ export default {
     flex-shrink: 0;
     scroll-snap-align: start;
 }
+
+.sliderAlertas > ul > li:first-of-type{
+    margin-left: 0;
+}
+
+.sliderAlertas > ul > li:last-of-type{
+    margin-right: 0;
+}
 </style>

@@ -1,10 +1,13 @@
 <template>
     <div class="card">
         <div class="cardImgContainer">
-            <span :class="tipo === 2 ? 'perdido' : 'encontrado'">
+            <span v-if="alerta.id_evento" class="evento">
+                Evento
+            </span>
+            <span v-else :class="tipo === 2 ? 'perdido' : 'encontrado'">
                 {{tipo === 2 ? 'Perdido' : 'Encontrado'}}
             </span>
-            <ImagenesAlerta :imgs="alerta.imagenes" :principal="true" />
+            <ImagenesAlerta :imgs="alerta.id_evento ? alerta.imagen : alerta.imagenes" :principal="true" :esEvento="alerta.id_evento ? true : false" />
         </div>
         <div class="cardContent">    
             <h3 v-if="tipo === 2">{{alerta.nombre}}</h3>
@@ -36,12 +39,19 @@ export default {
     },
     computed:{
         fechaBien: function(){
+            if(!this.alerta.id_tipoalerta){
+                let fecha = this.alerta.desde.split(' ')[0].split('-');
+                let hora = this.alerta.desde.split(' ')[1].split(':')
+                return `${fecha[2]}/${fecha[1]}/${fecha[0]}, a las ${hora[0]}:${hora[1]}hs`;
+            }
+            
             if(this.alerta.fecha == null){
                 return 'No se sabe';
             } 
+            
             let fecha = this.alerta.fecha.split('-');
             return fecha[2] + ' / ' + fecha[1] + ' / ' + fecha[0]; 
-        }
+        },
     },
     props: {
         alerta: { required: true },
@@ -76,7 +86,12 @@ export default {
 
 .cardImgContainer > .encontrado{
     background-color: #44BBA4;
-    color: #eee;
+    color: #fff;
+}
+
+.cardImgContainer > .evento{
+    background-color: var(--secondary);
+    color: #fff;
 }
 
 .cardImgContainer img{

@@ -12,7 +12,7 @@
         </div>
 
         <div class="header">
-            <ImagenesAlerta :imgs="alerta.imagenes" :principal="true" />
+            <ImagenesAlerta :imgs="alerta.imagenes" />
             <div @click="$router.push(goBackRoute)" class="go-back">
                 <span>Volver</span>
             </div>

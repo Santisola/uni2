@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TipoalertaSeeder::class);
         $this->call(UsuariosSeeder::class);
         $this->call(AlertasSeeder::class);
+        $this->call(AlertaImgsSeeder::class);
         $this->call(VerificadoSeeder::class);
         $this->call(EventosSeeder::class);
         $this->call(NoticiasSeeder::class);
