@@ -208,14 +208,16 @@
                     <label for="fotos">Seleccioná las fotos</label>
                     
                     <div id="selectImgsContainer">
-                        <img
-                            v-if="imagenPerdida !== null"
-                            width="148"
-                            height="148"
-                            style="object-fit: contain;"
-                            :src="imagenPerdida" :alt="'Mascota perdida ' + nombre"
-                        >
-                        <div v-else id="agregarFoto" @click="elegirFoto = true"></div>
+                        <div v-if="imagenPerdida !== null" id="selectedImgsList">
+                            <img
+                                v-for="(img, index) in imagenPerdida" :key="index"
+                                width="148"
+                                height="148"
+                                style="object-fit: contain;"
+                                :src="img" :alt="'Mascota perdida ' + nombre"
+                            >
+                        </div>
+                        <div id="agregarFoto" @click="elegirFoto = true"></div>
                     </div>
 
                     <div id="opcionesFoto" v-if="elegirFoto">
@@ -229,7 +231,15 @@
 
                                 <div id="archivos">
                                     <div id="inputFile">
-                                        <input type="file" id="fotos" ref="imagen" capture="environment" @change="cargarImg">
+                                        <input
+                                            type="file"
+                                            id="fotos"
+                                            ref="imagen"
+                                            capture="environment"
+                                            accept="image/*"
+                                            multiple
+                                            @change="cargarImg"
+                                        >
                                     </div>
                                     <p>Archivos</p>
                                 </div>
@@ -280,7 +290,7 @@
                                 width="100"
                                 height="100"
                                 style="object-fit: contain;"
-                                :src="imagenPerdida" :alt="'Mascota perdida ' + nombre"
+                                :src="imagenPerdida[0]" :alt="'Mascota perdida ' + nombre"
                             >
                         </div>
                     </div>
@@ -347,7 +357,7 @@ export default {
             })
         },
         camaraSuccess: function(imageData){
-            this.imagenPerdida = "data:image/jpeg;base64," + imageData;
+            this.imagenPerdida.push("data:image/jpeg;base64," + imageData);
         },
         camaraError: function(msj){
             this.errorCamara.error = true;
@@ -422,15 +432,16 @@ export default {
             });
         },
         cargarImg: function (){
-            const imagen = this.$refs.imagen.files[0];
             this.elegirFoto = false
-            const reader = new FileReader();
+            for(let i = 0; i < this.$refs.imagen.files.length; i++){
+                const reader = new FileReader();
 
-            reader.addEventListener('load', () => {
-                this.imagenPerdida = reader.result;
-            })
+                reader.addEventListener('load', () => {
+                    this.imagenPerdida.push(reader.result);
+                })
 
-            reader.readAsDataURL(imagen);
+                reader.readAsDataURL(this.$refs.imagen.files[i]);
+            }
         },
         validar: function(campo){
             switch(campo){
@@ -571,7 +582,7 @@ export default {
                     }
                     return true
                 case 3:
-                    if(!this.imagenPerdida){
+                    if(this.imagenPerdida.length < 1){
                         return false;
                     }
                     if(!this.descripcion){
@@ -658,7 +669,7 @@ export default {
             fecha: '',
             hora: '',
 
-            imagenPerdida: null,
+            imagenPerdida: [],
             descripcion: '',
 
             latitud: null,
@@ -930,11 +941,19 @@ option{
 #selectImgsContainer{
     display: flex;
     align-items: center;
+    overflow: auto;
 }
 
-#selectImgsContainer > img{
+#selectedImgsList{
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+#selectImgsContainer img{
     display: block;
     margin-right: 1rem;
+    flex-shrink: 0;
 }
 
 #agregarFoto{
@@ -943,6 +962,7 @@ option{
     height: 150px;
     position: relative;
     border: solid 1px #cecece;
+    flex-shrink: 0;
 }
 
 #agregarFoto::after{

@@ -6,6 +6,7 @@ use App\Models\Alerta;
 use App\Models\AlertaImg;
 use App\Models\Raza;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 
 class AlertasController extends Controller
@@ -95,6 +96,16 @@ class AlertasController extends Controller
     public function deUsuario($usuario){
         $alertas = Alerta::where('id_usuario', $usuario)->get();
 
+        foreach($alertas as $alerta){
+            $imgs = AlertaImg::all()->where('id_alerta', $alerta->id_alerta);
+            $formatImgs = [];
+            foreach($imgs as $img){
+                $formatImgs[] = $img;
+            }
+
+            $alerta->imagenes = $formatImgs;
+        }
+
         return response()->json([
             'data' => $alertas
         ]);
@@ -103,13 +114,20 @@ class AlertasController extends Controller
     public function nueva(Request $request){
         $request->validate(Alerta::$reglas, Alerta::$mensajesDeError);
 
+        $imgsParaSubir = [];
         if ($request->input('imagenes')) {
-            $extension = explode('/', explode(';', $request->imagenes)[0])[1];
-            $nombreImg = date('Ymd-his') . '.' . $extension;
+            $cont = 0;
+            foreach($request->input('imagenes') as $img){
+                $extension = explode('/', explode(';', $img)[0])[1];
+                $nombreImg = date('Ymd-his'). '_' . $cont . '.' . $extension;
 
-            Image::make($request->input('imagenes'))->save(public_path('imgs/mascotas/') . $nombreImg);
+                Image::make($img)->save(public_path('imgs/mascotas/') . $nombreImg);
+                $imgsParaSubir[] = $nombreImg;
+                $cont++;
+            }
         }else{
             $nombreImg = 'default.jpg';
+            $imgsParaSubir[] = $nombreImg;
         }
 
         $data = [
@@ -117,7 +135,7 @@ class AlertasController extends Controller
             'descripcion' => $request->input('descripcion'),
             'fecha' => $request->input('fecha'),
             'hora' => $request->input('hora'),
-            'imagenes' => $nombreImg,
+            'imagenes' => 'default.jpg',
             'latitud' => $request->input('latitud'),
             'longitud' => $request->input('longitud'),
             'id_usuario' => $request->input('id_usuario'),
@@ -128,6 +146,16 @@ class AlertasController extends Controller
         ];
 
         $alertaNueva = Alerta::create($data);
+
+        $imgsData = [];
+        foreach($imgsParaSubir as $img){
+            $imgsData[] = [
+                'imagen' => $img,
+                'id_alerta' => $alertaNueva->id_alerta,
+            ];
+        }
+
+        DB::table('alerta_imgs')->insert($imgsData);
 
         return response()->json([
            'success' => true,
