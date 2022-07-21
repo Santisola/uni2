@@ -30,6 +30,9 @@
                     <li class="hover:bg-white-100">
                         <a href="<?= url('/eventos') ;?>" class="px-3 py-2 text-slate-300 rounded-lg hover:bg-white-100 hover:text-slate-50 <?= url()->current() == url('/eventos') ? 'text-white' : '';?>">Eventos</a>
                     </li>
+                    <li class="hover:bg-white-100">
+                        <a href="<?= url('/alertas') ;?>" class="px-3 py-2 text-slate-300 rounded-lg hover:bg-white-100 hover:text-slate-50 <?= url()->current() == url('/alertas') ? 'text-white' : '';?>">Alertas</a>
+                    </li>
                 </ul>
                 <a href="<?= url('/logout') ;?>" class="px-3 py-2 text-slate-300 rounded-lg hover:bg-white-100 hover:text-slate-50">Cerrar Sesión</a>
             </div>

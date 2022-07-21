@@ -2,7 +2,7 @@
     <div>
         <h1>Alertas</h1>
         <MiniLoader v-if="isLoading" />
-        <div v-else-if="alertas.length == 0" id="sin-alertas">
+        <div v-else-if="alertas.length === 0" id="sin-alertas">
             <img src="../assets/no-alertas.png" alt="Gato durmiendo sobre una campana de notificaciones">
             <p>Aún no creaste ninguna alerta.</p>
         </div>

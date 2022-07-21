@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alerta;
 use App\Models\Eventos;
 use App\Models\Noticias;
 use App\Models\Verificados;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
@@ -24,8 +26,16 @@ class AdminController extends Controller
             ->take(5)
             ->get();
 
-        $merged = $b->mergeRecursive($a)->sortByDesc('created_at');
-        $results = $merged->all();
+        $c = Alerta::latest()
+            ->take(5)
+            ->with(['tipoalerta', 'especie', 'raza', 'sexo'])
+            ->get();
+
+        $results = new Collection;
+        $results = $results->mergeRecursive($a);
+        $results = $results->mergeRecursive($b);
+        $results = $results->mergeRecursive($c);
+        $results = $results->sortByDesc('created_at');
 
         return view('home', compact('results'));
     }
@@ -104,6 +114,15 @@ class AdminController extends Controller
                 ->with('message', $exception->getMessage())
                 ->with('message_type','bg-red-300 text-red-800');
         }
+    }
+
+    public function listadoAlertas()
+    {
+        $alertas = Alerta::orderBy('created_at', 'DESC')
+            ->with(['tipoalerta','raza','especie','sexo'])
+            ->paginate(25);
+
+        return view('alertas.index', compact('alertas'));
     }
 
     public function listadoUsuarios(Request $request)
