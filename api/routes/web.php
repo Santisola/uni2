@@ -55,4 +55,8 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/eliminar/{evento}', [AdminController::class, 'eliminarEvento'])->name('eventos.eliminar');
         Route::get('/restaurar/{evento}', [AdminController::class, 'eventosDesbloquear'])->name('eventos.restaurar');
     });
+
+    Route::prefix('/alertas')->group(function () {
+        Route::get('/', [AdminController::class, 'listadoAlertas'])->name('alertas');
+    });
 });

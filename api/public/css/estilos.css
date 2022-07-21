@@ -4,6 +4,8 @@
     --violeta: #5C3AE2;
     --gris: #7C7C7C;
     --blanco: #fff;
+    --perdida: #E5446D;
+    --encontrada: #44BBA4;
 }
 
 #logo {
@@ -141,6 +143,22 @@ main {
     border-color: var(--amarillo);
 }
 
+.tableta.perdida, .card.perdida {
+    border-color: var(--perdida);
+}
+
+.border-perdida {
+    border-color: var(--perdida);
+}
+
+.tableta.encontrada, .card.encontrada {
+    border-color: var(--encontrada);
+}
+
+.border-encontrada {
+    border-color: var(--encontrada);
+}
+
 .detalle {
     line-height: 1.5;
     word-break: break-word;
@@ -165,6 +183,7 @@ main {
     max-width: 300px;
     align-self: stretch;
     border: 3px solid;
+    width: 100%;
 }
 
 #loguearse {
