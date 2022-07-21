@@ -10,6 +10,13 @@ const alertasServicio = {
         return [...alertas];
     },
 
+    reencontradas: async function(){
+        const fetchRes = await fetch(API + '/alertas/reencontradas');
+        const respuesta = await fetchRes.json();
+        alertas = respuesta.data
+        return [...alertas];
+    },
+
     getRazas: async function(){
         const fetchRes = await fetch(API + '/razas');
         const respuesta = await fetchRes.json();
@@ -39,6 +46,18 @@ const alertasServicio = {
         const fetchRes = await fetch(API + '/alertas/' + id, {
             method: 'PUT',
             body: JSON.stringify(data),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+        });
+        const respuesta = await fetchRes.json();
+        return respuesta;
+    },
+
+    alternarEstado: async function(id){
+        const fetchRes = await fetch(API + '/alertas/' + id + '/alternarEstado', {
+            method: 'PUT',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'

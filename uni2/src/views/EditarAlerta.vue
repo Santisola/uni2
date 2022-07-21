@@ -214,25 +214,52 @@
                 </div>
                 <div id="perdida-paso-4">
                     <div class="form-group">
-                        <h2>Imagen actual</h2>
-                        <ImagenesAlerta :imgs="alerta.imagenes" :principal="true" />
+                        <h2>Imagenes actuales</h2>
+                        <ImagenesAlerta :imgs="alerta.imagenes" :esParaEditar="true"/>
                         
                         <label for="fotos">Cambiar imagen</label>
-                        <input
-                            type="file"
-                            id="fotos"
-                            ref="imagen"
-                            @change="cargarImg"
-                        >
-                        <div v-if="imagenPerdida !== null">
-                            <h3>Imagen seleccionada</h3>
-                            <img
-                                :src="imagenPerdida"
-                                :alt="'Mascota perdida ' + nombre"
-                                width="148"
-                                height="148"
-                                style="object-fit: contain;"
-                            >
+                        
+                        <div id="agregarFoto" @click="elegirFoto = true"></div>
+
+                        <div id="opcionesFoto" v-if="elegirFoto">
+                            <div>
+                                <h3>¿Cómo querés subir las fotos?</h3>
+                                <div id="lasOpciones">
+                                    <div id="camara">
+                                        <button id="fotosCelu" @click.prevent="sacarFoto">Sacar Foto</button>
+                                        <p>Cámara</p>
+                                    </div>
+
+                                    <div id="archivos">
+                                        <div id="inputFile">
+                                            <input
+                                                type="file"
+                                                id="fotos"
+                                                ref="imagen"
+                                                capture="environment"
+                                                accept="image/*"
+                                                multiple
+                                                @change="cargarImg"
+                                            >
+                                        </div>
+                                        <p>Archivos</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div v-if="imagenPerdida.length != 0">
+                            <h3>Imagenes seleccionadas</h3>
+                            
+                            <div id="selectedImgsList">
+                                <img
+                                    v-for="(img, index) in imagenPerdida" :key="index"
+                                    width="148"
+                                    height="148"
+                                    style="object-fit: contain;"
+                                    :src="img" :alt="'Mascota ' + nombre"
+                                >
+                            </div>
                         </div>
                         
                     </div>
@@ -315,6 +342,23 @@ export default {
         alertasServicio.getRazas().then(res => {this.razas = res});
     },
     methods: {
+        sacarFoto: function(){
+            this.elegirFoto = false
+            navigator.camera.getPicture(this.camaraSuccess, this.camaraError, {
+                saveToPhotoAlbum: true,
+                correctOrientation: true,
+                destinationType: Camera.DestinationType.DATA_URL
+            })
+        },
+        camaraSuccess: function(imageData){
+            this.imagenPerdida.push("data:image/jpeg;base64," + imageData);
+        },
+        camaraError: function(msj){
+            this.errorCamara.error = true;
+            this.errorCamara.msj = 'Ocurrió un error al intentar usar la cámara, por favor intentá de nuevo';
+
+            console.error('ERROR CAMARA: ', msj)
+        },
         autocomplete: function(){
             if(this.direccion !== ''){
                 this.service.autosuggest({
@@ -382,14 +426,16 @@ export default {
             });
         },
         cargarImg: function (){
-            const imagen = this.$refs.imagen.files[0];
-            const reader = new FileReader();
+            this.elegirFoto = false
+            for(let i = 0; i < this.$refs.imagen.files.length; i++){
+                const reader = new FileReader();
 
-            reader.addEventListener('load', () => {
-                this.imagenPerdida = reader.result;
-            })
+                reader.addEventListener('load', () => {
+                    this.imagenPerdida.push(reader.result);
+                })
 
-            reader.readAsDataURL(imagen);
+                reader.readAsDataURL(this.$refs.imagen.files[i]);
+            }
         },
         validar: function(campo){
             switch(campo){
@@ -543,7 +589,8 @@ export default {
             isLoading: false,
             alerta: null,
 
-            imagenPerdida: null,
+            elegirFoto: false,
+            imagenPerdida: [],
             
             razas:[],
 
@@ -797,5 +844,116 @@ input#fotos::after {
 
 .btn{
     margin: 1rem 0;
+}
+
+#agregarFoto{
+    background: #fff;
+    width: 150px;
+    height: 150px;
+    position: relative;
+    border: solid 1px #cecece;
+    flex-shrink: 0;
+    margin-bottom: 1.5rem;
+}
+
+#agregarFoto::after{
+    content: "+";
+    color: var(--primary);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    font-size: 32px;
+    border-radius: 50%;
+    border: solid 2px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#opcionesFoto{
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: rgba(0, 0, 0, 0.2);
+}
+#opcionesFoto > div{
+    background: #fff;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 1rem;
+    padding-bottom: 2rem;
+    border-radius: 4px 4px 0 0;
+    box-shadow: 0 -1px 5px rgb(0 0 0 / 25%);
+    transition: all 250ms ease;
+    animation: showUp 250ms;
+}
+
+@keyframes showUp {
+    0%{
+        bottom: -100%;
+    }
+    100%{
+        bottom: 0;
+    }
+}
+
+#lasOpciones{
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+#camara,
+#archivos{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#archivos{
+    margin-left: 2rem;
+}
+
+#inputFile{
+    width: 50px;
+    height: 50px;
+    border: solid 1px #ccc;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    background: url("../assets/icons/files.svg") center/25px no-repeat;
+}
+
+#inputFile > input{
+    opacity: 0;
+}
+
+#fotosCelu{
+    width: 50px;
+    height: 50px;
+    font-size: 0;
+    background: url("../assets/icons/camera.svg") center/25px no-repeat;
+    background-color: transparent;
+    border: solid 1px #ccc;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+}
+
+#selectedImgsList{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    overflow-x: auto;
+}
+
+#selectImgsContainer img{
+    display: block;
+    margin-right: 1rem;
 }
 </style>

@@ -18,7 +18,7 @@ class CreateAlertaImgsTable extends Migration
             $table->string('imagen');
 
             $table->unsignedBigInteger('id_alerta');
-            $table->foreign('id_alerta')->references('id_alerta')->on('alertas');
+            $table->foreign('id_alerta')->references('id_alerta')->on('alertas')->onDelete('cascade');
 
             $table->timestamps();
         });

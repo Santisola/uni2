@@ -20,7 +20,7 @@
                     <div><input :aria-describedby="errores.password.error ? 'error-password' : null" @blur="validar('password')" :disabled="isLoading" v-model="password" :type="verContra ? 'text' : 'password'" id="login-password" name="email"><span @click="verContra = !verContra">{{verContra ? 'Ocultar' : 'Mostrar'}}</span></div>
                     <p id="error-password" class="msj msj-error" v-if="errores.password.error">{{errores.password.mensaje}}</p>
                 </div>
-                <a href="#">Olvidé mi contraseña</a>
+                <router-link to="/olvide-mi-contra">Olvidé mi contraseña</router-link>
                 <div class="btn-link">
                     <button :disabled="isLoading || errores.email.error || errores.password.error" :class="isLoading || errores.email.error || errores.password.error ? 'btn btn-disabled' : 'btn btn-primary'">Iniciar Sesión</button>
                     <p>¿No tenés cuenta? <router-link to="/registro"> Registrate</router-link></p>

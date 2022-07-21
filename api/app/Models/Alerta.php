@@ -24,6 +24,7 @@ class Alerta extends Model
         'id_raza',
         'id_sexo',
         'id_tipoalerta',
+        'finalizada',
     ];
 
     public static $reglas = [

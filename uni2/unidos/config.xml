@@ -7,18 +7,7 @@
     <icon density="xhdpi" src="res/icon/android/icon-96-xhdpi.png" />
     <icon density="xxhdpi" src="res/icon/android/icon-144-xxhdpi.png" />
     <icon density="xxxhdpi" src="res/icon/android/icon-192-xxxhdpi.png" />
-    <splash density="land-ldpi" src="res/screen/android/screen-ldpi-land.png" />
-    <splash density="land-mdpi" src="res/screen/android/screen-mdpi-land.png" />
-    <splash density="land-hdpi" src="res/screen/android/screen-hdpi-land.png" />
-    <splash density="land-xhdpi" src="res/screen/android/screen-xhdpi-land.png" />
-    <splash density="land-xxhdpi" src="res/screen/android/screen-xxhdpi-land.png" />
-    <splash density="land-xxxhdpi" src="res/screen/android/screen-xxxhdpi-land.png" />
-    <splash density="ldpi" src="res/screen/android/screen-ldpi.png" />
-    <splash density="mdpi" src="res/screen/android/screen-mdpi.png" />
-    <splash density="hdpi" src="res/screen/android/screen-hdpi.png" />
-    <splash density="xhdpi" src="res/screen/android/screen-xhdpi.png" />
-    <splash density="xxhdpi" src="res/screen/android/screen-xxhdpi.png" />
-    <splash density="xxxhdpi" src="res/screen/android/screen-xxxhdpi.png" />
+    
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
     </description>
@@ -35,6 +24,18 @@
     <allow-intent href="geo:*" />
     <platform name="android">
         <allow-intent href="market:*" />
+        <splash density="land-ldpi" src="res/screen/android/screen-ldpi-landscape.png" />
+        <splash density="land-mdpi" src="res/screen/android/screen-mdpi-landscape.png" />
+        <splash density="land-hdpi" src="res/screen/android/screen-hdpi-landscape.png" />
+        <splash density="land-xhdpi" src="res/screen/android/screen-xhdpi-landscape.png" />
+        <splash density="land-xxhdpi" src="res/screen/android/screen-xxhdpi-landscape.png" />
+        <splash density="land-xxxhdpi" src="res/screen/android/screen-xxxhdpi-landscape.png" />
+        <splash density="ldpi" src="res/screen/android/screen-ldpi-portrait.png" />
+        <splash density="mdpi" src="res/screen/android/screen-mdpi-portrait.png" />
+        <splash density="hdpi" src="res/screen/android/screen-hdpi-portrait.png" />
+        <splash density="xhdpi" src="res/screen/android/screen-xhdpi-portrait.png" />
+        <splash density="xxhdpi" src="res/screen/android/screen-xxhdpi-portrait.png" />
+        <splash density="xxxhdpi" src="res/screen/android/screen-xxxhdpi-portrait.png" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />

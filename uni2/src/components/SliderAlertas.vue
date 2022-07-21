@@ -7,7 +7,7 @@
         <ul>
             <li v-for="(alerta, index) in reversedAlertas" :key="index">
                 <router-link :to="'/alertas/' + alerta.id_alerta.toString() + '?from=home'">
-                    <CardAlerta :alerta="alerta" :tipo="tipo"/>
+                    <CardAlerta :alerta="alerta" :tipo="alerta.id_tipoalerta"/>
                 </router-link>
             </li>
         </ul>

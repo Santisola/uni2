@@ -15,7 +15,7 @@ class AlertasController extends Controller
      * Returorna todas las alertas
      */
     public function all(){
-        $alertas = Alerta::all();
+        $alertas = Alerta::where('finalizada', 0)->get();;
 
         $data = [];
         foreach($alertas as $alerta){
@@ -39,6 +39,7 @@ class AlertasController extends Controller
                     'imagenes' => $formatImgs,
                     'fecha' => $alerta->fecha,
                     'hora' => $alerta->hora,
+                    'finalizada' => $alerta->finalizada,
                 ];
             }else{
                 $data[] = [
@@ -55,6 +56,7 @@ class AlertasController extends Controller
                     'imagenes' => $formatImgs,
                     'fecha' => $alerta->fecha,
                     'hora' => $alerta->hora,
+                    'finalizada' => $alerta->finalizada,
                 ];
             }
         }
@@ -111,6 +113,33 @@ class AlertasController extends Controller
         ]);
     }
 
+    public function reencontradas(){
+        $alertas = Alerta::where('finalizada', 1)->get();
+
+        foreach($alertas as $alerta){
+            $alerta->telefono = $alerta->usuario->telefono;
+            $alerta->raza = $alerta->raza->raza;
+
+            $alerta->especie = $alerta->especie->especie;
+
+            if($alerta->sexo){
+                $alerta->sexo = $alerta->sexo->sexo;
+            }
+
+            $imgs = AlertaImg::all()->where('id_alerta', $alerta->id_alerta);
+            $formatImgs = [];
+            foreach($imgs as $img){
+                $formatImgs[] = $img;
+            }
+
+            $alerta->imagenes = $formatImgs;
+        }
+
+        return response()->json([
+            'data' => $alertas
+        ]);
+    }
+
     public function nueva(Request $request){
         $request->validate(Alerta::$reglas, Alerta::$mensajesDeError);
 
@@ -143,6 +172,7 @@ class AlertasController extends Controller
             'id_raza' => $request->input('id_raza'),
             'id_sexo' => $request->input('id_sexo'),
             'id_tipoalerta' => $request->input('id_tipoalerta'),
+            'finalizada' => $request->input('finalizada'),
         ];
 
         $alertaNueva = Alerta::create($data);
@@ -170,39 +200,45 @@ class AlertasController extends Controller
 
 
         if ($request->input('imagenes')) {
-            $extension = explode('/', explode(';', $request->imagenes)[0])[1];
-            $nombreImg = date('Ymd-his') . '.' . $extension;
+            $imgsActuales = AlertaImg::all()->where('id_alerta', $alerta->id_alerta);
 
-            Image::make($request->input('imagenes'))->save(public_path('imgs/mascotas/') . $nombreImg);
+            foreach($imgsActuales as $img){
+                $img->delete();
+            }
 
-            $alerta->nombre = $request->input('nombre');
-            $alerta->descripcion = $request->input('descripcion');
-            $alerta->fecha = $request->input('fecha');
-            $alerta->hora = $request->input('hora');
-            $alerta->imagenes = $nombreImg;
-            $alerta->latitud = $request->input('latitud');
-            $alerta->longitud = $request->input('longitud');
-            $alerta->id_usuario = $request->input('id_usuario');
-            $alerta->id_especie = $request->input('id_especie');
-            $alerta->id_raza = $request->input('id_raza');
-            $alerta->id_sexo = $request->input('id_sexo');
-            $alerta->id_tipoalerta = $request->input('id_tipoalerta');
+            $imgsParaSubir = [];
+            $cont = 0;
+            foreach($request->input('imagenes') as $img){
+                $extension = explode('/', explode(';', $img)[0])[1];
+                $nombreImg = date('Ymd-his'). '_' . $cont . '.' . $extension;
 
-        }else{
+                Image::make($img)->save(public_path('imgs/mascotas/') . $nombreImg);
+                $imgsParaSubir[] = $nombreImg;
+                $cont++;
+            }
 
-            $alerta->nombre = $request->input('nombre');
-            $alerta->descripcion = $request->input('descripcion');
-            $alerta->fecha = $request->input('fecha');
-            $alerta->hora = $request->input('hora');
-            $alerta->latitud = $request->input('latitud');
-            $alerta->longitud = $request->input('longitud');
-            $alerta->id_usuario = $request->input('id_usuario');
-            $alerta->id_especie = $request->input('id_especie');
-            $alerta->id_raza = $request->input('id_raza');
-            $alerta->id_sexo = $request->input('id_sexo');
-            $alerta->id_tipoalerta = $request->input('id_tipoalerta');
+            $imgsData = [];
+            foreach($imgsParaSubir as $img){
+                $imgsData[] = [
+                    'imagen' => $img,
+                    'id_alerta' => $alerta->id_alerta,
+                ];
+            }
 
+            DB::table('alerta_imgs')->insert($imgsData);
         }
+
+        $alerta->nombre = $request->input('nombre');
+        $alerta->descripcion = $request->input('descripcion');
+        $alerta->fecha = $request->input('fecha');
+        $alerta->hora = $request->input('hora');
+        $alerta->latitud = $request->input('latitud');
+        $alerta->longitud = $request->input('longitud');
+        $alerta->id_usuario = $request->input('id_usuario');
+        $alerta->id_especie = $request->input('id_especie');
+        $alerta->id_raza = $request->input('id_raza');
+        $alerta->id_sexo = $request->input('id_sexo');
+        $alerta->id_tipoalerta = $request->input('id_tipoalerta');
 
         $alerta->save();
 
@@ -217,6 +253,19 @@ class AlertasController extends Controller
 
         return response()->json([
            'success' => true,
+        ]);
+    }
+
+    public function alternarEstado($alerta){
+        $alerta = Alerta::findOrFail($alerta);
+
+        $alerta->finalizada = !$alerta->finalizada;
+
+        $alerta->save();
+
+        return response()->json([
+           'success' => true,
+           'data' => $alerta,
         ]);
     }
 }

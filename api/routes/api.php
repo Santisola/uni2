@@ -4,6 +4,7 @@ use App\Http\Controllers\AlertasController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EventosController;
 use App\Http\Controllers\NoticiasController;
+use App\Http\Controllers\PasswordResetsController;
 use App\Http\Controllers\VerificadosController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,11 +29,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
  */
 
 Route::get('/alertas', [AlertasController::class, 'all']);
+Route::get('/alertas/reencontradas', [AlertasController::class, 'reencontradas']);
 Route::get('/alertas/{id}', [AlertasController::class, 'ver']);
 
 Route::post('/alertas', [AlertasController::class, 'nueva']);
 
 Route::put('/alertas/{id}', [AlertasController::class, 'editar']);
+
+Route::put('/alertas/{id}/alternarEstado', [AlertasController::class, 'alternarEstado']);
 
 Route::delete('/alertas/{id}', [AlertasController::class, 'borrar']);
 
@@ -46,6 +50,8 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware(['auth:sanctum']);
 
 Route::post('/registro', [AuthController::class, 'registrar']);
+
+Route::post('/generar-token', [PasswordResetsController::class, 'generarToken']);
 
 /**
  * CMS Usuarios verificados

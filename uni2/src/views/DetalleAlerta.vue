@@ -3,14 +3,28 @@
     <div v-else-if="alerta" id="alerta">
         <div v-if="deleteConfirmation" class="deleteModal">
             <div class="deleteModalContent">
-                <h2>¿Estás seguro?</h2>
+                <h2>Vas a eliminar esta alerta, ¿Estás seguro?</h2>
                 <div>
-                    <button @click.prevent="deleteConfirmation = false" class="btn btn-secondary">Cancelar</button>
-                    <button @click="borrarAlerta" class="btn btn-primary">Confirmar</button>
+                    <button @click.prevent="deleteConfirmation = false" class="btn btn-secondary">No</button>
+                    <button @click="borrarAlerta" class="btn btn-primary">Si</button>
+                </div>
+            </div>
+        </div>
+        <div v-if="finalizarConfirmation" class="deleteModal">
+            <div class="deleteModalContent">
+                <h2 v-if="alerta.finalizada">¿Querés republicar la alerta?</h2>
+                <h2 v-else>¿{{alerta.nombre || 'Esta mascota'}} encontró a su familia?</h2>
+                <div>
+                    <button @click.prevent="finalizarConfirmation = false" class="btn btn-secondary">No</button>
+                    <button @click="alternarEstado" class="btn btn-primary">Si</button>
                 </div>
             </div>
         </div>
 
+        <div id="reencuentro" v-if="alerta.finalizada">
+            <p>¡Mascota reunida con su familia!</p>
+        </div>
+        
         <div class="header">
             <ImagenesAlerta :imgs="alerta.imagenes" />
             <div @click="$router.push(goBackRoute)" class="go-back">
@@ -19,8 +33,14 @@
             <div v-if="usuarioCreoAlerta" @click="opciones = !opciones" class="settings">...</div>
             <div v-if="usuarioCreoAlerta" :class="opciones ? 'opened' : 'closed'" class="menu-opciones">
                 <ul>
-                    <li>
+                    <li v-if="!alerta.finalizada">
                         <router-link :to="'/alertas/editar/' + alerta.id_alerta" @click.prevent="opciones = false">Editar</router-link>
+                    </li>
+                    <li v-if="!alerta.finalizada">
+                        <a href="#" @click.prevent="finalizarConfirmation = true">Finalizar</a>
+                    </li>
+                    <li v-if="alerta.finalizada">
+                        <a href="#" @click.prevent="finalizarConfirmation = true">Deshacer</a>
                     </li>
                     <li>
                         <a href="#" @click.prevent="deleteConfirmation = true">Eliminar</a>
@@ -61,6 +81,15 @@
                 <a class="btn btn-primary" target="_blank" :href="wppLink">Enviar Whatsapp</a>
             </div>
         </div>
+
+        <div v-if="finalizarBorrarError" class="deleteModal">
+            <div class="deleteModalContent">
+                <h2>Ocurrió un error inesperado, por favor intentá de nuevo</h2>
+                <div>
+                    <button class="btn btn-primary" @click="finalizarBorrarError = false">Cerrar</button>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -90,9 +119,23 @@ export default {
             alertasServicio.delete(this.alerta.id_alerta)
             .then(res => {
                 if(res){
-                this.opciones = false,
-                this.deleteConfirmation = false,
-                this.$router.push('/alertas');
+                    this.opciones = false,
+                    this.deleteConfirmation = false,
+                    this.$router.push('/alertas');
+                }else{
+                    this.deleteConfirmation = false
+                }
+            })
+        },
+        alternarEstado: function(){
+            alertasServicio.alternarEstado(this.alerta.id_alerta)
+            .then(res => {
+                if(res.success){
+                    this.opciones = false,
+                    this.finalizarConfirmation = false,
+                    this.$router.push('/');
+                }else{
+                    this.finalizarConfirmation = false
                 }
             })
         }
@@ -153,6 +196,9 @@ export default {
             alerta: null,
             opciones: false,
             deleteConfirmation: false,
+            finalizarConfirmation: false,
+
+            finalizarBorrarError: false,
 
             direccion: '',
         }
@@ -162,6 +208,7 @@ export default {
 <style scoped>
     .go-back{
         position: absolute;
+        z-index: 2;
         top: 1rem;
         left: 1rem;
         font-size: 0;
@@ -182,7 +229,7 @@ export default {
         right: 0;
         bottom: 0;
         background: rgba(0, 0, 0, 0.5);
-        z-index: 1;
+        z-index: 2;
     }
 
     .deleteModalContent{
@@ -198,6 +245,7 @@ export default {
 
     .deleteModalContent h2{
         margin-bottom: 1rem;
+        font-size: 1.2rem;
     }
 
     .deleteModalContent > div{
@@ -222,6 +270,7 @@ export default {
 
     #alerta > .header .settings{
         position: absolute;
+        z-index: 2;
         top: 1rem;
         right: 1rem;
         background: #fff;
@@ -239,6 +288,7 @@ export default {
 
     #alerta > .header .menu-opciones{
         position: absolute;
+        z-index: 2;
         top: 4.5rem;
         background: #fff;
         padding: .5rem;
@@ -380,5 +430,34 @@ export default {
 
     .direccionBien{
         width: 100%;
+    }
+
+    #reencuentro{
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        background: rgba(255,255,255,.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #reencuentro p{
+        font-weight: 600;
+        border: solid 2px var(--primary);
+        background: #fff;
+        padding: 1rem;
+        border-radius: 4px;
+        color: var(--primary);
+        box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+    }
+
+    .brand{
+        color: var(--primary);
+        font-weight: 600;
+    }
+
+    .deleteModalContent button{
+        width: 50%;
     }
 </style>

@@ -13,6 +13,7 @@ import DetalleEvento from '../views/DetalleEvento.vue'
 import EditarAlerta from '../views/EditarAlerta.vue'
 import Login from '../views/Login.vue'
 import Registro from '../views/Registro.vue'
+import OlvideContra from '../views/OlvideContra.vue'
 
 Vue.use(VueRouter)
 
@@ -106,6 +107,11 @@ const routes = [
     path: '/registro',
     name: 'Registro',
     component: Registro
+  },
+  {
+    path: '/olvide-mi-contra',
+    name: 'Olvidé mi contraseña',
+    component: OlvideContra
   },
   {
     path: '*',

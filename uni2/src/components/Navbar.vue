@@ -20,6 +20,7 @@ export default {
 nav{
     padding: .25rem 1.5rem;
     position: fixed;
+    z-index: 2;
     bottom: 0;
     left: 0;
     width: 100%;

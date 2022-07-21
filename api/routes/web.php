@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\PasswordResetsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/login',[AdminController::class,'loginForm'])->name('auth.loginForm');
 Route::get('/logout',[AdminController::class, 'logout'])->name('auth.logout');
+
+Route::get('/recuperar-contrasena', [PasswordResetsController::class, 'updatePasswordForm']);
 
 Route::post('/login',[AdminController::class, 'login'])->name('auth.login');
 

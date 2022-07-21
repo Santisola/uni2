@@ -1,7 +1,12 @@
 <template>
     <div class="imgContainer">
         <img v-if="principal" :src="imgPrincipal" alt="Imagen de la mascota">
-        <ul v-else id="sliderImgs">
+        <ul v-else-if="!esParaEditar" id="sliderImgs">
+            <li v-for="(img, index) in imgs" :key="index">
+                <img :src="imgRoute(img.imagen)" :alt="img.imagen">
+            </li>
+        </ul>
+        <ul v-else id="listaImgs">
             <li v-for="(img, index) in imgs" :key="index">
                 <img :src="imgRoute(img.imagen)" :alt="img.imagen">
             </li>
@@ -15,6 +20,7 @@ export default {
     name: 'ImagenesAlerta',
     props:{
         esEvento: {default: false},
+        esParaEditar: {default: false},
         principal: {default: false},
         imgs: {required: true},
     },
@@ -50,5 +56,13 @@ export default {
         width: 100%;
         flex-shrink: 0;
         scroll-snap-align: start;
+    }
+
+    #listaImgs{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+        overflow-x: auto;
     }
 </style>

@@ -30,6 +30,7 @@ class AlertasSeeder extends Seeder
                 'id_sexo' => 1,
                 'id_raza' => 25,
                 'id_tipoalerta' => 2,
+                'finalizada' => false,
             ],
             [
                 'id_alerta' => 2,
@@ -45,6 +46,23 @@ class AlertasSeeder extends Seeder
                 'id_raza' => 40,
                 'id_usuario' => 2,
                 'id_tipoalerta' => 1,
+                'finalizada' => false,
+            ],
+            [
+                'id_alerta' => 3,
+                'nombre' => 'Ragnar',
+                'fecha' => '2021-12-28',
+                'hora' => '17:09',
+                'descripcion' => 'Es marron, grandote y super bueno, medio cachorron. Ladra mucho',
+                'imagenes' => '',
+                'latitud' => -34.611120,
+                'longitud' =>  -58.520410,
+                'id_especie' => 1,
+                'id_sexo' => 1,
+                'id_raza' => 1,
+                'id_usuario' => 1,
+                'id_tipoalerta' => 2,
+                'finalizada' => true,
             ],
         ]);
     }

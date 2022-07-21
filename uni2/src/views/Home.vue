@@ -2,14 +2,15 @@
 	<div class="home">
 		<h1><div>Hola, {{usuario.nombre}} <img src="../assets/imago-amarillo.svg" alt="Logo Unidos"></div></h1>
 		<MiniLoader v-if="isLoading" />
-		<SliderAlertas v-else
+		<SliderAlertas 
+		v-else-if="alertasPerdidas.length > 0"
 		titulo="Mascotas perdidas por tu zona"
 		:alertas="alertasPerdidas"
 		:tipo="2"
 		/>
         
 		<SliderAlertas
-		v-if="!isLoading"
+		v-if="!isLoading && alertasEncontradas.length > 0"
 		titulo="Mascotas encontradas por tu zona"
 		:alertas="alertasEncontradas"
 		:tipo="1"
@@ -18,8 +19,14 @@
 		<CardAnuncio :anuncio="anuncio" />
 
 		<MiniLoader v-if="isLoading" />
+		<SliderAlertas
+		v-else-if="reencontradas.length > 0"
+		titulo="¡Mascotas reunidas con sus familias!"
+		:alertas="reencontradas"
+		/>
+		
 		<SliderEventos 
-		v-else
+		v-if="!isLoading && eventos.length > 0"
 		titulo="¡Enterate de los eventos que tenés cerca!"
 		:alertas="eventos"
 		/>
@@ -57,6 +64,14 @@ export default {
 			}, 750)
 		})
 
+	  alertasServicio.reencontradas()
+		.then(data => {
+			this.reencontradas = data;
+			setTimeout(() => {
+				this.isLoading = false
+			}, 750)
+		})
+
 	  eventosServicio.todos()
 		.then(data => {
 			this.eventos = data;
@@ -84,6 +99,7 @@ export default {
 		usuario: {},
 		isLoading: false,
 		alertas: [],
+		reencontradas: [],
 		eventos: [],
         anuncio: {
             img: 'adopcion-puppies.jpg',

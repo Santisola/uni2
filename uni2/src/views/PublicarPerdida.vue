@@ -416,7 +416,8 @@ export default {
                 id_especie: this.selectedEspecie,
                 id_raza: this.selectedRaza,
                 id_sexo: this.selectedSexo,
-                id_tipoalerta: 2
+                id_tipoalerta: 2,
+                finalizada: false
             }
 
             alertasServicio.nueva(data).then(res => {

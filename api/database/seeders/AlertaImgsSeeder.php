@@ -45,6 +45,16 @@ class AlertaImgsSeeder extends Seeder
                 'imagen' => 'perro3.jpg',
                 'id_alerta' => 2,
             ],
+            [
+                'id_alerta_img' => 7,
+                'imagen' => 'ragnar.jpg',
+                'id_alerta' => 3,
+            ],
+            [
+                'id_alerta_img' => 8,
+                'imagen' => 'ragnar2.jpg',
+                'id_alerta' => 3,
+            ],
         ]);
     }
 }
