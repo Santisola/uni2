@@ -44,21 +44,6 @@
                     <dd>{{ $alerta->sexo->sexo }}</dd>
                 </div>
             </dl>
-            {{--<div class="flex flex-col">
-                <a class="rounded text-center py-3 px-2 mt-3 block w-full bg-yellow-500 hover:bg-yellow-600 transition hover:ease-in-out duration-300 md:w-fit w-full" href="{{ route('eventos.detalle', ['evento' => $alerta->id_evento]) }}">Detalle</a>
-                @if($alerta->deleted_at)
-                    <form action="{{ route('eventos.restaurar', ['evento' => $alerta->id_verificado]) }}">
-                        @csrf
-                        <button type="submit" class="w-full px-3 py-3 px-2 my-3 rounded text-center bg-green-600 hover:bg-green-700 hover:ease-in-out transition duration-300 text-white">Restaurar</button>
-                    </form>
-                @else
-                    <form action="{{ route('eventos.eliminar', ['evento' => $alerta->id_evento]) }}" method="post">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="rounded text-center py-3 px-2 my-3 block w-full bg-red-500 hover:bg-red-600 transition hover:ease-in-out duration-300 eliminar">Eliminar</button>
-                    </form>
-                @endif
-            </div>--}}
         </div>
     @empty
         <div class="flex justify-center items-center w-full px-5 mb-5">
@@ -66,6 +51,3 @@
         </div>
     @endforelse
 @endsection
-{{--@push('js')
-    <script src="{{ asset('js/selector.js') }}"></script>
-@endpush--}}

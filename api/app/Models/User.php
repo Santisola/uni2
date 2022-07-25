@@ -12,7 +12,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    protected $table = 'usuarios';
+    protected $table = 'verificados';
 
     protected $primaryKey = 'id_usuario';
 

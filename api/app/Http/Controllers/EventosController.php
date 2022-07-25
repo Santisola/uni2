@@ -24,8 +24,6 @@ class EventosController extends Controller
 
             $data = [];
             foreach($eventos as $evento){
-                /*$verificado = Verificados::findOrFail($evento->id_verificado, array('telefono'));
-                $evento->contacto = $verificado->telefono;*/
                 $data[] = $evento;
             }
 

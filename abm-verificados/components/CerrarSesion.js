@@ -13,7 +13,7 @@ export default function CerrarSesion() {
             <button
                 type={"button"}
                 onClick={handleCerrarSession}
-                className={"text-white text-2xl flex items-center gap-2"}
+                className={"text-white text-lg flex items-center gap-2"}
             > <Image layout={"fixed"} width={30} height={30} src={"/imgs/exit-icon.svg"} alt={"icono de cerrar sesión"} /> Cerrar Sesión</button>
         </div>
     )

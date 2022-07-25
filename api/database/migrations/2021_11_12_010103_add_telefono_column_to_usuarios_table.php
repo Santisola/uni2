@@ -25,7 +25,7 @@ class AddTelefonoColumnToUsuariosTable extends Migration
      */
     public function down()
     {
-        Schema::table('usuarios', function (Blueprint $table) {
+        Schema::table('verificados', function (Blueprint $table) {
             //
         });
     }

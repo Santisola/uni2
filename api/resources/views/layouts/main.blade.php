@@ -22,7 +22,10 @@
             <div class="flex flex-col md:flex-row justify-start md:justify-between items-center w-full" id="nav">
                 <ul class="flex md:flex-row justify-start md:justify-between items-center">
                     <li class="hover:bg-white-100">
-                        <a href="<?= url('/usuarios') ;?>" class="px-3 py-2 text-slate-300 rounded-lg hover:text-slate-50 <?= url()->current() == url('/usuarios') ? 'text-white' : '';?>">Usuarios Verificados</a>
+                        <a href="<?= url('/verificados') ;?>" class="px-3 py-2 text-slate-300 rounded-lg hover:text-slate-50 <?= url()->current() == url('/verificados') ? 'text-white' : '';?>">Usuarios Verificados</a>
+                    </li>
+                    <li class="hover:bg-white-100">
+                        <a href="<?= url('/usuarios') ;?>" class="px-3 py-2 text-slate-300 rounded-lg hover:text-slate-50 <?= url()->current() == url('/usuarios') ? 'text-white' : '';?>">Usuarios</a>
                     </li>
                     <li class="hover:bg-white-100">
                         <a href="<?= url('/noticias') ;?>" class="px-3 py-2 text-slate-300 rounded-lg hover:bg-white-100 hover:text-slate-50 <?= url()->current() == url('/noticias') ? 'text-white' : '';?>">Noticias</a>

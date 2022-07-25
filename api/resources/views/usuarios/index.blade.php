@@ -12,15 +12,13 @@
                 <label for="usuarios" class="sr-only">Seleccione</label>
                 <select name="usuarios" id="usuarios" class="border border-violet-800 rounded w-full bg-white px-2 py-1">
                     <option value="" {{ $seleccionado === null ? 'selected' : '' }}>Todos</option>
-                    <option value="eliminados" {{ $seleccionado === 'eliminados' ? 'selected' : '' }}>Eliminados</option>
-                    <option value="verificados" {{ $seleccionado === 'verificados' ? 'selected' : '' }}>Verificados</option>
-                    <option value="no-verificados" {{ $seleccionado === 'no-verificados' ? 'selected' : '' }}>No verificados</option>
+                    <option value="eliminados" {{ $seleccionado === 'eliminados' ? 'selected' : '' }}>Bloqueados</option>
                 </select>
             </div>
         </form>
     </div>
     @forelse($usuarios as $usuario)
-        <div class="flex flex-wrap justify-between items-center w-full py-5 px-10 mb-5 tableta verificados shadow-lg rounded-lg">
+        <div class="flex flex-wrap justify-between items-center w-full py-5 px-10 mb-5 tableta usuarios shadow-lg rounded-lg">
             <div>
                 @if($usuario->imagen)
                     <img class="img-perfil border rounded border-2 border-violet-800" src="{{ asset(str_replace('public/','',$usuario->imagen)) }}" alt="Imagen usuario">
@@ -29,46 +27,14 @@
                 @endif
             </div>
             <dl>
-                <dt class="sr-only">Cuit:</dt>
-                <dd class="mb-5">{{ $usuario->cuit }}</dd>
-                <dt class="sr-only">Razón social:</dt>
-                <dd class="mb-5">{{ $usuario->razon_social }}</dd>
-                <dt class="sr-only">Verificado:</dt>
-                @if($usuario->status === 1)
-                    <dd class="text-violet-800 font-semibold">Verificado</dd>
-                @else
-                    <dd class="text-violet-800 font-semibold">No verificado</dd>
-                @endif
+                <dt class="font-semibold">Nombre:</dt>
+                <dd class="mb-5">{{ $usuario->nombre }}</dd>
             </dl>
             <dl>
                 <dt class="font-semibold">Contacto:</dt>
                 <dd class="underline underline-offset-8 hover:underline-offset-4">{{ $usuario->email }}</dd>
                 <dd>{{ $usuario->telefono ?? '-' }}</dd>
             </dl>
-            <div>
-                <form action="{{ route('usuarios.verificar', ['usuario' => $usuario->id_verificado]) }}" method="post" class="flex flex-col">
-                    @csrf
-                    @method('PUT')
-
-                    @if( $usuario->status === 1 )
-                        <button type="submit" class="w-full py-3 px-2 my-3 rounded border border-violet-800 text-center text-violet-800 hover:ease-in-out hover:text-white hover:bg-violet-800 transition duration-300">No Verificar</button>
-                    @else
-                        <button type="submit" class="w-full py-3 px-2 my-3 rounded border-violet-800 text-center bg-violet-800 text-white">Verificar</button>
-                    @endif
-                </form>
-                @if($usuario->deleted_at)
-                    <form action="{{ route('usuarios.restaurar', ['usuario' => $usuario->id_verificado]) }}">
-                        @csrf
-                        <button type="submit" class="rounded text-center py-3 px-2 mt-3 block w-full bg-teal-500 hover:bg-teal-600 transition hover:ease-in-out duration-300">Restaurar</button>
-                    </form>
-                @else
-                    <form action="{{ route('usuarios.eliminar', ['usuario' => $usuario->id_verificado]) }}" method="post">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="rounded text-center py-3 px-2 my-3 block w-full bg-red-500 hover:bg-red-600 transition hover:ease-in-out duration-300">Eliminar</button>
-                    </form>
-                @endif
-            </div>
         </div>
     @empty
         <div class="flex justify-center items-center w-full px-5 mb-5">

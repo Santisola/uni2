@@ -36,6 +36,8 @@
                             <dd class="mb-5">{{ $result->cuit }}</dd>
                             <dt class="sr-only">Razón social:</dt>
                             <dd class="mb-5">{{ $result->razon_social }}</dd>
+                            <dt class="font-semibold">Nombre visible:</dt>
+                            <dd>{{ $result->nombre ?? '-' }}</dd>
                         </dl>
                         <dl>
                             <dt class="font-semibold">Contacto:</dt>
@@ -72,6 +74,30 @@
                             <div class="flex gap-3 mb-3">
                                 <dt>Sexo:</dt>
                                 <dd>{{ $result->sexo->sexo }}</dd>
+                            </div>
+                        </dl>
+                    </div>
+                @elseif($result->id_usuario)
+                    <div class="flex flex-col justify-start items-center w-full py-5 px-10 mb-5 card shadow-lg rounded-lg usuarios">
+                        <div>
+                            @if($result->imagen)
+                                <img class="img-perfil border rounded border-2 border-violet-800" src="{{ asset(str_replace('public/','',$result->imagen)) }}" alt="Imagen usuario">
+                            @else
+                                <img class="img-perfil border rounded-full border-2 border-violet-800" src="{{ asset('imgs/user-default.png') }}" alt="Default usuario">
+                            @endif
+                        </div>
+                        <dl class="mt-5">
+                            <dt class="sr-only">Nombre:</dt>
+                            <dd class="mb-3">{{ $result->nombre ?? '-' }}</dd>
+                        </dl>
+                        <dl class="mt-3 w-full">
+                            <div class="flex gap-3 mb-3">
+                                <dt>Email:</dt>
+                                <dd class="detalle">{{ $result->email }}</dd>
+                            </div>
+                            <div class="flex gap-3 mb-3">
+                                <dt>Telefono:</dt>
+                                <dd>{{ $result->telefono }}</dd>
                             </div>
                         </dl>
                     </div>

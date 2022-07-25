@@ -59,8 +59,12 @@ Route::post('/generar-token', [PasswordResetsController::class, 'generarToken'])
 Route::post('/verificado/login', [VerificadosController::class,'login']);
 Route::post('/verificado/register', [VerificadosController::class,'register']);
 
-//Route::put('/verificado/{usuario}/update', [VerificadosController::class,'update']);
 Route::put('/verificado/{usuario}/complete', [VerificadosController::class,'completeData']);
+Route::put('/verificado/{usuario}/EditarNombre', [VerificadosController::class,'editarNombre']);
+Route::put('/verificado/{usuario}/EditarEmail', [VerificadosController::class,'editarEmail']);
+Route::put('/verificado/{usuario}/EditarTelefono', [VerificadosController::class,'editarTelefono']);
+Route::put('/verificado/{usuario}/EditarImagen', [VerificadosController::class,'editarImagen']);
+Route::put('/verificado/{usuario}/EditarPassword', [VerificadosController::class,'editarPassword']);
 
 /**
  * CMS Noticias

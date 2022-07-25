@@ -14,7 +14,7 @@
 
 .inpiutContainer :is(input[type="tel"], input[type="email"], input[type="password"], input[type="number"], input[type="text"]) {
     border: 1px solid var(--negro);
-    border-radius: 20px;
+    border-radius: 5px;
     width: 100%;
     padding: 5px 10px;
     color: var(--violeta);
@@ -35,6 +35,11 @@
     font-weight: 600;
     border-color: var(--violeta);
     border-radius: 10px;
+}
+
+.inpiutContainer input[type="submit"]:disabled {
+    background-color: var(--gris);
+    cursor: not-allowed;
 }
 
 .ojo {

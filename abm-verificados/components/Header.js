@@ -3,7 +3,6 @@ import Image from "next/image";
 import Styles from '../styles/Header.module.css';
 import { useState } from "react";
 import Menu from "./Menu";
-import FormCompletar from "../formularios/FormCompletar";
 
 export default function Header({ pagina, datosUsuario }) {
     const [abierto, setAbierto] = useState(false);
@@ -21,7 +20,7 @@ export default function Header({ pagina, datosUsuario }) {
                     <span></span>
                 </button>
             </div>
-            <h1 className={`${Styles.pagina} text-lg text-center uppercase w-full`}>{pagina}</h1>
+            <h1 className={`${Styles.pagina} text-lg text-center capitalize w-full`}>{pagina}</h1>
             <Menu
                 setAbierto={setAbierto}
                 abierto={abierto}

@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Alerta;
 use App\Models\Eventos;
 use App\Models\Noticias;
+use App\Models\Usuarios;
 use App\Models\Verificados;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use phpDocumentor\Reflection\Types\True_;
 
 class AdminController extends Controller
 {
@@ -31,10 +31,15 @@ class AdminController extends Controller
             ->with(['tipoalerta', 'especie', 'raza', 'sexo'])
             ->get();
 
+        $d = Usuarios::latest()
+            ->take(5)
+            ->get();
+
         $results = new Collection;
         $results = $results->mergeRecursive($a);
         $results = $results->mergeRecursive($b);
         $results = $results->mergeRecursive($c);
+        $results = $results->mergeRecursive($d);
         $results = $results->sortByDesc('created_at');
 
         return view('home', compact('results'));
@@ -125,7 +130,7 @@ class AdminController extends Controller
         return view('alertas.index', compact('alertas'));
     }
 
-    public function listadoUsuarios(Request $request)
+    public function listadoVerificados(Request $request)
     {
         $seleccionado = null;
         if (isset($request->usuarios)) {
@@ -147,8 +152,28 @@ class AdminController extends Controller
             $usuarios = Verificados::orderBy('updated_at','desc')->withTrashed()->paginate(25);
         }
 
+        return view('verificados.index', compact('usuarios','seleccionado'));
+    }
+
+    public function listadoUsuarios(Request $request)
+    {
+        $seleccionado = null;
+        if (isset($request->usuarios)) {
+            $seleccionado = $request->usuarios;
+            if ($request->usuarios === 'eliminados') {
+                $usuarios = Usuarios::orderBy('updated_at','desc')
+                    ->onlyTrashed()
+                    ->paginate(25);
+            } else {
+                $usuarios = Usuarios::orderBy('updated_at','desc')->withTrashed()->paginate(25);
+            }
+        } else {
+            $usuarios = Usuarios::orderBy('updated_at','desc')->withTrashed()->paginate(25);
+        }
+
         return view('usuarios.index', compact('usuarios','seleccionado'));
     }
+
 
     public function verificarUsuario(int $id_verificado): RedirectResponse
     {
@@ -162,7 +187,7 @@ class AdminController extends Controller
                 $usuarios->save();
 
                 return redirect()
-                    ->route('usuarios')
+                    ->route('verificados')
                     ->with('message','Usuario verificado')
                     ->with('message_type','bg-green-300 text-green-800');
             } else {
@@ -172,51 +197,56 @@ class AdminController extends Controller
                 $usuarios->save();
 
                 return redirect()
-                    ->route('usuarios')
+                    ->route('verificados')
                     ->with('message','Usuario disentido')
                     ->with('message_type','bg-green-300 text-green-800');
             }
 
         } catch (\Exception $exception) {
             return redirect()
-                ->route('usuarios')
+                ->route('verificados')
                 ->with('message', $exception->getMessage())
                 ->with('message_type','bg-red-300 text-red-800');
         }
     }
 
-    public function usuarioEliminar(int $id_verificado): RedirectResponse
+    /**
+     * Verificar
+     * @param int $id_verificado
+     * @return RedirectResponse
+     */
+    public function verificadoEliminar(int $id_verificado): RedirectResponse
     {
         try {
             Verificados::findOrFail($id_verificado)->delete();
 
             return redirect()
-                ->route('usuarios')
+                ->route('verificados')
                 ->with('message','Usuario eliminado')
                 ->with('message_type','bg-green-300 text-green-800');
 
         } catch (\Exception $exception) {
             return redirect()
-                ->route('usuarios')
+                ->route('verificados')
                 ->with('message', $exception->getMessage())
                 ->with('message_type','bg-red-300 text-red-800');
         }
     }
 
-    public function usuarioRestaurar(int $id_verificado): RedirectResponse
+    public function verificadoRestaurar(int $id_verificado): RedirectResponse
     {
         try {
             $usuario = Verificados::onlyTrashed()->findOrFail($id_verificado);
             $usuario->restore();
 
             return redirect()
-                ->route('usuarios')
+                ->route('verificados')
                 ->with('message','Usuario restaurado')
                 ->with('message_type','bg-green-300 text-green-800');
 
         } catch (\Exception $exception) {
             return redirect()
-                ->route('usuarios')
+                ->route('verificados')
                 ->with('message', $exception->getMessage())
                 ->with('message_type','bg-red-300 text-red-800');
         }

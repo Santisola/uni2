@@ -6,10 +6,12 @@ import {useRouter} from "next/router";
 import {previewImage} from "../helpers";
 
 export default function FormCompletar() {
+    const [nombre, setNombre] = useState('');
     const [telefono,setTelefono] = useState('');
     const [imagen, setImagen] = useState('');
     const [error, setError] = useState(false);
     const [mensajeError, setMensajeError] = useState('');
+    const [errorNombre, setErrorNombre] = useState('');
     const [errorTelefono, setErrorTelefono] = useState('');
     const [errorImagen, setErrorImagen] = useState('');
     const [disabled, setDisabled] = useState(false);
@@ -23,6 +25,7 @@ export default function FormCompletar() {
         setDisabled(true);
 
         const data = {
+            nombre: nombre,
             telefono: Number(telefono),
             imagen: imagen,
         }
@@ -41,6 +44,7 @@ export default function FormCompletar() {
 
         const formData = new FormData();
 
+        formData.append('nombre', nombre);
         formData.append('imagen', imagen);
         formData.append('telefono', telefono);
         formData.append('_method', 'PUT');
@@ -54,16 +58,15 @@ export default function FormCompletar() {
             });
             const resultado = await respuesta.json();
             if (resultado[0].original.success === true) {
-                // return console.log(resultado[0].original.data[0]);
-                const { cuit, email, imagen, razon_social, telefono } = resultado[0].original.data[0];
+                const { razon_social, nombre, email, imagen, telefono } = resultado[0].original.data[0];
                 const id_verificado = resultado[0].original.id;
 
                 const usuario = {
-                    cuit: cuit,
-                    email: email,
-                    imagen: imagen,
-                    razon_social: razon_social,
-                    telefono: telefono,
+                    razon_social,
+                    nombre,
+                    email,
+                    imagen,
+                    telefono,
                 }
 
                 await sessionStorage.setItem('usuario',JSON.stringify(usuario));
@@ -93,10 +96,19 @@ export default function FormCompletar() {
     function validateData(datos) {
         setErrorTelefono('');
         setErrorImagen('');
+        setErrorNombre('');
 
-        const { telefono, imagen } = datos;
+        const { nombre, telefono, imagen } = datos;
 
         let errores  = {};
+
+        if (nombre === '') {
+            errores.nombre = 'El nombre no puede estar vacío'
+        }
+
+        if (nombre.length < 3) {
+            errores.nombre = 'El nombre debe tener al menos 3 caracteres'
+        }
 
         if (isNaN(telefono)) {
             errores.telefono = 'El número de teléfono debe contener solamente números';
@@ -119,6 +131,11 @@ export default function FormCompletar() {
             if (errores.imagen) {
                 setErrorImagen(errores.imagen);
             }
+
+            if (errores.nombre) {
+                setErrorNombre(errores.nombre);
+            }
+
             return true;
         } else {
             return false;
@@ -126,9 +143,7 @@ export default function FormCompletar() {
     }
     
     return (
-        <div
-            className={Styles.formularioModal}
-        >
+        <div>
             { loader && (
                 <PawLoader />
             )}
@@ -146,6 +161,23 @@ export default function FormCompletar() {
                 <div className={Styles.inpiutContainer}>
                     <label
                         className={"text-lg"}
+                        htmlFor={"nombre"}>Nombre</label>
+                    <input
+                        type={"text"}
+                        name={"nombre"}
+                        id={"nombre"}
+                        value={nombre}
+                        onChange={e => setNombre(e.target.value)}
+                        placeholder={"Ingrese el nombre de su emprendimiento"}
+                        disabled={disabled}
+                    />
+                    { errorNombre !== '' && (
+                        <div className={"mt-3 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"} role={"alert"}>
+                            <p className={"text-center"}>{errorNombre}</p>
+                        </div>
+                    )}
+                    <label
+                        className={"text-lg mt-5"}
                         htmlFor={"telefono"}>Teléfono</label>
                     <input
                         type={"tel"}
@@ -164,7 +196,7 @@ export default function FormCompletar() {
                 </div>
                 <div className={Styles.inpiutContainer}>
                     <label
-                        className={"text-lg"}
+                        className={"text-lg mt-5"}
                         htmlFor={"imagen"}>Imagen</label>
                     <input
                         type={"file"}

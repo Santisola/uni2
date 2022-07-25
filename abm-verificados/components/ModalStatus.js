@@ -17,7 +17,7 @@ export default function ModalStatus({ setModal }) {
                     onClick={() => setModal(false)}
                     className={`${Styles.close} text-amber-400 py-5 rounded-full z-10`}
                 >X</button>
-                { datos.telefono && datos.imagen ? (
+                { datos[0].telefono && datos[0].imagen && datos[0].nombre ? (
                     <p className={"font-semibold"}>Gracias por completar sus datos. <br/>Nos contactaremos con usted a la brevedad</p>
                 ) : (
                     <>

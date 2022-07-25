@@ -25,13 +25,25 @@ Route::post('/login',[AdminController::class, 'login'])->name('auth.login');
 Route::middleware(['auth'])->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('home');
 
+    // Verificados
+    Route::prefix('/verificados')->group(function () {
+        Route::get('/', [AdminController::class, 'listadoVerificados'])->name('verificados');
+
+        Route::match(['get', 'put'],'/verificar/{usuario}', [AdminController::class,'verificarUsuario'])->name('verificados.verificar');
+        Route::match(['get', 'delete'],'/eliminar/{usuario}', [AdminController::class,'verificadoEliminar'])->name('verificados.eliminar');
+
+        Route::get('/restaurar/{usuario}', [AdminController::class, 'verificadoRestaurar'])->name('verificados.restaurar');
+    });
+
+
+    // Usuarios
     Route::prefix('/usuarios')->group(function () {
         Route::get('/', [AdminController::class, 'listadoUsuarios'])->name('usuarios');
 
-        Route::match(['get', 'put'],'/verificar/{usuario}', [AdminController::class,'verificarUsuario'])->name('usuarios.verificar');
-        Route::match(['get', 'delete'],'/eliminar/{usuario}', [AdminController::class,'usuarioEliminar'])->name('usuarios.eliminar');
+        // TODO:
+        /*Route::match(['get', 'delete'],'/eliminar/{usuario}', [AdminController::class,'usuarioEliminar'])->name('usuarios.eliminar');
 
-        Route::get('/restaurar/{usuario}', [AdminController::class, 'usuarioRestaurar'])->name('usuarios.restaurar');
+        Route::get('/restaurar/{usuario}', [AdminController::class, 'usuarioRestaurar'])->name('usuarios.restaurar');*/
     });
 
     Route::prefix('/noticias')->group(function () {

@@ -17,6 +17,7 @@ class CreateUsuariosVerificadosTable extends Migration
             $table->id('id_verificado')->unsigned();
             $table->bigInteger('cuit')->unique();
             $table->string('razon_social')->nullable();
+            $table->string('nombre')->nullable();
             $table->bigInteger('telefono')->nullable();
             $table->string('email')->unique();
             $table->string('password');

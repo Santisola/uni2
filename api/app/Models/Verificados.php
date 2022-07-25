@@ -19,6 +19,7 @@ class Verificados extends Model
     protected $fillable = [
         'cuit',
         'razon_social',
+        'nombre',
         'telefono',
         'email',
         'password',
@@ -29,7 +30,6 @@ class Verificados extends Model
 
     public static $reglas = [
         'cuit' => 'required|numeric|unique:usuarios_verificados,cuit',
-//        'razon_social'=>'required',
         'email'=>'required|email:rfc|unique:usuarios_verificados,email',
         'password'=>'required',
     ];
@@ -38,7 +38,6 @@ class Verificados extends Model
         'cuit.required'=>'El CUIT es obligatorio',
         'cuit.unique'=>'Ya existe otro CUIT en nuestra base de datos',
         'cuit.numeric'=>'El CUIT deben ser sólo números',
-//        'razon_social.required'=>'El nombre es obligatorio',
         'email.required'=>'El email es obligatorio',
         'email.email'=>'El email debe ser de un formato válido (nombre@dominio.extension)',
         'email.unique'=>'El email que intenta ingresar ya existe en nuestra base de datos',

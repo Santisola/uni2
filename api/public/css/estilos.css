@@ -127,6 +127,10 @@ main {
     border-image: linear-gradient(180deg, var(--violeta) 50%, var(--amarillo) 50%) 1;
 }
 
+.tableta.usuarios, .card.usuarios {
+    border-image: linear-gradient(180deg, var(--encontrada) 50%, var(--perdida) 50%) 1;
+}
+
 .tableta.noticias {
     border-color: var(--violeta);
 }
@@ -177,10 +181,13 @@ main {
     justify-content: flex-start;
     align-items: center;
     gap: 40px;
+    overflow-x: auto;
+    margin-bottom: 2rem;
 }
 
 .card {
     max-width: 300px;
+    min-width: 300px;
     align-self: stretch;
     border: 3px solid;
     width: 100%;
