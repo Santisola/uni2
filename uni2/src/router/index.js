@@ -14,6 +14,7 @@ import EditarAlerta from '../views/EditarAlerta.vue'
 import Login from '../views/Login.vue'
 import Registro from '../views/Registro.vue'
 import OlvideContra from '../views/OlvideContra.vue'
+import CodigoOlvideContra from '../views/CodigoOlvideContra.vue'
 
 Vue.use(VueRouter)
 
@@ -112,6 +113,11 @@ const routes = [
     path: '/olvide-mi-contra',
     name: 'Olvidé mi contraseña',
     component: OlvideContra
+  },
+  {
+    path: '/olvide-mi-contra/codigo',
+    name: 'Código olvide mi contraseña',
+    component: CodigoOlvideContra
   },
   {
     path: '*',

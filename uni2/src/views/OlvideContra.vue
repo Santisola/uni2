@@ -67,9 +67,7 @@ export default {
                 .then(res => {
                     this.isLoading = false
                     if (res.success){
-                        this.estado.msj = 'El correo con los pasos a seguir se envió correctamente, si no lo encontrás revisá la casilla de spam';
-                        this.estado.tipo = 'success';
-                        this.estado.mostrar = true;
+                        this.$router.push('/olvide-mi-contra/codigo?email=' + this.email)
                     }else{
                         this.estado.msj = 'Ocurrió un error al intentar enviar el correo, por favor intentá de nuevo';
                         this.estado.tipo = 'error';

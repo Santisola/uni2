@@ -31,6 +31,12 @@ class PasswordResetsController extends Controller
 
         $token = '123456';
 
+        $hayTokenDeUsuario = DB::table('password_resets')->where('email', $request->email)->get();
+
+        if(count($hayTokenDeUsuario) > 0){
+            DB::table('password_resets')->where('email', $request->email)->delete();
+        }
+
         DB::table('password_resets')->insert([
             'email' => $request->email,
             'token' => $token,
@@ -43,5 +49,11 @@ class PasswordResetsController extends Controller
             'success' => true,
             'u' => $usuario
         ]);
+    }
+
+    public function validarToken(Request $request){
+        $tokenData = DB::table('password_resets')->where('email', $request->email)->get();
+
+        return $tokenData;
     }
 }

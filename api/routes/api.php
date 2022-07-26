@@ -52,6 +52,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware(['auth:san
 Route::post('/registro', [AuthController::class, 'registrar']);
 
 Route::post('/generar-token', [PasswordResetsController::class, 'generarToken']);
+Route::post('/validar-token', [PasswordResetsController::class, 'validarToken']);
 
 /**
  * CMS Usuarios verificados
