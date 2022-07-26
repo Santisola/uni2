@@ -1,15 +1,17 @@
 import Layout from "../../layouts/layout";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import {fecha} from "../../helpers";
 import Styles from '../../styles/Noticia.module.css'
 import Breadcrum from "../../components/Breadcrum";
+import Comentarios from "../../components/Comentarios";
+import FormComentario from "../../formularios/FormComentario";
 
 export default function EntradaNoticia({noticia}) {
     const [usuario, setUsuario] = useState({
         nombre: 'Nombre',
         apellido: 'Apellido',
-    })
+    });
     const router = useRouter();
 
     useEffect(() => {
@@ -21,6 +23,23 @@ export default function EntradaNoticia({noticia}) {
     },[router]);
 
     const { contenido, created_at, imagen, titulo } = noticia;
+
+    const [comentarios, setComentarios] = useState({});
+
+    useEffect(() => {
+        buscarNoticias();
+    },[noticia]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const buscarNoticias = async () => {
+        const URL = `${process.env.API_URL}/comentarios/${noticia['id_noticia']}`;
+        const respuesta = await fetch(URL);
+        const resultado = await respuesta.json();
+
+        if (resultado.success) {
+            setComentarios(resultado['comentarios']);
+        }
+    }
 
     return(
         <Layout
@@ -45,6 +64,24 @@ export default function EntradaNoticia({noticia}) {
             <h2 className={"text-xl font-semibold mt-5"}>{titulo}</h2>
             <small className={"block mt-3 mb-5 text-gray-400 text-sm"}>Publicado {fecha(created_at)}</small>
             <p className={Styles.contenido}>{contenido}</p>
+            <hr className={"mb-10 mt-5"}/>
+            {
+                comentarios.length > 0 && (
+                    <div className={"flex flex-col bg-gray-300 rounded-t-md p-5 gap-y-4"}>
+                        {comentarios.map(comentario => (
+                            <Comentarios
+                                key={comentario['id_comentario']}
+                                comentario={comentario}
+                            />
+                        ))}
+                    </div>
+                )
+            }
+            <FormComentario
+                usuario={usuario}
+                id_noticia={noticia['id_noticia']}
+                setComentarios={setComentarios}
+            />
         </Layout>
     )
 }
@@ -57,7 +94,7 @@ export async function getServerSideProps({query: {slug}}) {
 
     return {
         props: {
-            noticia: noticia
+            noticia: noticia,
         }
     }
 }

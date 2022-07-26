@@ -61,7 +61,6 @@ export default function FormEvento({
         }
 
         if (validateEvento(evento)) {
-            // console.log('Validó evento')
             return setLoader(false);
         }
 
