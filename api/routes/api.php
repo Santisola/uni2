@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AlertasController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ComentarioController;
 use App\Http\Controllers\EventosController;
 use App\Http\Controllers\NoticiasController;
 use App\Http\Controllers\PasswordResetsController;
@@ -87,3 +88,9 @@ Route::get('/evento-cms/{id_evento}', [EventosController::class, 'eventoVerifica
 Route::put('/evento-cms/{id_evento}/editar', [EventosController::class , 'editar']);
 
 Route::post('/nuevo-evento',[EventosController::class, 'nuevo']);
+
+/**
+ * CMS Comentarios
+ */
+Route::get('/comentarios/{noticia}', [ComentarioController::class, 'comentarios']);
+Route::post('/comentarios/{usuario}/{noticia}', [ComentarioController::class, 'crearComentario']);
