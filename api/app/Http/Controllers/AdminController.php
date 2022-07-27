@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alerta;
+use App\Models\Contacto;
 use App\Models\Eventos;
 use App\Models\Noticias;
 use App\Models\Usuarios;
@@ -23,12 +24,13 @@ class AdminController extends Controller
 
         $b = Eventos::where('publicado',true)
             ->latest()
+            ->with('verificado')
             ->take(5)
             ->get();
 
         $c = Alerta::latest()
             ->take(5)
-            ->with(['tipoalerta', 'especie', 'raza', 'sexo'])
+            ->with(['tipoalerta', 'especie', 'raza', 'sexo', 'usuario'])
             ->get();
 
         $d = Usuarios::latest()
@@ -58,6 +60,7 @@ class AdminController extends Controller
 
             $eventos = Eventos::onlyTrashed()
                 ->where('publicado', true)
+                ->with('verificado')
                 ->orderBy('created_at', 'DESC')
                 ->paginate(25);
 
@@ -65,11 +68,13 @@ class AdminController extends Controller
             $seleccionado = 'desbloqueados';
 
             $eventos = Eventos::where('publicado', true)
+                ->with('verificado')
                 ->orderBy('created_at', 'DESC')
                 ->paginate(25);
 
         } else {
             $eventos = Eventos::where('publicado', true)
+                ->with('verificado')
                 ->orderBy('created_at', 'DESC')
                 ->withTrashed()
                 ->paginate(25);
@@ -416,6 +421,25 @@ class AdminController extends Controller
             ->route('auth.login')
             ->with('message','La sesión ha sido cerrada con éxito')
             ->with('message_type','bg-green-300 text-green-800');
+    }
+
+    public function listadoContacto()
+    {
+        $contactos = Contacto::orderBy('created_at','desc')
+            ->with('verificado')
+            ->paginate(25);
+
+        return view('contacto.index', compact('contactos'));
+    }
+
+    public function detalleContacto(int $id_contacto)
+    {
+        $contacto = Contacto::with('verificado')
+            ->findOrFail($id_contacto);
+
+//        dd($contacto);
+
+        return view('contacto.detalle', compact('contacto'));
     }
 
     private function getNoticia(int $id_noticia)

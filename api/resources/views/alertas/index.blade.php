@@ -50,4 +50,7 @@
             <h2 class="text-center text-3xl">No hay Datos</h2>
         </div>
     @endforelse
+    <div class="flex justify-start items-center py-3 mt-5">
+        {{ $alertas->links() }}
+    </div>
 @endsection

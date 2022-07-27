@@ -27,7 +27,7 @@ export default function FormComentario({ usuario, id_noticia, setComentarios }) 
             setComentarios(resultado['comentarios']);
             setComentario('');
         } else {
-
+            setError('Hubo un problema al intentar agregar su comentario')
         }
     }
 
@@ -74,7 +74,7 @@ export default function FormComentario({ usuario, id_noticia, setComentarios }) 
                 { error.length > 0 && (
                     <Mensaje
                         tipo={false}
-                        mensaje={"Hubo un problema al intentar agregar su comentario"}
+                        mensaje={error}
                     />
                 ) }
                 <button

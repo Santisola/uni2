@@ -71,4 +71,9 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('/alertas')->group(function () {
         Route::get('/', [AdminController::class, 'listadoAlertas'])->name('alertas');
     });
+
+    Route::prefix('/contacto')->group(function () {
+        Route::get('/', [AdminController::class, 'listadoContacto'])->name('contacto');
+        Route::get('/{contacto}', [AdminController::class, 'detalleContacto'])->name('contacto.detalle');
+    });
 });

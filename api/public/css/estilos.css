@@ -168,6 +168,10 @@ main {
     word-break: break-word;
 }
 
+.detalle.email {
+    font-size: 80%;
+}
+
 .deleted {
     border-color: #DC2626 !important;
 }
@@ -187,7 +191,7 @@ main {
 
 .card {
     max-width: 300px;
-    min-width: 300px;
+    flex: 0 0 auto;
     align-self: stretch;
     border: 3px solid;
     width: 100%;
@@ -231,6 +235,10 @@ footer {
 
 input:focus, input:focus-visible, textarea:focus, textarea:focus-visible {
     outline-color: var(--violeta);
+}
+
+.capitalize {
+    text-transform: capitalize;
 }
 
 @media (max-width: 910px) {

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AlertasController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ComentarioController;
+use App\Http\Controllers\ContactoController;
 use App\Http\Controllers\EventosController;
 use App\Http\Controllers\NoticiasController;
 use App\Http\Controllers\PasswordResetsController;
@@ -95,3 +96,8 @@ Route::post('/nuevo-evento',[EventosController::class, 'nuevo']);
  */
 Route::get('/comentarios/{noticia}', [ComentarioController::class, 'comentarios']);
 Route::post('/comentarios/{usuario}/{noticia}', [ComentarioController::class, 'crearComentario']);
+
+/**
+ * CMS contacto
+ */
+Route::post('/contacto',[ContactoController::class, 'contacto']);

@@ -1,5 +1,5 @@
 <?php
-/**@var \App\Models\Noticias $evento*/
+/**@var \App\Models\Eventos $evento*/
 ?>
 @extends('layouts.main')
 @section('title','UNIDOS | Detalle Evento')

@@ -11,7 +11,7 @@
         <div id="tarjetas">
             @foreach($results as $result)
                 @if($result->id_evento)
-                    <div class="flex flex-col justify-start items-center w-full py-5 px-10 mb-5 card eventos shadow-lg rounded-lg">
+                    <div class="flex flex-col justify-between items-center w-full py-5 px-10 mb-5 card eventos shadow-lg rounded-lg">
                         <div>
                             <img class="img-evento border block w-full max-w-sm rounded-full border-2 border-yellow-500" src="{{ asset(str_replace('public/','',$result->imagen)) }}" alt="imagen del evento">
                         </div>
@@ -21,9 +21,13 @@
                             <dt class="sr-only">Descripción del evento:</dt>
                             <dd class="detalle">{{ substr($result->descripcion, 0, 40 ) }}</dd>
                         </dl>
+                        <dl class="w-full mt-3">
+                            <dt class="font-semibold">Creada por:</dt>
+                            <dd>{{ $result->verificado->nombre ?? $result->verificado->razon_social }}</dd>
+                        </dl>
                     </div>
                 @elseif($result->id_verificado)
-                    <div class="flex flex-col justify-start items-center w-full py-5 px-10 mb-5 card verificados shadow-lg rounded-lg">
+                    <div class="flex flex-col justify-between items-center w-full py-5 px-10 mb-5 card verificados shadow-lg rounded-lg">
                         <div>
                             @if($result->imagen)
                                 <img class="img-perfil border rounded border-2 border-violet-800" src="{{ asset(str_replace('public/','',$result->imagen)) }}" alt="Imagen usuario">
@@ -46,7 +50,7 @@
                         </dl>
                     </div>
                 @elseif($result->id_alerta)
-                    <div class="flex flex-col justify-start items-center w-full py-5 px-10 mb-5 card shadow-lg rounded-lg {{ $result->tipoalerta->id_tipoalerta === 1 ? 'perdida' : 'encontrada' }}">
+                    <div class="flex flex-col justify-between items-center w-full py-5 px-10 mb-5 card shadow-lg rounded-lg {{ $result->tipoalerta->id_tipoalerta === 1 ? 'perdida' : 'encontrada' }}">
                         <div>
                             @if($result->imagenes)
                                 <img class="img-evento border rounded border-2 border-{{ $result->tipoalerta->id_tipoalerta === 1 ? 'perdida' : 'encontrada' }}" src="{{ asset('imgs/mascotas/' . strtok($result->imagenes, '|')) }}" alt="Imagen mascota perdida">
@@ -76,26 +80,31 @@
                                 <dd>{{ $result->sexo->sexo }}</dd>
                             </div>
                         </dl>
+                        <dl class="mt-3 w-full">
+                            <dt class="font-semibold">Creado por:</dt>
+                            <dd>{{ $result->usuario->nombre }}</dd>
+                        </dl>
                     </div>
                 @elseif($result->id_usuario)
-                    <div class="flex flex-col justify-start items-center w-full py-5 px-10 mb-5 card shadow-lg rounded-lg usuarios">
+                    <div class="flex flex-col justify-between items-center w-full py-5 px-10 mb-5 card shadow-lg rounded-lg usuarios">
                         <div>
                             @if($result->imagen)
                                 <img class="img-perfil border rounded border-2 border-violet-800" src="{{ asset(str_replace('public/','',$result->imagen)) }}" alt="Imagen usuario">
                             @else
                                 <img class="img-perfil border rounded-full border-2 border-violet-800" src="{{ asset('imgs/user-default.png') }}" alt="Default usuario">
                             @endif
+                            <dl class="mt-5">
+                                <dt class="sr-only">Nombre:</dt>
+                                <dd class="mb-3">{{ $result->nombre ?? '-' }}</dd>
+                            </dl>
                         </div>
-                        <dl class="mt-5">
-                            <dt class="sr-only">Nombre:</dt>
-                            <dd class="mb-3">{{ $result->nombre ?? '-' }}</dd>
-                        </dl>
                         <dl class="mt-3 w-full">
-                            <div class="flex gap-3 mb-3">
+                            <dt class="font-semibold text-center mb-5">Contacto</dt>
+                            <div>
                                 <dt>Email:</dt>
-                                <dd class="detalle">{{ $result->email }}</dd>
+                                <dd class="detalle email">{{ $result->email }}</dd>
                             </div>
-                            <div class="flex gap-3 mb-3">
+                            <div class="mt-3">
                                 <dt>Telefono:</dt>
                                 <dd>{{ $result->telefono }}</dd>
                             </div>

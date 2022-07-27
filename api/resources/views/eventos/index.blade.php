@@ -38,11 +38,15 @@
                     <dd class="text-sm text-zinc-500">{{ date('d/m/Y H:i:s', strtotime($evento->updated_at)) }}</dd>
                 </div>
                 @if($evento->deleted_at)
-                    <div>
+                    <div class="mb-5">
                         <dt class="text-sm text-zinc-500">Fecha de eliminación:</dt>
                         <dd class="text-sm text-zinc-500">{{ date('d/m/Y H:i:s', strtotime($evento->deleted_at)) }}</dd>
                     </div>
                 @endif
+                <div>
+                    <dt class="text-sm text-zinc-500">Creado por:</dt>
+                    <dd class="text-sm text-zinc-500">{{ $evento->verificado->nombre ?? $evento->verificado->razon_social  }}</dd>
+                </div>
             </dl>
             <div class="flex flex-col">
                 <a class="rounded text-center py-3 px-2 mt-3 block w-full bg-yellow-500 hover:bg-yellow-600 transition hover:ease-in-out duration-300 md:w-fit w-full" href="{{ route('eventos.detalle', ['evento' => $evento->id_evento]) }}">Detalle</a>
@@ -65,6 +69,9 @@
             <h2 class="text-center text-3xl">No hay Datos</h2>
         </div>
     @endforelse
+    <div class="flex justify-start items-center py-3 mt-5">
+        {{ $eventos->links() }}
+    </div>
 @endsection
 @push('js')
     <script src="{{ asset('js/selector.js') }}"></script>

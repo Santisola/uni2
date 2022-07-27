@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Eventos extends Model
@@ -55,8 +56,8 @@ class Eventos extends Model
         'status.boolean' => 'Error en el el status'
     ];
 
-    public function verificado()
+    public function verificado(): BelongsTo
     {
-        $this->belongsTo(Verificados::class, 'id_verificado','id_verificado');
+        return $this->belongsTo(Verificados::class, 'id_verificado','id_verificado');
     }
 }
