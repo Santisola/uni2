@@ -43,7 +43,7 @@
             </div>
         </div>
     </div>
-    <div id="login" class="container h-96 m-auto flex justify-center items-center flex-col">
+    <div id="login" class="container h-full m-auto flex justify-center items-center flex-col">
         <form action="{{ route('auth.login') }}" method="post" class="mx-auto md:max-w-lg w-full px-5 border rounded md:p-5 border-violet-800 border-2 shadow-md shadow-violet-800">
             @if(Session::has('message'))
                 <div class="mb-10 py-3 {{ Session::get('message_type') ?? 'bg-green-300 text-green-800' }} text-center">{{ Session::get('message') }}</div>

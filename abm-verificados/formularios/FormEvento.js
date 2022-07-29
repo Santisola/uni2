@@ -231,7 +231,7 @@ export default function FormEvento({
         <>
             <form
                 onSubmit={handleSubmit}
-                className={Styles.form}
+                className={`${Styles.form} border rounded p-3 md:max-w-3xl md:mx-auto shadow`}
             >
                 { errorMensaje !== '' && (
                     <p
@@ -393,6 +393,17 @@ export default function FormEvento({
                         >{errorPublicado}</p>
                     ) }
                 </div>
+                {
+                    errorMensaje || errorNombre || errorDescripcion || errorDireccion || errorFecha || errorImagen || errorPublicado || errorLugar ?
+                        (
+                            <p
+                                className={"mt-3 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative text-center w-full"}
+                                role={"alert"}
+                            >Ocurrió un error</p>
+                        )
+                        :
+                        ('')
+                }
             </form>
         </>
     )

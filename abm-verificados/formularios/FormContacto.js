@@ -83,7 +83,7 @@ export default function FormContacto() {
     return (
         <form
             onSubmit={handleSubmit}
-            className={"border rounded p-3"}
+            className={"border rounded p-3 md:max-w-3xl md:mx-auto md:shadow"}
         >
             { success !== '' && (
                 <div className={"mb-5"}>
@@ -97,7 +97,7 @@ export default function FormContacto() {
                 <label
                     htmlFor={"asunto"}
                     className={"mb-1"}
-                >asunto</label>
+                >Asunto</label>
                 <select
                     name={"asunto"}
                     id={"asunto"}

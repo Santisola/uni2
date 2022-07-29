@@ -148,7 +148,7 @@ export default function FormCompletar() {
                 <PawLoader />
             )}
             <form
-                className={`${Styles.form} flex flex-col items-center justify-center`}
+                className={`${Styles.form} flex flex-col items-center justify-center border p-3 md:max-w-3xl md:mx-auto rounded md:shadow`}
                 onSubmit={e => handleSubmit(e)}
             >
                 <p className={"text-center text-md mb-5 font-semibold"}>Estos datos serán visibles en la aplicación de <b className={"text-violeta"}>Unidos</b></p>

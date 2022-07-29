@@ -19,7 +19,12 @@ export default function CompletarPerfil() {
             setUsuario(JSON.parse(sessionStorage.getItem('usuario')));
             setEliminado(JSON.parse(sessionStorage.getItem('eliminado')));
         }
-    },[router]);
+        
+        if (usuario.nombre !== null && usuario.telefono !== null && usuario.imagen !== null) {
+            router.push('/');
+        }
+        
+    },[router, usuario.imagen, usuario.nombre, usuario.telefono]);
 
     return (
         <Layout

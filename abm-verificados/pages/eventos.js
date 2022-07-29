@@ -57,23 +57,27 @@ export default function Eventos() {
             { fetching && (
                 <PawLoader />
             ) }
-            <Link href={"/eventos/nuevoEvento"}>
-                <a
-                    role={"button"}
-                    className={`${Styles.btn} text-lg mb-10 mt-5 block text-center`}
-                >Crear un evento</a>
-            </Link>
-            { eventos.length > 0 ? (
-                    eventos.map(evento => (
-                            <Evento
-                                key={evento.id_evento}
-                                evento={evento}
-                            />
+            <div className={"md:flex md:flex-col-reverse"}>
+                <Link href={"/eventos/nuevoEvento"}>
+                    <a
+                        role={"button"}
+                        className={`${Styles.btn} text-lg mb-10 mt-5 block text-center md:mt-10`}
+                    >Crear un evento</a>
+                </Link>
+                <div className={"md:flex md:flex-wrap md:items-center md:gap-10 md:mt-5"}>
+                    { eventos.length > 0 ? (
+                        eventos.map(evento => (
+                                <Evento
+                                    key={evento.id_evento}
+                                    evento={evento}
+                                />
+                            )
                         )
-                    )
-            ) : (
-                <CrearPrimerEvento />
-            ) }
+                    ) : (
+                        <CrearPrimerEvento />
+                    ) }
+                </div>
+            </div>
         </Layout>
     )
 }

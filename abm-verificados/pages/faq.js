@@ -2,9 +2,6 @@ import Layout from "../layouts/layout";
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
 import UsuarioEliminado from "../components/UsuarioEliminado";
-
-// Demo styles, see 'Styles' section below for some notes on use.
-import 'react-accessible-accordion/dist/fancy-example.css';
 import {
     Accordion,
     AccordionItem,
@@ -41,7 +38,7 @@ export default function Faq() {
             { eliminado !== null && (
                 <UsuarioEliminado />
             ) }
-            <h2 className={"mb-5 text-xl font-semibold"}>Preguntas frecuentes</h2>
+            <h2 className={"mb-5 text-xl font-semibold md:my-10 md:text-center"}>Preguntas frecuentes</h2>
             <Accordion
                 allowMultipleExpanded={true}
                 allowZeroExpanded={true}
@@ -54,7 +51,7 @@ export default function Faq() {
                             ¿Cómo puedo validar mi cuenta?
                         </AccordionItemButton>
                     </AccordionItemHeading>
-                    <AccordionItemPanel>
+                    <AccordionItemPanel className={"px-5 py-8"}>
                         <p>Para validar su cuenta deberá:</p>
                         <ol>
                             <li>Completar los datos de su perfil: Esto lo puede hacer desde el menú en el ícono <button
@@ -79,7 +76,7 @@ export default function Faq() {
                             ¿Los datos de mi cuenta son visibles?
                         </AccordionItemButton>
                     </AccordionItemHeading>
-                    <AccordionItemPanel>
+                    <AccordionItemPanel className={"px-5 py-8"}>
                         <p>Solamente son visibles:</p>
                         <ul>
                             <li>Su número de teléfono (para que los usuarios puedan contactarse con ustedes)</li>
@@ -96,7 +93,7 @@ export default function Faq() {
                             ¿Cómo puedo crear un evento?
                         </AccordionItemButton>
                     </AccordionItemHeading>
-                    <AccordionItemPanel>
+                    <AccordionItemPanel className={"px-5 py-8"}>
                         <p>Para crear nuevos eventos deberá dirigirse a la sección de eventos desde el menú. Ahí vera el botón que dice <b>&#34;crear evento&#34;</b>. En esta sección deberá completar todos los campos para publicar sus eventos</p>
                     </AccordionItemPanel>
                 </AccordionItem>
@@ -108,7 +105,7 @@ export default function Faq() {
                             ¿Puedo crear un evento anterior a la fecha actual?
                         </AccordionItemButton>
                     </AccordionItemHeading>
-                    <AccordionItemPanel>
+                    <AccordionItemPanel className={"px-5 py-8"}>
                         <p>No. Todos los eventos que se crean en la aplicación deben ser futuros (dentro de un par de horas, dias, meses u años)</p>
                     </AccordionItemPanel>
                 </AccordionItem>
@@ -120,7 +117,7 @@ export default function Faq() {
                             ¿Qué es publicar o guardar como borrador?
                         </AccordionItemButton>
                     </AccordionItemHeading>
-                    <AccordionItemPanel>
+                    <AccordionItemPanel className={"px-5 py-8"}>
                         <p>Guardar como borrador le permitirá a usted revisar todo su contenido antes de que los usuario de la aplicación de <b>Unidos</b> puedan verlo. Solo usted puede ver ese evento hasta que lo publique. <br/> Una vez publicado ese evento estará visible para todo usuario de la aplicación</p>
                     </AccordionItemPanel>
                 </AccordionItem>
@@ -132,7 +129,7 @@ export default function Faq() {
                             Publiqué un evento y no lo veo en la aplicación
                         </AccordionItemButton>
                     </AccordionItemHeading>
-                    <AccordionItemPanel>
+                    <AccordionItemPanel className={"px-5 py-8"}>
                         <p>Es posible que no esté publicado debido a que su perfil no esté verificado. O en cuyo coso esté visible en unos minutos <br/> De no ser así comuníquese con nosotros en contacto</p>
                     </AccordionItemPanel>
                 </AccordionItem>
@@ -144,7 +141,7 @@ export default function Faq() {
                             ¿Puedo generar un evento que se repita un día o varios días en la semana?
                         </AccordionItemButton>
                     </AccordionItemHeading>
-                    <AccordionItemPanel>
+                    <AccordionItemPanel className={"px-5 py-8"}>
                         <p>De momento no contamos con esa funcionalidad. Solo se pueden crear eventos que existan una sola vez en la app. En futuras actualizaciones tomaremos en cuenta este punto</p>
                     </AccordionItemPanel>
                 </AccordionItem>
@@ -156,7 +153,7 @@ export default function Faq() {
                             ¿Qué son las noticias?
                         </AccordionItemButton>
                     </AccordionItemHeading>
-                    <AccordionItemPanel>
+                    <AccordionItemPanel className={"px-5 py-8"}>
                         <p>Las noticias es un medio que utilizamos desde <b>Unidos</b> para comentarles las últimas actualizaciones y que estén al tanto de todo lo que ocurre en nuestras distintas aplicaciones</p>
                     </AccordionItemPanel>
                 </AccordionItem>
@@ -168,7 +165,7 @@ export default function Faq() {
                             Olvidé mi contraseña ¿Que hago?
                         </AccordionItemButton>
                     </AccordionItemHeading>
-                    <AccordionItemPanel>
+                    <AccordionItemPanel className={"px-5 py-8"}>
                         <p>Al momento de perder su contraseña deberá completar un formulario y nosotros le restableceremos una provisional que, le sugerimos, que cambie a penas vuelva a iniciar sesión</p>
                     </AccordionItemPanel>
                 </AccordionItem>

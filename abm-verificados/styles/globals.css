@@ -56,3 +56,11 @@ main {
 .text-violeta {
   color: var(--violeta);
 }
+
+input:focus,textarea:focus, select:focus-visible {
+  outline-color: var(--violeta);
+}
+
+.break-all {
+  word-break: break-all;
+}

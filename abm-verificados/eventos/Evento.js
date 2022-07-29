@@ -17,7 +17,7 @@ export default function Evento({evento}) {
             </div>
             <div className={Styles.contenido}>
                 <h2
-                    className={"text-center text-xl my-3 font-semibold"}
+                    className={"text-center text-xl my-3 font-semibold break-all"}
                 >{nombre}</h2>
                 <ul
                     className={"mb-5"}

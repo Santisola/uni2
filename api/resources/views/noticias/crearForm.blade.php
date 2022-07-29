@@ -17,7 +17,7 @@
                     value="{{ old('titulo','') }}"
                 >
                 @error('titulo')
-                    <p class="text-red-800 bg-red-600" id="error-titulo">{{ $message }}</p>
+                    <p class="text-red-800 bg-red-300 py-3 rounded my-10 text-center" id="error-titulo">{{ $message }}</p>
                 @enderror
             </div>
             <div class="w-full md:w-1/2 flex flex-col md:px-1">
@@ -32,7 +32,7 @@
                     value="{{ old('slug','') }}"
                 >
                 @error('slug')
-                <p class="text-red-800 bg-red-600" id="error-slug">{{ $message }}</p>
+                <p class="text-red-800 bg-red-300 py-3 rounded my-10 text-center" id="error-slug">{{ $message }}</p>
                 @enderror
             </div>
             <div class="mt-5 flex flex-col md:px-1 w-full">
@@ -45,7 +45,7 @@
                     @error('contenido') aria-describedby="error-contenido" @enderror
                 >{{ old('contenido','') }}</textarea>
                 @error('contenido')
-                    <p class="text-red-800 bg-red-600" id="error-contenido">{{ $message }}</p>
+                    <p class="text-red-800 bg-red-300 py-3 rounded my-10 text-center" id="error-contenido">{{ $message }}</p>
                 @enderror
             </div>
             <div class="mt-5 flex flex-col md:px-1 w-full">
@@ -60,7 +60,7 @@
                     @error('imagen') aria-describedby="error-imagen" @enderror
                 >
                 @error('imagen')
-                    <p class="text-red-800 bg-red-600" id="error-imagen">{{ $message }}</p>
+                    <p class="text-red-800 bg-red-300 py-3 rounded my-10 text-center" id="error-imagen">{{ $message }}</p>
                 @enderror
             </div>
             <input type="hidden" name="publicado" id="publicado">

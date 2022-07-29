@@ -16,19 +16,19 @@ export default function Detalle({
 })
     {
     return (
-        <>
+        <div className={"md:my-10"}>
             <Breadcrum
                 link={'/eventos'}
                 anterior={'Eventos'}
                 actual={nombre}
             />
-            <div>
+            <div className={Styles.imagen}>
                 <picture>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={process.env.API_IMAGEN + imagen} alt={`${nombre}. Imagen del evento`} />
                 </picture>
             </div>
-            <h2 className={"text-xl text-center font-semibold my-5"}>{nombre}</h2>
+            <h2 className={"text-xl text-center font-semibold my-5 break-all"}>{nombre}</h2>
             <p className={Styles.descripcion}>{descripcion}</p>
             <dl className={"mt-5"}>
                 <dt className={"font-bold"}>Fechas:</dt>
@@ -47,11 +47,13 @@ export default function Detalle({
                 <li className={"text-sm"}>Creado el: <span className={Styles.timestamp}>{dateTime(created_at)}</span></li>
                 <li className={"text-sm"}>Última modificación: <span className={Styles.timestamp}>{dateTime(updated_at)}</span></li>
             </ul>
-            <button
-                type={"button"}
-                className={Styles.boton}
-                onClick={() => setEditar(true)}
-            >Modificar</button>
-        </>
+            <div className={"md:flex md:justify-end md:items-center"}>
+                <button
+                    type={"button"}
+                    className={Styles.boton}
+                    onClick={() => setEditar(true)}
+                >Modificar</button>
+            </div>
+        </div>
     )
 }

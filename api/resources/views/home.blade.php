@@ -23,7 +23,11 @@
                         </dl>
                         <dl class="w-full mt-3">
                             <dt class="font-semibold">Creada por:</dt>
-                            <dd>{{ $result->verificado->nombre ?? $result->verificado->razon_social }}</dd>
+                            @if($result->verificado->nombre)
+                                <dd>{{ $result->verificado->nombre }} - <span class="font-semibold">{{ $result->verificado->razon_social }}</span></dd>
+                            @else
+                                <dd class="font-semibold">{{ $result->verificado->razon_social }}</dd>
+                            @endif
                         </dl>
                     </div>
                 @elseif($result->id_verificado)
@@ -39,9 +43,9 @@
                             <dt class="sr-only">Cuit:</dt>
                             <dd class="mb-5">{{ $result->cuit }}</dd>
                             <dt class="sr-only">Razón social:</dt>
-                            <dd class="mb-5">{{ $result->razon_social }}</dd>
+                            <dd class="mb-5 font">{{ $result->razon_social }}</dd>
                             <dt class="font-semibold">Nombre visible:</dt>
-                            <dd>{{ $result->nombre ?? '-' }}</dd>
+                            <dd>{{ $result->nombre ?? '' }}</dd>
                         </dl>
                         <dl>
                             <dt class="font-semibold">Contacto:</dt>

@@ -23,7 +23,7 @@ export default function Comentarios({comentario}) {
                 <p className={"font-semibold"}>{ nombre ?? razon_social }</p>
             </div>
         </div>
-        <p className={"text-base mt-3"}>{comentario['comentario']}</p>
+        <p className={"text-base mt-3 md:pl-10"}>{comentario['comentario']}</p>
         <div className={"flex justify-end items-center"}>
             <p className={"text-xs text-gray-500 mt-1"}>{ created_at === updated_at ? fecha(created_at) : 'Editado ' + fecha(updated_at) }</p>
         </div>

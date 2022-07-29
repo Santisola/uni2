@@ -64,3 +64,17 @@
 .button.open span::after {
     transform: translatey(-1px) rotate(-50deg);
 }
+
+@media (min-width: 911px) {
+    .button {
+        display: none;
+    }
+
+    .pagina {
+        margin: 0 100px 0 300px;
+    }
+
+    .logo {
+        margin-left: 400px;
+    }
+}

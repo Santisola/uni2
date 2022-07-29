@@ -31,13 +31,15 @@ export default function Noticias({noticias}) {
             { eliminado !== null && (
                 <UsuarioEliminado />
             ) }
-            <h2 className={"text-xl font-semibold my-10"}>Novedades para mantenerlo informado</h2>
-            { noticias.map((noticia, index) => (
-                <Noticia
-                    key={noticia.id ? noticia.id : index}
-                    noticia={noticia}
-                />
-            ))}
+            <h2 className={"text-xl font-semibold my-10 md:text-center"}>Novedades para mantenerlo informado</h2>
+            <div className={"md:flex md:flex-wrap md:items-center md:gap-10"}>
+                { noticias.map((noticia, index) => (
+                    <Noticia
+                        key={noticia.id ? noticia.id : index}
+                        noticia={noticia}
+                    />
+                ))}
+            </div>
         </Layout>
     )
 }

@@ -20,6 +20,8 @@ function GoogleMaps({ setLatitud, setLongitud, latitud, longitud, errorDireccion
     const [autocompletar, setAutocompletar] = useState({});
     const [center, setCenter] = useState({ lat: Number(-34.595951217761645), lng: Number(-58.456828095751796) });
     const [error, setError] = useState('');
+    const [zoom, setZoom] = useState(16);
+    const [maxHeight, setMaxHeight] = useState('100%');
 
     /** @type React.MutableRefObject<HTMLInputElement> */
     const lugar = useRef();
@@ -29,9 +31,21 @@ function GoogleMaps({ setLatitud, setLongitud, latitud, longitud, errorDireccion
             setCenter({
                 lat: Number(latitud),
                 lng: Number(longitud)
-            })
+            });
         }
-    },[latitud, longitud]);
+
+    }, [direccion, latitud, longitud]);
+
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            const media = window.matchMedia('(min-width: 911px)');
+
+            if (media.matches) {
+                setZoom(15);
+                setMaxHeight('500px')
+            }
+        }
+    },[])
 
     if (!isLoaded) return <PawLoader />
 
@@ -121,8 +135,8 @@ function GoogleMaps({ setLatitud, setLongitud, latitud, longitud, errorDireccion
             </div>
             <GoogleMap
                 center={center}
-                zoom={16}
-                mapContainerStyle={{ width: '100vw', height: '100vh', maxWidth: "100%", maxHeight: "100%" }}
+                zoom={zoom}
+                mapContainerStyle={{ width: '100vw', height: '100vh', maxWidth: "100%", maxHeight: maxHeight }}
                 options={{
                     zoomControl: true,
                     streetViewControl: false,

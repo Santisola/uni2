@@ -2,6 +2,7 @@ import {useState} from "react";
 import Styles from '../styles/LoginForm.module.css';
 import Mensaje from "../components/Mensaje";
 import {validateEmail} from "../helpers";
+import Image from "next/image";
 
 export default function FormLogin({ router, setLoader }) {
     const [cuit,setCuit] = useState('');
@@ -13,6 +14,7 @@ export default function FormLogin({ router, setLoader }) {
     const [errorEmail, setErrorEmail] = useState('');
     const [errorPassword, setErrorPassword] = useState('');
     const [disabled, setDisabled] = useState(false);
+    const [togglePassword, setTogglePassword] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -185,7 +187,7 @@ export default function FormLogin({ router, setLoader }) {
                     className={"text-lg"}
                     htmlFor={"password"}>Contraseña</label>
                 <input
-                    type={"password"}
+                    type={ !togglePassword ? "password" : "text" }
                     name={"password"}
                     id={"password"}
                     value={password}
@@ -193,6 +195,18 @@ export default function FormLogin({ router, setLoader }) {
                     placeholder={"Ingrese su contraseña aquí"}
                     disabled={disabled}
                 />
+                <button
+                    onClick={ () => setTogglePassword( !togglePassword ) }
+                    className={Styles.ojo}
+                    type={"button"}
+                >
+                    {
+                        togglePassword ?
+                            <Image layout={"fixed"} width={48} height={48} src={"/imgs/eye.svg"} alt={"ocultar contraseña"} />
+                            :
+                            <Image layout={"fixed"} width={48} height={48} src={"/imgs/eye-closed.svg"} alt={"ver contraseña"} />
+                    }
+                </button>
                 { errorPassword !== '' && (
                     <div className={"mt-3 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"} role={"alert"}>
                         <p className={"text-center"}>{errorPassword}</p>

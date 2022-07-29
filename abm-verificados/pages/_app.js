@@ -1,4 +1,5 @@
-import '../styles/globals.css'
+import '../styles/globals.css';
+import '../styles/accordions.css';
 
 function MyApp({ Component, pageProps }) {
   

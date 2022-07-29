@@ -30,7 +30,7 @@ export default function Contacto() {
             { eliminado !== null && (
                 <UsuarioEliminado />
             ) }
-            <h2 className={"mb-5 text-xl font-semibold"}>Complete los campos</h2>
+            <h2 className={"mb-5 text-xl font-semibold md:my-10 md:text-center"}>Complete los campos</h2>
             <FormContacto />
         </Layout>
     )

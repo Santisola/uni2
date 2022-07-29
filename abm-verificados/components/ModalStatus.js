@@ -11,11 +11,11 @@ export default function ModalStatus({ setModal }) {
         <div
             className={"w-screen h-screen bg-slate-900/75 fixed z-10 flex items-center justify-center inset-0"}
         >
-            <div className={"w-4/5 bg-white relative py-10 px-5 rounded-lg"}>
+            <div className={"w-4/5 bg-white relative py-10 px-5 rounded-lg md:max-w-lg md:p-10"}>
                 <button
                     aria-describedby={"cerrar modal"}
                     onClick={() => setModal(false)}
-                    className={`${Styles.close} text-amber-400 py-5 rounded-full z-10`}
+                    className={`${Styles.close} text-violeta py-5 rounded-full z-10`}
                 >X</button>
                 { datos[0].telefono && datos[0].imagen && datos[0].nombre ? (
                     <p className={"font-semibold"}>Gracias por completar sus datos. <br/>Nos contactaremos con usted a la brevedad</p>

@@ -37,7 +37,7 @@ export default function NuevoEvento() {
             { loader && (
                 <PawLoader />
             )}
-            <h2 className={"text-xl font-semibold text-center my-10"}>Cree aquí su evento</h2>
+            <h2 className={"text-xl font-semibold text-center my-10 md:hidden"}>Cree aquí su evento</h2>
             <div className={"mt-5"}>
                 <FormEvento
                     setSuccess={setSuccess}

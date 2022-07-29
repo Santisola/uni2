@@ -58,7 +58,7 @@ export default function FormComentario({ usuario, id_noticia, setComentarios }) 
             </div>
             <form
                 onSubmit={handleSubmit}
-                className={"bg-gray-300 p-1"}
+                className={`${Styles.form} bg-gray-300 p-1`}
             >
                 <label
                     htmlFor={"comentario"}

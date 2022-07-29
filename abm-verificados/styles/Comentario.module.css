@@ -16,3 +16,11 @@
 .nombre {
     padding-left: 20px;
 }
+
+@media (min-width: 911px) {
+    .form button {
+        width: fit-content;
+        margin-left: auto;
+        padding: 8px 30px;
+    }
+}

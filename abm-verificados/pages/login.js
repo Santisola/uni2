@@ -30,13 +30,15 @@ export default function Login() {
                 <PawLoader />
             )}
             <div className={`${Styles.background} flex justify-center items-center w-screen h-screen flex-col`}>
-                <Image layout={"fixed"} width={215} height={72} src={"/imgs/logo.svg"} alt={"Logo Unidos"} />
-                <h2 className={"text-center text-2xl my-5"}>Iniciar Sesión</h2>
-                <FormLogin
-                    router={router}
-                    setLoader={setLoader}
-                />
-                <p>¿No tiene cuenta? <Link href={"/register"}><a className={Styles.registrarme}>Registrarme</a></Link></p>
+                <div className={"container mx-auto flex flex-col justify-center items-center md:shadow md:rounded md:border"}>
+                    <Image layout={"fixed"} width={215} height={72} src={"/imgs/logo.svg"} alt={"Logo Unidos"} />
+                    <h2 className={"text-center text-2xl my-5"}>Iniciar Sesión</h2>
+                    <FormLogin
+                        router={router}
+                        setLoader={setLoader}
+                    />
+                    <p>¿No tiene cuenta? <Link href={"/register"}><a className={Styles.registrarme}>Registrarme</a></Link></p>
+                </div>
             </div>
         </>
     )

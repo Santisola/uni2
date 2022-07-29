@@ -3,8 +3,9 @@ import {useEffect, useState} from "react";
 
 export default function MenuDatosUsuario({datosUsuario}) {
     const [datos, setDatos] = useState({
-        razon_social: 'Nombre Apellido',
+        razon_social: 'Razón Social',
         email: 'email@correo.com',
+        nombre: null,
         imagen: null,
         tel: null,
     });
@@ -13,6 +14,7 @@ export default function MenuDatosUsuario({datosUsuario}) {
         setDatos({
             razon_social: datosUsuario.razon_social,
             email: datosUsuario.email,
+            nombre: datosUsuario.nombre,
             imagen: datosUsuario.imagen,
             tel: datosUsuario.telefono
         });
@@ -30,14 +32,17 @@ export default function MenuDatosUsuario({datosUsuario}) {
             }
             <div className={"overflow-hidden"}>
                 <p className={"text-white text-lg font-semibold"}>{datos.razon_social}</p>
-                {datos.email?.length > 20 ? (
+                {/*{ datos.email?.length > 20 ? (
                     <div className={"flex"}>
                         <p className={`${Styles.email} text-white mr-5`}>{datos.email}</p>
                         <p className={`${Styles.email} text-white`}>{datos.email}</p>
                     </div>
                 ) : (
                     <p className={"text-white"}>{datos.email}</p>
-                )}
+                )}*/}
+                { datos.nombre && (
+                    <p className={"text-white text-center"}>{ datos.nombre }</p>
+                ) }
             </div>
         </div>
     )

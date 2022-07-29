@@ -47,41 +47,43 @@ export default function EntradaNoticia({noticia}) {
             title={titulo}
             datosUsuario={usuario}
         >
-            <Breadcrum
-                link={'/noticias'}
-                anterior={'Noticias'}
-                actual={titulo}
-            />
-            <div>
-                <picture>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                        src={process.env.API_IMAGEN + '/public/imgs/noticias/' + imagen}
-                        alt={`${titulo} - noticia`}
-                    />
-                </picture>
+            <div className={"md:my-10"}>
+                <Breadcrum
+                    link={'/noticias'}
+                    anterior={'Noticias'}
+                    actual={titulo}
+                />
+                <div className={Styles.imagen}>
+                    <picture>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                            src={process.env.API_IMAGEN + '/public/imgs/noticias/' + imagen}
+                            alt={`${titulo} - noticia`}
+                        />
+                    </picture>
+                </div>
+                <h2 className={"text-xl font-semibold mt-5 md:text-3xl"}>{titulo}</h2>
+                <small className={"block mt-3 mb-5 text-gray-400 text-sm"}>Publicado {fecha(created_at)}</small>
+                <p className={Styles.contenido}>{contenido}</p>
+                <hr className={"mb-10 mt-5"}/>
+                {
+                    comentarios.length > 0 && (
+                        <div className={"flex flex-col bg-gray-300 rounded-t-md p-5 gap-y-4"}>
+                            {comentarios.map(comentario => (
+                                <Comentarios
+                                    key={comentario['id_comentario']}
+                                    comentario={comentario}
+                                />
+                            ))}
+                        </div>
+                    )
+                }
+                <FormComentario
+                    usuario={usuario}
+                    id_noticia={noticia['id_noticia']}
+                    setComentarios={setComentarios}
+                />
             </div>
-            <h2 className={"text-xl font-semibold mt-5"}>{titulo}</h2>
-            <small className={"block mt-3 mb-5 text-gray-400 text-sm"}>Publicado {fecha(created_at)}</small>
-            <p className={Styles.contenido}>{contenido}</p>
-            <hr className={"mb-10 mt-5"}/>
-            {
-                comentarios.length > 0 && (
-                    <div className={"flex flex-col bg-gray-300 rounded-t-md p-5 gap-y-4"}>
-                        {comentarios.map(comentario => (
-                            <Comentarios
-                                key={comentario['id_comentario']}
-                                comentario={comentario}
-                            />
-                        ))}
-                    </div>
-                )
-            }
-            <FormComentario
-                usuario={usuario}
-                id_noticia={noticia['id_noticia']}
-                setComentarios={setComentarios}
-            />
         </Layout>
     )
 }

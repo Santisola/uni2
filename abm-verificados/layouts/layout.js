@@ -2,8 +2,23 @@ import Head from "next/head";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Styles from '../styles/Layout.module.css';
+import {useEffect, useState} from "react";
 
 export default function Layout({ children, pagina, title, datosUsuario }) {
+    const [mobile, setMobile] = useState(true);
+
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            const viewport = window.matchMedia('(min-width: 911px)');
+
+            if (viewport.matches) {
+                setMobile(false);
+            } else {
+                setMobile(true);
+            }
+        }
+    },[]);
+
     return(
         <>
             <Head>

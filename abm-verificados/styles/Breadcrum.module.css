@@ -22,3 +22,9 @@
     font-weight: 400;
     padding-left: 5px;
 }
+
+@media (min-width: 991px) {
+    .bread {
+        font-size: 1.125rem;
+    }
+}
