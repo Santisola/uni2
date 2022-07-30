@@ -1,5 +1,5 @@
 <template>
-    <nav v-if="$route.path != '/login' && $route.path != '/registro'">
+    <nav v-if="$route.path != '/login' && $route.path != '/registro' && !$route.path.includes('/olvide-mi-contra')">
         <div id="navbar">
             <ul>
                 <li><router-link to="/">Inicio</router-link></li>

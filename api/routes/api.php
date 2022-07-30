@@ -55,6 +55,7 @@ Route::post('/registro', [AuthController::class, 'registrar']);
 
 Route::post('/generar-token', [PasswordResetsController::class, 'generarToken']);
 Route::post('/validar-token', [PasswordResetsController::class, 'validarToken']);
+Route::put('/reestablecer-contra', [PasswordResetsController::class, 'reestablecerContra']);
 
 /**
  * CMS Usuarios verificados

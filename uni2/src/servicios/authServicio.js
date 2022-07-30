@@ -108,6 +108,34 @@ const authServicio = {
 
         return respuesta;
     },
+
+    validateToken: async function(data){
+        const fetchRes = await fetch(API + '/validar-token', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+        });
+        const respuesta = await fetchRes.json();
+
+        return respuesta;
+    },
+
+    reestablecerContra: async function(data){
+        const fetchRes = await fetch(API + '/reestablecer-contra', {
+            method: 'PUT',
+            body: JSON.stringify(data),
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+        });
+        const respuesta = await fetchRes.json();
+
+        return respuesta;
+    },
     
     /**
      * Retorna un objeto con los datos del usuario autenticado
