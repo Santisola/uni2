@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OlvideMiContra;
 use App\Models\User;
 use Error;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class PasswordResetsController extends Controller
 {
@@ -39,6 +41,9 @@ class PasswordResetsController extends Controller
         }
 
         $token = (string)rand(0,9) . (string)rand(0,9) . (string)rand(0,9) . (string)rand(0,9) . (string)rand(0,9) . (string)rand(0,9);
+
+        $mail = new OlvideMiContra($token);
+        Mail::to($request->email)->send($mail);
 
         DB::table('password_resets')->insert([
             'email' => $request->email,
