@@ -51,8 +51,6 @@ class PasswordResetsController extends Controller
             'created_at' => now()
         ]);
 
-        // TODO: MANDAR EL MAIL QUE TE MANDE PARA EL FORM DE LARAVEL
-
         return response()->json([
             'success' => true,
             'u' => $usuario

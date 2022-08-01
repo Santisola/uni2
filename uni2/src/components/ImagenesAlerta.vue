@@ -26,12 +26,16 @@ export default {
     },
     computed: {
         imgPrincipal: function(){
-            return this.esEvento ? EVENTOS_IMG_PATH + this.imgs : IMG_PATH + this.imgs[0].imagen;
+            const goodImg = this.esEvento ? this.imgs.replace('public/', '') : null;
+            console.log(goodImg);
+            return this.esEvento ? EVENTOS_IMG_PATH + goodImg : IMG_PATH + this.imgs[0].imagen;
         }
     },
     methods: {
         imgRoute: function(img){
-            return this.isEvento ? EVENTOS_IMG_PATH + img : IMG_PATH + img
+            const goodImg = this.esEvento ? img.replace('public/', '') : null;
+            console.log(goodImg);
+            return this.esEvento ? EVENTOS_IMG_PATH + goodImg : IMG_PATH + img
         }
     },
 }
