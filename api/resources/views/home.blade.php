@@ -59,7 +59,7 @@
                     <div class="flex flex-col justify-between items-center w-full py-5 px-10 mb-5 card shadow-lg rounded-lg {{ $result->tipoalerta->id_tipoalerta === 1 ? 'perdida' : 'encontrada' }}">
                         <div class="container-img">
                             @if($result->imagenes)
-                                <img class="img-evento border rounded border-2 border-{{ $result->tipoalerta->id_tipoalerta === 1 ? 'perdida' : 'encontrada' }}" src="{{ asset('imgs/mascotas/' . strtok($result->imagenes, '|')) }}" alt="Imagen mascota perdida">
+                                <img class="img-evento border rounded border-2 border-{{ $result->tipoalerta->id_tipoalerta === 1 ? 'perdida' : 'encontrada' }}" src="{{ asset('imgs/mascotas/' . $result->imagenes[0]) }}" alt="Imagen mascota perdida">
                             @else
                                 <img class="img-evento border rounded-full border-2 border-{{ $result->tipoalerta->id_tipoalerta === 1 ? 'perdida' : 'encontrada' }}" src="{{ asset('imgs/icono-mascota-default.jpg') }}" alt="Default usuario">
                             @endif

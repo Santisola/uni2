@@ -34,6 +34,18 @@ class AdminController extends Controller
             ->with(['tipoalerta', 'especie', 'raza', 'sexo', 'usuario'])
             ->get();
 
+        foreach ($c as $alerta){
+            $imgs = AlertaImg::all()->where('id_alerta', $alerta->id_alerta);
+            $formatImgs = [];
+            foreach($imgs as $img){
+                $formatImgs[] = $img->imagen;
+            }
+
+            $alerta['imagenes'] = $formatImgs;
+        }
+
+
+
         $d = Usuarios::latest()
             ->take(5)
             ->get();
