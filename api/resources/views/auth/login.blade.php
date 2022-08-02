@@ -15,31 +15,19 @@
     <div id="carrousel">
         <div class="owl-carousel owl-theme">
             <div class="item">
-                <img src="https://images.pexels.com/photos/5749807/pexels-photo-5749807.jpeg" alt="img1">
+                <img src="{{ asset('/imgs/slider-login/login-slide-1.jpg') }}" alt="img1">
             </div>
             <div class="item">
-                <img src="https://images.pexels.com/photos/1364756/pexels-photo-1364756.jpeg" alt="img2">
+                <img src="{{ asset('/imgs/slider-login/login-slide-2.jpg') }}" alt="img2">
             </div>
             <div class="item">
-                <img src="https://images.pexels.com/photos/1612861/pexels-photo-1612861.jpeg" alt="img3">
+                <img src="{{ asset('/imgs/slider-login/login-slide-3.jpg') }}" alt="img3">
             </div>
             <div class="item">
-                <img src="https://images.pexels.com/photos/1143005/pexels-photo-1143005.jpeg" alt="img4">
+                <img src="{{ asset('/imgs/slider-login/login-slide-4.jpg') }}" alt="img4">
             </div>
             <div class="item">
-                <img src="https://images.pexels.com/photos/2745151/pexels-photo-2745151.jpeg" alt="img5">
-            </div>
-            <div class="item">
-                <img src="https://images.pexels.com/photos/2666154/pexels-photo-2666154.jpeg" alt="img6">
-            </div>
-            <div class="item">
-                <img src="https://images.pexels.com/photos/532310/pexels-photo-532310.jpeg" alt="img7">
-            </div>
-            <div class="item">
-                <img src="https://images.pexels.com/photos/963714/pexels-photo-963714.jpeg" alt="img8">
-            </div>
-            <div class="item">
-                <img src="https://images.pexels.com/photos/6001183/pexels-photo-6001183.jpeg" alt="img9">
+                <img src="{{ asset('/imgs/slider-login/login-slide-5.jpg') }}" alt="img5">
             </div>
         </div>
     </div>
