@@ -370,7 +370,6 @@ export default {
                     limit: 5,
                     q: this.direccion
                 }, (res) => {
-                    console.log(res)
                     this.suggestions = res.items;
                     if(res.items.length > 0) this.showSuggestions = true;
                 }, (err) => {

@@ -20,7 +20,7 @@ class EventosSeeder extends Seeder
             [
                 'id_evento' => 1,
                 'nombre' => 'Día de adopción',
-                'descripcion' => Str::random(250),
+                'descripcion' => "La Jornada de Concientización sobre la Adopción de Mascotas es un evento donde participan más de 75 ONGs que dan a conocer su labor, y a los perros y gatos que están en adopción. Además se reciben donaciones y se podrán incorporar nuevos voluntarios.",
                 'latitud' => -34.634124,
                 'longitud' => -58.493567,
                 'direccion' => 'Dirección al azar 1324',
@@ -67,8 +67,8 @@ class EventosSeeder extends Seeder
             ],
             [
                 'id_evento' => 4,
-                'nombre' => Str::random(20),
-                'descripcion' => Str::random(250),
+                'nombre' => "¡Revisión médica gratuita para tu mascota!",
+                'descripcion' => "Al igual que las personas, las mascotas necesitan una buena alimentación, ejercicio y un chequeo médico periódico para cuidar su salud. Desde cachorros hasta la vejez, mantener una rutina anual es vital para prevenir y detectar enfermedades. Un pronóstico precoz, además, garantiza un tratamiento más sencillo, una recuperación más rápida y un ahorro en los gastos veterinarios. Por estas razones, es importante no olvidar la cita para llevar a las mascotas a su chequeo médico de todos los años.",
                 'latitud' => -34.634111,
                 'longitud' => -58.493111,
                 'direccion' => 'Falso 1234',

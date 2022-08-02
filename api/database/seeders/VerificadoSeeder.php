@@ -27,6 +27,7 @@ class VerificadoSeeder extends Seeder
                'imagen' => null,
                'status' => false,
                'deleted_at' => null,
+               'telefono' => '541167246466',
                'created_at' => Carbon::now('UTC')->format('Y-m-d H:i:s'),
                'updated_at' => Carbon::now('UTC')->format('Y-m-d H:i:s')
            ],

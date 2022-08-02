@@ -19,6 +19,3 @@ new Vue({
 }).$mount('#app')
 
 Vue.use(VueCordova);
-
-console.log(Vue.cordova);
-console.log(Vue.cordova.plugins);
