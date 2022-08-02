@@ -4,23 +4,36 @@
 @extends('layouts.main')
 @section('title','UNIDOS | Detalle Evento')
 @section('main')
-    <div class="container-2xl mb-5">
+    <div id="evento" class="container-2xl mb-5">
         <h1 class="text-center text-violet-800 font-bold text-3xl mb-5">{{ $evento->titulo }}</h1>
-        <div class="text-center w-full">
-            <img class="max-w-4xl mx-auto w-full" src="{{ asset(str_replace('public/','',$evento->imagen)) }}" alt="{{ $evento->nombre }} imagen">
+        <div class="flex flex-wrap">
+            <div class="text-center md:w-1/2 w-full">
+                <img class="max-w-4xl mx-auto w-full" src="{{ asset(str_replace('public/','',$evento->imagen)) }}" alt="{{ $evento->nombre }} imagen">
+            </div>
+            <div class="text-center md:w-1/2 w-full px-10 flex flex-col justify-between">
+                <div>
+                    <h2 class="mt-5 text-2xl font-bold text-violet-800 mb-10">{{ $evento->nombre }}</h2>
+                    <p class="mt-2 whitespace-pre-line mb-10 break-words detalle md:text-start">{{ $evento->descripcion }}</p>
+                    <ul class="mt-10">
+                        <li class="text-sm text-zinc-500">Dirección: {{ $evento->direccion }}</li>
+                        <li class="mt-2 text-sm text-zinc-500">Fecha de creación: {{ date('d/m/Y H:i:s', strtotime($evento->created_at)) }}</li>
+                        <li class="mt-2 text-sm text-zinc-500">Última modificación: {{ date('d/m/Y H:i:s', strtotime($evento->updated_at)) }}</li>
+                    </ul>
+                    <iframe class="iframe-google" src="https://maps.google.com/maps?q={{$evento->latitud}},{{$evento->longitud}}&z=15&output=embed" frameborder="0" style="border:0" allowfullscreen></iframe>
+                </div>
+            </div>
         </div>
-        <ul class="mt-5">
-            {{--@if($evento->publicado === 1)
-            <li class="rounded border border-double w-fit border-4 border-violet-800 px-3 px-2 bg-violet-800 text-white">Status: Publicado</li>
-            @else
-                <li class="rounded border border-2 w-fit border-violet-800 px-3 px-2 text-violet-800">Status: Borrador</li>
-            @endif--}}
-            <li class="mt-3 text-sm text-zinc-500">Dirección: {{ $evento->direccion }}</li>
-            <li class="mt-3 text-sm text-zinc-500">Fecha de creación: {{ date('d/m/Y H:i:s', strtotime($evento->created_at)) }}</li>
-            <li class="text-sm text-zinc-500">Última modificación: {{ date('d/m/Y H:i:s', strtotime($evento->updated_at)) }}</li>
-        </ul>
-        <h2 class="mt-5 text-2xl font-bold text-violet-800">Nota:</h2>
-        <p class="mt-2 whitespace-pre-line mb-10 break-words detalle">{{ $evento->descripcion }}</p>
-        <!-- TODO: "eliminar" evento -->
+        @if($evento->deleted_at)
+            <form action="{{ route('eventos.restaurar', ['evento' => $evento->id_evento]) }}">
+                @csrf
+                <button type="submit" class="w-full px-3 py-3 px-2 rounded text-center bg-green-600 hover:bg-green-700 hover:ease-in-out transition duration-300 text-white mt-5">Restaurar</button>
+            </form>
+        @else
+            <form action="{{ route('eventos.eliminar', ['evento' => $evento->id_evento]) }}" method="post">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="rounded text-center py-3 px-2 block w-full bg-red-500 hover:bg-red-600 transition hover:ease-in-out duration-300 eliminar mt-5">Eliminar</button>
+            </form>
+        @endif
     </div>
 @endsection

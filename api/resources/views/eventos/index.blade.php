@@ -49,17 +49,21 @@
                 </div>
             </dl>
             <div class="flex flex-col">
+<<<<<<< HEAD
                 <a class="rounded text-center py-3 px-2 mt-3 block w-full bg-yellow-500 hover:bg-yellow-600 transition hover:ease-in-out duration-300 md:w-100 w-full" href="{{ route('eventos.detalle', ['evento' => $evento->id_evento]) }}">Detalle</a>
+=======
+                <a class="rounded text-center py-3 px-2 mt-3 block w-full bg-yellow-500 hover:bg-yellow-600 transition hover:ease-in-out duration-300 w-full" href="{{ route('eventos.detalle', ['evento' => $evento->id_evento]) }}">Detalle</a>
+>>>>>>> ee3d8c4b94301c0aa0897ced12ca9d87bc6db33d
                 @if($evento->deleted_at)
-                    <form action="{{ route('eventos.restaurar', ['evento' => $evento->id_verificado]) }}">
+                    <form action="{{ route('eventos.restaurar', ['evento' => $evento->id_evento]) }}">
                         @csrf
-                        <button type="submit" class="w-full px-3 py-3 px-2 my-3 rounded text-center bg-green-600 hover:bg-green-700 hover:ease-in-out transition duration-300 text-white">Restaurar</button>
+                        <button type="submit" class="w-full px-3 py-3 px-2 my-3 rounded text-center bg-green-600 hover:bg-green-700 hover:ease-in-out transition duration-300 text-white w-full">Restaurar</button>
                     </form>
                 @else
                     <form action="{{ route('eventos.eliminar', ['evento' => $evento->id_evento]) }}" method="post">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="rounded text-center py-3 px-2 my-3 block w-full bg-red-500 hover:bg-red-600 transition hover:ease-in-out duration-300 eliminar">Eliminar</button>
+                        <button type="submit" class="rounded text-center py-3 px-2 my-3 block w-full bg-red-500 hover:bg-red-600 transition hover:ease-in-out duration-300 eliminar w-full">Eliminar</button>
                     </form>
                 @endif
             </div>
