@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alerta;
+use App\Models\AlertaImg;
 use App\Models\Contacto;
 use App\Models\Eventos;
 use App\Models\Noticias;
@@ -89,6 +90,21 @@ class AdminController extends Controller
         return view('eventos.detalle', compact('evento'));
     }
 
+    public function detalleAlerta(int $id_alerta)
+    {
+        $alerta = Alerta::findOrFail($id_alerta);
+
+        $imgs = AlertaImg::all()->where('id_alerta', $alerta->id_alerta);
+        $formatImgs = [];
+        foreach($imgs as $img){
+            $formatImgs[] = $img->imagen;
+        }
+
+        $alerta['imagenes'] = $formatImgs;
+
+        return view('alertas.detalle', compact('alerta'));
+    }
+
     public function eliminarEvento(int $evento): RedirectResponse
     {
         try {
@@ -131,6 +147,16 @@ class AdminController extends Controller
         $alertas = Alerta::orderBy('created_at', 'DESC')
             ->with(['tipoalerta','raza','especie','sexo'])
             ->paginate(25);
+
+        foreach ($alertas as $alerta){
+            $imgs = AlertaImg::all()->where('id_alerta', $alerta->id_alerta);
+            $formatImgs = [];
+            foreach($imgs as $img){
+                $formatImgs[] = $img->imagen;
+            }
+
+            $alerta['imagenes'] = $formatImgs;
+        }
 
         return view('alertas.index', compact('alertas'));
     }

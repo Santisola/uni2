@@ -70,6 +70,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('/alertas')->group(function () {
         Route::get('/', [AdminController::class, 'listadoAlertas'])->name('alertas');
+
+        Route::get('/detalle/{alerta}', [AdminController::class, 'detalleAlerta'])->name('alertas.detalle');
+
+        Route::delete('/eliminar/{alerta}', [AdminController::class, 'eliminarEvento'])->name('alertas.eliminar');
+        Route::get('/restaurar/{alerta}', [AdminController::class, 'eventosDesbloquear'])->name('alertas.restaurar');
     });
 
     Route::prefix('/contacto')->group(function () {
