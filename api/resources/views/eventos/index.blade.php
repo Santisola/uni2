@@ -49,7 +49,7 @@
                 </div>
             </dl>
             <div class="flex flex-col">
-                <a class="rounded text-center py-3 px-2 mt-3 block w-full bg-yellow-500 hover:bg-yellow-600 transition hover:ease-in-out duration-300 md:w-fit w-full" href="{{ route('eventos.detalle', ['evento' => $evento->id_evento]) }}">Detalle</a>
+                <a class="rounded text-center py-3 px-2 mt-3 block w-full bg-yellow-500 hover:bg-yellow-600 transition hover:ease-in-out duration-300 md:w-100 w-full" href="{{ route('eventos.detalle', ['evento' => $evento->id_evento]) }}">Detalle</a>
                 @if($evento->deleted_at)
                     <form action="{{ route('eventos.restaurar', ['evento' => $evento->id_verificado]) }}">
                         @csrf
