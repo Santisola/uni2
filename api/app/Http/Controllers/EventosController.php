@@ -86,7 +86,8 @@ class EventosController extends Controller
     {
         try {
 
-            $eventos = Eventos::orderBy('updated_at','desc')
+            $eventos = Eventos::withTrashed()
+                ->orderBy('updated_at','desc')
                 ->where('id_verificado',$usuario)
                 ->get();
 

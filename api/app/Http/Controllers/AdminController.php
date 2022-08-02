@@ -85,7 +85,7 @@ class AdminController extends Controller
 
     public function detalleEvento(int $id_evento)
     {
-        $evento = Eventos::findOrFail($id_evento);
+        $evento = Eventos::withTrashed()->findOrFail($id_evento);
         return view('eventos.detalle', compact('evento'));
     }
 
