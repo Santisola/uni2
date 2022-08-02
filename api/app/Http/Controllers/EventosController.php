@@ -57,7 +57,10 @@ class EventosController extends Controller
 
             $telefono = Verificados::findOrFail($evento->id_verificado)
                 ->select('telefono')
-                ->get();
+                ->get()
+                ->first();
+
+            $evento['telefono'] = $telefono['telefono'];
 
             return response()->json([
                 'success' => true,
