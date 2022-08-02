@@ -4,9 +4,9 @@
 @extends('layouts.main')
 @section('title','UNIDOS | Alertas')
 @section('main')
-    <h1 class="text-center text-3xl mb-10 text-violet-800 font-bold">Eventos</h1>
+    <h1 class="text-center text-3xl mb-10 text-violet-800 font-bold">Alertas</h1>
     @forelse($alertas as $alerta)
-        <div class="flex flex-col md:flex-row flex-wrap justify-between items-center w-full py-5 px-10 mb-5 tableta shadow-lg rounded-lg {{ $alerta->tipoalerta->id_tipoalerta === 1 ? 'perdida' : 'encontrada' }}">
+        <div class="flex flex-col md:flex-row flex-wrap justify-between items-center w-full py-5 px-10 mb-5 tableta shadow-lg rounded-lg {{ $alerta->tipoalerta->id_tipoalerta === 1 ? 'perdida' : 'encontrada' }} tableta-alertas">
             <div>
                 @if($alerta->imagenes)
                     <img class="img-evento border rounded border-2 border-{{ $alerta->tipoalerta->id_tipoalerta === 1 ? 'perdida' : 'encontrada' }}" src="{{ asset('imgs/mascotas/' . strtok($alerta->imagenes, '|')) }}" alt="Imagen mascota perdida">
@@ -19,17 +19,13 @@
                 <dd class="text-center font-semibold mb-5">{{ $alerta->nombre ?? '-' }}</dd>
                 <dt class="sr-only">Descripción</dt>
                 <dd>
-                    @if(strlen($alerta->descripcion) > 20)
-                        {{ substr(ucfirst($alerta->descripcion), 20) }}[...]
-                    @else
-                        {{ ucfirst($alerta->descripcion) }}
-                    @endif
+                    {{$alerta->descripcion}}
                 </dd>
             </dl>
             <dl>
                 <div class="flex gap-3 mb-3">
-                    <dt class="font-semibold">Horario {{ $alerta->tipoalerta->id_tipoalerta === 1 ? 'perdida' : 'encontrada' }}:</dt>
-                    <dd>{{ $alerta->hora }}hs</dd>
+                    <dt class="font-semibold">Fecha:</dt>
+                    <dd>{{ explode('-', $alerta->fecha)[2] }}-{{ explode('-', $alerta->fecha)[1] }}-{{ explode('-', $alerta->fecha)[0] }}, a las {{ $alerta->hora }}hs</dd>
                 </div>
                 <div class="flex gap-3 mb-3">
                     <dt class="font-semibold">Especie:</dt>

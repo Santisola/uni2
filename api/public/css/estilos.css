@@ -123,6 +123,24 @@ main {
     border-left: 50px solid darkgrey;
 }
 
+.tableta-alertas > div:first-of-type{
+    width: 15%;
+}
+
+.tableta-alertas > div:first-of-type > img{
+    max-width: 150px;
+    max-height: 150px;
+}
+
+.tableta-alertas > dl:first-of-type{
+    width: 60%;
+    text-align: center;
+}
+
+.tableta-alertas > dl:last-of-type{
+    width: 20%;
+}
+
 .tableta.verificados, .card.verificados {
     border-image: linear-gradient(180deg, var(--violeta) 50%, var(--amarillo) 50%) 1;
 }
