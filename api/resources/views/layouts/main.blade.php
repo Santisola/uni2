@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="<?= url('css/estilos.css');?>">
     <link rel="icon" href="{{ asset('/imgs/logo-unidos.png') }}">
     @stack('css')
+    @yield('links')
 </head>
 <body class="overflow-x-hidden">
 @auth
