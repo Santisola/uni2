@@ -1,6 +1,7 @@
 .perfil {
     max-width: 30px;
     max-height: 30px;
+    overflow: hidden;
 }
 
 .perfil img {
