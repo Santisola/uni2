@@ -16,10 +16,10 @@
                     <p class="mt-2 whitespace-pre-line mb-10 break-words detalle md:text-start">{{ $evento->descripcion }}</p>
                     <ul class="mt-10">
                         <li class="text-sm text-zinc-500">Dirección: {{ $evento->direccion }}</li>
-                        <li class="mt-2 text-sm text-zinc-500">Fecha de creación: {{ date('d/m/Y H:i:s', strtotime($evento->created_at)) }}</li>
-                        <li class="mt-2 text-sm text-zinc-500">Última modificación: {{ date('d/m/Y H:i:s', strtotime($evento->updated_at)) }}</li>
+                        <li class="mt-2 text-sm text-zinc-500">Fecha de creación: {{ date('d/m/Y H:i:s', strtotime($evento->created_at)) }}hs</li>
+                        <li class="mt-2 text-sm text-zinc-500">Última modificación: {{ date('d/m/Y H:i:s', strtotime($evento->updated_at)) }}hs</li>
                     </ul>
-                    <iframe class="iframe-google" src="https://maps.google.com/maps?q={{$evento->latitud}},{{$evento->longitud}}&z=15&output=embed" frameborder="0" style="border:0" allowfullscreen></iframe>
+                    <iframe class="iframe-google" src="https://maps.google.com/maps?q={{$evento->latitud}},{{$evento->longitud}}&z=14&output=embed" frameborder="0" style="border:0" allowfullscreen></iframe>
                 </div>
             </div>
         </div>
@@ -32,7 +32,7 @@
             <form action="{{ route('eventos.eliminar', ['evento' => $evento->id_evento]) }}" method="post">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="rounded text-center py-3 px-2 block w-full bg-red-500 hover:bg-red-600 transition hover:ease-in-out duration-300 eliminar mt-5">Eliminar</button>
+                <button type="submit" class="rounded mt-5 text-center py-3 px-2 block w-full text-red-800 hover:text-white hover:bg-red-600 transition hover:ease-in-out duration-300 eliminar">Eliminar</button>
             </form>
         @endif
     </div>

@@ -15,9 +15,9 @@
                 @endif
             </div>
             <dl>
-                <div class="flex gap-3 items-center justify-start">
+                <div class="flex gap-3 items-center justify-start mb-5">
                     <dt class="font-semibold">Asunto:</dt>
-                    <dd class="mb-5 mt-5 md:mt-0">{{ $contacto->asunto }}</dd>
+                    <dd class="mt-5 md:mt-0 capitalize">{{ $contacto->asunto }}</dd>
                 </div>
                 <div class="flex gap-3 items-center justify-start">
                     <dt class="font-semibold">Mensaje:</dt>

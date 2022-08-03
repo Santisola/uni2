@@ -51,7 +51,7 @@
                     <form action="{{ route('eventos.eliminar', ['evento' => $alerta->id_alerta]) }}" method="post">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="rounded text-center py-3 px-2 my-3 block w-full bg-red-500 hover:bg-red-600 transition hover:ease-in-out duration-300 eliminar">Eliminar</button>
+                        <button type="submit" class="rounded mt-5 text-center py-3 px-2 block w-full text-red-800 hover:text-white hover:bg-red-600 transition hover:ease-in-out duration-300 eliminar">Eliminar</button>
                     </form>
                 @endif
             </div>
