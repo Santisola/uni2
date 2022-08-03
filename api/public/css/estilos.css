@@ -535,12 +535,6 @@ input:focus, input:focus-visible, textarea:focus, textarea:focus-visible {
     min-height: 500px;
 }
 
-.detalle-alerta-container > div:last-of-type{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
 .detalle-alerta-container h2{
     font-size: 1.5rem;
     margin-bottom: .5rem;
