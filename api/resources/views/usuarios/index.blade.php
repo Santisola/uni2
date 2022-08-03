@@ -5,7 +5,7 @@
 @extends('layouts.main')
 @section('title','UNIDOS | Usuarios')
 @section('main')
-    <h1 class="text-center text-3xl mb-10 text-violet-800 font-bold">Usuarios Verificados</h1>
+    <h1 class="text-center text-3xl mb-10 text-violet-800 font-bold">Usuarios</h1>
     <div class="flex justify-center md:justify-between items-center gap-3 flex-wrap">
         <form id="formulario" action="{{ route('usuarios') }}" method="get" class="md:w-1/2 w-full mb-5 px-3 md:px-0">
             <div>

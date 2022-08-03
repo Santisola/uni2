@@ -53,13 +53,13 @@
                 @if($evento->deleted_at)
                     <form action="{{ route('eventos.restaurar', ['evento' => $evento->id_evento]) }}">
                         @csrf
-                        <button type="submit" class="w-full px-3 py-3 px-2 my-3 rounded text-center bg-green-600 hover:bg-green-700 hover:ease-in-out transition duration-300 text-white w-full">Restaurar</button>
+                        <button type="submit" class="restaurar px-3 py-3 px-2 my-3 rounded text-center hover:bg-green-700 hover:ease-in-out transition duration-300 hover:text-white text-green-800 w-full">Restaurar</button>
                     </form>
                 @else
                     <form action="{{ route('eventos.eliminar', ['evento' => $evento->id_evento]) }}" method="post">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="rounded text-center py-3 px-2 my-3 block w-full bg-red-500 hover:bg-red-600 transition hover:ease-in-out duration-300 eliminar w-full">Eliminar</button>
+                        <button type="submit" class="rounded text-center py-3 px-2 my-3 block hover:bg-red-600 transition hover:ease-in-out duration-300 eliminar hover:text-white text-red-800 w-full">Eliminar</button>
                     </form>
                 @endif
             </div>

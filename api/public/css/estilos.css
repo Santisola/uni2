@@ -292,6 +292,20 @@ input:focus, input:focus-visible, textarea:focus, textarea:focus-visible {
     margin-top: 1rem;
 }
 
+.hover\:text-black:hover {
+    color: var(--negro);
+}
+
+.tableta .rounded {
+    min-width: 100px;
+}
+
+@media (max-width: 1280px) and (min-width: 912px) {
+    body :is(header, main, footer) {
+        padding: 0 40px;
+    }
+}
+
 @media (min-width: 911px) {
     #evento :is(li, p) {
         text-align: left;
