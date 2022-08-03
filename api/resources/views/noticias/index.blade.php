@@ -61,9 +61,9 @@
                     </div>
                 </dl>
                 <div class="flex flex-col">
-                    <a class="rounded text-center py-3 px-2 mt-3 block w-full bg-teal-500 hover:bg-teal-600 transition hover:ease-in-out duration-300" href="{{ route('noticias.detalle', ['noticia' => $noticia->id_noticia]) }}">Detalle</a>
-                    <a class="rounded text-center py-3 px-2 mt-3 block w-full bg-yellow-500 hover:bg-yellow-600 transition hover:ease-in-out duration-300" href="{{ route('noticias.editarForm', ['noticia' => $noticia->id_noticia]) }}">Editar</a>
-                    <a href="{{ route('noticias.eliminar', ['noticia' => $noticia->id_noticia]) }}" class="rounded text-center py-3 px-2 my-3 block w-full bg-red-500 hover:bg-red-600 transition hover:ease-in-out duration-300 eliminar">Eliminar</a>
+                    <a class="rounded text-center py-3 px-2 mt-3 block w-full bg-yellow-500 hover:bg-yellow-600 transition hover:ease-in-out duration-300" href="{{ route('noticias.detalle', ['noticia' => $noticia->id_noticia]) }}">Detalle</a>
+                    <a class="rounded text-center py-3 px-2 mt-3 block w-full transition hover:ease-in-out duration-300" href="{{ route('noticias.editarForm', ['noticia' => $noticia->id_noticia]) }}">Editar</a>
+                    <a href="{{ route('noticias.eliminar', ['noticia' => $noticia->id_noticia]) }}" class="rounded mt-5 text-center py-3 px-2 block w-full text-red-800 hover:text-white hover:bg-red-600 transition hover:ease-in-out duration-300 eliminar">Eliminar</a>
                 </div>
             </div>
         @empty

@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>UNIDOS - Iniciar Sesión</title>
     <link rel="stylesheet" href="<?= url('css/app.css');?>">
+    <link rel="stylesheet" href="<?= url('css/animate.css');?>">
     <link rel="stylesheet" href="<?= url('css/owl.carousel.min.css') ;?>">
     <link rel="stylesheet" href="<?= url('css/estilos.css');?>">
     <link rel="icon" href="{{ asset('/imgs/logo-unidos.png') }}">
@@ -71,15 +72,16 @@
 <script src="<?= url('js/owl.carousel.min.js') ;?>"></script>
 <script>
     $('.owl-carousel').owlCarousel({
-        animateOut: 'slideOutDown',
-        animateIn: 'flipInX',
+        animateOut: 'fadeOut',
         items:1,
         margin:30,
         stagePadding:0,
         smartSpeed:450,
         autoplay: true,
         autoplayTimeout:5000,
-        autoplayHoverPause:true
+        autoplayHoverPause:false,
+        loop: true,
+        mouseDrag: false,
     });
 </script>
 <script>
