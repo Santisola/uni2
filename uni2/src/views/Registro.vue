@@ -108,6 +108,14 @@ export default {
                     break;
                 case 'telefono':
                     this.errores.telefono.error = false;
+                    this.errores.codigoArea.error = false;
+                    document.querySelector('form .form-group:last-of-type > div').classList.remove('error');
+                    
+                    if(this.usuario.codigoArea.trim() == ''){
+                        this.errores.codigoArea.error = true;
+                        document.querySelector('form .form-group:last-of-type > div').classList.add('error');
+                    }
+                    
                     this.errores.telefono.mensaje = 'El numero de celular es obligatorio';
                     if(this.usuario.telefono.trim() === ''){
                         this.errores.telefono.error = true;
@@ -128,8 +136,10 @@ export default {
                     break;
                 case 'codigoArea':
                     this.errores.codigoArea.error = false;
+                    document.querySelector('form .form-group:last-of-type > div').classList.remove('error');
                     if(this.usuario.codigoArea.trim() == ''){
                         this.errores.codigoArea.error = true;
+                        document.querySelector('form .form-group:last-of-type > div').classList.add('error');
                     }
                     break;               
             }
@@ -270,6 +280,14 @@ export default {
         background-color: #fff;
         border-right: 0;
         border-radius: 4px 0 0 4px;
+    }
+
+    form .form-group:last-of-type > div.error::before{
+        border-color: rgba(255, 0, 0, .5);
+    }
+    
+    form .form-group:last-of-type > div.error > input:first-of-type{
+        border-color: rgba(255, 0, 0, .5);
     }
     
     .form-group > div > input{

@@ -9,63 +9,17 @@
             </div>
         
             
-            <form action="#" method="POST" @submit.prevent="validarToken">
-                <div id="inputsContainer">
+            <form autocomplete="off" action="#" method="POST" @submit.prevent="validarToken">
+                <div class="form-group">
                     <input
-                        type="text"
-                        name="codigo1"
-                        id="codigo1"
-                        maxlength="1"
-                        v-model="codigo1"
-                        placeholder="-"
-                        @input="changeFocus"
-                    >
-                    <input
-                        type="text"
-                        name="codigo2"
-                        id="codigo2"
-                        maxlength="1"
-                        v-model="codigo2"
-                        placeholder="-"
-                        @input="changeFocus"
-                    >
-                    <input
-                        type="text"
-                        name="codigo3"
-                        id="codigo3"
-                        maxlength="1"
-                        v-model="codigo3"
-                        placeholder="-"
-                        @input="changeFocus"
-                    >
-                    <input
-                        type="text"
-                        name="codigo4"
-                        id="codigo4"
-                        maxlength="1"
-                        v-model="codigo4"
-                        placeholder="-"
-                        @input="changeFocus"
-                    >
-                    <input
-                        type="text"
-                        name="codigo5"
-                        id="codigo5"
-                        maxlength="1"
-                        v-model="codigo5"
-                        placeholder="-"
-                        @input="changeFocus"
-                    >
-                    <input
-                        type="text"
-                        name="codigo6"
-                        id="codigo6"
-                        maxlength="1"
-                        v-model="codigo6"
-                        placeholder="-"
-                        @input="changeFocus"
+                        type="number"
+                        name="codigo"
+                        id="codigo"
+                        v-model="codigo"
+                        @input="codigo = codigo.slice(0, 6)"
                     >
                 </div>
+
                 <div><button class="btn btn-primary">Validar</button></div>
             </form>
             <div v-if="error">
@@ -152,10 +106,9 @@ export default {
             this.error = false;
             this.isLoading = true;
 
-            const token = this.codigo1 + this.codigo2 + this.codigo3 + this.codigo4 + this.codigo5 + this.codigo6;
             const data = {
                 email: this.$route.query.email,
-                token: token
+                token: this.codigo
             }
 
             const res = await authServicio.validateToken(data);
@@ -220,12 +173,7 @@ export default {
             isLoading: false,
             error: false,
             
-            codigo1: '',
-            codigo2: '',
-            codigo3: '',
-            codigo4: '',
-            codigo5: '',
-            codigo6: '',
+            codigo: '',
 
             reestableceContra: false,
 
@@ -265,7 +213,8 @@ export default {
     margin-bottom: .5rem;
 }
 
-#validarToken #inputsContainer{
+#validarToken #inputsContainer,
+#validarToken #fakeInputsContainer{
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -273,16 +222,19 @@ export default {
     margin-top: 2rem;
 }
 
-#validarToken #inputsContainer > input{
+#validarToken #inputsContainer > input,
+#validarToken #fakeInputsContainer > div{
     display: block;
     width: 15%;
     min-width: 2rem;
+    min-height: 65px;
     font-size: 1.25rem;
     padding: 1.25rem 0;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
+    background-color: #f6f6f6;
     border: solid 1px #cecece;
     border-radius: 4px;
     color: #2b2b2b;
@@ -327,4 +279,25 @@ export default {
     text-decoration: underline;
     font-weight: bold;
 }
+
+#validarToken > form > .form-group:first-of-type input::-webkit-outer-spin-button,
+#validarToken > form > .form-group:first-of-type input::-webkit-inner-spin-button{
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#validarToken > form > .form-group:first-of-type input{
+        margin-top: 1rem;
+    font-family: 'Montserrat';
+    font-size: 1.25rem;
+    text-align: center;
+    letter-spacing: 15px;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+
+
 </style>
