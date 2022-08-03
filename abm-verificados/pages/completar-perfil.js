@@ -20,10 +20,6 @@ export default function CompletarPerfil() {
             setEliminado(JSON.parse(sessionStorage.getItem('eliminado')));
         }
         
-        if (usuario.nombre !== null && usuario.telefono !== null && usuario.imagen !== null) {
-            router.push('/');
-        }
-        
     },[router, usuario.imagen, usuario.nombre, usuario.telefono]);
 
     return (
