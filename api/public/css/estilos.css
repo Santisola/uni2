@@ -9,6 +9,7 @@
     --perdida: #E5446D;
     --encontrada: #44BBA4;
     --azul: #268AFF;
+    --naranja: #FF9B26;
 }
 
 * {
@@ -298,6 +299,10 @@ main {
 .tarjeta.contactos .tipo {
     background-color: var(--azul);
     color: white;
+}
+
+.tarjeta.noticias .tipo {
+    background-color: var(--naranja);
 }
 
 .card {

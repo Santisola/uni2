@@ -30,11 +30,11 @@
     </div>
     <div id="tarjetas">
         @forelse($noticias as $noticia)
-            <div class="tarjeta verificados">
+            <div class="tarjeta noticias">
                 <div class="container-img">
                     <img src="{{ asset('imgs/noticias/') . '/' . $noticia->imagen }}" alt="{{ $noticia->titulo }}">
                 </div>
-                <h2 class="tipo">Noticias</h2>
+                <h2 class="tipo">Noticia</h2>
                 <h3>{{ $noticia->titulo }}</h3>
                 <ul>
                     <li>Fecha: <span>{{ date('d/m/Y H:i:s', strtotime($noticia->created_at)) }}</span></li>
