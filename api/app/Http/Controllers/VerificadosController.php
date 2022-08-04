@@ -399,7 +399,7 @@ class VerificadosController extends Controller
 
             return response()->json([
                 'success' => true,
-                'mensaje' => 'Verifique su contraseña en su email'
+                'mensaje' => 'Le enviamos a su correo una contraseña provisoria'
             ]);
 
         } catch (\Exception $exception) {

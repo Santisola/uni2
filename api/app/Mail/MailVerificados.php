@@ -22,7 +22,7 @@ class MailVerificados extends Mailable
      *
      * @return $this
      */
-    public function nuevaPassword()
+    public function build(): MailVerificados
     {
         return $this
             ->view('layouts.verificadoEmail')
