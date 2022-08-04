@@ -162,7 +162,8 @@ class AdminController extends Controller
 
     public function listadoAlertas()
     {
-        $allAlertas = Alerta::orderBy('created_at', 'DESC')
+        $allAlertas = Alerta::withTrashed()
+            ->orderBy('created_at', 'DESC')
             ->with(['tipoalerta','raza','especie','sexo'])
             ->paginate(25);
 
@@ -182,6 +183,43 @@ class AdminController extends Controller
         }
 
         return view('alertas.index', compact('alertas'));
+    }
+
+    public function eliminarAlerta(int $alerta): RedirectResponse
+    {
+        try {
+            Alerta::findOrFail($alerta)->delete();
+
+            return redirect()
+                ->route('alertas')
+                ->with('message','Alerta bloqueada')
+                ->with('message_type','bg-green-300 text-green-800');
+
+        } catch (\Exception $exception) {
+            return redirect()
+                ->route('alertas')
+                ->with('message', $exception->getMessage())
+                ->with('message_type','bg-red-300 text-red-800');
+        }
+    }
+
+    public function restaurarAlerta(int $id_alerta): RedirectResponse
+    {
+        try {
+            $alerta = Alerta::onlyTrashed()->findOrFail($id_alerta);
+            $alerta->restore();
+
+            return redirect()
+                ->route('alertas')
+                ->with('message','Alerta desbloqueada')
+                ->with('message_type','bg-green-300 text-green-800');
+
+        } catch (\Exception $exception) {
+            return redirect()
+                ->route('alertas')
+                ->with('message', $exception->getMessage())
+                ->with('message_type','bg-red-300 text-red-800');
+        }
     }
 
     public function listadoVerificados(Request $request)

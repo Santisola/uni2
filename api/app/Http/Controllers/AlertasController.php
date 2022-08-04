@@ -15,7 +15,7 @@ class AlertasController extends Controller
      * Returorna todas las alertas
      */
     public function all(){
-        $alertas = Alerta::where('finalizada', 0)->get();
+        $alertas = Alerta::withoutTrashed()->where('finalizada', 0)->get();
 
         $data = [];
         foreach($alertas as $alerta){
@@ -100,7 +100,7 @@ class AlertasController extends Controller
     }
 
     public function deUsuario($usuario){
-        $alertas = Alerta::where('id_usuario', $usuario)->get();
+        $alertas = Alerta::withoutTrashed()->where('id_usuario', $usuario)->get();
 
         foreach($alertas as $alerta){
             $imgs = AlertaImg::all()->where('id_alerta', $alerta->id_alerta);
@@ -118,7 +118,7 @@ class AlertasController extends Controller
     }
 
     public function reencontradas(){
-        $alertas = Alerta::where('finalizada', 1)->get();
+        $alertas = Alerta::withoutTrashed()->where('finalizada', 1)->get();
 
         foreach($alertas as $alerta){
             $alerta->telefono = $alerta->usuario->telefono;
