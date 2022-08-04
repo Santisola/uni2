@@ -19,7 +19,7 @@ class EventosController extends Controller
     public function eventosPublicados() : JsonResponse
     {
         try {
-            $eventos = Eventos::all()
+            $eventos = Eventos::withoutTrashed()
                 ->where('publicado',true);
 
             $data = [];
@@ -50,7 +50,7 @@ class EventosController extends Controller
     {
         try {
 
-            $evento = Eventos::all()
+            $evento = Eventos::withoutTrashed()
                 ->where('id_evento', $id)
                 ->where('publicado', true)
                 ->first();

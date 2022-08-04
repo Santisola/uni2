@@ -3,68 +3,46 @@
 /**@var \App\Models\Admin $seleccionado*/
 ?>
 @extends('layouts.main')
-@section('title','UNIDOS | Noticias')
+@section('title','Unidos | Noticias')
 @section('main')
     <div class="container">
         <h1 class="text-center text-3xl mb-10 text-violet-800 font-bold">Noticias</h1>
-        <form action="{{ route('noticias') }}" method="get" class="block w-full mb-5 flex md:justify-start items-center flex-wrap">
-            @csrf
-            <div class="w-1/3">
-                <label for="titulo" class="sr-only">Buscar noticia por título</label>
-                <input
-                    type="text"
-                    id="titulo"
-                    name="titulo"
-                    class="px-2 py-1 border border-violet-800 rounded block w-full"
-                    placeholder="Escriba el título que desea buscar"
-                    value="{{ $seleccionado ?? '' }}"
-                >
-            </div>
-            <div class="ml-5">
-                <button type="submit" class="border-violet-800 border rounded bg-violet-800 text-white text-center block w-fit uppercase px-5 py-1 hover:border-double transition hover:ease-in-out duration-300 hover:border-violet-600">Buscar</button>
-            </div>
-        </form>
+        <div class="flex flex-wrap justify-between items-center">
+            <form action="{{ route('noticias') }}" method="get" class="block w-1/2 mb-5 flex md:justify-start items-center flex-wrap">
+                @csrf
+                <div class="w-2/3">
+                    <label for="titulo" class="sr-only">Buscar noticia por título</label>
+                    <input
+                        type="text"
+                        id="titulo"
+                        name="titulo"
+                        class="px-2 py-1 border border-violet-800 rounded block w-full"
+                        placeholder="Escriba el título que desea buscar"
+                        value="{{ $seleccionado ?? '' }}"
+                    >
+                </div>
+                <div class="pl-5">
+                    <button type="submit" class="border-violet-800 border rounded bg-violet-800 text-white text-center block w-fit uppercase px-5 py-1 hover:border-double transition hover:ease-in-out duration-300 hover:border-violet-600">Buscar</button>
+                </div>
+            </form>
+            <a class="rounded block w-fit px-2 py-3 text-white bg-violet-800 hover:ease-in-out transition duration-300 hover:bg-violet-900 md:ml-3" role="button" href="{{ route('noticias.crearForm') }}">Añadir nueva noticia</a>
+        </div>
     </div>
-    <div class="w-full flex md:justify-end items-center">
-        <a class="rounded-t-lg block w-fit px-2 py-3 text-white bg-violet-800 hover:ease-in-out transition duration-300 hover:bg-violet-900 md:ml-3" role="button" href="{{ route('noticias.crearForm') }}">Añadir nueva noticia</a>
-    </div>
-    <div id="noticias">
+    <div id="tarjetas">
         @forelse($noticias as $noticia)
-            <div class="flex flex-wrap justify-between items-center w-full py-5 px-10 mb-10 tableta noticias shadow-lg rounded-lg">
-                <div>
-                    @if(!$noticia->imagen)
-                        <span class="whitespace-nowrap px-5">-</span>
-                    @else
-                        <img class="img-noticia border block w-full max-w-sm rounded-full border-2 border-violet-800" src="{{ asset('imgs/noticias/' . $noticia->imagen) }}" alt="{{ $noticia->titulo }} imagen">
-                    @endif
+            <div class="tarjeta verificados">
+                <div class="container-img">
+                    <img src="{{ asset('imgs/noticias/') . '/' . $noticia->imagen }}" alt="{{ $noticia->titulo }}">
                 </div>
-                <dl>
-                    <dt class="sr-only">Titulo:</dt>
-                    <dd>{{ $noticia->titulo }}</dd>
-                </dl>
-                <dl>
-                    <dt class="sr-only">Status:</dt>
-                    @if($noticia->publicado === 1)
-                        <dd class="text-violet-800 font-semibold">Publicado</dd>
-                    @else
-                        <dd class="text-violet-800 font-semibold">Borrador</dd>
-                    @endif
-                </dl>
-                <dl>
-                    <div class="flex gap-3">
-                        <dt>Fecha de creación:</dt>
-                        <dd>{{ date('d/m/Y H.i:s', strtotime($noticia->created_at)) }}</dd>
-                    </div>
-                    <div class="flex gap-3">
-                        <dt>Última actualización:</dt>
-                        <dd>{{ date('d/m/Y H:i:s', strtotime($noticia->updated_at)) }}</dd>
-                    </div>
-                </dl>
-                <div class="flex flex-col">
-                    <a class="rounded text-center py-3 px-2 mt-3 block w-full bg-yellow-500 hover:bg-yellow-600 transition hover:ease-in-out duration-300" href="{{ route('noticias.detalle', ['noticia' => $noticia->id_noticia]) }}">Detalle</a>
-                    <a class="rounded text-center py-3 px-2 mt-3 block w-full transition hover:ease-in-out duration-300" href="{{ route('noticias.editarForm', ['noticia' => $noticia->id_noticia]) }}">Editar</a>
-                    <a href="{{ route('noticias.eliminar', ['noticia' => $noticia->id_noticia]) }}" class="rounded mt-5 text-center py-3 px-2 block w-full text-red-800 hover:text-white hover:bg-red-600 transition hover:ease-in-out duration-300 eliminar">Eliminar</a>
-                </div>
+                <h2 class="tipo">Noticias</h2>
+                <h3>{{ $noticia->titulo }}</h3>
+                <ul>
+                    <li>Fecha: <span>{{ date('d/m/Y H:i:s', strtotime($noticia->created_at)) }}</span></li>
+                    <li>Estado: <span>{{ $noticia->publicado === 1 ? 'Publicado' : 'Borrador' }}</span></li>
+                </ul>
+                <a class="rounded text-center py-3 px-2 mt-3 block w-full bg-yellow-500 hover:bg-yellow-600 transition hover:ease-in-out duration-300" href="{{ route('noticias.detalle', ['noticia' => $noticia->id_noticia]) }}">Detalle</a>
+                <a class="w-full py-3 px-2 my-3 rounded border border-violet-600 text-center text-violet-800 hover:ease-in-out hover:text-white hover:bg-violet-800 transition duration-300" href="{{ route('noticias.editarForm', ['noticia' => $noticia->id_noticia]) }}">Editar</a>
+                <a href="{{ route('noticias.eliminar', ['noticia' => $noticia->id_noticia]) }}" class="rounded text-center py-3 px-2 block w-full text-red-800 hover:text-white hover:bg-red-600 transition hover:ease-in-out duration-300 eliminar">Eliminar</a>
             </div>
         @empty
             <div class="flex justify-center items-center w-full px-5 mb-5">

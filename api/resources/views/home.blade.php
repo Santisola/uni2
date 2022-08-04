@@ -11,114 +11,64 @@
         <div id="tarjetas">
             @foreach($results as $result)
                 @if($result->id_evento)
-                    <div class="flex flex-col justify-between items-center w-full py-5 px-10 mb-5 card eventos shadow-lg rounded-lg">
+                    <div class="tarjeta evento">
                         <div class="container-img">
-                            <img class="img-evento border block w-full max-w-sm rounded-full border-2 border-yellow-500" src="{{ asset(str_replace('public/','',$result->imagen)) }}" alt="imagen del evento">
+                            <img src="{{ asset(str_replace('public/','',$result->imagen)) }}" alt="{{ $result->nombre }}">
                         </div>
-                        <dl>
-                            <dt class="sr-only">Título del evento:</dt>
-                            <dd class="font-semibold mb-5 mt-5 md:mt-0">{{ $result->nombre }}</dd>
-                            <dt class="sr-only">Descripción del evento:</dt>
-                            <dd class="detalle">{{ substr($result->descripcion, 0, 40 ) }}</dd>
-                        </dl>
-                        <dl class="w-full mt-3">
-                            <dt class="font-semibold">Creada por:</dt>
-                            @if($result->verificado->nombre)
-                                <dd>{{ $result->verificado->nombre }} - <span class="font-semibold">{{ $result->verificado->razon_social }}</span></dd>
-                            @else
-                                <dd class="font-semibold">{{ $result->verificado->razon_social }}</dd>
-                            @endif
-                        </dl>
+                        <h2 class="tipo">Evento</h2>
+                        <h3>{{ $result->nombre }}</h3>
+                        <ul>
+                            <li>Desde: <span>{{ date('d/m/Y H:i:s', strtotime($result->desde)) }}hs</span></li>
+                            <li>Hasta: <span>{{ date('d/m/Y H:i:s', strtotime($result->hasta)) }}hs</span></li>
+                        </ul>
+                        <p>Creado por {{ $result->verificado->razon_social }}</p>
                     </div>
                 @elseif($result->id_verificado)
-                    <div class="flex flex-col justify-between items-center w-full py-5 px-10 mb-5 card verificados shadow-lg rounded-lg">
+                    <div class="tarjeta verificados">
                         <div class="container-img">
-                            @if($result->imagen)
-                                <img class="img-perfil border rounded border-2 border-violet-800" src="{{ asset(str_replace('public/','',$result->imagen)) }}" alt="Imagen usuario">
-                            @else
-                                <img class="img-perfil border rounded-full border-2 border-violet-800" src="{{ asset('imgs/user-default.png') }}" alt="Default usuario">
-                            @endif
+                            <img src="{{ $result->imagen ? asset(str_replace('public/','', $result->imagen)) : asset('imgs/user-default.png') }}" alt="{{ $result->razon_social }}">
                         </div>
-                        <dl class="mt-5">
-                            <dt class="sr-only">Cuit:</dt>
-                            <dd class="mb-5">{{ $result->cuit }}</dd>
-                            <dt class="sr-only">Razón social:</dt>
-                            <dd class="mb-5 font-semibold">{{ $result->razon_social }}</dd>
-                            @if($result->nombre)
-                                <dt class="font-semibold">Nombre visible:</dt>
-                                <dd>{{ $result->nombre }}</dd>
-                            @endif
-                        </dl>
-                        <dl>
-                            <dt class="font-semibold">Contacto:</dt>
-                            <dd class="underline underline-offset-8 hover:underline-offset-4">{{ $result->email }}</dd>
-                            <dd>{{ $result->telefono ?? '-' }}</dd>
-                        </dl>
+                        <h2 class="tipo">Verificado</h2>
+                        <h3>{{ $result->razon_social }}</h3>
+                        <ul>
+                            <li>Email: <span>{{ $result->email }}</span></li>
+                            <li>Tel.: <span>{{ $result->telefono }}</span></li>
+                            <li>Cuit: <span>{{ $result->cuit }}</span></li>
+                        </ul>
                     </div>
                 @elseif($result->id_alerta)
-                    <div class="flex flex-col justify-between items-center w-full py-5 px-10 mb-5 card shadow-lg rounded-lg {{ $result->tipoalerta->id_tipoalerta === 1 ? 'perdida' : 'encontrada' }}">
+                    <div class="tarjeta {{ $result->tipoalerta->id_tipoalerta === 1 ? 'perdida' : 'encontrada' }}">
                         <div class="container-img">
                             @if($result->imagenes)
-                                <img class="img-evento border rounded border-2 border-{{ $result->tipoalerta->id_tipoalerta === 1 ? 'perdida' : 'encontrada' }}" src="{{ asset('imgs/mascotas/' . $result->imagenes[0]) }}" alt="Imagen mascota perdida">
+                                <img src="{{ asset('imgs/mascotas/' . $result->imagenes[0]) }}" alt="Imagen mascota perdida">
                             @else
-                                <img class="img-evento border rounded-full border-2 border-{{ $result->tipoalerta->id_tipoalerta === 1 ? 'perdida' : 'encontrada' }}" src="{{ asset('imgs/icono-mascota-default.jpg') }}" alt="Default usuario">
+                                <img src="{{ asset('imgs/icono-mascota-default.jpg') }}" alt="Default mascota">
                             @endif
                         </div>
-                        <dl class="mt-5">
-                            <dt class="sr-only">Nombre:</dt>
-                            <dd class="mb-3">{{ $result->nombre ?? '-' }}</dd>
-                        </dl>
-                        <dl class="mt-3 w-full">
-                            <div class="flex gap-3 mb-3">
-                                <dt>Fecha:</dt>
-                                <dd>{{ date('d/m/Y', strtotime($result->fecha)) }}</dd>
-                            </div>
-                            <div class="flex gap-3 mb-3">
-                                <dt>Hora:</dt>
-                                <dd>{{ $result->hora }}hs</dd>
-                            </div>
-                            <div class="flex gap-3 mb-3">
-                                <dt>Especie:</dt>
-                                <dd>{{ $result->especie->especie }}</dd>
-                            </div>
-                            <div class="flex gap-3 mb-3">
-                                <dt>Raza:</dt>
-                                <dd>{{ $result->raza->raza }}</dd>
-                            </div>
-                            <div class="flex gap-3 mb-3">
-                                <dt>Sexo:</dt>
-                                <dd>{{ $result->sexo->sexo }}</dd>
-                            </div>
-                        </dl>
-                        <dl class="mt-3 w-full">
-                            <dt class="font-semibold">Creado por:</dt>
-                            <dd class="font-semibold">{{ $result->usuario->nombre }}</dd>
-                        </dl>
+                        <h2 class="tipo">{{ $result->tipoalerta->id_tipoalerta === 1 ? 'perdida' : 'encontrada' }}</h2>
+                        <h3>{{ $result->nombre ?? '-' }}</h3>
+                        <ul>
+                            <li>Fecha: <span>{{ date('d/m/Y', strtotime($result->fecha)) }} {{ date('H:i:s', strtotime($result->hora)) }}hs</span></li>
+                            <li>Raza.: <span>{{ $result->raza->raza }}</span></li>
+                            <li>Sexo: <span>{{ $result->sexo->sexo }}</span></li>
+                        </ul>
+                        <p>Creado por {{ $result->usuario->nombre }}</p>
                     </div>
                 @elseif($result->id_usuario)
-                    <div class="flex flex-col justify-between items-center w-full py-5 px-10 mb-5 card shadow-lg rounded-lg usuarios">
+                    <div class="tarjeta verificados">
                         <div class="container-img">
                             @if($result->imagen)
-                                <img class="img-perfil border rounded border-2 border-violet-800" src="{{ asset(str_replace('public/','',$result->imagen)) }}" alt="Imagen usuario">
+                                <img src="{{ asset(str_replace('public/','',$result->imagen)) }}" alt="Imagen usuario">
                             @else
-                                <img class="img-perfil border rounded-full border-2 border-violet-800" src="{{ asset('imgs/user-default.png') }}" alt="Default usuario">
+                                <img src="{{ asset('imgs/user-default.png') }}" alt="Default usuario">
                             @endif
                         </div>
-                        <dl class="mt-5">
-                            <dt class="sr-only">Nombre:</dt>
-                            <dd class="mb-3">{{ $result->nombre ?? '-' }}</dd>
-                        </dl>
-                        <dl class="mt-3 w-full">
-                            <dt class="font-semibold text-center mb-5">Contacto</dt>
-                            <div>
-                                <dt>Email:</dt>
-                                <dd class="detalle email">{{ $result->email }}</dd>
-                            </div>
-                            <div class="mt-3">
-                                <dt>Telefono:</dt>
-                                <dd>{{ $result->telefono }}</dd>
-                            </div>
-                        </dl>
+                        <h2 class="tipo">Usuario</h2>
+                        <h3>{{ $result->nombre }}</h3>
+                        <ul>
+                            <li>Email: <span>{{ $result->email }}</span></li>
+                            <li>Tel.: <span>{{ $result->telefono }}</span></li>
+                        </ul>
                     </div>
                 @endif
             @endforeach

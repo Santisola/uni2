@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','UNIDOS | Crear una nueva noticia')
+@section('title','Unidos | Crear una nueva noticia')
 @section('main')
     <div class="container">
         <h1 class="text-center text-3xl mb-10 text-violet-800 font-bold">Crear una nueva noticia</h1>

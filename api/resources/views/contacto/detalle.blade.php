@@ -2,7 +2,7 @@
 /**@var \App\Models\Contacto $contacto*/
 ?>
 @extends('layouts.main')
-@section('title','UNIDOS | Detalle Contacto')
+@section('title','Unidos | Detalle Contacto')
 @section('main')
     <div class="container-2xl mb-5 ">
         <h1 class="text-center text-violet-800 font-bold text-3xl mb-5 capitalize">Asunto: {{ $contacto->asunto }}</h1>

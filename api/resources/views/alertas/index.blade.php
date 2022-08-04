@@ -2,7 +2,7 @@
 /**@var $alertas*/
 ?>
 @extends('layouts.main')
-@section('title','UNIDOS | Alertas')
+@section('title','Unidos | Alertas')
 @section('main')
     <h1 class="text-center text-3xl mb-10 text-violet-800 font-bold">Alertas</h1>
     @forelse($alertas as $alerta)

@@ -35,6 +35,6 @@ class Contacto extends Model
 
     public function verificado(): BelongsTo
     {
-        return $this->belongsTo(Verificados::class, 'id_verificado','id_verificado');
+        return $this->belongsTo(Verificados::class, 'id_verificado','id_verificado')->withTrashed();;
     }
 }

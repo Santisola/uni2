@@ -2,7 +2,7 @@
 /**@var \App\Models\Noticias $noticia*/
 ?>
 @extends('layouts.main')
-@section('title','UNIDOS | Editar: ' . $noticia->titulo)
+@section('title','Unidos | Editar: ' . $noticia->titulo)
 @section('main')
     <div class="container">
         <h1 class="text-center text-3xl mb-10 text-violet-800 font-bold">Editar noticia</h1>

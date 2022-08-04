@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Alerta;
 use App\Models\AlertaImg;
+use App\Models\Comentarios;
 use App\Models\Contacto;
 use App\Models\Eventos;
 use App\Models\Noticias;
@@ -400,7 +401,13 @@ class AdminController extends Controller
     public function detalle(int $id_noticia)
     {
         $noticia = $this->getNoticia($id_noticia);
-        return view('noticias.detalle', compact('noticia'));
+
+        $comentarios = Comentarios::where('id_noticia','=',$id_noticia)
+            ->orderBy('created_at','desc')
+            ->with('verificado')
+            ->paginate(10);
+
+        return view('noticias.detalle', compact('noticia', 'comentarios'));
     }
 
     public function editarForm(int $id_noticia)
@@ -524,13 +531,11 @@ class AdminController extends Controller
         $contacto = Contacto::with('verificado')
             ->findOrFail($id_contacto);
 
-//        dd($contacto);
-
         return view('contacto.detalle', compact('contacto'));
     }
 
     private function getNoticia(int $id_noticia)
     {
-        return Noticias::where('id_noticia', '=', $id_noticia)->first();
+        return Noticias::findOrFail($id_noticia);
     }
 }

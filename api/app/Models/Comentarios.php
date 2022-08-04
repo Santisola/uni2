@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Comentarios extends Model
 {
@@ -25,12 +26,12 @@ class Comentarios extends Model
         'comentario.required' => 'El comentario no puede estar vacío'
     ];
 
-    public function verificado()
+    public function verificado(): BelongsTo
     {
-        return $this->belongsTo(Verificados::class, 'id_verificado','id_verificado');
+        return $this->belongsTo(Verificados::class, 'id_verificado','id_verificado')->withTrashed();
     }
 
-    public function noticia()
+    public function noticia(): BelongsTo
     {
         return $this->belongsTo(Noticias::class, 'id_noticia','id_noticia');
     }

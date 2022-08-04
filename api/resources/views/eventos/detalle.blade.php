@@ -2,7 +2,7 @@
 /**@var \App\Models\Eventos $evento*/
 ?>
 @extends('layouts.main')
-@section('title','UNIDOS | Detalle Evento')
+@section('title','Unidos | Detalle Evento')
 @section('main')
     <div id="evento" class="container-2xl mb-5">
         <h1 class="text-center text-violet-800 font-bold text-3xl mb-5">{{ $evento->titulo }}</h1>

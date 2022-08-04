@@ -2,7 +2,7 @@
 /**@var \App\Models\Alerta $alerta*/
 ?>
 @extends('layouts.main')
-@section('title','UNIDOS | Detalle Alerta')
+@section('title','Unidos | Detalle Alerta')
 @section('links')
     <link rel="stylesheet" href="<?= url('css/animate.css');?>">
     <link rel="stylesheet" href="<?= url('css/owl.carousel.min.css') ;?>">
