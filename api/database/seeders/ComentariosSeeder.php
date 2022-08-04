@@ -18,15 +18,7 @@ class ComentariosSeeder extends Seeder
         DB::table('comentarios')->insert([
            [
                'id_comentario' => 1,
-               'comentario' => 'Este es un comentario del seeder',
-               'id_verificado' => 1,
-               'id_noticia' => 1,
-               'created_at' => Carbon::now('UTC')->format('Y-m-d H:i:s'),
-               'updated_at' => Carbon::now('UTC')->format('Y-m-d H:i:s'),
-           ],
-            [
-               'id_comentario' => 2,
-               'comentario' => 'Este es el segundo comentario del seeder',
+               'comentario' => '¡Que buena noticia!',
                'id_verificado' => 1,
                'id_noticia' => 1,
                'created_at' => Carbon::now('UTC')->format('Y-m-d H:i:s'),
