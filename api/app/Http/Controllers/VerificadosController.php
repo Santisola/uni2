@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\MailVerificados;
 use App\Models\Verificados;
 use Carbon\Carbon;
 use Goutte\Client;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class VerificadosController extends Controller
 {
@@ -351,6 +354,58 @@ class VerificadosController extends Controller
             return response()->json([
                 'success' => false,
                 'data' => 'Ocurrió un error al momento de modificar sus datos' . $exception
+            ]);
+        }
+    }
+
+    public function olvideMiPassword(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(),[
+            'cuit' => 'required|numeric',
+            'email' => 'required|email',
+        ],[
+            'cuit.required' => 'El cuit no puede estar vacío',
+            'cuit.numeric' => 'El cuit deben ser solo números',
+            'email.required' => 'El email no puede estar vacío',
+            'email.email' => 'El email que ingresó no es válido',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'data' => $validator->messages()
+            ]);
+        }
+
+        try {
+            $verificado = Verificados::where('email','=', $request->email)
+                ->where('cuit','=', $request->cuit)
+                ->withTrashed()
+                ->first();
+
+            if ($verificado === null) {
+                return response()->json([
+                    'success' => false,
+                    'mensaje' => 'Datos no válidos'
+                ]);
+            }
+
+            $nuevaPass = Str::random();
+            $verificado->password = $nuevaPass;
+            $verificado->save();
+
+            $mail = new MailVerificados($nuevaPass);
+            Mail::to($verificado->email)->send($mail);
+
+            return response()->json([
+                'success' => true,
+                'mensaje' => 'Verifique su contraseña en su email'
+            ]);
+
+        } catch (\Exception $exception) {
+            return response()->json([
+                'success' => false,
+                'data' => $exception->getMessage()
             ]);
         }
     }

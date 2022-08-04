@@ -62,6 +62,7 @@ Route::put('/reestablecer-contra', [PasswordResetsController::class, 'reestablec
  */
 Route::post('/verificado/login', [VerificadosController::class,'login']);
 Route::post('/verificado/register', [VerificadosController::class,'register']);
+Route::post('/verificado/olvidePassword', [VerificadosController::class, 'olvideMiPassword']);
 
 Route::put('/verificado/{usuario}/complete', [VerificadosController::class,'completeData']);
 Route::put('/verificado/{usuario}/EditarNombre', [VerificadosController::class,'editarNombre']);
