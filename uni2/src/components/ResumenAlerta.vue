@@ -36,7 +36,7 @@ export default {
     },
     computed:{
         tipoAlerta: function(){
-            return this.alerta.tipoAlerta == 1 ? 'Encontrada' : 'Perdida';
+            return this.alerta.id_tipoalerta == 1 ? 'Encontrada' : 'Perdida';
         },
         fechaBien: function(){
             if(!this.alerta.id_tipoalerta){

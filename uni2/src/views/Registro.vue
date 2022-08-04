@@ -230,7 +230,7 @@ export default {
                 email: '',
                 password: '',
                 telefono: '',
-                codigoArea: ''
+                codigoArea: '54'
             }
         }
     },
