@@ -35,6 +35,20 @@
                 <dd class="underline underline-offset-8 hover:underline-offset-4">{{ $usuario->email }}</dd>
                 <dd>{{ $usuario->telefono ?? '-' }}</dd>
             </dl>
+            <dl>
+                @if($usuario->deleted_at)
+                    <form action="{{ route('usuarios.restaurar', ['id' => $usuario->id_usuario]) }}">
+                        @csrf
+                        <button type="submit" class="restaurar px-3 py-3 px-2 my-3 rounded text-center hover:bg-green-700 hover:ease-in-out transition duration-300 hover:text-white text-green-800 w-full">Restaurar</button>
+                    </form>
+                @else
+                    <form action="{{ route('usuarios.eliminar', ['id' => $usuario->id_usuario]) }}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="rounded text-center py-3 px-2 my-3 block hover:bg-red-600 transition hover:ease-in-out duration-300 eliminar hover:text-white text-red-800 w-full">Eliminar</button>
+                    </form>
+                @endif
+            </dl>
         </div>
     @empty
         <div class="flex justify-center items-center w-full px-5 mb-5">

@@ -34,14 +34,20 @@ class AdminController extends Controller
             ->with(['tipoalerta', 'especie', 'raza', 'sexo', 'usuario'])
             ->get();
 
+        $output = [];
         foreach ($c as $alerta){
-            $imgs = AlertaImg::all()->where('id_alerta', $alerta->id_alerta);
-            $formatImgs = [];
-            foreach($imgs as $img){
-                $formatImgs[] = $img->imagen;
-            }
+            if($alerta->usuario){
+                $imgs = AlertaImg::all()->where('id_alerta', $alerta->id_alerta);
+                $formatImgs = [];
+                foreach($imgs as $img){
+                    $formatImgs[] = $img->imagen;
+                }
 
-            $alerta['imagenes'] = $formatImgs;
+                $alerta['imagenes'] = $formatImgs;
+
+
+                $output[] = $alerta;
+            }
         }
 
 
@@ -53,7 +59,7 @@ class AdminController extends Controller
         $results = new Collection;
         $results = $results->mergeRecursive($a);
         $results = $results->mergeRecursive($b);
-        $results = $results->mergeRecursive($c);
+        $results = $results->mergeRecursive($output);
         $results = $results->mergeRecursive($d);
         $results = $results->sortByDesc('created_at');
 
@@ -156,18 +162,23 @@ class AdminController extends Controller
 
     public function listadoAlertas()
     {
-        $alertas = Alerta::orderBy('created_at', 'DESC')
+        $allAlertas = Alerta::orderBy('created_at', 'DESC')
             ->with(['tipoalerta','raza','especie','sexo'])
             ->paginate(25);
 
-        foreach ($alertas as $alerta){
-            $imgs = AlertaImg::all()->where('id_alerta', $alerta->id_alerta);
-            $formatImgs = [];
-            foreach($imgs as $img){
-                $formatImgs[] = $img->imagen;
-            }
+        $alertas = [];
+        foreach ($allAlertas as $alerta){
+            if($alerta->usuario){
+                $imgs = AlertaImg::all()->where('id_alerta', $alerta->id_alerta);
+                $formatImgs = [];
+                foreach($imgs as $img){
+                    $formatImgs[] = $img->imagen;
+                }
 
-            $alerta['imagenes'] = $formatImgs;
+                $alerta['imagenes'] = $formatImgs;
+
+                $alertas[] = $alerta;
+            }
         }
 
         return view('alertas.index', compact('alertas'));

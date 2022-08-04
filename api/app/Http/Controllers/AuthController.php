@@ -23,13 +23,20 @@ class AuthController extends Controller
             'password.required' => 'La contraseña es obligatoria'
         ]);
 
-        $usuario = User::where('email', $request->email)->first();
+        $usuario = User::withTrashed()->where('email', $request->email)->first();
 
         if(!$usuario || !Hash::check($request->password, $usuario->password)){
             return response()->json([
                 'success' => false,
                 'mensaje' => 'Los datos ingresados no coinciden con nuestros registros'
              ]);
+        }
+
+        if($usuario->deleted_at){
+            return response()->json([
+                'success' => false,
+                'mensaje' => 'Tu usuario está bloqueado. Por favor comunicate con nosotros.'
+            ]);
         }
 
         $token = $usuario->createToken($request->device_name)->plainTextToken;
@@ -113,5 +120,40 @@ class AuthController extends Controller
             ],
             'token' => $token
         ]);
+    }
+
+    public function bloquearUsuario($id){
+        try {
+            User::findOrFail($id)->delete();
+
+            return redirect()
+                ->route('usuarios')
+                ->with('message','Usuario bloqueado')
+                ->with('message_type','bg-green-300 text-green-800');
+
+        } catch (\Exception $exception) {
+            return redirect()
+                ->route('usuarios')
+                ->with('message', $exception->getMessage())
+                ->with('message_type','bg-red-300 text-red-800');
+        }
+    }
+
+    public function restaurarUsuario($id){
+        try {
+            $usuario = User::onlyTrashed()->findOrFail($id);
+            $usuario->restore();
+
+            return redirect()
+                ->route('usuarios')
+                ->with('message','Usuario desbloqueado')
+                ->with('message_type','bg-green-300 text-green-800');
+
+        } catch (\Exception $exception) {
+            return redirect()
+                ->route('usuarios')
+                ->with('message', $exception->getMessage())
+                ->with('message_type','bg-red-300 text-red-800');
+        }
     }
 }

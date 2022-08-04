@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PasswordResetsController;
 use Illuminate\Support\Facades\Route;
 
@@ -40,6 +41,8 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('/usuarios')->group(function () {
         Route::get('/', [AdminController::class, 'listadoUsuarios'])->name('usuarios');
 
+        Route::delete('/eliminar/{id}', [AuthController::class, 'bloquearUsuario'])->name('usuarios.eliminar');
+        Route::get('/restaurar/{id}', [AuthController::class, 'restaurarUsuario'])->name('usuarios.restaurar');
         // TODO:
         /*Route::match(['get', 'delete'],'/eliminar/{usuario}', [AdminController::class,'usuarioEliminar'])->name('usuarios.eliminar');
 

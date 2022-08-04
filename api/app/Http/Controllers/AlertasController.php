@@ -15,11 +15,13 @@ class AlertasController extends Controller
      * Returorna todas las alertas
      */
     public function all(){
-        $alertas = Alerta::where('finalizada', 0)->get();;
+        $alertas = Alerta::where('finalizada', 0)->get();
 
         $data = [];
         foreach($alertas as $alerta){
-            $imgs = AlertaImg::all()->where('id_alerta', $alerta->id_alerta);
+            if($alerta->usuario){
+
+                $imgs = AlertaImg::all()->where('id_alerta', $alerta->id_alerta);
             $formatImgs = [];
             foreach($imgs as $img){
                 $formatImgs[] = $img;
@@ -58,6 +60,8 @@ class AlertasController extends Controller
                     'hora' => $alerta->hora,
                     'finalizada' => $alerta->finalizada,
                 ];
+            }
+
             }
         }
 
