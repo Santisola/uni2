@@ -4,7 +4,7 @@
 @extends('layouts.main')
 @section('title','Unidos | Eventos')
 @section('main')
-    <h1 class="text-center text-3xl mb-10 text-violet-800 font-bold">Contactos</h1>
+    <h1 class="text-center text-3xl mb-10 texto-violeta font-bold">Contactos</h1>
     <div id="tarjetas">
         @forelse($contactos as $contacto)
             <div class="tarjeta contactos">
@@ -19,7 +19,7 @@
                     <li>Cuit: <span>{{ $contacto->verificado->cuit }}</span></li>
                 </ul>
                 <div class="flex flex-col w-full">
-                    <a class="w-full py-3 px-2 my-3 rounded border border-violet-600 text-center text-violet-800 hover:ease-in-out hover:text-white hover:bg-violet-800 transition duration-300" href="{{ route('contacto.detalle', ['contacto' => $contacto->id_contacto]) }}">Detalle</a>
+                    <a class="block w-full py-3 px-2 my-3 rounded border-violet-800 text-center bg-violeta hover:bg-indigo-700 text-white transition ease-in-out" href="{{ route('contacto.detalle', ['contacto' => $contacto->id_contacto]) }}">Detalle</a>
                 </div>
             </div>
         @empty

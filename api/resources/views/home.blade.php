@@ -6,7 +6,7 @@
 @extends('layouts.main')
 @section('title','UNIDOS | Inicio')
 @section('main')
-    <h1 class="text-center text-3xl mb-10 text-violet-800 font-bold">ÚLTIMAS ACTUALIZACIONES</h1>
+    <h1 class="text-center text-3xl mb-10 texto-violeta font-bold">ÚLTIMAS ACTUALIZACIONES</h1>
     @if(count($results) > 0)
         <div id="tarjetas">
             @foreach($results as $result)
@@ -32,7 +32,7 @@
                         <h3>{{ $result->razon_social }}</h3>
                         <ul>
                             <li>Email: <span>{{ $result->email }}</span></li>
-                            <li>Tel.: <span>{{ $result->telefono }}</span></li>
+                            <li>Tel.: <span>{{ $result->telefono ?? '-' }}</span></li>
                             <li>Cuit: <span>{{ $result->cuit }}</span></li>
                         </ul>
                     </div>

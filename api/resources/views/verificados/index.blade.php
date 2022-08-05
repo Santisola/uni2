@@ -5,12 +5,12 @@
 @extends('layouts.main')
 @section('title','Unidos | Usuarios')
 @section('main')
-    <h1 class="text-center text-3xl mb-10 text-violet-800 font-bold">Usuarios Verificados</h1>
+    <h1 class="text-center text-3xl mb-10 texto-violeta font-bold">Usuarios Verificados</h1>
     <div class="flex justify-center md:justify-between items-center gap-3 flex-wrap">
         <form id="formulario" action="{{ route('verificados') }}" method="get" class="md:w-1/2 w-full mb-5 px-3 md:px-0">
             <div>
                 <label for="usuarios" class="sr-only">Seleccione</label>
-                <select name="usuarios" id="usuarios" class="border border-violet-800 rounded w-full bg-white px-2 py-1">
+                <select name="usuarios" id="usuarios" class="border border-violeta rounded w-full bg-white px-2 py-1">
                     <option value="" {{ $seleccionado === null ? 'selected' : '' }}>Todos</option>
                     <option value="eliminados" {{ $seleccionado === 'eliminados' ? 'selected' : '' }}>Eliminados</option>
                     <option value="verificados" {{ $seleccionado === 'verificados' ? 'selected' : '' }}>Verificados</option>
@@ -39,7 +39,7 @@
                     @if( $usuario->status === 1 )
                         <button type="submit" class="w-full py-3 px-2 my-3 rounded border border-violet-600 text-center text-violet-800 hover:ease-in-out hover:text-white hover:bg-violet-800 transition duration-300">No Verificar</button>
                     @else
-                        <button type="submit" class="w-full py-3 px-2 my-3 rounded border-violet-800 text-center bg-violet-800 text-white">Verificar</button>
+                        <button type="submit" class="w-full py-3 px-2 my-3 rounded border-violet-800 text-center bg-violeta hover:bg-indigo-700 text-white transition ease-in-out">Verificar</button>
                     @endif
                 </form>
                 @if($usuario->deleted_at)
