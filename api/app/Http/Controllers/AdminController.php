@@ -270,7 +270,7 @@ class AdminController extends Controller
 
     public function verificarUsuario(int $id_verificado): RedirectResponse
     {
-        $usuarios = Verificados::findOrFail($id_verificado);
+        $usuarios = Verificados::withTrashed()->findOrFail($id_verificado);
 
         try {
             if ($usuarios->status !== 1) {
