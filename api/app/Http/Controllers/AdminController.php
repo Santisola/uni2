@@ -111,7 +111,7 @@ class AdminController extends Controller
 
     public function detalleAlerta(int $id_alerta)
     {
-        $alerta = Alerta::findOrFail($id_alerta);
+        $alerta = Alerta::withTrashed()->findOrFail($id_alerta);
 
         $imgs = AlertaImg::all()->where('id_alerta', $alerta->id_alerta);
         $formatImgs = [];

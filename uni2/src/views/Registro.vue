@@ -13,6 +13,14 @@
             
             <form @submit.prevent="registrar" action="#">
                 <div class="form-group">
+                    <label for="registro-imagen">Foto de perfil</label>
+
+                    <div v-if="usuario.imagen" id="imgPreviewContainer">
+                        <img :src="usuario.imagen" alt="Foto del usuario">
+                    </div>
+                    <input :disabled="isLoading" type="file" ref="imagen" id="registro-imagen" name="imagen" @change="cargarImg">
+                </div>
+                <div class="form-group">
                     <label for="registro-nombre">Nombre completo</label>
                     <input :disabled="isLoading" :aria-describedby="errores.nombre.error ? 'error-nombre' : null" @blur="validar('nombre')" v-model="usuario.nombre" type="text" id="registro-nombre" name="nombre" placeholder="Nombre completo">
                     <p id="error-nombre" class="msj msj-error" v-if="errores.nombre.error">{{errores.nombre.mensaje}}</p>
@@ -57,12 +65,21 @@ export default {
         Loader
     },
     methods: {
+        cargarImg: function (){
+            const imagen = this.$refs.imagen.files[0];
+            const reader = new FileReader();
+            reader.addEventListener('load', () => {
+                this.usuario.imagen = reader.result;
+            })
+            reader.readAsDataURL(imagen);
+        },
         registrar: function(){
             this.isLoading = true;
             this.erroresBack = null;
 
             authServicio.registrar({
                 nombre: this.usuario.nombre,
+                imagen: this.usuario.imagen,
                 email: this.usuario.email,
                 password: this.usuario.password,
                 telefono: this.usuario.codigoArea + this.usuario.telefono,
@@ -227,6 +244,7 @@ export default {
             },
             usuario: {
                 nombre: '',
+                imagen: null,
                 email: '',
                 password: '',
                 telefono: '',
@@ -321,5 +339,21 @@ export default {
         width: 100%;
         margin-top: 2rem;
         padding: .75rem 0;
+    }
+
+    #imgPreviewContainer{
+        width: 150px;
+        height: 150px;
+        border: 0;
+    }
+
+    #imgPreviewContainer img{
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    #registro-imagen{
+        border: 0;
     }
 </style>

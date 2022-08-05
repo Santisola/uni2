@@ -3,17 +3,29 @@
         <h1>Perfil</h1>
         <div class="columnas-2">
           <div class="datosUsuario">
-            <h2>{{usuario.nombre}}</h2>
-            <ul>
-              <li>{{usuario.email}}</li>
-              <li>{{usuario.telefono}}</li>
-            </ul>
+            <div class="userHeader">
+                <div>
+                    <img :src="imagenUsuario" alt="Foto de perfil del usuario">
+                </div>
+                <ul>
+                    <li><h2>{{usuario.nombre}}</h2></li>
+                    <li>{{usuario.email}}</li>
+                    <!-- <li>{{usuario.telefono}}</li> -->
+                </ul>
+            </div>
           </div>
         </div>
         <ul class="user-menu">
             <li @click="editarDatos = !editarDatos">Editar mis datos</li>
-            <li :style="editarDatos ? 'max-height: 500px;' : 'max-height: 0;'" class="editar-form">
+            <li :style="editarDatos ? 'max-height: 550px;' : 'max-height: 0;'" class="editar-form">
                 <form @submit.prevent="editar" action="#">
+                    <div class="form-group">
+                        <label for="imagen">Foto de perfil</label>
+                        <div id="imgPreviewContainer" v-if="editarImagen">
+                            <img :src="editarImagen" alt="Nueva foto de perfil">
+                        </div>
+                        <input type="file" ref="imagen" id="imagen" name="imagen" accept="image/*" @change="cargarImg">
+                    </div>
                     <div class="form-group">
                         <label for="nombre-editar">Nombre</label>
                         <input v-bind:disabled="isLoading" v-model="editarUsuario.nombre" type="text" name="nombre" id="nombre-editar">
@@ -43,6 +55,7 @@
 <script>
 import authServicio from '../servicios/authServicio';
 import MiniLoader from '../components/MiniLoader.vue';
+import {EVENTOS_IMG_PATH} from '../constantes/index';
 
 export default {
     name: 'Perfil',
@@ -51,11 +64,20 @@ export default {
     },
     mounted() {
         this.isLoading = true;
+
         this.usuario = authServicio.getUsuario();
-        this.editarUsuario = authServicio.getUsuario();
+        this.editarUsuario = {
+            nombre: this.usuario.nombre,
+            email: this.usuario.email,
+            telefono: this.usuario.telefono,
+            id_usuario: this.usuario.id_usuario,
+        }
         this.isLoading = false;
     },
     computed:{
+        imagenUsuario: function(){
+            return this.usuario.imagen ? EVENTOS_IMG_PATH + 'public/' + this.usuario.imagen : EVENTOS_IMG_PATH + 'public/imgs/user-default.png';
+        },
         isValid: function(){
             if(this.editarDatos){
                 if(this.editarUsuario.nombre.trim() === ''){
@@ -99,34 +121,54 @@ export default {
         },
     },
     methods: {
-      logout: function () {
-        if (authServicio.logout()) {
-          this.$router.push('/login')
-        }
-      },
-      editar: function () {
-        this.isLoading = true;
-        this.erroresBack = null;
-        authServicio.editar(this.editarUsuario)
-            .then(rta => {
-              if (rta.success) {
-                this.usuario = rta.data;
-
-                this.editarUsuario = {
-                  nombre: rta.data.nombre,
-                  email: rta.data.email,
-                  telefono: rta.data.telefono,
-                  id_usuario: rta.data.id_usuario,
-                }
-
-                this.isLoading = false;
-                this.editarDatos = false
-              } else {
-                this.erroresBack = rta.errors;
-                this.isLoading = false;
-              }
+        cargarImg: function (){
+            const imagen = this.$refs.imagen.files[0];
+            const reader = new FileReader();
+            reader.addEventListener('load', () => {
+                this.editarImagen = reader.result;
             })
-      },
+            reader.readAsDataURL(imagen);
+        },
+        logout: function () {
+            if (authServicio.logout()) {
+            this.$router.push('/login')
+            }
+        },
+        editar: function () {
+            this.isLoading = true;
+            this.erroresBack = null;
+
+            let data = {};
+            if(this.editarImagen){
+                data = {
+                    ...this.editarUsuario,
+                    imagen: this.editarImagen,
+                }
+            }else{
+                data = {...this.editarUsuario}
+            }
+
+            authServicio.editar(data)
+                .then(rta => {
+                if (rta.success) {
+                    this.usuario = rta.data;
+
+                    this.editarUsuario = {
+                        nombre: rta.data.nombre,
+                        email: rta.data.email,
+                        telefono: rta.data.telefono,
+                        id_usuario: rta.data.id_usuario,
+                    }
+                    this.editarImagen = null;
+
+                    this.isLoading = false;
+                    this.editarDatos = false
+                } else {
+                    this.erroresBack = rta.errors;
+                    this.isLoading = false;
+                }
+                })
+        },
     },
     data() {
         return {
@@ -139,7 +181,8 @@ export default {
                 email: null,
                 telefono: null,
                 id_usuario: null,
-            }
+            },
+            editarImagen: null,
         }
     },
 }
@@ -195,5 +238,48 @@ export default {
 
     .datosUsuario li {
       margin-bottom: 5px;
+    }
+
+    .userHeader{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .userHeader > div{
+        width: 65px;
+        height: 65px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin-right: 1rem;
+        background-color: #fff;
+        box-shadow: 0 4px 12px rgb(152 152 152 / 25%);
+    }
+
+    .userHeader > div img{
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    #imagen{
+        border: 0;
+        padding: 0;
+    }
+
+    #imgPreviewContainer{
+        width: 75px;
+        height: 75px;
+        background-color: #fff;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: .5rem;
+        box-shadow: 0 4px 12px rgb(152 152 152 / 25%);
+    }
+
+    #imgPreviewContainer img{
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
     }
 </style>

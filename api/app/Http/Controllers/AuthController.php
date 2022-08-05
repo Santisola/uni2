@@ -7,6 +7,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Intervention\Image\Facades\Image;
 
 class AuthController extends Controller
 {
@@ -76,6 +77,17 @@ class AuthController extends Controller
 
         $user = User::findOrFail($request->id_usuario);
 
+        if ($request->imagen) {
+            $extension = explode('/', explode(';', $request->imagen)[0])[1];
+            $nombreImg = date('Ymd-his') . '.' . $extension;
+
+            $path = 'imgs/perfiles/' . $nombreImg;
+
+            Image::make($request->imagen)->save(public_path('imgs/perfiles/') . $nombreImg);
+
+            $user->imagen = $path;
+        }
+
         $user->nombre = $request->nombre;
         $user->email = $request->email;
         $user->telefono = $request->telefono;
@@ -91,10 +103,22 @@ class AuthController extends Controller
     public function registrar(Request $request){
         $request->validate(User::$reglas, User::$mensajesDeError);
 
+        if ($request->imagen) {
+            $extension = explode('/', explode(';', $request->imagen)[0])[1];
+            $nombreImg = date('Ymd-his') . '.' . $extension;
+
+            $path = 'imgs/perfiles/' . $nombreImg;
+
+            Image::make($request->imagen)->save(public_path('imgs/perfiles/') . $nombreImg);
+        }else{
+            $nombreImg = null;
+        }
+
         User::create([
             'nombre' => $request->nombre,
             'email' => $request->email,
             'telefono' => $request->telefono,
+            'imagen' => $path,
             'password' => Hash::make($request->password),
         ]);
 
@@ -116,6 +140,7 @@ class AuthController extends Controller
                 'id_usuario' => $usuario->id_usuario,
                 'email' => $usuario->email,
                 'nombre' => $usuario->nombre,
+                'imagen' => $usuario->imagen,
                 'telefono' => $usuario->telefono,
             ],
             'token' => $token
