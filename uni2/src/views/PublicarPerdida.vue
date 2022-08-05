@@ -411,6 +411,7 @@ export default {
                 imagenes: this.imagenPerdida, /*****/
                 latitud: this.latitud,
                 longitud: this.longitud,
+                extraDireccion: this.extraDireccion,
                 id_usuario: this.usuario.id_usuario,
                 id_especie: this.selectedEspecie,
                 id_raza: this.selectedRaza,

@@ -21,6 +21,7 @@ class Alerta extends Model
         'imagenes',
         'latitud',
         'longitud',
+        'extraDireccion',
         'id_usuario',
         'id_especie',
         'id_raza',

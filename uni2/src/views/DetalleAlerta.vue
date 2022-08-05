@@ -73,6 +73,10 @@
                 <li>{{alerta.hora}}</li>
                 <li><Direccion :lat="alerta.latitud" :lng="alerta.longitud" /></li>
             </ul>
+            <div v-if="alerta.extraDireccion" class="extraDireccion">
+                <h3>Más información del lugar</h3>
+                <p>{{alerta.extraDireccion}}</p>
+            </div>
             <div v-if="alerta.descripcion" class="descripcion">
                 <h3>Características</h3>
                 <p>{{alerta.descripcion}}</p>
@@ -354,6 +358,7 @@ export default {
         flex-wrap: wrap;
         justify-content: space-between;
         margin: 1rem 0;
+        margin-bottom: 0;
     }
 
     #alerta > .content > ul li{
@@ -401,6 +406,14 @@ export default {
         text-align: center;
     }
 
+    .extraDireccion{
+        margin: 0.75rem 0;
+    }
+
+    .extraDireccion > h3{
+        margin-bottom: .5rem;
+    }
+    
     .descripcion > h3{
         margin-bottom: .5rem;
     }

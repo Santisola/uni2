@@ -112,7 +112,7 @@ class AuthController extends Controller
 
             Image::make($request->imagen)->save(public_path('imgs/perfiles/') . $nombreImg);
         }else{
-            $nombreImg = null;
+            $path = null;
         }
 
         User::create([

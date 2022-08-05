@@ -37,7 +37,7 @@
                     <li>{{evento.direccion}}</li>
                 </ul>
             </div>
-            <div class="wpp-container">
+            <div v-if="evento.telefono" class="wpp-container">
                 <a class="btn btn-primary" target="_blank" :href="wppLink">Enviar Whatsapp</a>
             </div>
         </div>
@@ -67,7 +67,7 @@ export default {
     computed:{
         wppLink: function() {
             //AGREGAR EL CODIGO DE PAIS (54)
-            return `https://api.whatsapp.com/send?phone=${this.evento.telefono}&text=Hola!%20Me%20interesó%20el%20evento%20'${this.evento.nombre}'%20que%20subiste%20a%20la%20app%20Unidos. Quisiera saber más por favor.%20`;
+            return `https://api.whatsapp.com/send?phone=54${this.evento.telefono}&text=Hola!%20Me%20interesó%20el%20evento%20'${this.evento.nombre}'%20que%20subiste%20a%20la%20app%20Unidos. Quisiera saber más por favor.%20`;
         },
         goBackRoute: function(){
             return '/' + this.$route.query.from;

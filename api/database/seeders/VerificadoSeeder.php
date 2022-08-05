@@ -27,7 +27,7 @@ class VerificadoSeeder extends Seeder
                'imagen' => null,
                'status' => false,
                'deleted_at' => null,
-               'telefono' => null,
+               'telefono' => '1167246466',
                'created_at' => Carbon::now('UTC')->format('Y-m-d H:i:s'),
                'updated_at' => Carbon::now('UTC')->format('Y-m-d H:i:s')
            ],
@@ -41,7 +41,7 @@ class VerificadoSeeder extends Seeder
                'imagen' => null,
                'status' => false,
                'deleted_at' => null,
-               'telefono' => null,
+               'telefono' => '1163674462',
                'created_at' => Carbon::now('UTC')->format('Y-m-d H:i:s'),
                'updated_at' => Carbon::now('UTC')->format('Y-m-d H:i:s')
            ],
@@ -55,7 +55,7 @@ class VerificadoSeeder extends Seeder
                'imagen' => null,
                'status' => false,
                'deleted_at' => null,
-               'telefono' => null,
+               'telefono' => '1150268860',
                'created_at' => Carbon::now('UTC')->format('Y-m-d H:i:s'),
                'updated_at' => Carbon::now('UTC')->format('Y-m-d H:i:s')
            ],

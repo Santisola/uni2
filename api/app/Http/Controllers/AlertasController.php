@@ -171,6 +171,7 @@ class AlertasController extends Controller
             'imagenes' => 'default.jpg',
             'latitud' => $request->input('latitud'),
             'longitud' => $request->input('longitud'),
+            'extraDireccion' => $request->input('extraDireccion'),
             'id_usuario' => $request->input('id_usuario'),
             'id_especie' => $request->input('id_especie'),
             'id_raza' => $request->input('id_raza'),
