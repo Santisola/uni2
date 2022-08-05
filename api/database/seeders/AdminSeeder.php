@@ -45,6 +45,15 @@ class AdminSeeder extends Seeder
                 'created_at' => Carbon::now('UTC')->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now('UTC')->format('Y-m-d H:i:s'),
             ],
+            [
+                'id_admin' => 4,
+                'nombre' => 'Admin',
+                'email' => 'admin@unidos.com',
+                'password' => Hash::make('nota10'),
+                'role' => 'Admin',
+                'created_at' => Carbon::now('UTC')->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now('UTC')->format('Y-m-d H:i:s'),
+            ],
         ]);
 
     }
