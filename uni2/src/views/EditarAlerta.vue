@@ -170,10 +170,10 @@
                         >{{errores.direccion.mensaje}}</p>
                     </div>
 
-                    <!-- <div class="form-group">
+                    <div class="form-group">
                         <label for="extraDireccion">Más información del lugar</label>
-                        <input v-model="extraDireccion" type="text" name="extraDireccion" id="extraDireccion" placeholder="Ej. Entre las calles...">
-                    </div> -->
+                        <input v-model="alerta.extraDireccion" type="text" name="extraDireccion" id="extraDireccion" placeholder="Ej. Entre las calles...">
+                    </div>
                 </div>
                 <div id="perdida-paso-3">
                     <div class="form-group">
@@ -263,7 +263,8 @@
                         </div>
                         
                     </div>
-
+                </div>
+                <div id="perdida-paso-5">
                     <div class="form-group">
                         <label for="descripcion">Características de tu mascota</label>
 
@@ -405,6 +406,7 @@ export default {
                 imagenes: this.imagenPerdida, /*****/
                 latitud: this.alerta.latitud,
                 longitud: this.alerta.longitud,
+                extraDireccion: this.alerta.extraDireccion,
                 id_usuario: this.alerta.id_usuario,
                 id_especie: this.alerta.id_especie,
                 id_raza: this.alerta.id_raza,
@@ -955,5 +957,9 @@ input#fotos::after {
 #selectImgsContainer img{
     display: block;
     margin-right: 1rem;
+}
+
+[id^="perdida-paso-"]{
+    margin-bottom: 2rem;
 }
 </style>

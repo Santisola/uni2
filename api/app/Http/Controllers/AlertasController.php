@@ -239,6 +239,7 @@ class AlertasController extends Controller
         $alerta->hora = $request->input('hora');
         $alerta->latitud = $request->input('latitud');
         $alerta->longitud = $request->input('longitud');
+        $alerta->extraDireccion = $request->input('extraDireccion');
         $alerta->id_usuario = $request->input('id_usuario');
         $alerta->id_especie = $request->input('id_especie');
         $alerta->id_raza = $request->input('id_raza');

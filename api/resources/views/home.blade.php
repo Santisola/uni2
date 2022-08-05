@@ -37,7 +37,7 @@
                         </ul>
                     </div>
                 @elseif($result->id_alerta)
-                    <div class="tarjeta {{ $result->tipoalerta->id_tipoalerta === 1 ? 'perdida' : 'encontrada' }}">
+                    <div class="tarjeta {{ $result->tipoalerta->id_tipoalerta === 1 ? 'encontrada' : 'perdida' }}">
                         <div class="container-img">
                             @if($result->imagenes)
                                 <img src="{{ asset('imgs/mascotas/' . $result->imagenes[0]) }}" alt="Imagen mascota perdida">
@@ -45,7 +45,7 @@
                                 <img src="{{ asset('imgs/icono-mascota-default.jpg') }}" alt="Default mascota">
                             @endif
                         </div>
-                        <h2 class="tipo">{{ $result->tipoalerta->id_tipoalerta === 1 ? 'perdida' : 'encontrada' }}</h2>
+                        <h2 class="tipo">{{ $result->tipoalerta->id_tipoalerta === 1 ? 'encontrada' : 'perdida' }}</h2>
                         <h3>{{ $result->nombre ?? $result->especie->especie }}</h3>
                         <ul>
                             <li>Fecha: <span>{{ date('d/m/Y', strtotime($result->fecha)) }} {{ date('H:i:s', strtotime($result->hora)) }}hs</span></li>
