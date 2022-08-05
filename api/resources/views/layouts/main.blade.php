@@ -13,7 +13,7 @@
 </head>
 <body class="overflow-x-hidden">
 @auth
-<header class="bg-violet-800 mb-10 py-3">
+<header class="bg-violeta mb-10 py-5">
     <div class="container">
         <nav class="flex md:justify-start justify-between items-center">
             <a class="text-white text-2xl block md:mr-14" href="<?= url('/') ;?>"><img id="logo" src="{{ asset('imgs/logo.svg') }}" alt="Logo Unidos"></a>

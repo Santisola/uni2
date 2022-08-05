@@ -33,6 +33,31 @@ main {
     background-color: rgba(0,0,0,0.4);
 }
 
+.bg-violeta {
+    background-color: var(--violeta);
+}
+
+.border-violeta {
+    border-color: var(--violeta);
+    transition: background-color 0.3s ease-in-out;
+}
+
+.border-violeta:hover {
+    background-color: var(--violeta);
+}
+
+input.border-violeta, form.border-violeta:hover, select.border-violeta:hover, li.border-violeta:hover {
+    background-color: var(--blanco) !important;
+}
+
+input.border-violeta:focus {
+    outline-color: var(--violeta);
+}
+
+.texto-violeta {
+    color: var(--violeta);
+}
+
 .botones {
     display: flex;
     justify-content: center;
@@ -328,6 +353,10 @@ main {
     position: relative;
     overflow: hidden;
     z-index: 1;
+}
+
+#login form {
+    box-shadow: 0 3px 5px var(--violeta);
 }
 
 #carrousel img {

@@ -4,12 +4,12 @@
 @extends('layouts.main')
 @section('title','Unidos | Eventos')
 @section('main')
-    <h1 class="text-center text-3xl mb-10 text-violet-800 font-bold">Eventos</h1>
+    <h1 class="text-center text-3xl mb-10 texto-violeta font-bold">Eventos</h1>
     <div class="flex justify-center md:justify-between items-center gap-3 flex-wrap">
         <form id="formulario" action="{{ route('eventos') }}" method="get" class="md:w-1/2 w-full mb-5 px-3 md:px-0">
             <div>
                 <label for="eventos" class="sr-only">Seleccione</label>
-                <select name="eventos" id="eventos" class="border border-violet-800 rounded w-full bg-white px-2 py-1">
+                <select name="eventos" id="eventos" class="border border-violeta rounded w-full bg-white px-2 py-1">
                     <option value="" {{ $seleccionado === null ? 'selected' : '' }}>Todos</option>
                     <option value="eliminados" {{ $seleccionado === 'eliminados' ? 'selected' : '' }}>Bloqueados</option>
                     <option value="no-eliminados" {{ $seleccionado === 'desbloqueados' ? 'selected' : '' }}>Sin bloquear</option>
@@ -31,7 +31,7 @@
                 </ul>
                 <p>Creado por {{ $evento->verificado->razon_social }}</p>
                 <div class="h-full w-full flex flex-col justify-end items-center">
-                    <a class="w-full py-3 px-2 my-3 rounded border border-violet-600 text-center text-violet-800 hover:ease-in-out hover:text-white hover:bg-violet-800 transition duration-300" href="{{ route('eventos.detalle', ['evento' => $evento->id_evento]) }}">Detalle</a>
+                    <a class="w-full py-3 px-2 my-3 rounded border-violet-800 text-center bg-violeta hover:bg-indigo-700 text-white transition ease-in-out" href="{{ route('eventos.detalle', ['evento' => $evento->id_evento]) }}">Detalle</a>
                     @if($evento->deleted_at)
                         <form action="{{ route('eventos.restaurar', ['evento' => $evento->id_evento]) }}">
                             @csrf

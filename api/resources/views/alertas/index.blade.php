@@ -4,7 +4,7 @@
 @extends('layouts.main')
 @section('title','Unidos | Alertas')
 @section('main')
-    <h1 class="text-center text-3xl mb-10 text-violet-800 font-bold">Alertas</h1>
+    <h1 class="text-center text-3xl mb-10 texto-violeta font-bold">Alertas</h1>
     <div id="tarjetas">
         @forelse($alertas as $alerta)
             <div class="tarjeta {{ $alerta->tipoalerta->id_tipoalerta === 1 ? 'perdida' : 'encontrada' }}">
@@ -24,7 +24,7 @@
                 </ul>
                 <p>Creado por {{ $alerta->usuario->nombre }}</p>
                 <div class="actions w-full">
-                    <a class="w-full block py-3 px-2 my-3 rounded border border-violet-600 text-center text-violet-800 hover:ease-in-out hover:text-white hover:bg-violet-800 transition duration-300" href="{{ route('alertas.detalle', ['alerta' => $alerta->id_alerta]) }}">Detalle</a>
+                    <a class="block w-full py-3 px-2 my-3 rounded border-violet-800 text-center bg-violeta hover:bg-indigo-700 text-white transition ease-in-out" href="{{ route('alertas.detalle', ['alerta' => $alerta->id_alerta]) }}">Detalle</a>
                     @if($alerta->deleted_at)
                         <form action="{{ route('alertas.restaurar', ['alerta' => $alerta->id_alerta]) }}">
                             @csrf

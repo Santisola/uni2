@@ -5,14 +5,13 @@
 @section('title','Unidos | Detalle Evento')
 @section('main')
     <div id="evento" class="container-2xl mb-5">
-        <h1 class="text-center text-violet-800 font-bold text-3xl mb-5">{{ $evento->titulo }}</h1>
         <div class="flex flex-wrap">
             <div class="text-center md:w-1/2 w-full">
                 <img class="max-w-4xl mx-auto w-full" src="{{ asset(str_replace('public/','',$evento->imagen)) }}" alt="{{ $evento->nombre }} imagen">
             </div>
             <div class="text-center md:w-1/2 w-full px-10 flex flex-col justify-between">
                 <div>
-                    <h2 class="mt-5 text-2xl font-bold text-violet-800 mb-10">{{ $evento->nombre }}</h2>
+                    <h1 class="mt-5 text-2xl font-bold texto-violeta mb-10">{{ $evento->nombre }}</h1>
                     <p class="mt-2 whitespace-pre-line mb-10 break-words detalle md:text-start">{{ $evento->descripcion }}</p>
                     <ul class="mt-10">
                         <li class="text-sm text-zinc-500">Dirección: {{ $evento->direccion }}</li>

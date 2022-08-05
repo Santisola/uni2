@@ -33,11 +33,11 @@
         </div>
     </div>
     <div id="login" class="container h-full m-auto flex justify-center items-center flex-col">
-        <form action="{{ route('auth.login') }}" method="post" class="mx-auto md:max-w-lg w-full px-5 border rounded md:p-5 border-violet-800 border-2 shadow-md shadow-violet-800">
+        <form action="{{ route('auth.login') }}" method="post" class="mx-auto md:max-w-lg w-full px-5 border rounded md:p-5 border-violeta border-2 shadow-md">
             @if(Session::has('message'))
                 <div class="mb-10 py-3 {{ Session::get('message_type') ?? 'bg-green-300 text-green-800' }} text-center">{{ Session::get('message') }}</div>
             @endif
-            <h1 class="text-center mb-5 text-3xl text-violet-800 font-bold">Iniciar Sesión</h1>
+            <h1 class="text-center mb-5 text-3xl texto-violeta font-bold">Iniciar Sesión</h1>
             @csrf
             <div class="mb-5">
                 <label for="email" class="mb-2 block">Email</label>
@@ -59,7 +59,7 @@
                        placeholder="Ingrese aquí su contraseña">
             </div>
             <div>
-                <button type="submit" class="rounded transition hover:ease-in-out duration-300 py-3 uppercase w-full bg-violet-800 hover:bg-violet-900 text-white">Ingresar</button>
+                <button type="submit" class="rounded transition hover:ease-in-out duration-300 py-3 uppercase w-full bg-violeta hover:bg-indigo-700 text-white">Ingresar</button>
             </div>
         </form>
     </div>

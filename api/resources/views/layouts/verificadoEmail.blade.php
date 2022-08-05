@@ -13,8 +13,10 @@
     <title>Grids Master Template</title>
 
     <style type="text/css">
+        @import url({{ asset('css/fonts/stylesheet.css') }});
+
         * {
-            font-family: sans-serif;
+            font-family: 'Montserrat', sans-serif;
         }
 
         /* Outlines the grids, remove when sending */

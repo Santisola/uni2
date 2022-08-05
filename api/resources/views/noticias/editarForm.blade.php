@@ -5,8 +5,8 @@
 @section('title','Unidos | Editar: ' . $noticia->titulo)
 @section('main')
     <div class="container">
-        <h1 class="text-center text-3xl mb-10 text-violet-800 font-bold">Editar noticia</h1>
-        <form action="{{ route('noticias.editar', ['noticia' => $noticia->id_noticia]) }}" method="post" enctype="multipart/form-data" id="formulario" class="border border-violet-800 rounded p-5 w-full flex justify-center items-center flex-col md:flex-row mx-auto flex-wrap max-w-xl mb-10">
+        <h1 class="text-center text-3xl mb-10 texto-violeta font-bold">Editar noticia</h1>
+        <form action="{{ route('noticias.editar', ['noticia' => $noticia->id_noticia]) }}" method="post" enctype="multipart/form-data" id="formulario" class="border border-violeta rounded p-5 w-full flex justify-center items-center flex-col md:flex-row mx-auto flex-wrap max-w-xl mb-10">
             @csrf
             @method('PUT')
             <div class="w-full md:w-1/2 flex flex-col md:px-1">
@@ -60,7 +60,7 @@
                     id="imagen"
                     name="imagen"
                     placeholder="Ingrese la imagen de la noticia aquí"
-                    class="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"
+                    class="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-700 transition ease-in-out cursor-pointer"
                     @error('imagen') aria-describedby="error-imagen" @enderror
                 >
                 @error('imagen')
@@ -75,8 +75,8 @@
             <input type="hidden" name="publicado" id="publicado">
             <div class="mt-5">
                 <div class="botones">
-                    <button id="publicar" type="button" class="rounded bg-violet-800 text-white px-5 py-1">Publicar</button>
-                    <button id="borrador" type="button" class="rounded border-violet-800 hover:bg-violet-800 text-violet-800 hover:text-white px-5 py-1 border-violet-800 border duration-300 transition">Guardar borrador</button>
+                    <button id="publicar" type="button" class="rounded bg-violeta text-white px-5 py-1">Publicar</button>
+                    <button id="borrador" type="button" class="rounded hover:bg-violeta texto-violeta hover:text-white px-5 py-1 border-violeta border duration-300 transition">Guardar borrador</button>
                 </div>
             </div>
         </form>
