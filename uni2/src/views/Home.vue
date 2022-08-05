@@ -2,18 +2,33 @@
 	<div class="home">
 		<h1><div>Hola, {{usuario.nombre}} <img src="../assets/imago-amarillo.svg" alt="Logo Unidos"></div></h1>
 		<MiniLoader v-if="isLoading" />
-		<SliderAlertas v-else
+		<SliderAlertas 
+		v-else-if="alertasPerdidas.length > 0"
 		titulo="Mascotas perdidas por tu zona"
-		:alertas=alertasPerdidas
+		:alertas="alertasPerdidas"
 		:tipo="2"
 		/>
-        <CardAnuncio :anuncio="anuncio" />
+        
+		<SliderAlertas
+		v-if="!isLoading && alertasEncontradas.length > 0"
+		titulo="Mascotas encontradas por tu zona"
+		:alertas="alertasEncontradas"
+		:tipo="1"
+		/>
+
+		<CardAnuncio :anuncio="anuncio" />
+
 		<MiniLoader v-if="isLoading" />
 		<SliderAlertas
-		v-else
-		titulo="Mascotas encontradas por tu zona"
-		:alertas=alertasEncontradas
-		:tipo="1"
+		v-else-if="reencontradas.length > 0"
+		titulo="¡Mascotas reunidas con sus familias!"
+		:alertas="reencontradas"
+		/>
+		
+		<SliderEventos 
+		v-if="!isLoading && eventos.length > 0"
+		titulo="¡Enterate de los eventos que tenés cerca!"
+		:alertas="eventos"
 		/>
 	</div>
 </template>
@@ -21,8 +36,10 @@
 <script>
 // @ is an alias to /src
 import SliderAlertas from '../components/SliderAlertas';
+import SliderEventos from '../components/SliderEventos';
 import CardAnuncio from '../components/CardAnuncio.vue';
 import alertasServicio from '../servicios/alertasServicio'
+import eventosServicio from '../servicios/eventosServicio'
 import authServicio from '../servicios/authServicio';
 import MiniLoader from '../components/MiniLoader.vue';
 
@@ -30,6 +47,7 @@ export default {
   name: 'Home',
   components: {
 	  SliderAlertas,
+	  SliderEventos,
       CardAnuncio,
 	  MiniLoader
   },
@@ -41,6 +59,22 @@ export default {
 	  alertasServicio.todos()
 		.then(data => {
 			this.alertas = data;
+			setTimeout(() => {
+				this.isLoading = false
+			}, 750)
+		})
+
+	  alertasServicio.reencontradas()
+		.then(data => {
+			this.reencontradas = data;
+			setTimeout(() => {
+				this.isLoading = false
+			}, 750)
+		})
+
+	  eventosServicio.todos()
+		.then(data => {
+			this.eventos = data;
 			setTimeout(() => {
 				this.isLoading = false
 			}, 750)
@@ -65,6 +99,8 @@ export default {
 		usuario: {},
 		isLoading: false,
 		alertas: [],
+		reencontradas: [],
+		eventos: [],
         anuncio: {
             img: 'adopcion-puppies.jpg',
             titulo: '¡Vení a una nueva jornada de adopción!',

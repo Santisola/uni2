@@ -9,9 +9,12 @@ import Perfil from '../views/Perfil.vue'
 import PublicarPerdida from '../views/PublicarPerdida.vue'
 import PublicarEncontrada from '../views/PublicarEncontrada.vue'
 import DetalleAlerta from '../views/DetalleAlerta.vue'
+import DetalleEvento from '../views/DetalleEvento.vue'
 import EditarAlerta from '../views/EditarAlerta.vue'
 import Login from '../views/Login.vue'
 import Registro from '../views/Registro.vue'
+import OlvideContra from '../views/OlvideContra.vue'
+import CodigoOlvideContra from '../views/CodigoOlvideContra.vue'
 
 Vue.use(VueRouter)
 
@@ -73,6 +76,14 @@ const routes = [
     component: DetalleAlerta,
   },
   {
+    path: '/eventos/:id',
+    name: 'DetalleEvento',
+    meta:{
+        requiresAuth: true,
+    },
+    component: DetalleEvento,
+  },
+  {
     path: '/alertas/editar/:id',
     name: 'EditarAlerta',
     meta:{
@@ -97,6 +108,16 @@ const routes = [
     path: '/registro',
     name: 'Registro',
     component: Registro
+  },
+  {
+    path: '/olvide-mi-contra',
+    name: 'Olvidé mi contraseña',
+    component: OlvideContra
+  },
+  {
+    path: '/olvide-mi-contra/codigo',
+    name: 'Código olvide mi contraseña',
+    component: CodigoOlvideContra
   },
   {
     path: '*',

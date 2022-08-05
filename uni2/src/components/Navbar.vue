@@ -1,5 +1,5 @@
 <template>
-    <nav v-if="$route.path != '/login' && $route.path != '/registro'">
+    <nav v-if="$route.path != '/login' && $route.path != '/registro' && !$route.path.includes('/olvide-mi-contra')">
         <div id="navbar">
             <ul>
                 <li><router-link to="/">Inicio</router-link></li>
@@ -20,6 +20,7 @@ export default {
 nav{
     padding: .25rem 1.5rem;
     position: fixed;
+    z-index: 2;
     bottom: 0;
     left: 0;
     width: 100%;

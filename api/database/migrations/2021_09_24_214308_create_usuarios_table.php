@@ -19,6 +19,7 @@ class CreateUsuariosTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('imagen')->nullable();
+            $table->softDeletes()->nullable();
 
             $table->timestamps();
         });

@@ -22,6 +22,7 @@ class UsuariosSeeder extends Seeder
                 'email' => 'isolasantiago@gmail.com',
                 'password' => Hash::make('123456'),
                 'imagen' => null,
+                'deleted_at' => null,
                 'telefono' => '541150268860'
             ],
             [
@@ -30,6 +31,7 @@ class UsuariosSeeder extends Seeder
                 'email' => 'lucasmartincampora@gmail.com',
                 'password' => Hash::make('123456'),
                 'imagen' => null,
+                'deleted_at' => null,
                 'telefono' => '541163674462'
             ],
             [
@@ -38,6 +40,7 @@ class UsuariosSeeder extends Seeder
                 'email' => 'matias.bubello@davinci.edu.ar',
                 'password' => Hash::make('123456'),
                 'imagen' => null,
+                'deleted_at' => null,
                 'telefono' => '541167246466'
             ],
         ]);

@@ -2,19 +2,21 @@
     <a
     href="#"
     class="container"
-    @click="$router.push('/alertas/' + alerta.id_alerta + '?from=buscar')"
+    @click="alerta.id_evento ? $router.push('/eventos/' + alerta.id_evento + '?from=buscar') : $router.push('/alertas/' + alerta.id_alerta + '?from=buscar')"
     >
         <div class="imgContainer">
-            <ImagenesAlerta :imgs="alerta.imagenes" :principal="true" />
+            <ImagenesAlerta :imgs="alerta.id_tipoalerta ? alerta.imagenes : alerta.imagen" :principal="true" :esEvento="alerta.id_evento ? true : false" />
         </div>
         <div class="info">
             <div class="info-header">
                 <h1 v-if="alerta.nombre">{{alerta.nombre}}</h1>
-                <span :class="alerta.tipoAlerta == 1 ? 'encontrada' : 'perdida'">{{tipoAlerta}}</span>
+                <span v-if="!alerta.id_tipoalerta" class="evento">Evento</span>
+                <span v-else :class="alerta.id_tipoalerta == 1 ? 'encontrada' : 'perdida'">{{tipoAlerta}}</span>
             </div>
             <ul>
                 <li>{{fechaBien}}</li>
-                <li><Direccion :lat="alerta.latitud" :lng="alerta.longitud" /></li>
+                <li v-if="!alerta.id_tipoalerta">{{alerta.direccion}}</li>
+                <li v-else><Direccion :lat="alerta.latitud" :lng="alerta.longitud" /></li>
             </ul>
         </div>
     </a>
@@ -35,12 +37,19 @@ export default {
     },
     computed:{
         tipoAlerta: function(){
-            return this.alerta.tipoAlerta == 1 ? 'Encontrada' : 'Perdida';
+            return this.alerta.id_tipoalerta == 1 ? 'Encontrada' : 'Perdida';
         },
         fechaBien: function(){
+            if(!this.alerta.id_tipoalerta){
+                let fecha = this.alerta.desde.split(' ')[0].split('-');
+                let hora = this.alerta.desde.split(' ')[1].split(':')
+                return `${fecha[2]}/${fecha[1]}/${fecha[0]}, a las ${hora[0]}:${hora[1]}hs`;
+            }
+            
             if(this.alerta.fecha == null){
                 return 'No se sabe';
             } 
+            
             let fecha = this.alerta.fecha.split('-');
             return fecha[2] + ' / ' + fecha[1] + ' / ' + fecha[0]; 
         },
@@ -100,6 +109,10 @@ export default {
 
     .info-header .encontrada{
         background: var(--encontrada);
+    }
+
+    .info-header .evento{
+        background: var(--secondary);
     }
 
     li{

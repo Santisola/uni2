@@ -5,6 +5,7 @@
                 <li @click="filter = 0" :class="filter == 0 ? 'active' : '' ">Todas</li>
                 <li @click="filter = 1" :class="filter == 1 ? 'active' : '' ">Encontradas</li>
                 <li @click="filter = 2" :class="filter == 2 ? 'active' : '' ">Perdidas</li>
+                <li @click="filter = 3" :class="filter == 3 ? 'active' : '' ">Eventos</li>
             </ul>
         </div>
         <BaseMap
@@ -21,9 +22,9 @@
         /> -->
         <transition name="slide-fade">
             <ResumenAlerta
-            v-if="alertaElegida !== null"
-            :alerta="alertaElegida"
-            @cerrarResumen="alertaElegida = null"
+                v-if="alertaElegida !== null"
+                :alerta="alertaElegida"
+                @cerrarResumen="alertaElegida = null"
             />
         </transition> 
     </div>
@@ -33,6 +34,7 @@
 import ResumenAlerta from '../components/ResumenAlerta.vue';
 import BaseMap from '../components/BaseMap.vue';
 import alertasServicio from '../servicios/alertasServicio';
+import eventosServicio from '../servicios/eventosServicio';
 
 export default {
     name: 'Buscar',
@@ -43,6 +45,7 @@ export default {
     },
     computed:{
         filterAlertas: function() {
+            let output = []
             if(this.filter == 1){
                 //tipo 1 = encontradas
                 const alertasPerdidas = this.alertas.filter(alerta => {
@@ -54,8 +57,18 @@ export default {
                     return alerta.id_tipoalerta == 2; 
                 })
                 return alertasEncontradas
+            }else if(this.filter == 3){
+                return this.eventos
+            }else{
+                this.alertas.map(alerta => {
+                    output.push(alerta)
+                })
+                this.eventos.map(evento => {
+                    output.push(evento)
+                })
+                return output;
             }
-            return this.alertas;
+            
         }
     },
     beforeMount() {
@@ -77,6 +90,10 @@ export default {
             .then(res => {
                 this.alertas = res;
             })
+        eventosServicio.todos()
+            .then(res => {
+                this.eventos = res;
+            })
     },
     methods: {
         elegirAlerta: function(alerta){
@@ -89,6 +106,7 @@ export default {
         return{
             map: null,
             alertas: [],
+            eventos: [],
             filter: 0,
             alertaElegida: null,
 
@@ -124,6 +142,7 @@ export default {
         color: #fff;
         padding: .5rem;
         border-radius: 4px;
+        font-size: 14px;
     }
 
     #mapHeader .active{

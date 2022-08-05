@@ -169,6 +169,7 @@
                     <label for="fecha">Fecha</label>
                     <input
                         :aria-describedby="errores.fecha.error ? 'error-fecha' : null" @blur="validar('fecha')"
+                        :max="diaMaximo"
                         v-model="fecha"
                         type="date"
                         name="fecha"
@@ -203,14 +204,47 @@
             <div id="perdida-paso-4" v-if="paso === 3">
                 <div class="form-group">
                     <label for="fotos">Seleccioná las fotos</label>
-                    <input v-if="imagenEncontrada === null" type="file" id="fotos" ref="imagen" @change="cargarImg">
-                    <img
-                        v-else
-                        width="148"
-                        height="148"
-                        style="object-fit: contain;"
-                        :src="imagenEncontrada" :alt="'Mascota perdida ' + nombre"
-                    >
+
+                    <div id="selectImgsContainer">
+                        <div v-if="imagenEncontrada !== null" id="selectedImgsList">
+                            <img
+                                v-for="(img, index) in imagenEncontrada" :key="index"
+                                width="148"
+                                height="148"
+                                style="object-fit: contain;"
+                                :src="img" :alt="'Mascota encontrada ' + nombre"
+                            >
+                        </div>
+                        <div id="agregarFoto" @click="elegirFoto = true"></div>
+                    </div>
+
+                    <div id="opcionesFoto" v-if="elegirFoto">
+                        <div>
+                            <h3>¿Cómo querés subir las fotos?</h3>
+                            <div id="lasOpciones">
+                                <div id="camara">
+                                    <button id="fotosCelu" @click.prevent="sacarFoto">Sacar Foto</button>
+                                    <p>Cámara</p>
+                                </div>
+
+                                <div id="archivos">
+                                    <div id="inputFile">
+                                        <input
+                                            type="file"
+                                            id="fotos"
+                                            ref="imagen"
+                                            capture="environment"
+                                            accept="image/*"
+                                            multiple
+                                            @change="cargarImg"
+                                        >
+                                    </div>
+                                    <p>Archivos</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
                 <div class="form-group">
@@ -258,7 +292,7 @@
                                 width="100"
                                 height="100"
                                 style="object-fit: contain;"
-                                :src="imagenEncontrada" :alt="'Mascota perdida ' + nombre"
+                                :src="imagenEncontrada[0]" :alt="'Mascota encontrada ' + nombre"
                             >
                         </div>
                     </div>
@@ -312,6 +346,23 @@ export default {
         Loader
     },
     methods: {
+        sacarFoto: function(){
+            this.elegirFoto = false
+            navigator.camera.getPicture(this.camaraSuccess, this.camaraError, {
+                saveToPhotoAlbum: true,
+                correctOrientation: true,
+                destinationType: Camera.DestinationType.DATA_URL
+            })
+        },
+        camaraSuccess: function(imageData){
+            this.imagenEncontrada.push("data:image/jpeg;base64," + imageData);
+        },
+        camaraError: function(msj){
+            this.errorCamara.error = true;
+            this.errorCamara.msj = 'Ocurrió un error al intentar usar la cámara, por favor intentá de nuevo';
+
+            console.error('ERROR CAMARA: ', msj)
+        },
         autocomplete: function(){
             if(this.direccion !== ''){
                 this.service.autosuggest({
@@ -319,7 +370,6 @@ export default {
                     limit: 5,
                     q: this.direccion
                 }, (res) => {
-                    console.log(res)
                     this.suggestions = res.items;
                     if(res.items.length > 0) this.showSuggestions = true;
                 }, (err) => {
@@ -359,11 +409,13 @@ export default {
                 imagenes: this.imagenEncontrada, /*****/
                 latitud: this.latitud,
                 longitud: this.longitud,
+                extraDireccion: this.extraDireccion,
                 id_usuario: this.usuario.id_usuario,
                 id_especie: this.selectedEspecie,
                 id_raza: this.selectedRaza,
                 id_sexo: this.selectedSexo,
-                id_tipoalerta: 1
+                id_tipoalerta: 1,
+                finalizada: false
             }
 
             alertasServicio.nueva(data).then(res => {
@@ -379,14 +431,16 @@ export default {
             });
         },
         cargarImg: function (){
-            const imagen = this.$refs.imagen.files[0];
-            const reader = new FileReader();
+            this.elegirFoto = false
+            for(let i = 0; i < this.$refs.imagen.files.length; i++){
+                const reader = new FileReader();
 
-            reader.addEventListener('load', () => {
-                this.imagenEncontrada = reader.result;
-            })
+                reader.addEventListener('load', () => {
+                    this.imagenEncontrada.push(reader.result);
+                })
 
-            reader.readAsDataURL(imagen);
+                reader.readAsDataURL(this.$refs.imagen.files[i]);
+            }
         },
         validar: function(campo){
             switch(campo){
@@ -456,6 +510,14 @@ export default {
         alertasServicio.getRazas().then(res => {this.razas = res});
     },
     computed:{
+        diaMaximo: function() {
+            const hoy = new Date();
+            const dia = hoy.getDate() < 10 ? `0${hoy.getDate()}` : hoy.getDate();
+            const mes = hoy.getMonth() < 9 ? `0${hoy.getMonth() + 1}` : hoy.getMonth() + 1;
+            const año = hoy.getFullYear();
+
+            return `${año}-${mes}-${dia}`
+        },
         erroresBackArray: function(){
             if(this.erroresBack === null){
                 return false
@@ -493,7 +555,7 @@ export default {
                     }
                     return true
                 case 3:
-                    if(!this.imagenEncontrada){
+                    if(this.imagenEncontrada.length < 1){
                         return false;
                     }
                     if(!this.descripcion){
@@ -588,12 +650,19 @@ export default {
             fecha: '',
             hora: '',
 
-            imagenEncontrada: null,
+            imagenEncontrada: [],
             descripcion: '',
 
             latitud: null,
             longitud: null,
 
+            elegirFoto: false,
+
+            errorCamara: {
+                error: false,
+                msj: '',
+            },
+            
             erroresBack: null,
             errores:{
                 //Paso 1
@@ -841,14 +910,34 @@ option{
     color: #656565;
 }
 
-#fotos{
+#selectImgsContainer{
+    display: flex;
+    align-items: center;
+    overflow: auto;
+}
+
+#selectedImgsList{
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+#selectImgsContainer img{
+    display: block;
+    margin-right: 1rem;
+    flex-shrink: 0;
+}
+
+#agregarFoto{
     background: #fff;
     width: 150px;
     height: 150px;
     position: relative;
+    border: solid 1px #cecece;
+    flex-shrink: 0;
 }
 
-input#fotos::before {
+#agregarFoto::after{
     content: "+";
     color: var(--primary);
     position: absolute;
@@ -866,14 +955,75 @@ input#fotos::before {
     align-items: center;
 }
 
-input#fotos::after {
-    position: absolute;
+#opcionesFoto{
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: rgba(0, 0, 0, 0.2);
+}
+#opcionesFoto > div{
+    background: #fff;
+    position: fixed;
+    z-index: 1000;
     left: 0;
     right: 0;
-    top: 0;
     bottom: 0;
-    content: "";
-    background: #fff;
+    padding: 1rem;
+    padding-bottom: 2rem;
+    border-radius: 4px 4px 0 0;
+    box-shadow: 0 -1px 5px rgb(0 0 0 / 25%);
+    transition: all 250ms ease;
+    animation: showUp 250ms;
+}
+
+@keyframes showUp {
+    0%{
+        bottom: -100%;
+    }
+    100%{
+        bottom: 0;
+    }
+}
+
+#lasOpciones{
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+#camara,
+#archivos{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#archivos{
+    margin-left: 2rem;
+}
+
+#inputFile{
+    width: 50px;
+    height: 50px;
+    border: solid 1px #ccc;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    background: url("../assets/icons/files.svg") center/25px no-repeat;
+}
+
+#inputFile > input{
+    opacity: 0;
+}
+
+#fotosCelu{
+    width: 50px;
+    height: 50px;
+    font-size: 0;
+    background: url("../assets/icons/camera.svg") center/25px no-repeat;
+    background-color: transparent;
+    border: solid 1px #ccc;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
 }
 
 #perdida-paso-5 > p{

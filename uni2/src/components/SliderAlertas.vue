@@ -4,15 +4,13 @@
             <h2>{{titulo}}</h2>
             <!-- <a href="#">Ver todo</a> -->
         </div>
-        <div class="sliderContent">
-            <ul>
-                <li v-for="(alerta, index) in reversedAlertas" :key="index">
-                    <router-link :to="'/alertas/' + alerta.id_alerta.toString() + '?from=home'">
-                        <CardAlerta :alerta="alerta" :tipo="tipo"/>
-                    </router-link>
-                </li>
-            </ul>
-        </div>
+        <ul>
+            <li v-for="(alerta, index) in reversedAlertas" :key="index">
+                <router-link :to="'/alertas/' + alerta.id_alerta.toString() + '?from=home'">
+                    <CardAlerta :alerta="alerta" :tipo="alerta.id_tipoalerta"/>
+                </router-link>
+            </li>
+        </ul>
     </div>
 </template>
 <script>
@@ -60,19 +58,30 @@ export default {
     font-size: .95rem;
 }
 
-.sliderAlertas .sliderContent{
+.sliderAlertas{
     width: 100%;
-    overflow: auto;
+    overflow: hidden;
 }
 
-.sliderAlertas .sliderContent > ul{
+.sliderAlertas > ul{
     display: flex;
     overflow: auto;
-    width: fit-content;
+    width: 100%;
+    scroll-snap-type: x mandatory;
 }
-.sliderAlertas .sliderContent > ul > li{
+.sliderAlertas > ul > li{
     width: 200px;
     margin: .25rem .5rem;
     padding: .5rem 0;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+}
+
+.sliderAlertas > ul > li:first-of-type{
+    margin-left: 0;
+}
+
+.sliderAlertas > ul > li:last-of-type{
+    margin-right: 0;
 }
 </style>

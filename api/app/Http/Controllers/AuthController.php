@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Intervention\Image\Facades\Image;
 
 class AuthController extends Controller
 {
-    public function login(Request $request){
+    public function login(Request $request): JsonResponse
+    {
 
         $request->validate([
             'email' => 'required|email',
@@ -21,13 +24,20 @@ class AuthController extends Controller
             'password.required' => 'La contraseña es obligatoria'
         ]);
 
-        $usuario = User::where('email', $request->email)->first();
+        $usuario = User::withTrashed()->where('email', $request->email)->first();
 
         if(!$usuario || !Hash::check($request->password, $usuario->password)){
             return response()->json([
                 'success' => false,
                 'mensaje' => 'Los datos ingresados no coinciden con nuestros registros'
              ]);
+        }
+
+        if($usuario->deleted_at){
+            return response()->json([
+                'success' => false,
+                'mensaje' => 'Tu usuario está bloqueado. Por favor comunicate con nosotros.'
+            ]);
         }
 
         $token = $usuario->createToken($request->device_name)->plainTextToken;
@@ -38,13 +48,15 @@ class AuthController extends Controller
                 'id_usuario' => $usuario->id_usuario,
                 'email' => $usuario->email,
                 'nombre' => $usuario->nombre,
+                'imagen' => $usuario->imagen,
                 'telefono' => $usuario->telefono,
             ],
             'token' => $token
         ]);
     }
 
-    public function logout() {
+    public function logout(): JsonResponse
+    {
         Auth::user()->tokens()->delete();
 
         return response()->json([
@@ -66,6 +78,17 @@ class AuthController extends Controller
 
         $user = User::findOrFail($request->id_usuario);
 
+        if ($request->imagen) {
+            $extension = explode('/', explode(';', $request->imagen)[0])[1];
+            $nombreImg = date('Ymd-his') . '.' . $extension;
+
+            $path = 'imgs/perfiles/' . $nombreImg;
+
+            Image::make($request->imagen)->save(public_path('imgs/perfiles/') . $nombreImg);
+
+            $user->imagen = $path;
+        }
+
         $user->nombre = $request->nombre;
         $user->email = $request->email;
         $user->telefono = $request->telefono;
@@ -81,10 +104,22 @@ class AuthController extends Controller
     public function registrar(Request $request){
         $request->validate(User::$reglas, User::$mensajesDeError);
 
+        if ($request->imagen) {
+            $extension = explode('/', explode(';', $request->imagen)[0])[1];
+            $nombreImg = date('Ymd-his') . '.' . $extension;
+
+            $path = 'imgs/perfiles/' . $nombreImg;
+
+            Image::make($request->imagen)->save(public_path('imgs/perfiles/') . $nombreImg);
+        }else{
+            $path = null;
+        }
+
         User::create([
             'nombre' => $request->nombre,
             'email' => $request->email,
             'telefono' => $request->telefono,
+            'imagen' => $path,
             'password' => Hash::make($request->password),
         ]);
 
@@ -106,9 +141,45 @@ class AuthController extends Controller
                 'id_usuario' => $usuario->id_usuario,
                 'email' => $usuario->email,
                 'nombre' => $usuario->nombre,
+                'imagen' => $usuario->imagen,
                 'telefono' => $usuario->telefono,
             ],
             'token' => $token
         ]);
+    }
+
+    public function bloquearUsuario($id){
+        try {
+            User::findOrFail($id)->delete();
+
+            return redirect()
+                ->route('usuarios')
+                ->with('message','Usuario bloqueado')
+                ->with('message_type','bg-green-300 text-green-800');
+
+        } catch (\Exception $exception) {
+            return redirect()
+                ->route('usuarios')
+                ->with('message', $exception->getMessage())
+                ->with('message_type','bg-red-300 text-red-800');
+        }
+    }
+
+    public function restaurarUsuario($id){
+        try {
+            $usuario = User::onlyTrashed()->findOrFail($id);
+            $usuario->restore();
+
+            return redirect()
+                ->route('usuarios')
+                ->with('message','Usuario desbloqueado')
+                ->with('message_type','bg-green-300 text-green-800');
+
+        } catch (\Exception $exception) {
+            return redirect()
+                ->route('usuarios')
+                ->with('message', $exception->getMessage())
+                ->with('message_type','bg-red-300 text-red-800');
+        }
     }
 }

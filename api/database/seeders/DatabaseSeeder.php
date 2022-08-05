@@ -13,12 +13,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
         $this->call(EspeciesSeeder::class);
         $this->call(RazasSeeder::class);
         $this->call(SexoSeeder::class);
         $this->call(TipoalertaSeeder::class);
         $this->call(UsuariosSeeder::class);
         $this->call(AlertasSeeder::class);
+        $this->call(AlertaImgsSeeder::class);
+        $this->call(VerificadoSeeder::class);
+        $this->call(EventosSeeder::class);
+        $this->call(NoticiasSeeder::class);
+        $this->call(AdminSeeder::class);
+        $this->call(ComentariosSeeder::class);
+        $this->call(ContactoSeeder::class);
     }
 }
