@@ -19,12 +19,14 @@ class EventosController extends Controller
     public function eventosPublicados() : JsonResponse
     {
         try {
-            $eventos = Eventos::withoutTrashed()
+            $eventos = Eventos::all()
                 ->where('publicado',true);
 
             $data = [];
             foreach($eventos as $evento){
-                $data[] = $evento;
+                if($evento->deleted_at == null){
+                    $data[] = $evento;
+                }
             }
 
             return response()->json([
