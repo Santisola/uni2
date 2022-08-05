@@ -92,6 +92,7 @@
 
         function handleSlug(e) {
             slug.value = e.target.value.replaceAll(' ','-').toLowerCase();
+            slug.value = slug.value.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         }
     </script>
     <script>
