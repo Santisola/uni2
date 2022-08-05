@@ -5,7 +5,7 @@
                 Evento
             </span>
             <span v-else :class="tipo === 2 ? 'perdido' : 'encontrado'">
-                {{tipo === 2 ? 'Perdido' : 'Encontrado'}}
+                {{tipo === 2 ? 'Perdida' : 'Encontrada'}}
             </span>
             <ImagenesAlerta :imgs="alerta.id_evento ? alerta.imagen : alerta.imagenes" :principal="true" :esEvento="alerta.id_evento ? true : false" />
         </div>

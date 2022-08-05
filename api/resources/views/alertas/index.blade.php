@@ -7,7 +7,7 @@
     <h1 class="text-center text-3xl mb-10 texto-violeta font-bold">Alertas</h1>
     <div id="tarjetas">
         @forelse($alertas as $alerta)
-            <div class="tarjeta {{ $alerta->tipoalerta->id_tipoalerta === 1 ? 'perdida' : 'encontrada' }}">
+            <div class="tarjeta {{ $alerta->tipoalerta->id_tipoalerta === 1 ? 'encontrada' : 'perdida' }}">
                 <div class="w-full">
                     <div class="container-img">
                         @if($alerta->imagenes)
@@ -16,7 +16,7 @@
                             <img src="{{ asset('imgs/icono-mascota-default.jpg') }}" alt="Default mascota">
                         @endif
                     </div>
-                    <h2 class="tipo">{{ $alerta->tipoalerta->id_tipoalerta === 1 ? 'perdida' : 'encontrada' }}</h2>
+                    <h2 class="tipo">{{ $alerta->tipoalerta->id_tipoalerta === 1 ? 'encontrada' : 'perdida' }}</h2>
                     <h3>{{ $alerta->nombre ?? $alerta->especie->especie }}</h3>
                     <ul>
                         <li>Fecha: <span>{{ date('d/m/Y', strtotime($alerta->fecha)) }} {{ date('H:i:s', strtotime($alerta->hora)) }}hs</span></li>
