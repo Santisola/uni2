@@ -15,7 +15,8 @@
             </div>
             <ul>
                 <li>{{fechaBien}}</li>
-                <li><Direccion :lat="alerta.latitud" :lng="alerta.longitud" /></li>
+                <li v-if="!alerta.id_tipoalerta">{{alerta.direccion}}</li>
+                <li v-else><Direccion :lat="alerta.latitud" :lng="alerta.longitud" /></li>
             </ul>
         </div>
     </a>

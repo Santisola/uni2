@@ -34,7 +34,7 @@
             <div class="lugar">
                 <h3>¿En dónde?</h3>
                 <ul>
-                    <li><Direccion :lat="evento.latitud" :lng="evento.longitud" /></li>
+                    <li>{{evento.direccion}}</li>
                 </ul>
             </div>
             <div class="wpp-container">
@@ -46,14 +46,14 @@
 <script>
 import eventosServicio from '../servicios/eventosServicio';
 import ImagenesAlerta from '../components/ImagenesAlerta.vue';
-import Direccion from '../components/Direccion.vue'
+//import Direccion from '../components/Direccion.vue'
 import Loader from '../components/Loader.vue'
 
 export default {
     name: "DetalleEvento",
     components:{
         ImagenesAlerta,
-        Direccion,
+        //Direccion,
         Loader
     },
     mounted() {

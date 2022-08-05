@@ -76,7 +76,7 @@ export default {
     },
     computed:{
         imagenUsuario: function(){
-            return this.usuario.imagen ? EVENTOS_IMG_PATH + 'public/' + this.usuario.imagen : EVENTOS_IMG_PATH + 'public/imgs/user-default.png';
+            return this.usuario.imagen ? EVENTOS_IMG_PATH + '' + this.usuario.imagen : EVENTOS_IMG_PATH + 'imgs/user-default.png';
         },
         isValid: function(){
             if(this.editarDatos){

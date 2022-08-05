@@ -71,7 +71,7 @@ class EventosSeeder extends Seeder
                 'descripcion' => "Al igual que las personas, las mascotas necesitan una buena alimentación, ejercicio y un chequeo médico periódico para cuidar su salud. Desde cachorros hasta la vejez, mantener una rutina anual es vital para prevenir y detectar enfermedades. Un pronóstico precoz, además, garantiza un tratamiento más sencillo, una recuperación más rápida y un ahorro en los gastos veterinarios. Por estas razones, es importante no olvidar la cita para llevar a las mascotas a su chequeo médico de todos los años.",
                 'latitud' => -34.634111,
                 'longitud' => -58.493111,
-                'direccion' => 'Falso 1234',
+                'direccion' => 'Bacacay 4719',
                 'desde' => Carbon::parse('2022-11-29 14:30:00'),
                 'hasta' => Carbon::parse('2022-11-30 17:30:00'),
                 'imagen' => 'public/imgs/eventos/cachorrito.jpg',

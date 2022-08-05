@@ -9,7 +9,7 @@
             </span>
             <ImagenesAlerta :imgs="alerta.id_evento ? alerta.imagen : alerta.imagenes" :principal="true" :esEvento="alerta.id_evento ? true : false" />
         </div>
-        <div class="cardContent">    
+        <div class="cardContent" v-if="tipo">    
             <h3 v-if="tipo === 2">{{alerta.nombre}}</h3>
             <ul class="encontradas-data" v-if="tipo === 1">
                 <li>{{fechaBien}}</li>
@@ -23,6 +23,14 @@
             <ul class="perdidas-data" v-else>
                 <li>{{fechaBien}}</li>
                 <li><Direccion :lat="alerta.latitud" :lng="alerta.longitud" /></li>
+            </ul>
+        </div>
+        <div class="cardContent eventContent" v-else>    
+            <h3>{{alerta.nombre}}</h3>
+            <ul class="encontradas-data">
+                <li>{{fechaBien}}</li>
+                <li>{{alerta.direccion}}</li>
+                
             </ul>
         </div>
     </div>
@@ -183,5 +191,13 @@ export default {
 
 .direccionBien{
     width: 100%;
+}
+
+.eventContent h3{
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 46px;
 }
 </style>
