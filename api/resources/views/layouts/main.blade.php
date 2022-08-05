@@ -57,7 +57,7 @@
     </div>
 </header>
 @endauth
-<main class="container mx-auto">
+<main class="container mx-auto relative">
     @if(Session::has('message'))
         <div class="mb-10 py-3 {{ Session::get('message_type') ?? 'bg-green-300 text-green-800' }} text-center">{{ Session::get('message') }}</div>
     @endif
@@ -81,6 +81,37 @@
         } else {
             nav.classList.add('abrir');
         }
+    }
+</script>
+<script>
+    const emails = document.querySelectorAll('li.email');
+
+    if (emails.length > 0) {
+        emails.forEach(email => {
+            email.addEventListener('click',emailHandler);
+        });
+    }
+
+    function emailHandler(e) {
+        e.target.classList.contains('full') ? e.target.classList.remove('full') : e.target.classList.add('full');
+        navigator.clipboard.writeText(e.target.firstElementChild.textContent);
+
+        if (document.querySelector('.clipboard')) {
+            return;
+        }
+
+        const span = document.createElement('span');
+        span.classList.add('clipboard');
+        span.innerHTML = 'Email copiado en el portapapeles';
+        document.querySelector('main').insertAdjacentElement('beforeend',span);
+        span.style.opacity = "1";
+
+        setTimeout(() => {
+            span.style.opacity = "0";
+            setTimeout(() => {
+                span.remove();
+            },500)
+        },3000);
     }
 </script>
 @stack('js')

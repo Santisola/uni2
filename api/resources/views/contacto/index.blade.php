@@ -8,16 +8,18 @@
     <div id="tarjetas">
         @forelse($contactos as $contacto)
             <div class="tarjeta contactos">
-                <div class="container-img">
-                    <img src="{{ $contacto->verificado->imagen ? asset(str_replace('public/','', $contacto->verificado->imagen)) : asset('imgs/user-default.png') }}" alt="{{ $contacto->verificado->razon_social }}">
+                <div class="w-full">
+                    <div class="container-img">
+                        <img src="{{ $contacto->verificado->imagen ? asset(str_replace('public/','', $contacto->verificado->imagen)) : asset('imgs/user-default.png') }}" alt="{{ $contacto->verificado->razon_social }}">
+                    </div>
+                    <h2 class="tipo">Contacto</h2>
+                    <h3>{{ $contacto->asunto }}</h3>
+                    <ul>
+                        <li>Email: <span>{{ $contacto->verificado->email }}</span></li>
+                        <li>Tel.: <span>{{ $contacto->verificado->telefono ?? '-' }}</span></li>
+                        <li>Cuit: <span>{{ $contacto->verificado->cuit }}</span></li>
+                    </ul>
                 </div>
-                <h2 class="tipo">Contacto</h2>
-                <h3>{{ $contacto->asunto }}</h3>
-                <ul>
-                    <li>Email: <span>{{ $contacto->verificado->email }}</span></li>
-                    <li>Tel.: <span>{{ $contacto->verificado->telefono ?? '-' }}</span></li>
-                    <li>Cuit: <span>{{ $contacto->verificado->cuit }}</span></li>
-                </ul>
                 <div class="flex flex-col w-full">
                     <a class="block w-full py-3 px-2 my-3 rounded border-violet-800 text-center bg-violeta hover:bg-indigo-700 text-white transition ease-in-out" href="{{ route('contacto.detalle', ['contacto' => $contacto->id_contacto]) }}">Detalle</a>
                 </div>

@@ -20,17 +20,19 @@
     <div id="tarjetas">
         @forelse($eventos as $evento)
             <div class="tarjeta evento">
-                <div class="container-img">
-                    <img src="{{ asset(str_replace('public/','',$evento->imagen)) }}" alt="{{ $evento->nombre }}">
+                <div>
+                    <div class="container-img">
+                        <img src="{{ asset(str_replace('public/','',$evento->imagen)) }}" alt="{{ $evento->nombre }}">
+                    </div>
+                    <h2 class="tipo">Evento</h2>
+                    <h3>{{ strlen($evento->nombre) > 25 ? substr($evento->nombre,0,19) . '[...]' : $evento->nombre }}</h3>
+                    <ul>
+                        <li>Desde: <span>{{ date('d/m/Y H:i:s', strtotime($evento->desde)) }}hs</span></li>
+                        <li>Hasta: <span>{{ date('d/m/Y H:i:s', strtotime($evento->hasta)) }}hs</span></li>
+                    </ul>
+                    <p>Creado por {{ $evento->verificado->razon_social }}</p>
                 </div>
-                <h2 class="tipo">Evento</h2>
-                <h3>{{ $evento->nombre }}</h3>
-                <ul>
-                    <li>Desde: <span>{{ date('d/m/Y H:i:s', strtotime($evento->desde)) }}hs</span></li>
-                    <li>Hasta: <span>{{ date('d/m/Y H:i:s', strtotime($evento->hasta)) }}hs</span></li>
-                </ul>
-                <p>Creado por {{ $evento->verificado->razon_social }}</p>
-                <div class="h-full w-full flex flex-col justify-end items-center">
+                <div class="w-full flex flex-col">
                     <a class="w-full py-3 px-2 my-3 rounded border-violet-800 text-center bg-violeta hover:bg-indigo-700 text-white transition ease-in-out" href="{{ route('eventos.detalle', ['evento' => $evento->id_evento]) }}">Detalle</a>
                     @if($evento->deleted_at)
                         <form action="{{ route('eventos.restaurar', ['evento' => $evento->id_evento]) }}">
@@ -46,7 +48,6 @@
                     @endif
                 </div>
             </div>
-            <div class="flex flex-col">
                 @empty
                     <div class="flex justify-center items-center w-full px-5 mb-5">
                         <h2 class="text-center text-3xl">No hay Datos</h2>

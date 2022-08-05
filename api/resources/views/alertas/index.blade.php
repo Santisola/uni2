@@ -8,21 +8,23 @@
     <div id="tarjetas">
         @forelse($alertas as $alerta)
             <div class="tarjeta {{ $alerta->tipoalerta->id_tipoalerta === 1 ? 'perdida' : 'encontrada' }}">
-                <div class="container-img">
-                    @if($alerta->imagenes)
-                        <img src="{{ asset('imgs/mascotas/' . $alerta->imagenes[0]) }}" alt="Imagen mascota perdida">
-                    @else
-                        <img src="{{ asset('imgs/icono-mascota-default.jpg') }}" alt="Default mascota">
-                    @endif
+                <div class="w-full">
+                    <div class="container-img">
+                        @if($alerta->imagenes)
+                            <img src="{{ asset('imgs/mascotas/' . $alerta->imagenes[0]) }}" alt="Imagen mascota perdida">
+                        @else
+                            <img src="{{ asset('imgs/icono-mascota-default.jpg') }}" alt="Default mascota">
+                        @endif
+                    </div>
+                    <h2 class="tipo">{{ $alerta->tipoalerta->id_tipoalerta === 1 ? 'perdida' : 'encontrada' }}</h2>
+                    <h3>{{ $alerta->nombre ?? '-' }}</h3>
+                    <ul>
+                        <li>Fecha: <span>{{ date('d/m/Y', strtotime($alerta->fecha)) }} {{ date('H:i:s', strtotime($alerta->hora)) }}hs</span></li>
+                        <li>Raza.: <span>{{ $alerta->raza->raza }}</span></li>
+                        <li>Sexo: <span>{{ $alerta->sexo->sexo }}</span></li>
+                    </ul>
+                    <p>Creado por {{ $alerta->usuario->nombre }}</p>
                 </div>
-                <h2 class="tipo">{{ $alerta->tipoalerta->id_tipoalerta === 1 ? 'perdida' : 'encontrada' }}</h2>
-                <h3>{{ $alerta->nombre ?? '-' }}</h3>
-                <ul>
-                    <li>Fecha: <span>{{ date('d/m/Y', strtotime($alerta->fecha)) }} {{ date('H:i:s', strtotime($alerta->hora)) }}hs</span></li>
-                    <li>Raza.: <span>{{ $alerta->raza->raza }}</span></li>
-                    <li>Sexo: <span>{{ $alerta->sexo->sexo }}</span></li>
-                </ul>
-                <p>Creado por {{ $alerta->usuario->nombre }}</p>
                 <div class="actions w-full">
                     <a class="block w-full py-3 px-2 my-3 rounded border-violet-800 text-center bg-violeta hover:bg-indigo-700 text-white transition ease-in-out" href="{{ route('alertas.detalle', ['alerta' => $alerta->id_alerta]) }}">Detalle</a>
                     @if($alerta->deleted_at)

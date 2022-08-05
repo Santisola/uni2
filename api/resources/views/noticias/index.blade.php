@@ -31,18 +31,22 @@
     <div id="tarjetas">
         @forelse($noticias as $noticia)
             <div class="tarjeta noticias">
-                <div class="container-img">
-                    <img src="{{ asset('imgs/noticias/') . '/' . $noticia->imagen }}" alt="{{ $noticia->titulo }}">
+                <div class="w-full">
+                    <div class="container-img">
+                        <img src="{{ asset('imgs/noticias/') . '/' . $noticia->imagen }}" alt="{{ $noticia->titulo }}">
+                    </div>
+                    <h2 class="tipo">Noticia</h2>
+                    <h3>{{ $noticia->titulo }}</h3>
+                    <ul>
+                        <li>Fecha: <span>{{ date('d/m/Y H:i:s', strtotime($noticia->created_at)) }}</span></li>
+                        <li>Estado: <span>{{ $noticia->publicado === 1 ? 'Publicado' : 'Borrador' }}</span></li>
+                    </ul>
                 </div>
-                <h2 class="tipo">Noticia</h2>
-                <h3>{{ $noticia->titulo }}</h3>
-                <ul>
-                    <li>Fecha: <span>{{ date('d/m/Y H:i:s', strtotime($noticia->created_at)) }}</span></li>
-                    <li>Estado: <span>{{ $noticia->publicado === 1 ? 'Publicado' : 'Borrador' }}</span></li>
-                </ul>
-                <a class="w-full py-3 px-2 my-3 rounded border-violet-800 text-center bg-violeta hover:bg-indigo-700 text-white transition ease-in-out" href="{{ route('noticias.detalle', ['noticia' => $noticia->id_noticia]) }}">Detalle</a>
-                <a class="w-full py-3 px-2 my-3 rounded border border-violeta text-center texto-violeta hover:ease-in-out hover:text-white transition duration-300" href="{{ route('noticias.editarForm', ['noticia' => $noticia->id_noticia]) }}">Editar</a>
-                <a href="{{ route('noticias.eliminar', ['noticia' => $noticia->id_noticia]) }}" class="rounded text-center py-3 px-2 block w-full text-red-800 hover:text-white hover:bg-red-600 transition hover:ease-in-out duration-300 eliminar">Eliminar</a>
+                <div class="w-full">
+                    <a class="w-full block py-3 px-2 my-3 rounded border-violet-800 text-center bg-violeta hover:bg-indigo-700 text-white transition ease-in-out" href="{{ route('noticias.detalle', ['noticia' => $noticia->id_noticia]) }}">Detalle</a>
+                    <a class="w-full block py-3 px-2 my-3 rounded border border-violeta text-center texto-violeta hover:ease-in-out hover:text-white transition duration-300" href="{{ route('noticias.editarForm', ['noticia' => $noticia->id_noticia]) }}">Editar</a>
+                    <a href="{{ route('noticias.eliminar', ['noticia' => $noticia->id_noticia]) }}" class="rounded text-center py-3 px-2 block w-full text-red-800 hover:text-white hover:bg-red-600 transition hover:ease-in-out duration-300 eliminar">Eliminar</a>
+                </div>
             </div>
         @empty
             <div class="flex justify-center items-center w-full px-5 mb-5">

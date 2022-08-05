@@ -22,38 +22,42 @@
     <div id="tarjetas">
         @forelse($usuarios as $usuario)
             <div class="tarjeta verificados">
-                <div class="container-img">
-                    <img src="{{ $usuario->imagen ? asset(str_replace('public/','', $usuario->imagen)) : asset('imgs/user-default.png') }}" alt="{{ $usuario->razon_social }}">
+                <div>
+                    <div class="container-img">
+                        <img src="{{ $usuario->imagen ? asset(str_replace('public/','', $usuario->imagen)) : asset('imgs/user-default.png') }}" alt="{{ $usuario->razon_social }}">
+                    </div>
+                    <h2 class="tipo">Verificado</h2>
+                    <h3>{{ $usuario->razon_social }}</h3>
+                    <ul>
+                        <li class="email">Email: <span>{{ $usuario->email }}</span></li>
+                        <li>Tel.: <span>{{ $usuario->telefono }}</span></li>
+                        <li>Cuit: <span>{{ $usuario->cuit }}</span></li>
+                    </ul>
                 </div>
-                <h2 class="tipo">Verificado</h2>
-                <h3>{{ $usuario->razon_social }}</h3>
-                <ul>
-                    <li>Email: <span>{{ $usuario->email }}</span></li>
-                    <li>Tel.: <span>{{ $usuario->telefono }}</span></li>
-                    <li>Cuit: <span>{{ $usuario->cuit }}</span></li>
-                </ul>
-                <form action="{{ route('verificados.verificar', ['usuario' => $usuario->id_verificado]) }}" method="post" class="flex flex-col w-full">
-                    @csrf
-                    @method('PUT')
+                <div class="w-full">
+                    <form action="{{ route('verificados.verificar', ['usuario' => $usuario->id_verificado]) }}" method="post" class="flex flex-col w-full">
+                        @csrf
+                        @method('PUT')
 
-                    @if( $usuario->status === 1 )
-                        <button type="submit" class="w-full py-3 px-2 my-3 rounded border border-violet-600 text-center text-violet-800 hover:ease-in-out hover:text-white hover:bg-violet-800 transition duration-300">No Verificar</button>
+                        @if( $usuario->status === 1 )
+                            <button type="submit" class="w-full py-3 px-2 my-3 rounded border border-violet-600 text-center text-violet-800 hover:ease-in-out hover:text-white hover:bg-violet-800 transition duration-300">No Verificar</button>
+                        @else
+                            <button type="submit" class="w-full py-3 px-2 my-3 rounded border-violet-800 text-center bg-violeta hover:bg-indigo-700 text-white transition ease-in-out">Verificar</button>
+                        @endif
+                    </form>
+                    @if($usuario->deleted_at)
+                        <form action="{{ route('verificados.restaurar', ['usuario' => $usuario->id_verificado]) }}" class="w-full">
+                            @csrf
+                            <button type="submit" class="restaurar rounded text-center py-3 px-2 my-3 block hover:bg-green-600 transition hover:ease-in-out duration-300 hover:text-white text-green-600 w-full">Restaurar</button>
+                        </form>
                     @else
-                        <button type="submit" class="w-full py-3 px-2 my-3 rounded border-violet-800 text-center bg-violeta hover:bg-indigo-700 text-white transition ease-in-out">Verificar</button>
+                        <form action="{{ route('verificados.eliminar', ['usuario' => $usuario->id_verificado]) }}" method="post" class="w-full">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="rounded mt-5 text-center py-3 px-2 block w-full text-red-600 hover:text-white hover:bg-red-600 transition hover:ease-in-out duration-300 eliminar">Eliminar</button>
+                        </form>
                     @endif
-                </form>
-                @if($usuario->deleted_at)
-                    <form action="{{ route('verificados.restaurar', ['usuario' => $usuario->id_verificado]) }}" class="w-full">
-                        @csrf
-                        <button type="submit" class="restaurar rounded text-center py-3 px-2 my-3 block hover:bg-green-600 transition hover:ease-in-out duration-300 hover:text-white text-green-600 w-full">Restaurar</button>
-                    </form>
-                @else
-                    <form action="{{ route('verificados.eliminar', ['usuario' => $usuario->id_verificado]) }}" method="post" class="w-full">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="rounded mt-5 text-center py-3 px-2 block w-full text-red-600 hover:text-white hover:bg-red-600 transition hover:ease-in-out duration-300 eliminar">Eliminar</button>
-                    </form>
-                @endif
+                </div>
             </div>
         @empty
             <div class="flex justify-center items-center w-full px-5 mb-5">
