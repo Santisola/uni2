@@ -17,7 +17,7 @@
                         @endif
                     </div>
                     <h2 class="tipo">{{ $alerta->tipoalerta->id_tipoalerta === 1 ? 'perdida' : 'encontrada' }}</h2>
-                    <h3>{{ $alerta->nombre ?? '-' }}</h3>
+                    <h3>{{ $alerta->nombre ?? $alerta->especie->especie }}</h3>
                     <ul>
                         <li>Fecha: <span>{{ date('d/m/Y', strtotime($alerta->fecha)) }} {{ date('H:i:s', strtotime($alerta->hora)) }}hs</span></li>
                         <li>Raza.: <span>{{ $alerta->raza->raza }}</span></li>

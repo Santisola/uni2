@@ -7,7 +7,7 @@
     <title>@yield('title', 'Unidos - Administrador')</title>
     <link rel="stylesheet" href="<?= url('css/app.css');?>">
     <link rel="stylesheet" href="<?= url('css/estilos.css');?>">
-    <link rel="icon" href="{{ asset('/imgs/logo-unidos.png') }}">
+    <link rel="icon" sizes="8x16" href="{{ asset('/imgs/logo-unidos.png') }}">
     @stack('css')
     @yield('links')
 </head>
@@ -16,7 +16,7 @@
 <header class="bg-violeta mb-10 py-5">
     <div class="container">
         <nav class="flex md:justify-start justify-between items-center">
-            <a class="text-white text-2xl block md:mr-14" href="<?= url('/') ;?>"><img id="logo" src="{{ asset('imgs/logo.svg') }}" alt="Logo Unidos"></a>
+            <a class="text-white text-2xl block md:mr-14" href="<?= url('/') ;?>"><img id="logo" src="{{ asset('imgs/logo-unidos.svg') }}" alt="Logo Unidos"></a>
             <button id="menu" class="md:hidden">
                 <svg class="ham hamRotate ham8" viewBox="0 0 100 100" width="80" onclick="this.classList.toggle('active')">
                     <path

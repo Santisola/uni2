@@ -6,7 +6,7 @@
 @extends('layouts.main')
 @section('title','UNIDOS | Inicio')
 @section('main')
-    <h1 class="text-center text-3xl mb-10 texto-violeta font-bold">ÚLTIMAS ACTUALIZACIONES</h1>
+    <h1 class="text-center text-3xl mb-10 texto-violeta font-bold">Últimas Actualizaciones</h1>
     @if(count($results) > 0)
         <div id="tarjetas">
             @foreach($results as $result)
@@ -31,7 +31,7 @@
                         <h2 class="tipo">Verificado</h2>
                         <h3>{{ $result->razon_social }}</h3>
                         <ul>
-                            <li>Email: <span>{{ $result->email }}</span></li>
+                            <li class="email">Email: <span>{{ $result->email }}</span></li>
                             <li>Tel.: <span>{{ $result->telefono ?? '-' }}</span></li>
                             <li>Cuit: <span>{{ $result->cuit }}</span></li>
                         </ul>
@@ -46,7 +46,7 @@
                             @endif
                         </div>
                         <h2 class="tipo">{{ $result->tipoalerta->id_tipoalerta === 1 ? 'perdida' : 'encontrada' }}</h2>
-                        <h3>{{ $result->nombre ?? '-' }}</h3>
+                        <h3>{{ $result->nombre ?? $result->especie->especie }}</h3>
                         <ul>
                             <li>Fecha: <span>{{ date('d/m/Y', strtotime($result->fecha)) }} {{ date('H:i:s', strtotime($result->hora)) }}hs</span></li>
                             <li>Raza.: <span>{{ $result->raza->raza }}</span></li>
@@ -66,7 +66,7 @@
                         <h2 class="tipo">Usuario</h2>
                         <h3>{{ $result->nombre }}</h3>
                         <ul>
-                            <li>Email: <span>{{ $result->email }}</span></li>
+                            <li class="email">Email: <span>{{ $result->email }}</span></li>
                             <li>Tel.: <span>{{ $result->telefono }}</span></li>
                         </ul>
                     </div>
