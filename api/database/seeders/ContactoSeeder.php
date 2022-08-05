@@ -19,7 +19,7 @@ class ContactoSeeder extends Seeder
            [
                'id_contacto' => 1,
                'asunto' => 'otro',
-               'mensaje' => 'Mensaje desde el seeder',
+               'mensaje' => 'Tuve un problema con mi contraseña',
                'id_verificado' => 1,
                'created_at' => Carbon::now('UTC')->format('Y-m-d H:i:s'),
                'updated_at' => Carbon::now('UTC')->format('Y-m-d H:i:s')

@@ -48,7 +48,7 @@ class VerificadoSeeder extends Seeder
             [
                'id_verificado' => 3,
                'cuit' => 20434417784,
-               'razon_social' => 'Santiago Martin Campora',
+               'razon_social' => 'Santiago Martin Isola',
                'nombre' => null,
                'email' => 'santiago.isola@davinci.edu.ar',
                'password' => Hash::make('123456'),
