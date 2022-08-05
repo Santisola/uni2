@@ -55,6 +55,51 @@ class AlertaImgsSeeder extends Seeder
                 'imagen' => 'ragnar2.jpg',
                 'id_alerta' => 3,
             ],
+            [
+                'id_alerta_img' => 9,
+                'imagen' => 'tommy1.jpg',
+                'id_alerta' => 4,
+            ],
+            [
+                'id_alerta_img' => 10,
+                'imagen' => 'tommy2.jpg',
+                'id_alerta' => 4,
+            ],
+            [
+                'id_alerta_img' => 11,
+                'imagen' => 'perdido1.jpg',
+                'id_alerta' => 5,
+            ],
+            [
+                'id_alerta_img' => 12,
+                'imagen' => 'perdido2.jpg',
+                'id_alerta' => 5,
+            ],
+            [
+                'id_alerta_img' => 13,
+                'imagen' => 'boxer.jpg',
+                'id_alerta' => 6,
+            ],
+            [
+                'id_alerta_img' => 14,
+                'imagen' => 'boxer2.jpg',
+                'id_alerta' => 6,
+            ],
+            [
+                'id_alerta_img' => 15,
+                'imagen' => 'boxer3.jpg',
+                'id_alerta' => 6,
+            ],
+            [
+                'id_alerta_img' => 16,
+                'imagen' => 'caniche2.jpg',
+                'id_alerta' => 7,
+            ],
+            [
+                'id_alerta_img' => 17,
+                'imagen' => 'caniche.jpg',
+                'id_alerta' => 7,
+            ],
         ]);
     }
 }
