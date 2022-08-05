@@ -97,7 +97,7 @@
 
             formulario.action = e.target.href;
 
-            tituloModal.textContent = e.target.parentElement.querySelector("h3").textContent;
+            tituloModal.textContent = e.target.parentElement.parentElement.querySelector('h3').textContent;
 
             modal.classList.remove('hidden');
         }
