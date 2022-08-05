@@ -112,7 +112,7 @@ class EventosController extends Controller
     public function eventoVerificado( int $id_evento) : JsonResponse
     {
         try {
-            $evento = Eventos::findOrFail($id_evento);
+            $evento = Eventos::withTrashed()->findOrFail($id_evento);
 
             return response()->json([
                'success' => true,
