@@ -15,7 +15,7 @@
                     <h2 class="tipo">Contacto</h2>
                     <h3>{{ $contacto->asunto }}</h3>
                     <ul>
-                        <li>Email: <span>{{ $contacto->verificado->email }}</span></li>
+                        <li class="email">Email: <span>{{ $contacto->verificado->email }}</span></li>
                         <li>Tel.: <span>{{ $contacto->verificado->telefono ?? '-' }}</span></li>
                         <li>Cuit: <span>{{ $contacto->verificado->cuit }}</span></li>
                     </ul>
