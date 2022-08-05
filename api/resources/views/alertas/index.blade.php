@@ -24,7 +24,7 @@
                 </ul>
                 <p>Creado por {{ $alerta->usuario->nombre }}</p>
                 <div class="actions w-full">
-                    <a class="rounded text-center py-3 px-2 mt-3 block w-full bg-yellow-500 hover:bg-yellow-600 transition hover:ease-in-out duration-300 md:w-100 w-full" href="{{ route('alertas.detalle', ['alerta' => $alerta->id_alerta]) }}">Detalle</a>
+                    <a class="w-full py-3 px-2 my-3 rounded border border-violet-600 text-center text-violet-800 hover:ease-in-out hover:text-white hover:bg-violet-800 transition duration-300" href="{{ route('alertas.detalle', ['alerta' => $alerta->id_alerta]) }}">Detalle</a>
                     @if($alerta->deleted_at)
                         <form action="{{ route('alertas.restaurar', ['alerta' => $alerta->id_alerta]) }}">
                             @csrf

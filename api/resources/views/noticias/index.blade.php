@@ -40,7 +40,7 @@
                     <li>Fecha: <span>{{ date('d/m/Y H:i:s', strtotime($noticia->created_at)) }}</span></li>
                     <li>Estado: <span>{{ $noticia->publicado === 1 ? 'Publicado' : 'Borrador' }}</span></li>
                 </ul>
-                <a class="rounded text-center py-3 px-2 mt-3 block w-full bg-yellow-500 hover:bg-yellow-600 transition hover:ease-in-out duration-300" href="{{ route('noticias.detalle', ['noticia' => $noticia->id_noticia]) }}">Detalle</a>
+                <a class="w-full py-3 px-2 my-3 rounded border border-violet-600 text-center text-violet-800 hover:ease-in-out hover:text-white hover:bg-violet-800 transition duration-300" href="{{ route('noticias.detalle', ['noticia' => $noticia->id_noticia]) }}">Detalle</a>
                 <a class="w-full py-3 px-2 my-3 rounded border border-violet-600 text-center text-violet-800 hover:ease-in-out hover:text-white hover:bg-violet-800 transition duration-300" href="{{ route('noticias.editarForm', ['noticia' => $noticia->id_noticia]) }}">Editar</a>
                 <a href="{{ route('noticias.eliminar', ['noticia' => $noticia->id_noticia]) }}" class="rounded text-center py-3 px-2 block w-full text-red-800 hover:text-white hover:bg-red-600 transition hover:ease-in-out duration-300 eliminar">Eliminar</a>
             </div>
@@ -66,7 +66,7 @@
                 ¿Está seguro que desea eliminar esta noticia? Una vez eliminada no habrá vuelta atrás.
             </div>
             <div class="modal-footer flex justify-end items-center gap-1 mt-5">
-                <button type="button" class="block w-fit border rounded bg-slate-700 text-white transition duration-300 hover:ease-in-out px-3 py-1" onclick="cerrar()">Cerrar</button>
+                <button type="button" class="rounded border border-violet-600 text-center text-violet-800 hover:ease-in-out hover:text-white hover:bg-violet-800 transition duration-300t px-3 py-1" onclick="cerrar()">Cerrar</button>
                 <form action="" id="formulario" onsubmit="continuar()">
                     @csrf
                     @method('DELETE')
@@ -93,7 +93,7 @@
 
             formulario.action = e.target.href;
 
-            tituloModal.textContent = e.target.parentNode.previousElementSibling.previousElementSibling.previousElementSibling.lastElementChild.textContent;
+            tituloModal.textContent = e.target.parentElement.querySelector("h3").textContent;
 
             modal.classList.remove('hidden');
         }

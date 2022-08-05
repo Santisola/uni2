@@ -19,7 +19,7 @@
                     <li>Cuit: <span>{{ $contacto->verificado->cuit }}</span></li>
                 </ul>
                 <div class="flex flex-col w-full">
-                    <a class="rounded text-center py-3 px-2 mt-3 block w-full bg-yellow-500 hover:bg-yellow-600 transition hover:ease-in-out duration-300" href="{{ route('contacto.detalle', ['contacto' => $contacto->id_contacto]) }}">Detalle</a>
+                    <a class="w-full py-3 px-2 my-3 rounded border border-violet-600 text-center text-violet-800 hover:ease-in-out hover:text-white hover:bg-violet-800 transition duration-300" href="{{ route('contacto.detalle', ['contacto' => $contacto->id_contacto]) }}">Detalle</a>
                 </div>
             </div>
         @empty
